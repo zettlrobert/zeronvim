@@ -9,8 +9,8 @@ The entire configuration should/will be written with `lua`
 
 ## Development Procedure
 
-For development purposed this directory is located in a `development` location and will be invoked via `zrvim`.
-For now I will accomplish this by setting up an alias for `nvim -u /path/to/configuration`
+For development purposed we will setup a docker container and mount this configuration in `$HOME/.config/nvim` the correct location.
+This directory is located in a `development` location and will be invoked via `zrvim`.
 
 ## Documentation
 
