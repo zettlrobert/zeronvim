@@ -91,13 +91,24 @@ RUN yay -Y --devel --save --noconfirm
 # Install community packages and pass along the password to every yay used sudo process
 RUN echo "${USER_PASSWORD}" | yay -S --sudoflags -S \
     ttf-juliamono \
-    neovim-git \
     --noconfirm
+
+# neovim-git \
 
 # update the tldr cache
 RUN tldr --update
 
 # Install neovim
+WORKDIR /home/${USER_NAME}
+RUN if [ -d "neovim" ]; then rm -Rf neovim; fi
+RUN git clone https://github.com/neovim/neovim
+WORKDIR /home/${USER_NAME}/neovim
+# ARG MAKE_COMMAND=make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=/home/${USER_NAME}/neovim" CMAKE_BUILD_TYPE=Release install
+# RUN "${MAKE_COMMAND}"
+USER root
+RUN make CMAKE_BUILD_TYPE=Release install
+USER ${USER_NAME}
+WORKDIR /home/${USER_NAME}
 
 # aliases
 RUN echo "alias ls='exa'" >> ~/.zshrc
