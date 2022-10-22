@@ -1,5 +1,5 @@
 -- Set keymap to vim.api.nvim_set_keymap function
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 
 -- Set opts to shorten keymaps noremap, silent for no output
 local opts =  { noremap = true, silent = true }
