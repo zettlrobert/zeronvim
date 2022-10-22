@@ -4,7 +4,7 @@ local options = {
   backup = false,                                       -- keep backup file after overwriting a file
   breakindent = true,                                   -- wrapped line repeats indent
   cmdheight = 2,                                        -- Number of screen lines to use for the command-line, cmdheight - Number of screen lines to use for the command-line, space to display messages space to display messages
-  colorcolum = "125",                                   -- comma-separated list of screen columns
+  colorcolumn = "125",                                  -- comma-separated list of screen columns
   completeopt = { "menuone", "noselect", "preview" },   -- comma-separated list of options for Insert mode completion
   conceallevel = 0,                                     -- determine how text with the 'conceal' syntax attribute :syn-conceal is shown
   confirm = true,                                       -- operations that would normally fail, because of unsaved changes raise a dialog,  asking if we want to save
@@ -34,7 +34,7 @@ local options = {
   termguicolors = true,                                 -- enables 24-bit RGB color in the TUI
   undofile = true,                                      -- the name of the undo file that would be used for a file with {name} when writing
   updatetime = 300,                                     -- updatetime - if this many millisecond's nothing is typed the swap file will be written to disk 
-  wrap = true                                           -- this option changes how text is displayed
+  wrap = false                                          -- this option changes how text is displayed
 }
 
 -- Set option with value from options array
