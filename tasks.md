@@ -10,6 +10,46 @@ Here we just summarize all future steps in a bulletpoint list to have an idea wh
 
 nvim-gps -> nvim navic
 
+### Possible plugins
+
+#### generic
+
+- packer.nvim
+- popup.nvim
+- plenary.nvim
+- nvim-autopairs
+- comment.nvim
+- nvim-web-devicions
+- nvim-tree
+- vim-bbye
+- lualine.nvim
+- toggleterm.nvim
+- project.nvim
+- impatient.nvim
+- indent-blankline.nvim
+- alpha-nvim
+
+#### LSP
+
+- nivm-lspconfig
+- nvim-lsp-installer/mason (mason and ecosystem)
+- null-ls
+- vim-illuminate
+
+#### cmp
+
+- nvim-cmp
+- cmp-buffer
+- cmp-path
+- cmp_luasnip
+- cmp-nvim-lsp
+- cmp-nvim-lua
+
+#### snippets
+
+- LuaSnip
+- friendly-snippets
+
 ## Keymaps
 
 - Move text up and down
