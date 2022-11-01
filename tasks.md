@@ -6,6 +6,10 @@ Here we just summarize all future steps in a bulletpoint list to have an idea wh
 
 ## Unbreakable Config Suggestions https://twitter.com/KaYBeE6969/with_replies
 
+## Features
+
+- Rename input across project -- interactive
+
 ## Plugins
 
 nvim-gps -> nvim navic
@@ -36,7 +40,7 @@ nvim-gps -> nvim navic
 - null-ls
 - vim-illuminate
 
-#### cmp
+#### cmp - completion
 
 - nvim-cmp
 - cmp-buffer
@@ -53,3 +57,7 @@ nvim-gps -> nvim navic
 ## Keymaps
 
 - Move text up and down
+
+## System Dependencies
+
+- ripgrep
