@@ -26,14 +26,14 @@ local options = {
   sidescrolloff = 16,                                   -- the minimal number of screen columns to keep to the left and to the right of the cursor if nowrap is set
   signcolumn = "yes",                                   -- when and how to draw the signcolumn
   smartcase = true,                                     -- override the ignorecase option if the search patter contains upper case characters
-  smartindent = true,                                   -- do smart autoindenting when starting a new line
+  smartindent = false,                                  -- do smart autoindenting when starting a new line TODO: Evaluate
   splitbelow = true,                                    -- when on, splitting a window will put the new window below the current
   splitright = true,                                    -- when on, splitting a window will put the new window to the right of the current one
   swapfile = false,                                     -- use a swapfile for the buffer
   tabstop = 4,                                          -- number of spaces that a tab in the file counts for
   termguicolors = true,                                 -- enables 24-bit RGB color in the TUI
   undofile = true,                                      -- the name of the undo file that would be used for a file with {name} when writing
-  updatetime = 300,                                     -- updatetime - if this many millisecond's nothing is typed the swap file will be written to disk 
+  updatetime = 250,                                     -- updatetime - if this many millisecond's nothing is typed the swap file will be written to disk 
   wrap = false                                          -- this option changes how text is displayed
 }
 
