@@ -3,19 +3,19 @@ local fn = vim.fn
 
 -- Packer install path equals system user data directory
 -- will be ~/.local/share/nvim/site/pack/packer/packer.nvim
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = fn.system({
-      'git',
-      'clone',
-      '--depth',
-      '1',
-      'https://github.com/wbthomason/packer.nvim',
-      install_path
-    })
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  PACKER_BOOTSTRAP = fn.system({
+    'git',
+    'clone',
+    '--depth',
+    '1',
+    'https://github.com/wbthomason/packer.nvim',
+    install_path
+  })
   print "Installing packer, close and reopen nvim..."
-    vim.cmd [[packadd packer.nvim]]
-  end
+  vim.cmd [[packadd packer.nvim]]
+end
 
 -- Autocommand that reloads nvim when plugins.lua is saved
 vim.cmd [[
@@ -43,6 +43,14 @@ packer.init {
 
 -- _Plugins to install
 return packer.startup(function(use)
+  -- Packer self management
+  use { "wbthomason/packer.nvim" } -- Have packer manage itself
+
+  -- Colorscheme
+  use { "catppuccin/nvim", as = "catppuccin"}
+
+
+  -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
