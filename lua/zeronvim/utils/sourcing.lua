@@ -13,6 +13,4 @@ function M.source_nvim_configuration()
   vim.notify("[OK]: nvim configuration sourced")
 end
 
-
-
 return M
