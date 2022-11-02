@@ -61,3 +61,11 @@ nvim-gps -> nvim navic
 ## System Dependencies
 
 - ripgrep
+
+## Order
+
+- plugins (packer)
+- telescope
+- treesitter
+- cmp
+- colorscheme
