@@ -43,4 +43,4 @@ luac.out
 .trunk/
 
 # Plugins
-plugin/
+plugin/**

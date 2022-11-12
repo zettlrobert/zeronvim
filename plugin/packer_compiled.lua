@@ -79,6 +79,16 @@ _G.packer_plugins = {
     path = "/home/zerovim/.local/share/nvim/site/pack/packer/start/catppuccin",
     url = "https://github.com/catppuccin/nvim"
   },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/zerovim/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/home/zerovim/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/home/zerovim/.local/share/nvim/site/pack/packer/start/packer.nvim",
