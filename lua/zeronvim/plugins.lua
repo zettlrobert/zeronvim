@@ -49,6 +49,12 @@ return packer.startup(function(use)
   -- Colorscheme
   use { "catppuccin/nvim", as = "catppuccin"}
 
+  -- Icons
+  use { "nvim-tree/nvim-web-devicons" }
+
+  -- NvimTree - Filemanager
+  use { "nvim-tree/nvim-tree.lua" }
+
 
   -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then
