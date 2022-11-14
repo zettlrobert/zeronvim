@@ -2,7 +2,7 @@
 local function protectedPluginCall(plugin)
   local status_ok, initializedPlugin = pcall(require, plugin)
   if not status_ok then
-    vim.notify("ERROR: Could not require " .. plugin
+    vim.notify("ERROR: Could not require " .. plugin)
     return
   else
     return initializedPlugin
