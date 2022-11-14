@@ -1,6 +1,4 @@
-local M = {}
-
-function M.source_nvim_configuration()
+local function source_nvim_configuration()
   local vimRCPath = vim.env.MYVIMRC
   local command = "source" .. vimRCPath
 
@@ -9,8 +7,7 @@ function M.source_nvim_configuration()
     vim.notify("[FAIL]: nvim configuration NOT sourced")
     return
   end
-
   vim.notify("[OK]: nvim configuration sourced")
 end
 
-return M
+return source_nvim_configuration
