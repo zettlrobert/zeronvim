@@ -71,3 +71,7 @@ nvim-gps -> nvim navic
 - treesitter
 - cmp
 - colorscheme
+
+## Marks
+
+Reserach Marks and how to use them efficiently
