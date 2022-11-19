@@ -36,3 +36,9 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("v", "<", "<gv",  opts)
 keymap("v", ">", ">gv",  opts)
 
+
+-- Telescope
+keymap("n", "<Leader>ff", ":Telescope find_files<CR>",  opts)
+-- keymap("n", "<Leader>ff", ":Telescope find_files theme=dropdown<CR>",  opts)
+-- keymap("n", "<Leader>ff", ":Telescope find_files theme=ivy<CR>",  opts)
+
