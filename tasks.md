@@ -3,9 +3,12 @@
 ## Currently Working ON
 
 - telescope
+  - WARNING: nvim-treesitter not found.
+  - :help telescope
 
 ## Accumulating TODOs
 
+- [ ] Fix sourcing requirement keymap
 - [ ] Remove plugins folder from git repository, add to gitignore
 - [ ] Fix Dockerfile According to linter output
 
@@ -66,7 +69,6 @@ nvim-gps -> nvim navic
 
 ## Order
 
-- plugins (packer)
 - treesitter
 - cmp
 - colorscheme
