@@ -3,7 +3,7 @@ local fn = vim.fn
 
 -- Packer install path equals system user data directory
 -- will be ~/.local/share/nvim/site/pack/packer/packer.nvim
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = fn.system({
     'git',
@@ -46,6 +46,9 @@ return packer.startup(function(use)
   -- Packer self management
   use { "wbthomason/packer.nvim" } -- Have packer manage itself
 
+  -- Pleneary Lua Functions to use with neoviom
+  use { "nvim-lua/plenary.nvim" }
+
   -- Colorscheme
   use { "catppuccin/nvim", as = "catppuccin"}
 
@@ -54,7 +57,6 @@ return packer.startup(function(use)
 
   -- NvimTree - Filemanager
   use { "nvim-tree/nvim-tree.lua" }
-
 
   -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then

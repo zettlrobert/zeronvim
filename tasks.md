@@ -1,18 +1,22 @@
 # Tasks
 
+## Currently Working ON
+
+- telescope
+
+## Accumulating TODOs
+
 - [ ] Remove plugins folder from git repository, add to gitignore
+- [ ] Fix Dockerfile According to linter output
+
+## Ideas
 
 Here we just summarize all future steps in a bulletpoint list to have an idea what is coming and what the next steps should be.
 
 - notification messages
-
-## Unbreakable Config Suggestions https://twitter.com/KaYBeE6969/with_replies
-
-## Features
-
 - Rename input across project -- interactive
 
-## Plugins
+## Exchange Plugins for better Variant
 
 nvim-gps -> nvim navic
 
@@ -20,13 +24,9 @@ nvim-gps -> nvim navic
 
 #### generic
 
-- packer.nvim
 - popup.nvim
-- plenary.nvim
 - nvim-autopairs
 - comment.nvim
-- nvim-web-devicions
-- nvim-tree
 - vim-bbye
 - lualine.nvim
 - toggleterm.nvim
@@ -67,7 +67,6 @@ nvim-gps -> nvim navic
 ## Order
 
 - plugins (packer)
-- telescope
 - treesitter
 - cmp
 - colorscheme

@@ -3,5 +3,8 @@ require "zeronvim.options"
 require "zeronvim.keymaps"
 require "zeronvim.theme.colorscheme"
 
--- Configuration for all installed plugins
+-- Packer and Plugins
+require "zeronvim.plugins"
+
+-- Plugin Configurations
 require "zeronvim.plugins.nvim-tree"
