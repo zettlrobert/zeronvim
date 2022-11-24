@@ -2,12 +2,19 @@
 
 ## Currently Working ON
 
+- nvim tree - fix wrong keys on startup (renderer)
+
 - telescope
+  - WARNING: nvim-treesitter not found.
+  - :help telescope
+  - work through telescope functionality and decide on features
 
 ## Accumulating TODOs
 
+- [x] Fix sourcing requirement keymap
 - [ ] Remove plugins folder from git repository, add to gitignore
 - [ ] Fix Dockerfile According to linter output
+- [ ] Status Line
 
 ## Ideas
 
@@ -51,6 +58,8 @@ nvim-gps -> nvim navic
 - cmp-nvim-lsp
 - cmp-nvim-lua
 
+#### Treesitter
+
 #### snippets
 
 - LuaSnip
@@ -66,7 +75,6 @@ nvim-gps -> nvim navic
 
 ## Order
 
-- plugins (packer)
 - treesitter
 - cmp
 - colorscheme
@@ -74,3 +82,15 @@ nvim-gps -> nvim navic
 ## Marks
 
 Reserach Marks and how to use them efficiently
+
+## Tags
+
+How to use Tags efficiently
+
+## Quickfix
+
+How to use the Quickfix list efficently and what is it for in the best case
+
+## Loclist
+
+How to use the Loclist efficently and what is it for in the best case

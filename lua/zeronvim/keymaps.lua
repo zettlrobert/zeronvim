@@ -12,16 +12,15 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Reload Configuration
-keymap("n", "<Leader>sv", "<cmd>lua require'zeronvim.utils.sourcing'.source_nvim_configuration()<CR>", opts)
+-- Local Utilities bound to keymaps
+local utils = require "zeronvim.utils"
+keymap("n", "<Leader>source", utils.sourcing, opts)
 
 -- Window Navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
-
-
 
 -- Toggle highlight
 keymap("n", "<Leader>h", ":set hlsearch!<CR>", opts)
@@ -36,3 +35,9 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("v", "<", "<gv",  opts)
 keymap("v", ">", ">gv",  opts)
 
+-- Telescope
+local telescope_builtin = require('telescope.builtin')
+keymap('n', '<leader>ff', telescope_builtin.find_files, {})
+keymap('n', '<leader>fg', telescope_builtin.live_grep, {})
+keymap('n', '<leader>fb', telescope_builtin.buffers, {})
+keymap('n', '<leader>fh', telescope_builtin.help_tags, {})

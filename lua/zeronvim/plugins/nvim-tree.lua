@@ -117,16 +117,6 @@ if nvim_tree then
         enable = false,
         auto_open = true,
       },
-      update_focused_file = {
-        enable = true,
-        update_root = true,
-        ignore_list = {},
-      },
-      ignore_ft_on_setup = {},
-      system_open = {
-        cmd = "",
-        args = {},
-      },
       diagnostics = {
         enable = true,
         show_on_dirs = false,
@@ -138,18 +128,12 @@ if nvim_tree then
           error = "",
         },
       },
-      filters = {
-        dotfiles = false,
-        custom = {},
-        exclude = {},
-      },
       git = {
         enable = true,
         ignore = true,
         show_on_dirs = true,
         timeout = 400,
       },
-
       actions = {
         use_system_clipboard = true,
         change_dir = {
@@ -181,10 +165,6 @@ if nvim_tree then
         remove_file = {
           close_window = true,
         },
-      },
-      trash = {
-        cmd = "gio trash",
-        require_confirm = true,
       },
       notify = nil
     }

@@ -22,6 +22,7 @@ RUN pacman -Sy\
     bash \
     curl \ 
     ripgrep \
+    fd \
     exa \
     figlet \ 
     findutils \

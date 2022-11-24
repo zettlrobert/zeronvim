@@ -58,6 +58,9 @@ return packer.startup(function(use)
   -- NvimTree - Filemanager
   use { "nvim-tree/nvim-tree.lua" }
 
+  -- Telescope Fuzzy Finder
+  use { "nvim-telescope/telescope.nvim" }
+
   -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then
     require("packer").sync()
