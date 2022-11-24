@@ -49,6 +49,12 @@ return packer.startup(function(use)
   -- Pleneary Lua Functions to use with neoviom
   use { "nvim-lua/plenary.nvim" }
 
+  -- Treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate"
+  }
+
   -- Colorscheme
   use { "catppuccin/nvim", as = "catppuccin"}
 

@@ -9,3 +9,4 @@ require "zeronvim.plugins"
 -- Plugin Configurations
 require "zeronvim.plugins.nvim-tree"
 require "zeronvim.plugins.telescope"
+require "zeronvim.plugins.treesitter"
