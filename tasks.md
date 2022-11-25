@@ -2,19 +2,10 @@
 
 ## Currently Working ON
 
-- nvim tree - fix wrong keys on startup (renderer)
-
 - telescope
   - WARNING: nvim-treesitter not found.
   - :help telescope
   - work through telescope functionality and decide on features
-
-## Accumulating TODOs
-
-- [x] Fix sourcing requirement keymap
-- [ ] Remove plugins folder from git repository, add to gitignore
-- [ ] Fix Dockerfile According to linter output
-- [ ] Status Line
 
 ## Ideas
 
@@ -44,21 +35,8 @@ nvim-gps -> nvim navic
 
 #### LSP
 
-- nivm-lspconfig
-- nvim-lsp-installer/mason (mason and ecosystem)
 - null-ls
 - vim-illuminate
-
-#### cmp - completion
-
-- nvim-cmp
-- cmp-buffer
-- cmp-path
-- cmp_luasnip
-- cmp-nvim-lsp
-- cmp-nvim-lua
-
-#### Treesitter
 
 #### snippets
 
@@ -72,12 +50,6 @@ nvim-gps -> nvim navic
 ## System Dependencies
 
 - ripgrep
-
-## Order
-
-- treesitter
-- cmp
-- colorscheme
 
 ## Marks
 
