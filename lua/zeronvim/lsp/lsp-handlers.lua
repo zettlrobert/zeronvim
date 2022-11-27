@@ -23,6 +23,7 @@ local function lsp_keymaps(bufnr)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', '<space>d', vim.diagnostic.open_float, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
@@ -44,7 +45,7 @@ M.setup = function ()
 
   -- Configuration object for diagnostics
   local diagnostic_config = {
-    virtual_text = true,
+    virtual_text = false,
     signs = {
       active = signs,
     },
