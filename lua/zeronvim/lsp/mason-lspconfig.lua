@@ -27,8 +27,6 @@ if mason_lspconfig and lspconfig and handlers then
   -- list of all mason installed langauge servers
   local installed_servers = mason_lspconfig.get_installed_servers()
 
-
-
   -- Loop over all availalbe langauge servers, and use mason default setup
   local function server_setup()
     -- Default options every language server receives
