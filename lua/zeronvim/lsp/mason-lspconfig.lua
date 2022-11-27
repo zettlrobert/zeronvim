@@ -27,21 +27,23 @@ if mason_lspconfig and lspconfig and handlers then
   -- list of all mason installed langauge servers
   local installed_servers = mason_lspconfig.get_installed_servers()
 
-  local sumneko_lua_config = require "zeronvim.lsp.providers.sumneko_lua"
 
   -- Loop over all availalbe langauge servers, and use mason default setup
   local function server_setup()
-    for _, server in pairs(installed_servers) do
-      lspconfig[server].setup{
-        on_attach = handlers.on_attach
-      }
+    -- Default options every language server receives
+    local server_configuration_options = {
+      on_attach = handlers.on_attach
+    }
 
-      -- Override defaults for server
+    -- Itterate over every installed server and call the setup function with the configuration
+    for _, server in pairs(installed_servers) do
+      lspconfig[server].setup(server_configuration_options)
+
+      -- Override defaults for servers
       if server == "sumneko_lua" then
-        lspconfig.sumneko_lua.setup {
-          on_attach = handlers.on_attach,
-          settings = sumneko_lua_config
-        }
+        local sumneko_lua_config = require "zeronvim.lsp.providers.sumneko_lua"
+        local updated_server_config = vim.tbl_deep_extend("force", sumneko_lua_config, server_configuration_options)
+        lspconfig.sumneko_lua.setup(updated_server_config)
       end
 
     end
