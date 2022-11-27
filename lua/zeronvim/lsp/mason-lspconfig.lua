@@ -1,12 +1,43 @@
 local utils = require "zeronvim.utils"
+local handlers = require "zeronvim.lsp.lsp-handlers"
 local mason_lspconfig = utils.protected_plugin_call("mason-lspconfig")
+local lspconfig = utils.protected_plugin_call("lspconfig")
 
-if mason_lspconfig then
+if mason_lspconfig and lspconfig and handlers then
+  handlers.setup()
+
   mason_lspconfig.setup({
-    ensujre_installed = {
-      "sumneko_lua"
+    ensure_installed = {
+      "sumneko_lua",
+      "bashls",
+      "clangd",
+      "cssls",
+      "gopls",
+      "graphql",
+      "html",
+      "jsonls",
+      "pyright",
+      "tsserver",
+      "dockerls",
+      "yamlls"
     },
-
     automatic_installation = true
   })
+
+  -- list of all mason installed langauge servers
+  local installed_servers = mason_lspconfig.get_installed_servers()
+
+  -- Loop over all availalbe langauge servers, and use mason default setup
+  local function server_setup()
+      for _, server in pairs(installed_servers) do
+        lspconfig[server].setup{
+          on_attach = handlers.on_attach
+        }
+      end
+  end
+
+  -- advanced feature to setup servers automatically
+  mason_lspconfig.setup_handlers {
+    server_setup
+  }
 end
