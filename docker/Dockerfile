@@ -15,12 +15,13 @@ RUN echo "root:${ROOT_PASSWORD}" | chpasswd
 RUN pacman -Syyu --noconfirm
 
 # Install packages
-RUN pacman -Sy\
-    curl\
+RUN pacman -Sy \
+    curl \
     zsh \ 
     sudo \
     bash \
     curl \ 
+    wget \
     ripgrep \
     fd \
     exa \
@@ -37,10 +38,12 @@ RUN pacman -Sy\
     bat \
     vim \
     tealdeer \
+    nodejs \
+    npm \
     --noconfirm
 
 # Add user
-RUN useradd -m -p ${USER_PASSWORD} ${USER_NAME}
+RUN useradd -m -p ${USER_PASSWORD} ${USER_NAME
 
 # Update password for ${USER_NAME}
 RUN echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
