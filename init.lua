@@ -10,3 +10,7 @@ require "zeronvim.plugins"
 require "zeronvim.plugins.nvim-tree"
 require "zeronvim.plugins.telescope"
 require "zeronvim.plugins.treesitter"
+
+-- LSP
+require "zeronvim.lsp"
+

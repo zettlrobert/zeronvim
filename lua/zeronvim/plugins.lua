@@ -67,6 +67,12 @@ return packer.startup(function(use)
   -- Telescope Fuzzy Finder
   use { "nvim-telescope/telescope.nvim" }
 
+  -- LSP
+  use { "williamboman/mason.nvim" }
+  use { "williamboman/mason-lspconfig.nvim" }
+  use { "neovim/nvim-lspconfig" }
+
+
   -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then
     require("packer").sync()
