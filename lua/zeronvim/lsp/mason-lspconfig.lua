@@ -49,6 +49,12 @@ if mason_lspconfig and lspconfig and handlers then
         local updated_server_config = deep_extend_server_config(sumneko_lua_config)
         lspconfig.sumneko_lua.setup(updated_server_config)
       end
+
+      if server == "html" then
+        local html_config = require "zeronvim.lsp.providers.html"
+        local updated_server_config = deep_extend_server_config(html_config)
+        lspconfig.html.setup(updated_server_config)
+      end
     end
   end
 
