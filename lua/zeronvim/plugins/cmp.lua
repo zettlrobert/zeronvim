@@ -91,31 +91,16 @@ if cmp and luasnip then
       { name = "path" },
       { name = "luasnip" },
       { name = "buffer" },
+      { name = "treesitter" },
       { name = "omni" },  -- WARN: could slow down
       { name = "nvim_lsp_signature_help" },
       { name = "conventionalcommits" }
-
       --      { name = "spell" },
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,
       select = false,
     },
-
-    --[[    formatting = {
-      format = function(entry, vim_item)
-        if vim.tbl_contains({ 'path' }, entry.source.name) then
-          local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
-          if icon then
-            vim_item.kind = icon
-            vim_item.kind_hl_group = hl_group
-            return vim_item
-          end
-        end
-        return lspkind.cmp_format({ with_text = false })(entry, kind_icons[vim_item.kind])
-      end
-    },
-    ]]--
 
     formatting = {
       fields = { "kind", "abbr", "menu" },
@@ -129,11 +114,10 @@ if cmp and luasnip then
           luasnip = "[Snippet]",
           buffer = "[Buffer]",
           path = "[Path]",
+          treesitter = "[Treesitter]"
         })[entry.source.name]
         return vim_item
       end,
     },
-
-
   })
 end
