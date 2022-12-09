@@ -72,6 +72,18 @@ return packer.startup(function(use)
   use { "williamboman/mason-lspconfig.nvim" }
   use { "neovim/nvim-lspconfig" }
 
+  -- CMP Completion
+  use { "hrsh7th/cmp-nvim-lsp" }
+  use { "hrsh7th/cmp-path" }
+  use { "hrsh7th/cmp-cmdline" }
+  use { "hrsh7th/nvim-cmp" }
+  use { "hrsh7th/cmp-nvim-lua" }
+  use { "hrsh7th/cmp-buffer" }
+  use { "saadparwaiz1/cmp_luasnip" }
+  --  use { "f3fora/cmp-spell" }
+
+  -- Snippet Engine
+  use { "L3MON4D3/LuaSnip" }
 
   -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then

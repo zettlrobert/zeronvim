@@ -3,6 +3,9 @@ require "zeronvim.options"
 require "zeronvim.keymaps"
 require "zeronvim.theme.colorscheme"
 
+-- LSP
+require "zeronvim.lsp"
+
 -- Packer and Plugins
 require "zeronvim.plugins"
 
@@ -11,6 +14,5 @@ require "zeronvim.plugins.nvim-tree"
 require "zeronvim.plugins.telescope"
 require "zeronvim.plugins.treesitter"
 
--- LSP
-require "zeronvim.lsp"
-
+-- Completion
+require "zeronvim.plugins.cmp"

@@ -35,6 +35,9 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("v", "<", "<gv",  opts)
 keymap("v", ">", ">gv",  opts)
 
+-- NVIM TREE
+keymap("n", "<Leader>e", ":NvimTreeToggle<CR>", opts)
+
 -- Telescope
 local telescope_builtin = require('telescope.builtin')
 keymap('n', '<leader>ff', telescope_builtin.find_files, {})
