@@ -43,7 +43,7 @@ RUN pacman -Sy \
     --noconfirm
 
 # Add user
-RUN useradd -m -p ${USER_PASSWORD} ${USER_NAME
+RUN useradd -m -p ${USER_PASSWORD} ${USER_NAME}
 
 # Update password for ${USER_NAME}
 RUN echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
