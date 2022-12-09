@@ -1,3 +1,7 @@
+
+local utils = require "zeronvim.utils"
+local cmp_nvim_lsp = utils.protected_plugin_call('cmp_nvim_lsp')
+
 local M = {}
 
 -- local function, for better assignment in lsp keymaps
@@ -71,5 +75,11 @@ end
 
 -- Gets a new ClientCapabilities object describing the LSP client capabilities.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Update capabilities for completion
+if cmp_nvim_lsp then
+  M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+end
+
 
 return M
