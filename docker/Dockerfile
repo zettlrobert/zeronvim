@@ -39,6 +39,7 @@ RUN pacman -Sy \
     vim \
     tealdeer \
     nodejs \
+    go \
     npm \
     --noconfirm
 

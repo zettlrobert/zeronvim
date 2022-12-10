@@ -9,6 +9,7 @@ require "zeronvim.plugins.nvim-tree"
 require "zeronvim.plugins.telescope"
 require "zeronvim.plugins.treesitter"
 require "zeronvim.plugins.lualine"
+require "zeronvim.plugins.indentlines"
 
 -- Completion
 require "zeronvim.plugins.cmp"

@@ -13,9 +13,8 @@ if nvim_tree then
     ignore_buffer_on_setup = false,
     open_on_setup = false,
     open_on_setup_file = false,
-    open_on_tab = false,
-    ignore_buf_on_tab_change = {},
-    sort_by = "case_sensitive",
+    -- open_on_tab = false,
+    sort_by = "name",
     root_dirs = {},
     prefer_startup_root = false,
     sync_root_with_cwd = false,
@@ -53,6 +52,18 @@ if nvim_tree then
           height = 30,
           row = 1,
           col = 1,
+        },
+      },
+    },
+    renderer = {
+      indent_width = 2,
+      indent_markers = {
+        enable = false,
+        icons = {
+          corner = "└ ",
+          edge = "│ ",
+          item = "│ ",
+          none = "  ",
         },
       },
     }
