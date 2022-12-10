@@ -58,6 +58,9 @@ return packer.startup(function(use)
   -- Colorscheme
   use { "catppuccin/nvim", as = "catppuccin"}
 
+  -- Lualine
+  use { "nvim-lualine/lualine.nvim" }
+
   -- Icons
   use { "nvim-tree/nvim-web-devicons" }
 
