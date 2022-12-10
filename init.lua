@@ -1,8 +1,3 @@
--- Neovim Configuration
-require "zeronvim.options"
-require "zeronvim.keymaps"
-require "zeronvim.theme.colorscheme"
-
 -- LSP
 require "zeronvim.lsp"
 
@@ -13,6 +8,12 @@ require "zeronvim.plugins"
 require "zeronvim.plugins.nvim-tree"
 require "zeronvim.plugins.telescope"
 require "zeronvim.plugins.treesitter"
+require "zeronvim.plugins.lualine"
 
 -- Completion
 require "zeronvim.plugins.cmp"
+
+-- Neovim Configuration
+require "zeronvim.keymaps"
+require "zeronvim.theme.colorscheme"
+require "zeronvim.options"
