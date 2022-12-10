@@ -61,6 +61,9 @@ return packer.startup(function(use)
   -- Lualine
   use { "nvim-lualine/lualine.nvim" }
 
+  -- Indentlines
+  use { "lukas-reineke/indent-blankline.nvim" }
+
   -- Icons
   use { "nvim-tree/nvim-web-devicons" }
 
