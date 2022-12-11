@@ -5,11 +5,12 @@ require "zeronvim.lsp"
 require "zeronvim.plugins"
 
 -- Plugin Configurations
+require "zeronvim.plugins.treesitter"
 require "zeronvim.plugins.nvim-tree"
 require "zeronvim.plugins.telescope"
-require "zeronvim.plugins.treesitter"
 require "zeronvim.plugins.lualine"
 require "zeronvim.plugins.indentlines"
+require "zeronvim.plugins.comment"
 
 -- Completion
 require "zeronvim.plugins.cmp"
