@@ -1,3 +1,4 @@
+-- TODO: Double Check that sourcing is working
 local function source_nvim_configuration()
   local vimRCPath = vim.env.MYVIMRC
   local command = "source" .. vimRCPath
