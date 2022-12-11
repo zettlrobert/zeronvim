@@ -28,10 +28,10 @@ if mason_lspconfig and lspconfig and handlers then
       "jsonls",
       "ltex",
       "sumneko_lua",
-      "rnix",
+      -- "rnix",
       "prismals",
       "pyright",
-      "r_language_server",
+      -- "r_language_server",
       "rust_analyzer",
       "sqlls",
       "svelte",
@@ -69,6 +69,12 @@ if mason_lspconfig and lspconfig and handlers then
         local sumneko_lua_config = require "zeronvim.lsp.providers.sumneko_lua"
         local updated_server_config = deep_extend_server_config(sumneko_lua_config)
         lspconfig.sumneko_lua.setup(updated_server_config)
+      end
+
+      if server == "tsserver" then
+        local tsserver_config = require "zeronvim.lsp.providers.tsserver"
+        local updated_server_config = deep_extend_server_config(tsserver_config)
+        lspconfig.tsserver.setup(updated_server_config)
       end
     end
   end

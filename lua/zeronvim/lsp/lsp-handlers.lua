@@ -1,11 +1,10 @@
-
 local utils = require "zeronvim.utils"
 local cmp_nvim_lsp = utils.protected_plugin_call('cmp_nvim_lsp')
 
 local M = {}
 
 -- local function, for better assignment in lsp keymaps
-local function list_workspace_folders ()
+local function list_workspace_folders()
   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end
 
@@ -15,7 +14,7 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -33,7 +32,7 @@ local function lsp_keymaps(bufnr)
 end
 
 -- Setup function for base lsp configuration
-M.setup = function ()
+M.setup = function()
   -- Store Signso
   local signs = {
     { name = "DiagnosticSignError", text = "" },
