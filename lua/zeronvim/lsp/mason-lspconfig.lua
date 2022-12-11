@@ -7,19 +7,40 @@ if mason_lspconfig and lspconfig and handlers then
   handlers.setup()
 
   mason_lspconfig.setup({
+    -- Available Lsp Servers: https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
     ensure_installed = {
-      "sumneko_lua",
+      "awk_ls",
+      "angularls",
+      "ansiblels",
+      "arduino_language_server",
+      "astro",
       "bashls",
       "clangd",
+      "cmake",
       "cssls",
+      "denols",
+      "dockerls",
+      "eslint",
+      "elixirls",
       "gopls",
       "graphql",
       "html",
       "jsonls",
+      "ltex",
+      "sumneko_lua",
+      "rnix",
+      "prismals",
       "pyright",
+      "r_language_server",
+      "rust_analyzer",
+      "sqlls",
+      "svelte",
+      "tailwindcss",
+      "terraformls",
+      "tflint",
       "tsserver",
-      "dockerls",
-      "yamlls"
+      "vuels",
+      "yamlls",
     },
     automatic_installation = true
   })
