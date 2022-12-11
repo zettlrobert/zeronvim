@@ -54,6 +54,8 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate"
   }
+  use "JoosepAlviste/nvim-ts-context-commentstring"             -- Setting commentstring based on cursor location in file
+
 
   -- Colorscheme
   use { "catppuccin/nvim", as = "catppuccin"}
@@ -61,14 +63,17 @@ return packer.startup(function(use)
   -- Lualine
   use { "nvim-lualine/lualine.nvim" }
 
+  -- NvimTree - Filemanager
+  use { "nvim-tree/nvim-tree.lua" }
+
   -- Indentlines
   use { "lukas-reineke/indent-blankline.nvim" }
 
   -- Icons
   use { "nvim-tree/nvim-web-devicons" }
 
-  -- NvimTree - Filemanager
-  use { "nvim-tree/nvim-tree.lua" }
+  -- Comments
+  use { "numToStr/Comment.nvim" }
 
   -- Telescope Fuzzy Finder
   use { "nvim-telescope/telescope.nvim" }
