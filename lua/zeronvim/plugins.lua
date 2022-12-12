@@ -25,7 +25,7 @@ vim.cmd [[
   augroup end
 ]]
 
--- protected call to packer, to ensure we do not error out on first load 
+-- protected call to packer, to ensure we do not error out on first load
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
   vim.notify("Error loading packer...")
@@ -54,11 +54,10 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate"
   }
-  use "JoosepAlviste/nvim-ts-context-commentstring"             -- Setting commentstring based on cursor location in file
-
+  use "JoosepAlviste/nvim-ts-context-commentstring"
 
   -- Colorscheme
-  use { "catppuccin/nvim", as = "catppuccin"}
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Lualine
   use { "nvim-lualine/lualine.nvim" }
@@ -82,6 +81,9 @@ return packer.startup(function(use)
   use { "williamboman/mason.nvim" }
   use { "williamboman/mason-lspconfig.nvim" }
   use { "neovim/nvim-lspconfig" }
+
+  -- Winbar, breadcrumbs
+  use { "SmiteshP/nvim-navic" }
 
   -- CMP Completion
   use { "hrsh7th/cmp-nvim-lsp" }
