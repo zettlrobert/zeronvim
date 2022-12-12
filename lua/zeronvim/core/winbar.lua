@@ -1,8 +1,18 @@
-local utils = require "zeronvim.utils"
-
 local M = {}
+local utils = require "zeronvim.utils"
+local nvim_web_devicons = utils.protected_plugin_call("nvim-web-devicons")
+local nvim_navic = utils.protected_plugin_call("nvim-navic")
+local filename = utils.get_filename
+local fileExtension = utils.get_file_extension
 
--- Exclude Winbar
+-- Autocommand to call winbar on different actions
+vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+  callback = function()
+    M.get_winbar()
+  end,
+})
+
+-- Exclude Winbar for the following filetypes
 M.winbar_filetype_exclude = {
   "help",
   "startify",
@@ -18,53 +28,50 @@ M.winbar_filetype_exclude = {
   "toggleterm",
 }
 
-local get_filename = function()
-  local filename = vim.fn.expand "%:t"
-  local extension = vim.fn.expand "%:e"
-  local utilities = require "zr.utilities"
-
-  if not utilities.isempty(filename) then
-    local file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
-      filename,
-      extension,
+local prepare_filename = function()
+  if not utils.is_input_empty(filename()) and nvim_web_devicons then
+    local file_icon, file_icon_color = nvim_web_devicons.get_icon(
+      filename(),
+      fileExtension(),
       { default = true }
     )
 
-    local hl_group = "FileIconColor" .. extension
-
-    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
-    if utilities.isempty(file_icon) then
+    -- If there is no fileicon, provide a default
+    if utils.is_input_empty(file_icon) then
       file_icon = ""
-      file_icon_color = ""
+      -- file_icon_color = ""
     end
 
-    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#LineNr#" .. filename .. "%*"
+    local navic_text = vim.api.nvim_get_hl_by_name("Normal", true)
+    vim.api.nvim_set_hl(0, "Winbar", { fg = navic_text.foreground })
+
+    return " " .. "%#" .. file_icon_color .. "#" .. file_icon .. "%*" .. " " .. "%#LineNr#" .. filename() .. "%*"
   end
 end
 
-local get_gps = function()
-  local status_gps_ok, gps = pcall(require, "nvim-gps")
-  if not status_gps_ok then
+local prepare_navic = function()
+  -- If no nvim navic is loadeda
+  if not nvim_navic then
     return ""
   end
 
-  local status_ok, gps_location = pcall(gps.get_location, {})
-  if not status_ok then
+  -- If nvim navic location can not be acessed
+  if not nvim_navic.get_location() then
     return ""
   end
 
-  if not gps.is_available() or gps_location == "error" then
+  if not nvim_navic.is_available or nvim_navic.get_location == "error" then
     return ""
   end
 
-  if not require("zr.utilities").isempty(gps_location) then
-    return require("zr.icons").ui.ChevronRight .. " " .. gps_location
+  if not utils.is_input_empty(nvim_navic.get_location()) then
+    return " > " .. "%* " .. nvim_navic.get_location()
   else
     return ""
   end
 end
 
-local excludes = function()
+local excludeWinbarOnFiletypes = function()
   if vim.tbl_contains(M.winbar_filetype_exclude, vim.bo.filetype) then
     vim.opt_local.winbar = nil
     return true
@@ -72,36 +79,45 @@ local excludes = function()
   return false
 end
 
+
+
+
 M.get_winbar = function()
-  if excludes() then
+  -- Do not display winbar if filetypes are execluded
+  if excludeWinbarOnFiletypes() then
     return
   end
-  local utilities = require("zr.utilities")
-  local value = get_filename()
 
-  local gps_added = false
-  if not utilities.isempty(value) then
-    local gps_value = get_gps()
-    value = value .. " " .. gps_value
-    if not utilities.isempty(gps_value) then
-      gps_added = true
+  local value = prepare_filename()
+  local navic_added = false
+
+  if not utils.is_input_empty(value) then
+    local navic_value = prepare_navic()
+    value = value .. " " .. navic_value
+
+    if not utils.is_input_empty(navic_value) then
+      navic_added = true
     end
   end
 
-  if not utilities.isempty(value) and utilities.get_buf_option("mod") then
-    local mod = "%#LineNr#" .. require("zr.icons").ui.Circle .. "%*"
-    if gps_added then
+  if not utils.is_input_empty(value) and utils.get_buf_option("mod") then
+    local mod = "%#LineNr#" .. "o" .. "%*"
+
+    if navic_added then
       value = value .. " " .. mod
     else
       value = value .. mod
     end
   end
 
+  -- Enable Winbar
   local status_ok, _ = pcall(vim.api.nvim_set_option_value, "winbar", value, { scope = "local" })
+
   if not status_ok then
+    vim.notify("Could not set up winbar")
     return
   end
+
 end
 
 return M
-
