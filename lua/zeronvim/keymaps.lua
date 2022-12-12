@@ -16,7 +16,6 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
 keymap("n", "<Leader>source", source_config, {})
 
 -- Window Navigation
@@ -50,3 +49,9 @@ keymap('n', '<leader>fh', telescope_builtin.help_tags, {})
 
 -- Formatting
 keymap('n', '<leader>fmt', '<cmd>lua vim.lsp.buf.format({ async = true })<cr>', opts)
+
+-- Git
+keymap('n', '<leader>gblame', '<cmd>:Gitsigns toggle_current_line_blame<cr>')
+keymap('n', '<leader>gnum', '<cmd>:Gitsigns toggle_numhl<cr>')
+keymap('n', '<leader>glh', '<cmd>:Gitsigns toggle_linehl<cr>')
+keymap('n', '<leader>gwd', '<cmd>:Gitsigns toggle_word_diff<cr>')
