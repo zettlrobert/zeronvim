@@ -71,6 +71,9 @@ return packer.startup(function(use)
   -- Icons
   use { "nvim-tree/nvim-web-devicons" }
 
+  -- Gitsigns
+  use { "lewis6991/gitsigns.nvim" }
+
   -- Comments
   use { "numToStr/Comment.nvim" }
 
