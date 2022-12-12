@@ -92,7 +92,7 @@ catppuccin.setup({
 		vimwiki = true,
 		beacon = true,
 		navic = {
-			enabled = false,
+			enabled = true,
 			custom_bg = "NONE",
 		},
 		overseer = false,
