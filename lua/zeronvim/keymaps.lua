@@ -1,5 +1,6 @@
 ---- Local Utilities bound to keymaps
 local utils = require "zeronvim.utils"
+local source_config = utils.sourcing
 
 -- Set keymap to vim.api.nvim_set_keymap function
 local keymap = vim.keymap.set
@@ -16,7 +17,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
-keymap("n", "<Leader>source", utils.sourcing, opts)
+keymap("n", "<Leader>source", source_config, {})
 
 -- Window Navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
