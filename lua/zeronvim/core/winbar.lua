@@ -79,9 +79,6 @@ local excludeWinbarOnFiletypes = function()
   return false
 end
 
-
-
-
 M.get_winbar = function()
   -- Do not display winbar if filetypes are execluded
   if excludeWinbarOnFiletypes() then
