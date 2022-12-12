@@ -2,6 +2,7 @@ local utils = require "zeronvim.utils"
 local handlers = require "zeronvim.lsp.lsp-handlers"
 local mason_lspconfig = utils.protected_plugin_call("mason-lspconfig")
 local lspconfig = utils.protected_plugin_call("lspconfig")
+local navic = utils.protected_plugin_call("nvim-navic")
 
 if mason_lspconfig and lspconfig and handlers then
   handlers.setup()

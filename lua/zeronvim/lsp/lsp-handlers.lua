@@ -1,5 +1,6 @@
 local utils = require "zeronvim.utils"
 local cmp_nvim_lsp = utils.protected_plugin_call('cmp_nvim_lsp')
+local nvim_navic = utils.protected_plugin_call('nvim-navic')
 
 local M = {}
 
@@ -19,7 +20,7 @@ local function lsp_keymaps(bufnr)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>sig', vim.lsp.buf.signature_help, bufopts) -- todo: define better keymap
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
   vim.keymap.set('n', '<space>wl', list_workspace_folders, bufopts)
@@ -69,7 +70,13 @@ end
 
 --Callback invoked by Nvim's built-in client when attaching a buffer to a language server.
 M.on_attach = function(client, bufnr)
+  -- Add LSP Keymaps
   lsp_keymaps(bufnr)
+
+  -- If nvim_navic could load and  server supports document symbol provicers, attach nvim_navic
+  if nvim_navic and client.server_capabilities.documentSymbolProvider then
+    nvim_navic.attach(client, bufnr)
+  end
 end
 
 -- Gets a new ClientCapabilities object describing the LSP client capabilities.
