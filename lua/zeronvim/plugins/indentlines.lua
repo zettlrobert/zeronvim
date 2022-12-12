@@ -1,5 +1,5 @@
 local utils = require "zeronvim.utils"
-local indent_blanklines = utils.protected_plugin_call("indent-blankline")
+local indent_blanklines = utils.protected_plugin_call("indent_blankline")
 
 vim.opt.list = true
 vim.opt.listchars:append "eol:↴"
