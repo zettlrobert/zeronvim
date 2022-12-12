@@ -19,7 +19,7 @@ if mason_lspconfig and lspconfig and handlers then
       "clangd",
       "cmake",
       "cssls",
-      "denols",
+      --"denols",
       "dockerls",
       "eslint",
       "elixirls",
@@ -76,6 +76,12 @@ if mason_lspconfig and lspconfig and handlers then
         local tsserver_config = require "zeronvim.lsp.providers.tsserver"
         local updated_server_config = deep_extend_server_config(tsserver_config)
         lspconfig.tsserver.setup(updated_server_config)
+      end
+
+      if server == "deno" then
+        local deno_config = require "zeronvim.lsp.providers.denols"
+        local updated_server_config = deep_extend_server_config(deno_config)
+        lspconfig.deno.setup(updated_server_config)
       end
     end
   end
