@@ -2,7 +2,6 @@ local utils = require "zeronvim.utils"
 local handlers = require "zeronvim.lsp.lsp-handlers"
 local mason_lspconfig = utils.protected_plugin_call("mason-lspconfig")
 local lspconfig = utils.protected_plugin_call("lspconfig")
-local navic = utils.protected_plugin_call("nvim-navic")
 
 if mason_lspconfig and lspconfig and handlers then
   handlers.setup()
@@ -27,7 +26,7 @@ if mason_lspconfig and lspconfig and handlers then
       "graphql",
       "html",
       "jsonls",
-      "ltex",
+      -- "ltex",
       "sumneko_lua",
       -- "rnix",
       "prismals",
@@ -82,6 +81,12 @@ if mason_lspconfig and lspconfig and handlers then
         local deno_config = require "zeronvim.lsp.providers.denols"
         local updated_server_config = deep_extend_server_config(deno_config)
         lspconfig.deno.setup(updated_server_config)
+      end
+
+      if server == "ltex" then
+        local ltex_config = require "zeronvim.lsp.providers.ltex-ls"
+        local updated_server_config = deep_extend_server_config(ltex_config)
+        lspconfig.ltex.setup(updated_server_config)
       end
     end
   end

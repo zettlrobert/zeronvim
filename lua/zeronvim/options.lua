@@ -1,3 +1,7 @@
+-- Path to personal dictionlary - checking with ltex-ls
+local spellfilePath = vim.fn.stdpath "config" .. "/dictionary/utf-8.add"
+
+-- Neovim Options
 local options = {
   autoindent = true,                                    -- automatically indent line with indentation of previous line
   autoread = true,                                      -- automatically read file when changed outside of vim
@@ -34,7 +38,9 @@ local options = {
   termguicolors = true,                                 -- enables 24-bit RGB color in the TUI
   undofile = true,                                      -- the name of the undo file that would be used for a file with {name} when writing
   updatetime = 250,                                     -- updatetime - if this many millisecond's nothing is typed the swap file will be written to disk 
-  wrap = false                                          -- this option changes how text is displayed
+  wrap = false,                                         -- this option changes how text is displayed
+  spellfile = spellfilePath,                            -- path to our custom dictionary
+  spelllang = {"en_us", "de_de"}                        -- languages we do spellchecking for, if we enable it
 }
 
 -- Set option with value from options array
@@ -52,7 +58,6 @@ end
 -- TODO: wrap
 -- TODO: scrollback
 -- TODO: showbreak
--- TODO: spellsuggest
 -- TODO: statusline
 -- TODO: switchbuf
 -- TODO: tabline

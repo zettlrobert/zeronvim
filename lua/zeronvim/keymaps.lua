@@ -1,5 +1,6 @@
 ---- Local Utilities bound to keymaps
 local utils = require "zeronvim.utils"
+local spelling = utils.spelling
 local source_config = utils.sourcing
 
 -- Set keymap to vim.api.nvim_set_keymap function
@@ -11,12 +12,12 @@ local opts = { noremap = true, silent = true }
 -- Set terminal opts to silent
 local term_opts = { silent = true }
 
--- Set Leader
+-- Set leader
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-keymap("n", "<Leader>source", source_config, {})
+keymap("n", "<leader>source", source_config, {})
 
 -- Window Navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -25,7 +26,7 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Toggle highlight
-keymap("n", "<Leader>h", ":set hlsearch!<CR>", opts)
+keymap("n", "<leader>h", ":set hlsearch!<CR>", opts)
 
 -- Resize Buffer with arrow keys
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
@@ -38,7 +39,7 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- NVIM TREE
-keymap("n", "<Leader>e", ":NvimTreeToggle<CR>", opts)
+keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
 -- Telescope
 local telescope_builtin = require('telescope.builtin')
@@ -55,3 +56,7 @@ keymap('n', '<leader>gblame', '<cmd>:Gitsigns toggle_current_line_blame<cr>')
 keymap('n', '<leader>gnum', '<cmd>:Gitsigns toggle_numhl<cr>')
 keymap('n', '<leader>glh', '<cmd>:Gitsigns toggle_linehl<cr>')
 keymap('n', '<leader>gwd', '<cmd>:Gitsigns toggle_word_diff<cr>')
+
+-- Sepllchecking
+keymap('n', '<leader>spell', spelling.toggle_spell_check, {})
+keymap('n', '<leader>cr', spelling.add_to_dictionary, {})
