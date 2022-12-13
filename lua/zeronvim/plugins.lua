@@ -101,6 +101,9 @@ return packer.startup(function(use)
   -- Snippet Engine
   use { "L3MON4D3/LuaSnip" }
 
+  -- Color Picker
+  use { "uga-rosa/ccc.nvim" }
+
   -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then
     require("packer").sync()

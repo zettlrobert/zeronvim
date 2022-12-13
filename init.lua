@@ -16,6 +16,7 @@ require "zeronvim.plugins.nvim-tree"
 require "zeronvim.plugins.comment"
 require "zeronvim.plugins.navic"
 require "zeronvim.plugins.gitsigns"
+require "zeronvim.plugins.ccc"
 
 -- Completion
 require "zeronvim.plugins.cmp"
