@@ -30,7 +30,7 @@ local options = {
   sidescrolloff = 60,                                   -- the minimal number of screen columns to keep to the left and to the right of the cursor if nowrap is set
   signcolumn = "yes",                                   -- when and how to draw the signcolumn
   smartcase = true,                                     -- override the ignorecase option if the search patter contains upper case characters
-  smartindent = false,                                  -- do smart autoindenting when starting a new line TODO: Evaluate
+  smartindent = false,                                  -- do smart autoindenting when starting a new line
   splitbelow = true,                                    -- when on, splitting a window will put the new window below the current
   splitright = true,                                    -- when on, splitting a window will put the new window to the right of the current one
   swapfile = false,                                     -- use a swapfile for the buffer
@@ -41,6 +41,9 @@ local options = {
   wrap = false,                                         -- this option changes how text is displayed
   spellfile = spellfilePath,                            -- path to our custom dictionary
   spelllang = {"en_us", "de_de"},                       -- languages we do spellchecking for, if we enable it
+  foldlevel = 20,                                       -- the result is a number, which is the foldlevel of line
+  foldmethod = "expr",                                  -- foldexpr gives t he foldlevel of a line
+  foldexpr = "nvim_treesitter#foldexpr()",              -- expression, used for when foldmethod is expr in this case treesitter
 }
 
 -- Set option with value from options array
@@ -50,6 +53,8 @@ end
 
 
 -- TODO: foldclose, foldcolumn, foldenable
+-- TODO: evaluate preview for no completeopt
+-- TODO: is guifont needed?
 -- TODO: icon, iconstring
 -- TODO: langmap
 -- TODO: statusline
