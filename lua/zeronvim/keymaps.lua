@@ -1,5 +1,6 @@
 ---- Local Utilities bound to keymaps
 local utils = require "zeronvim.utils"
+local folding = require "zeronvim.core.folding"
 local spelling = utils.spelling
 local source_config = utils.sourcing
 
@@ -62,11 +63,12 @@ keymap('n', '<leader>spell', spelling.toggle_spell_check, {})
 keymap('n', '<leader>cr', spelling.add_to_dictionary, {})
 
 -- Folding
--- TODO: Setup custom functions with fold, and notify
-keymap('n', '<leader>zc', 'zc', {}) -- close one fold under cursor
-keymap('n', '<leader>zC', 'zC', {}) -- close all folds under cursor recursively
-keymap('n', '<leader>za', 'za', {}) -- when on closed fold, open it
-keymap('n', '<leader>zA', 'zA', {}) -- when on closed fold, open it recursively
-keymap('n', '<leader>zM', 'zM', {}) -- close all folds
-keymap('n', '<leader>zR', 'zR', {}) -- open all folds
-
+keymap('n', '<leader>zo', folding.openFoldUnderCursor, {})
+keymap('n', '<leader>zO', folding.openAllFoldsUnderCursorRecursively, {})
+keymap('n', '<leader>zc', folding.closeOneFoldUnderCursor, {})
+keymap('n', '<leader>zC', folding.closeAllFoldsUnderCursorRecursively, {})
+keymap('n', '<leader>za', folding.openOnClosedFold, {})
+keymap('n', '<leader>zA', folding.openOnClosedFoldRecursively, {})
+keymap('n', '<leader>zM', folding.closeAllFolds, {})
+keymap('n', '<leader>zR', folding.openAllFolds, {})
+keymap('n', '<leader>zx', folding.updateFolds, {})
