@@ -7,3 +7,4 @@ services:
     tty: true
     volumes:
       - ../:/home/zerovim/.config/nvim
+      - ../../web/eventprofil/:/home/zerovim/eventprofil
