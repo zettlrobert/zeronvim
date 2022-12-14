@@ -27,7 +27,7 @@ local options = {
   scrolloff = 16,                                       -- minimal number of screen lines to keep above and below the cursor
   shiftwidth = 2,                                       -- number of spaces to use for each step of (auto)indent
   showtabline = 2,                                      -- the value of this option specifies when the line with tab page labels will be displayed
-  sidescrolloff = 16,                                   -- the minimal number of screen columns to keep to the left and to the right of the cursor if nowrap is set
+  sidescrolloff = 60,                                   -- the minimal number of screen columns to keep to the left and to the right of the cursor if nowrap is set
   signcolumn = "yes",                                   -- when and how to draw the signcolumn
   smartcase = true,                                     -- override the ignorecase option if the search patter contains upper case characters
   smartindent = false,                                  -- do smart autoindenting when starting a new line TODO: Evaluate
@@ -40,7 +40,7 @@ local options = {
   updatetime = 250,                                     -- updatetime - if this many millisecond's nothing is typed the swap file will be written to disk 
   wrap = false,                                         -- this option changes how text is displayed
   spellfile = spellfilePath,                            -- path to our custom dictionary
-  spelllang = {"en_us", "de_de"}                        -- languages we do spellchecking for, if we enable it
+  spelllang = {"en_us", "de_de"},                       -- languages we do spellchecking for, if we enable it
 }
 
 -- Set option with value from options array
@@ -49,15 +49,9 @@ for k, v in pairs(options) do
 end
 
 
--- TODO: evaluate preview for no completeopt
 -- TODO: foldclose, foldcolumn, foldenable
--- TODO: is guifont needed?
 -- TODO: icon, iconstring
 -- TODO: langmap
--- TODO: linebreak - this has to be used in conjunction with wrap
--- TODO: wrap
--- TODO: scrollback
--- TODO: showbreak
 -- TODO: statusline
 -- TODO: switchbuf
 -- TODO: tabline
