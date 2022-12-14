@@ -60,3 +60,13 @@ keymap('n', '<leader>gwd', '<cmd>:Gitsigns toggle_word_diff<cr>')
 -- Sepllchecking
 keymap('n', '<leader>spell', spelling.toggle_spell_check, {})
 keymap('n', '<leader>cr', spelling.add_to_dictionary, {})
+
+-- Folding
+-- TODO: Setup custom functions with fold, and notify
+keymap('n', '<leader>zc', 'zc', {}) -- close one fold under cursor
+keymap('n', '<leader>zC', 'zC', {}) -- close all folds under cursor recursively
+keymap('n', '<leader>za', 'za', {}) -- when on closed fold, open it
+keymap('n', '<leader>zA', 'zA', {}) -- when on closed fold, open it recursively
+keymap('n', '<leader>zM', 'zM', {}) -- close all folds
+keymap('n', '<leader>zR', 'zR', {}) -- open all folds
+
