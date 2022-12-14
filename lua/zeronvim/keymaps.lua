@@ -1,5 +1,6 @@
 ---- Local Utilities bound to keymaps
 local utils = require "zeronvim.utils"
+local folding = require "zeronvim.core.folding"
 local spelling = utils.spelling
 local source_config = utils.sourcing
 
@@ -60,3 +61,14 @@ keymap('n', '<leader>gwd', '<cmd>:Gitsigns toggle_word_diff<cr>')
 -- Sepllchecking
 keymap('n', '<leader>spell', spelling.toggle_spell_check, {})
 keymap('n', '<leader>cr', spelling.add_to_dictionary, {})
+
+-- Folding
+keymap('n', '<leader>zo', folding.openFoldUnderCursor, {})
+keymap('n', '<leader>zO', folding.openAllFoldsUnderCursorRecursively, {})
+keymap('n', '<leader>zc', folding.closeOneFoldUnderCursor, {})
+keymap('n', '<leader>zC', folding.closeAllFoldsUnderCursorRecursively, {})
+keymap('n', '<leader>za', folding.openOnClosedFold, {})
+keymap('n', '<leader>zA', folding.openOnClosedFoldRecursively, {})
+keymap('n', '<leader>zM', folding.closeAllFolds, {})
+keymap('n', '<leader>zR', folding.openAllFolds, {})
+keymap('n', '<leader>zx', folding.updateFolds, {})
