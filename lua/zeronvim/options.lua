@@ -51,8 +51,6 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
-
--- TODO: foldclose, foldcolumn, foldenable
 -- TODO: evaluate preview for no completeopt
 -- TODO: is guifont needed?
 -- TODO: icon, iconstring
