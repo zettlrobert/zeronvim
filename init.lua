@@ -20,6 +20,7 @@ require "zeronvim.plugins.comment"
 require "zeronvim.plugins.navic"
 require "zeronvim.plugins.gitsigns"
 require "zeronvim.plugins.ccc"
+require "zeronvim.plugins.lualine"
 
 -- Completion
 require "zeronvim.plugins.cmp"
