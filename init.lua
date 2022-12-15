@@ -21,6 +21,7 @@ require "zeronvim.plugins.navic"
 require "zeronvim.plugins.gitsigns"
 require "zeronvim.plugins.ccc"
 require "zeronvim.plugins.lualine"
+require "zeronvim.plugins.toggleterm"
 
 -- Completion
 require "zeronvim.plugins.cmp"
