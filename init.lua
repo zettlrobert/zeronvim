@@ -1,6 +1,9 @@
 -- LSP
 require "zeronvim.lsp"
 
+-- Null-Ls
+require "zeronvim.lsp.null-ls"
+
 -- Packer and Plugins
 require "zeronvim.plugins"
 
