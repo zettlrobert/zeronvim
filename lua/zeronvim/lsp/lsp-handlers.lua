@@ -87,5 +87,10 @@ if cmp_nvim_lsp then
   M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 end
 
+function M.get_lsp_options()
+  return {
+    on_attach = M.on_attach,
+  }
+end
 
 return M
