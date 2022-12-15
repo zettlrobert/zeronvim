@@ -17,6 +17,7 @@ local options = {
   expandtab = true,                                     -- use the appropriate number of spaces to insert a <Tab>
   fileencoding = "utf-8",                               -- file-content encoding for the current buffer
   hlsearch = true,                                      -- when there is a previous search pattern highlight all its matches
+  hidden = true,                                        -- When off a buffer is unloaded (including loss of undo information)
   ignorecase = true,                                    -- ignore case in search patterns
   laststatus = 3,                                       -- influences when the last window will have a status line
   mouse = 'a',                                          -- enable mouse support
