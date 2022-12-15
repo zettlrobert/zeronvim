@@ -86,6 +86,9 @@ return packer.startup(function(use)
   use { "williamboman/mason-lspconfig.nvim" }
   use { "neovim/nvim-lspconfig" }
 
+  -- Null-LS
+  use { "jose-elias-alvarez/null-ls.nvim" }
+
   -- Winbar, breadcrumbs
   use { "SmiteshP/nvim-navic" }
 
