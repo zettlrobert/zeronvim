@@ -100,10 +100,13 @@ return packer.startup(function(use)
   use { "hrsh7th/cmp-nvim-lua" }
   use { "hrsh7th/cmp-buffer" }
   use { "saadparwaiz1/cmp_luasnip" }
-  --  use { "f3fora/cmp-spell" }
+  use { "hrsh7th/cmp-calc" }
 
   -- Snippet Engine
   use { "L3MON4D3/LuaSnip" }
+
+  -- Snippets
+  use { "rafamadriz/friendly-snippets" }
 
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }

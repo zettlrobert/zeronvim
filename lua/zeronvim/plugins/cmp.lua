@@ -38,6 +38,7 @@ local kind_icons = {
 }
 
 if cmp and luasnip then
+  require("luasnip.loaders.from_vscode").lazy_load()
 
   cmp.setup({
     snippet = {
@@ -94,8 +95,9 @@ if cmp and luasnip then
       { name = "treesitter" },
       { name = "omni" },
       { name = "nvim_lsp_signature_help" },
-      { name = "conventionalcommits" }
-      --      { name = "spell" },
+      { name = "conventionalcommits" },
+      { name = "spell" },
+      { name = "calc" }
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,
