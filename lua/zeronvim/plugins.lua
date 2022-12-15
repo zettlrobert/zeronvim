@@ -81,6 +81,9 @@ return packer.startup(function(use)
   -- Telescope Fuzzy Finder
   use { "nvim-telescope/telescope.nvim" }
 
+  -- ToggleTerm
+  use { "akinsho/toggleterm.nvim" }
+
   -- LSP
   use { "williamboman/mason.nvim" }
   use { "williamboman/mason-lspconfig.nvim" }
