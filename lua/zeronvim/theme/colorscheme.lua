@@ -1,4 +1,3 @@
-vim.g.catppuccin_flavour = "mocha"
 local colorscheme = "catppuccin"
 
 local status_ok, catppuccin = pcall(require, colorscheme)
@@ -9,6 +8,7 @@ end
 
 -- catppuccin configuration
 catppuccin.setup({
+  flavour = "mocha",
   dim_inactive = {
     enabled = false,
     shade = "dark",
@@ -108,6 +108,7 @@ local crust = "#11111B"
 local base = "#1E1E2E"
 local mantle = "#181825"
 local rosewater = "#F5E0DC"
+local none = 'none'
 
 --Cursorline Configuration
 vim.api.nvim_set_hl(0, "CursorLine", { bg = crust })
