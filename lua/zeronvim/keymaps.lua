@@ -73,6 +73,16 @@ keymap('n', '<leader>zM', folding.closeAllFolds, {})
 keymap('n', '<leader>zR', folding.openAllFolds, {})
 keymap('n', '<leader>zx', folding.updateFolds, {})
 
+-- Testing
+local testing = function()
+  vim.notify("Test function executed...")
+end
+keymap('n', '<leader>test', testing, {})
+
+-- Update Window Title
+keymap('n', '<leader>titlef', utils.get_title_string.set_titlestring_to_file, {})
+keymap('n', '<leader>titlep', utils.get_title_string.set_titlestring_to_project, {})
+
 -- Toggleterm
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
