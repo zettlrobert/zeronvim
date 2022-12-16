@@ -8,6 +8,9 @@ utils.is_input_empty = require "zeronvim.utils.is-input-empty"
 utils.get_buf_option = require "zeronvim.utils.get-buf-option"
 utils.merge_tables = require "zeronvim.utils.merge-tables"
 utils.spelling = require "zeronvim.utils.spelling"
+utils.get_icons = require "zeronvim.utils.get_icons"
+utils.get_title_string = require "zeronvim.utils.get_titlestring"
+utils.debugger = require "zeronvim.utils.debugger"
 
 -- Expose Module to configuration
 return utils
