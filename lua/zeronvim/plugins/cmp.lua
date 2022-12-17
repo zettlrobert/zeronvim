@@ -70,9 +70,9 @@ if cmp and luasnip then
           fallback()
         end
       end, {
-          "i",
-          "s",
-        }),
+        "i",
+        "s",
+      }),
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
@@ -82,9 +82,9 @@ if cmp and luasnip then
           fallback()
         end
       end, {
-          "i",
-          "s",
-        }),
+        "i",
+        "s",
+      }),
     }),
     sources = {
       { name = "nvim_lsp" },
@@ -96,7 +96,10 @@ if cmp and luasnip then
       { name = "omni" },
       { name = "nvim_lsp_signature_help" },
       { name = "conventionalcommits" },
-      { name = "spell" },
+      { name = "spell",
+        option = {
+          keep_all_entries = false
+        } },
       { name = "calc" }
     },
     confirm_opts = {
