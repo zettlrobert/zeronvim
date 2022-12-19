@@ -1,4 +1,3 @@
-local debugger = require "zeronvim.utils.debugger"
 local nvim_web_devicons = require 'nvim-web-devicons'
 
 local M = {}
