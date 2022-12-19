@@ -73,9 +73,12 @@ keymap('n', '<leader>zM', folding.closeAllFolds, {})
 keymap('n', '<leader>zR', folding.openAllFolds, {})
 keymap('n', '<leader>zx', folding.updateFolds, {})
 
+
+-- Colorpicker
+keymap('n', '<leader>col', utils.colorpicker.toggle_color_picker, {})
+
 -- Testing
 local testing = function()
-  vim.notify("Test function executed...")
 end
 keymap('n', '<leader>test', testing, {})
 

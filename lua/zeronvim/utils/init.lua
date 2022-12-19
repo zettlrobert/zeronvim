@@ -11,6 +11,7 @@ utils.spelling = require "zeronvim.utils.spelling"
 utils.get_icons = require "zeronvim.utils.get_icons"
 utils.get_title_string = require "zeronvim.utils.get_titlestring"
 utils.debugger = require "zeronvim.utils.debugger"
+utils.colorpicker = require "zeronvim.utils.colorpicker"
 
 -- Expose Module to configuration
 return utils

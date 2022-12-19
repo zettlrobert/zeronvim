@@ -1,5 +1,7 @@
 # Tasks
 
+- nvim tree u - custom toggle for env files
+
 ## Currently Working ON
 
 - telescope
@@ -66,3 +68,11 @@ How to use the Quickfix list efficently and what is it for in the best case
 ## Loclist
 
 How to use the Loclist efficently and what is it for in the best case
+
+## Keybinds
+
+REMEMBER
+
+- <C-v> - open in vsplit
+- <C-x> - open in split
+- <C-t> - open in tab
