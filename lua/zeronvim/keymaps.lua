@@ -39,6 +39,12 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
+-- Copy to System Clipboard
+-- We escape " to select the register and type + y to copy in every mode
+keymap('n', '<leader>y', "\"+y")
+keymap('v', '<leader>y', "\"+y")
+keymap('V', '<leader>Y', "\"+y")
+
 -- NVIM TREE
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
