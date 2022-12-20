@@ -43,7 +43,7 @@ keymap("v", ">", ">gv", opts)
 -- We escape " to select the register and type + y to copy in every mode
 keymap('n', '<leader>y', "\"+y")
 keymap('v', '<leader>y', "\"+y")
-keymap('V', '<leader>Y', "\"+y")
+--keymap('V', '<leader>Y', "\"+y")
 
 -- NVIM TREE
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
