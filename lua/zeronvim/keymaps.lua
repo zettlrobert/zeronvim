@@ -48,6 +48,9 @@ keymap('v', '<leader>y', "\"+y")
 -- Concatenate line
 keymap("n", "J", "mzJ`z")
 
+-- Paste without losing buffer
+keymap("x", "<leader>p", "\"_dP")
+
 -- NVIM TREE
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
