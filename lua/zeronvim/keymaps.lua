@@ -45,6 +45,9 @@ keymap('n', '<leader>y', "\"+y")
 keymap('v', '<leader>y', "\"+y")
 --keymap('V', '<leader>Y', "\"+y")
 
+-- Concatenate line
+keymap("n", "J", "mzJ`z")
+
 -- NVIM TREE
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
