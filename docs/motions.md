@@ -16,3 +16,17 @@
 | `A`       | End of line in insert mode                                                    |
 
 ## Vertical Movements
+
+| Motion       | Description                         |
+| ------------ | ----------------------------------- |
+| `{`          | paragraph backward                  |
+| `}`          | paragraph forward                   |
+| `C+d`        | jump half a page up                 |
+| `C+u`        | jump half a page down               |
+| `/<pattern>` | find pattern                        |
+| `n`          | go to previous occurence of pattern |
+| `N`          | go to next occurence of pattern     |
+| `*`          | load word under cursor as pattern   |
+| `?`          | inverted word under pattern         |
+
+Tip: Vertical motion can be extended with zz in custom remaps to always be in the center of the screen
