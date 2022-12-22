@@ -1,6 +1,7 @@
 ---- Local Utilities bound to Keymaps
 local utils = require "zeronvim.utils"
 local folding = require "zeronvim.core.folding"
+local telescope = require "zeronvim.plugins.telescope"
 local spelling = utils.spelling
 local source_config = utils.sourcing
 
@@ -57,6 +58,7 @@ keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 -- Telescope
 local telescope_builtin = require('telescope.builtin')
 keymap('n', '<leader>ff', telescope_builtin.find_files, {})
+keymap('n', '<leader>fy', telescope.find_env, {})
 keymap('n', '<leader>fg', telescope_builtin.live_grep, {})
 keymap('n', '<leader>fb', telescope_builtin.buffers, {})
 keymap('n', '<leader>fh', telescope_builtin.help_tags, {})
