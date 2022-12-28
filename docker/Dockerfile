@@ -42,6 +42,7 @@ RUN pacman -Sy \
     go \
     npm \
     prettier \
+    xclip \
     --noconfirm
 
 # Add user
