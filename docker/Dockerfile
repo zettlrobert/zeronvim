@@ -41,6 +41,7 @@ RUN pacman -Sy \
     nodejs \
     go \
     npm \
+    fzf \
     prettier \
     xclip \
     --noconfirm
