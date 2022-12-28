@@ -41,6 +41,7 @@ RUN pacman -Sy \
     nodejs \
     go \
     npm \
+    prettier \
     --noconfirm
 
 # Add user
