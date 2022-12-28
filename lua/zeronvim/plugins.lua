@@ -112,6 +112,9 @@ return packer.startup(function(use)
   -- Snippets
   use { "rafamadriz/friendly-snippets" }
 
+  -- Debugging
+  use { "mfussenegger/nvim-dap" }
+
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }
 
