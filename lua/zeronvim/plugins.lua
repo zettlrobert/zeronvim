@@ -114,6 +114,8 @@ return packer.startup(function(use)
 
   -- Debugging
   use { "mfussenegger/nvim-dap" }
+  use { "rcarriga/nvim-dap-ui" }
+  use { "theHamsta/nvim-dap-virtual-text" }
 
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }
