@@ -31,3 +31,5 @@ require "zeronvim.plugins.ccc"
 require "zeronvim.plugins.lualine"
 require "zeronvim.plugins.toggleterm"
 
+-- Debugging
+require "zeronvim.dap"
