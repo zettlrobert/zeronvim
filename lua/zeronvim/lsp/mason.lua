@@ -60,7 +60,7 @@ if mason and mason_nvim_dap then
     -- 	- false: Dap is not automatically configured.
     -- 	- true: Dap is automatically configured.
     -- 	- {adapters: {ADAPTER: {}, }, configurations: {ADAPTER: {}, }}. Allows overriding default configuration.
-    automatic_setup = false,
+    automatic_setup = true,
   })
 end
 

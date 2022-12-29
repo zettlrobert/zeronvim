@@ -67,6 +67,6 @@ if nvim_dap then
   end
 
   dap_vscode_js.setup()
-  dap_chrome_adapater.setup()
-  dap_firefox_adapter.setup()
+  --[[ dap_chrome_adapater.setup() ]]
+  --[[ dap_firefox_adapter.setup() ]]
 end
