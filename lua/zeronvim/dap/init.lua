@@ -2,7 +2,7 @@ local utils = require "zeronvim.utils"
 local nvim_dap = utils.protected_plugin_call("dap")
 local nvim_dap_ui = require "zeronvim.dap.nvim_dap_ui"
 local nvim_dap_virtual_text = require "zeronvim.dap.nvim_dap_virtual_text"
-local javascript = require "zeronvim.dap.language.javascript"
+local dap_vscode_js = require "zeronvim.dap.dap-vscode-js"
 
 local description = {
   toggle_breakpoint = "Toggle Breakpoint",
@@ -25,9 +25,10 @@ end
 
 nvim_dap_ui.setup()
 nvim_dap_virtual_text.setup()
-javascript.setup()
 
 if nvim_dap then
+  nvim_dap.set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
+
   -- Set conditional Breakpoint
   local conditional_breakpoint = function()
     local prompt = "Breakpoint condition: "
@@ -41,25 +42,29 @@ if nvim_dap then
   end
 
   -- Keymaps
-  map("<leade>b", nvim_dap.toggle_breakpoint, description.toggle_breakpoint)
+  map("<leader>b", nvim_dap.toggle_breakpoint, description.toggle_breakpoint)
   map("<leader>B", conditional_breakpoint, description.conditional_breakpoint)
   map("<F2>", nvim_dap.step_into, description.step_into)
   map("<F3>", nvim_dap.step_over, description.step_over)
   map("<F5>", nvim_dap.continue, description.continue)
   map("<F12>", nvim_dap.step_out, description.step_out)
-  map("<leade>lp", set_logpoint_message, description.set_logpoint_message)
-  map("<leade>dr", nvim_dap.repl.open, description.repl_open)
+  map("<leader>lp", set_logpoint_message, description.set_logpoint_message)
+  map("<leader>dr", nvim_dap.repl.open, description.repl_open)
 
   -- Open and close dap ui conditionally
   nvim_dap.listeners.after.event_initialized["dapui_config"] = function()
-    nvim_dap_ui.open()
+    nvim_dap_ui.instance.open()
   end
 
   nvim_dap.listeners.before.event_terminated["dapui_config"] = function()
-    nvim_dap_ui.close()
+    nvim_dap_ui.instance.close()
   end
 
   nvim_dap.listeners.before.event_exited["dapui_config"] = function()
-    nvim_dap_ui.close()
+    nvim_dap_ui.instance.close()
   end
+
+  -- javascript.setup(nvim_dap)
 end
+
+dap_vscode_js.setup()
