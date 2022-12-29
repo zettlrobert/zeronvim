@@ -76,3 +76,7 @@ REMEMBER
 - <C-v> - open in vsplit
 - <C-x> - open in split
 - <C-t> - open in tab
+
+## Debugger Config
+
+- neotest

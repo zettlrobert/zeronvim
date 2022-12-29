@@ -112,6 +112,13 @@ return packer.startup(function(use)
   -- Snippets
   use { "rafamadriz/friendly-snippets" }
 
+  -- Debugging
+  use { "jayp0521/mason-nvim-dap.nvim" }
+  use { "mfussenegger/nvim-dap" }
+  use { "rcarriga/nvim-dap-ui" }
+  use { "theHamsta/nvim-dap-virtual-text" }
+  use { "mxsdev/nvim-dap-vscode-js" }
+
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }
 

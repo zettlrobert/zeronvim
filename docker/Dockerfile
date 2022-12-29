@@ -25,6 +25,7 @@ RUN pacman -Sy \
     ripgrep \
     fd \
     exa \
+    lsof \
     figlet \ 
     findutils \
     git \
@@ -41,6 +42,9 @@ RUN pacman -Sy \
     nodejs \
     go \
     npm \
+    fzf \
+    prettier \
+    xclip \
     --noconfirm
 
 # Add user
