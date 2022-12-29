@@ -113,6 +113,7 @@ return packer.startup(function(use)
   use { "rafamadriz/friendly-snippets" }
 
   -- Debugging
+  use { "jayp0521/mason-nvim-dap.nvim" }
   use { "mfussenegger/nvim-dap" }
   use { "rcarriga/nvim-dap-ui" }
   use { "theHamsta/nvim-dap-virtual-text" }
