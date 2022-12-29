@@ -9,6 +9,7 @@ if nvim_dap then
       command = 'node',
       args = { os.getenv('HOME') .. '.local/share/nvim/mason/bin/js-debug-adapter' },
     }
+
     nvim_dap.configurations.javascript = {
       {
         name = 'Launch',
