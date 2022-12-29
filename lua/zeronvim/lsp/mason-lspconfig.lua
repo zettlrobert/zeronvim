@@ -23,7 +23,7 @@ if mason_lspconfig and lspconfig and handlers then
       "eslint",
       --"elixirls",
       "gopls",
-      "graphql",
+      -- "graphql",
       "html",
       "jsonls",
       --"ltex",
