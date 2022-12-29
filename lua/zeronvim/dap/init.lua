@@ -3,7 +3,8 @@ local nvim_dap = utils.protected_plugin_call("dap")
 local nvim_dap_ui = require "zeronvim.dap.nvim_dap_ui"
 local nvim_dap_virtual_text = require "zeronvim.dap.nvim_dap_virtual_text"
 local dap_vscode_js = require "zeronvim.dap.dap-vscode-js"
-local dap_firefox_adapter = require "zeronvim.dap.language.firefox-debug-adapter-tsx-jsx"
+local dap_chrome_adapater = require "zeronvim.dap.language.chrome-debug-adapter"
+local dap_firefox_adapter = require "zeronvim.dap.language.firefox-debug-adapter"
 
 local description = {
   toggle_breakpoint = "Toggle Breakpoint",
@@ -65,7 +66,7 @@ if nvim_dap then
     nvim_dap_ui.instance.close()
   end
 
-  -- javascript.setup(nvim_dap)
   dap_vscode_js.setup()
-  --[[ dap_firefox_adapter.setup() ]]
+  dap_chrome_adapater.setup()
+  dap_firefox_adapter.setup()
 end
