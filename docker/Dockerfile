@@ -25,6 +25,7 @@ RUN pacman -Sy \
     ripgrep \
     fd \
     exa \
+    lsof \
     figlet \ 
     findutils \
     git \
