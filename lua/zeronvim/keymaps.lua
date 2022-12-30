@@ -62,6 +62,7 @@ keymap('n', '<leader>fy', telescope.find_env, {})
 keymap('n', '<leader>fg', telescope_builtin.live_grep, {})
 keymap('n', '<leader>fb', telescope_builtin.buffers, {})
 keymap('n', '<leader>fh', telescope_builtin.help_tags, {})
+keymap('n', '<leader>key', telescope_builtin.keymaps, {})
 
 -- Formatting
 keymap('n', '<leader>fmt', '<cmd>lua vim.lsp.buf.format({ async = true })<cr>', opts)
@@ -99,6 +100,19 @@ keymap('n', '<leader>test', testing, {})
 -- Update Window Title
 keymap('n', '<leader>titlef', utils.get_title_string.set_titlestring_to_file, {})
 keymap('n', '<leader>titlep', utils.get_title_string.set_titlestring_to_project, {})
+
+-- Trouble
+keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, desc = "Toggle Trouble" })
+keymap("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+  { silent = true, desc = "Toggle Trouble Workspace Diagnostics" })
+keymap("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+  { silent = true, desc = "Toggle Trouble Docuemnt Diagnostics" })
+keymap("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+  { silent = true, desc = "Toggle Trouble Location List" })
+keymap("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+  { silent = true, desc = "Toggle Trouble Quickfix List" })
+keymap("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+  { silent = true, desc = "Toggle Trouble LSP References" })
 
 -- Toggleterm
 function _G.set_terminal_keymaps()
