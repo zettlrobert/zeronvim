@@ -110,7 +110,7 @@ The location list equivalents for `:cdo` and `:cfdo` are — you guessed it — 
 
 ## Usage cases
 
-```
+```sh
 file | row | col | error message
 ```
 
