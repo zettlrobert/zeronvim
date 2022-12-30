@@ -30,6 +30,7 @@ require "zeronvim.plugins.gitsigns"
 require "zeronvim.plugins.ccc"
 require "zeronvim.plugins.lualine"
 require "zeronvim.plugins.toggleterm"
+require "zeronvim.plugins.trouble"
 
 -- Debugging
 require "zeronvim.dap"
