@@ -121,6 +121,7 @@ return packer.startup(function(use)
 
   -- Quickfix and Location List
   use { "folke/trouble.nvim" }
+  use { "folke/todo-comments.nvim" }
 
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }
