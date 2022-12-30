@@ -119,6 +119,9 @@ return packer.startup(function(use)
   use { "theHamsta/nvim-dap-virtual-text" }
   use { "mxsdev/nvim-dap-vscode-js" }
 
+  -- Quickfix and Location List
+  use { "folke/trouble.nvim" }
+
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }
 
