@@ -26,3 +26,18 @@ Lists need to be populated to be able to display content, the quickfix list is a
 To populate the quickfix list with search results from external utiltiy like `grep` we can use `:cope` followd by the output of the `grep` command
 
 `:cope 'grep pattern **/*.txt'`
+
+### Substitution
+
+nnoremap and vnoremap get converted into the respective vim.keymap(n/v) strings
+s/\(.\)noremap(/vim.keymap.set("\1",
+
+## Keymaps
+
+Move up and down in visual mode
+"v", "J", ":m '>+1<CR>gv=gv"
+"v", "K", ":m '>-2<CR>gv=gv"
+
+Keep Serach Terms in middle when jumping
+"n", "n", "nzzzv"
+"n", "N", "Nzzzv"
