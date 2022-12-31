@@ -123,6 +123,15 @@ return packer.startup(function(use)
   use { "folke/trouble.nvim" }
   use { "folke/todo-comments.nvim" }
 
+  -- Dashboard
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.startify'.config)
+    end
+}
+
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }
 
