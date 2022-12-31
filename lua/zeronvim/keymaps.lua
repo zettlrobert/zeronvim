@@ -31,6 +31,10 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 -- Toggle highlight
 keymap("n", "<leader>h", ":set hlsearch!<CR>", opts)
 
+-- Keep Cursor centered when going page up and down
+keymap("n", "<C-d>", "<C-d>zz")
+keymap("n", "<C-u>", "<C-u>zz")
+
 -- Resize Buffer with arrow keys
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
