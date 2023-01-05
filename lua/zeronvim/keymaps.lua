@@ -106,6 +106,9 @@ keymap('n', '<leader>test', testing, {})
 keymap('n', '<leader>titlef', utils.get_title_string.set_titlestring_to_file, {})
 keymap('n', '<leader>titlep', utils.get_title_string.set_titlestring_to_project, {})
 
+-- Line Wrapping
+keymap('n', '<leader>wrap', utils.wrap.toggle_wrap, {})
+
 -- Trouble
 keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, desc = "Toggle Trouble" })
 keymap("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
