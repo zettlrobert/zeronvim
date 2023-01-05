@@ -38,6 +38,11 @@ M.parse_debug_value = function(type, value)
     return stringified_value
   end
 
+  if type == "boolean" then
+    local stringified_value = tostring(value)
+    return stringified_value
+  end
+
   return "Error: Custom debugger currently does not support this type"
 end
 
