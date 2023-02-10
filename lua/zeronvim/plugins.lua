@@ -126,6 +126,9 @@ return packer.startup(function(use)
   -- Color Picker
   use { "uga-rosa/ccc.nvim" }
 
+  -- Syntax
+  use { "jxnblk/vim-mdx-js" }
+
   -- Automatically setup configuration after cloning packer
   if PACKER_BOOTSTRAP then
     require("packer").sync()
