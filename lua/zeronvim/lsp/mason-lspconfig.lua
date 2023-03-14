@@ -89,6 +89,12 @@ if mason_lspconfig and lspconfig and handlers then
         local updated_server_config = deep_extend_server_config(ltex_config)
         lspconfig.ltex.setup(updated_server_config)
       end
+
+      if server == "yamlls" then
+        local yaml_config = require "zeronvim.lsp.providers.yamlls"
+        local updated_server_config = deep_extend_server_config(yaml_config)
+        lspconfig.yamlls.setup(updated_server_config)
+      end
     end
   end
 
