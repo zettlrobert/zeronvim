@@ -57,6 +57,10 @@ keymap("n", "J", "mzJ`z")
 -- Paste without losing buffer
 keymap("x", "<leader>p", "\"_dP")
 
+-- Move Current Lines up or down
+keymap("n", "<A-k>", ":m .-2<CR>", opts)
+keymap("n", "<A-j>", ":m .+1<CR>", opts)
+
 -- NVIM TREE
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
