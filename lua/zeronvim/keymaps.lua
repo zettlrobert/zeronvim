@@ -4,6 +4,7 @@ local folding = require "zeronvim.core.folding"
 local telescope = require "zeronvim.plugins.telescope"
 local todo_comments = require "zeronvim.plugins.todo-comments"
 local spelling = utils.spelling
+local tab = utils.tab
 local source_config = utils.sourcing
 
 -- Set keymap to vim.api.nvim_set_keymap function
@@ -27,6 +28,8 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-t>", tab.tabnew, {})
+keymap("n", "<C-q>", tab.tabclose, {})
 
 -- Toggle highlight
 keymap("n", "<leader>h", ":set hlsearch!<CR>", opts)
