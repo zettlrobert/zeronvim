@@ -13,9 +13,6 @@ local keymap = vim.keymap.set
 -- Set opts to shorten keymaps noremap, silent for no output
 local opts = { noremap = true, silent = true }
 
--- Set terminal opts to silent
-local term_opts = { silent = true }
-
 -- Set leader
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
@@ -30,6 +27,7 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-t>", tab.tabnew, {})
 keymap("n", "<C-q>", tab.tabclose, {})
+keymap("n", "<leader>ntff", utils.nvimtree.nvim_tree_find_file, {})
 
 -- Toggle highlight
 keymap("n", "<leader>h", ":set hlsearch!<CR>", opts)
