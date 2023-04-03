@@ -14,6 +14,7 @@ utils.debugger = require "zeronvim.utils.debugger"
 utils.colorpicker = require "zeronvim.utils.colorpicker"
 utils.wrap = require "zeronvim.utils.wrap"
 utils.tab = require "zeronvim.utils.tab"
+utils.nvimtree = require "zeronvim.utils.nvimtree"
 
 -- Expose Module to configuration
 return utils
