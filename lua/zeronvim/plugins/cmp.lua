@@ -35,6 +35,7 @@ local kind_icons = {
   Event = "",
   Operator = "",
   TypeParameter = "",
+  Codeium = ""
 }
 
 if cmp and luasnip then
@@ -100,7 +101,8 @@ if cmp and luasnip then
         option = {
           keep_all_entries = false
         } },
-      { name = "calc" }
+      { name = "calc" },
+      { name = "codeium" }
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -117,10 +119,15 @@ if cmp and luasnip then
           luasnip = "[Snippet]",
           buffer = "[Buffer]",
           path = "[Path]",
-          treesitter = "[Treesitter]"
+          treesitter = "[Treesitter]",
+          codeium = "[AI]"
         })[entry.source.name]
         return vim_item
       end,
     },
+
+    experimental = {
+      ghost_text = true
+    }
   })
 end
