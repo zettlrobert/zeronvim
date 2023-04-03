@@ -1,136 +1,98 @@
--- Access vim.fn with variable `fn`
-local fn = vim.fn
-
--- Packer install path equals system user data directory
--- will be ~/.local/share/nvim/site/pack/packer/packer.nvim
-local install_path = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system({
-    'git',
-    'clone',
-    '--depth',
-    '1',
-    'https://github.com/wbthomason/packer.nvim',
-    install_path
+-- bootstarap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
   })
-  print "Installing packer, close and reopen nvim..."
-  vim.cmd [[packadd packer.nvim]]
 end
+vim.opt.rtp:prepend(lazypath)
 
--- Autocommand that reloads nvim when plugins.lua is saved
--- TODO: Write with neovim autocommand syntax
-vim.cmd [[
-  augroup packer_user_config
-  autocmd!
-  autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]]
+require("lazy").setup({
+	-- Pleneary Lua Functions to use with neoviom
+	"nvim-lua/plenary.nvim",
 
--- protected call to packer, to ensure we do not error out on first load
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  vim.notify("Error loading packer...")
-  return
-end
+	-- Treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate"
+	},
 
--- Popup window for packer
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
+	"JoosepAlviste/nvim-ts-context-commentstring",
 
--- _Plugins to install
-return packer.startup(function(use)
-  -- Packer self management
-  use { "wbthomason/packer.nvim" } -- Have packer manage itself
+	-- Colorscheme
+	{ "catppuccin/nvim", name = "catppuccin" },
 
-  -- Pleneary Lua Functions to use with neoviom
-  use { "nvim-lua/plenary.nvim" }
+	-- Lualine
+	"nvim-lualine/lualine.nvim",
 
-  -- Treesitter
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate"
-  }
-  use "JoosepAlviste/nvim-ts-context-commentstring"
+	-- NvimTree - Filemanager
+	"nvim-tree/nvim-tree.lua",
 
-  -- Colorscheme
-  use { "catppuccin/nvim", as = "catppuccin" }
+	-- Indentlines
+	"lukas-reineke/indent-blankline.nvim",
 
-  -- Lualine
-  use { "nvim-lualine/lualine.nvim" }
+	-- Icons
+	"nvim-tree/nvim-web-devicons",
 
-  -- NvimTree - Filemanager
-  use { "nvim-tree/nvim-tree.lua" }
+	-- Gitsigns
+	"lewis6991/gitsigns.nvim",
 
-  -- Indentlines
-  use { "lukas-reineke/indent-blankline.nvim" }
+	-- Comments
+	"numToStr/Comment.nvim",
 
-  -- Icons
-  use { "nvim-tree/nvim-web-devicons" }
+	-- Telescope Fuzzy Finder
+	"nvim-telescope/telescope.nvim",
 
-  -- Gitsigns
-  use { "lewis6991/gitsigns.nvim" }
+	-- ToggleTerm
+	"akinsho/toggleterm.nvim",
 
-  -- Comments
-  use { "numToStr/Comment.nvim" }
+	-- LSP
+	"williamboman/mason.nvim",
+	"williamboman/mason-lspconfig.nvim",
+	"neovim/nvim-lspconfig",
 
-  -- Telescope Fuzzy Finder
-  use { "nvim-telescope/telescope.nvim" }
+	-- Null-LS
+	"jose-elias-alvarez/null-ls.nvim",
 
-  -- ToggleTerm
-  use { "akinsho/toggleterm.nvim" }
+	-- Winbar, breadcrumbs
+	"SmiteshP/nvim-navic",
 
-  -- LSP
-  use { "williamboman/mason.nvim" }
-  use { "williamboman/mason-lspconfig.nvim" }
-  use { "neovim/nvim-lspconfig" }
+	-- CMP Completion
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-cmdline",
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-nvim-lua",
+	"hrsh7th/cmp-buffer",
+	"saadparwaiz1/cmp_luasnip",
+	"hrsh7th/cmp-calc",
+	"f3fora/cmp-spell",
 
-  -- Null-LS
-  use { "jose-elias-alvarez/null-ls.nvim" }
+	-- Snippet Engine
+	"L3MON4D3/LuaSnip",
 
-  -- Winbar, breadcrumbs
-  use { "SmiteshP/nvim-navic" }
+	-- Snippets
+	"rafamadriz/friendly-snippets",
 
-  -- CMP Completion
-  use { "hrsh7th/cmp-nvim-lsp" }
-  use { "hrsh7th/cmp-path" }
-  use { "hrsh7th/cmp-cmdline" }
-  use { "hrsh7th/nvim-cmp" }
-  use { "hrsh7th/cmp-nvim-lua" }
-  use { "hrsh7th/cmp-buffer" }
-  use { "saadparwaiz1/cmp_luasnip" }
-  use { "hrsh7th/cmp-calc" }
-  use { "f3fora/cmp-spell" }
+	-- Debugging
+	"jayp0521/mason-nvim-dap.nvim",
+	"mfussenegger/nvim-dap",
+	"rcarriga/nvim-dap-ui",
+	"theHamsta/nvim-dap-virtual-text",
+	"mxsdev/nvim-dap-vscode-js",
 
-  -- Snippet Engine
-  use { "L3MON4D3/LuaSnip" }
+	-- Quickfix and Location List
+	"folke/trouble.nvim",
+	"folke/todo-comments.nvim",
 
-  -- Snippets
-  use { "rafamadriz/friendly-snippets" }
+	-- Color Picker
+	"uga-rosa/ccc.nvim",
 
-  -- Debugging
-  use { "jayp0521/mason-nvim-dap.nvim" }
-  use { "mfussenegger/nvim-dap" }
-  use { "rcarriga/nvim-dap-ui" }
-  use { "theHamsta/nvim-dap-virtual-text" }
-  use { "mxsdev/nvim-dap-vscode-js" }
-
-  -- Quickfix and Location List
-  use { "folke/trouble.nvim" }
-  use { "folke/todo-comments.nvim" }
-
-  -- Color Picker
-  use { "uga-rosa/ccc.nvim" }
-
-  -- Syntax
-  use { "jxnblk/vim-mdx-js" }
-
-  -- Automatically setup configuration after cloning packer
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
-end)
+	-- Syntax
+	"jxnblk/vim-mdx-js"
+})
