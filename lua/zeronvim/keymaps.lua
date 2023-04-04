@@ -85,6 +85,11 @@ keymap('n', '<leader>gnum', '<cmd>:Gitsigns toggle_numhl<cr>')
 keymap('n', '<leader>glh', '<cmd>:Gitsigns toggle_linehl<cr>')
 keymap('n', '<leader>gwd', '<cmd>:Gitsigns toggle_word_diff<cr>')
 
+-- AI
+keymap('n', '<leader>tai', utils.toggle_codeium.toggle_ai, {})
+keymap('n', '<leader>taitrace', utils.toggle_codeium.toggle_codium_logging, {})
+keymap('n', '<leader>tailog', utils.toggle_codeium.open_codium_log, {})
+
 -- Spellchecking
 keymap('n', '<leader>spell', spelling.toggle_spell_check, {})
 keymap('n', '<leader>cr', spelling.add_to_dictionary, {})
