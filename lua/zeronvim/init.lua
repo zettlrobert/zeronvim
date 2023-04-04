@@ -1,5 +1,5 @@
--- Packer and Plugins
-require "zeronvim.plugins"
+-- Plugins
+require "zeronvim.lazy-plugins"
 
 -- Core
 require "zeronvim.core.winbar"
@@ -32,6 +32,9 @@ require "zeronvim.plugins.lualine"
 require "zeronvim.plugins.toggleterm"
 require "zeronvim.plugins.trouble"
 require "zeronvim.plugins.todo-comments"
+
+-- Ai
+require "zeronvim.plugins.codeium"
 
 -- Debugging
 require "zeronvim.dap"
