@@ -1,8 +1,8 @@
 local M = {}
 local utils = require "zeronvim.utils"
 local codeium = utils.protected_plugin_call("codeium")
-local codeium_api_key = vim.fn.expand("data") .. "/codeium/.api"
-local codeium_directory = vim.fn.expand("data") .. "/codeium"
+local codeium_api_key = vim.fn.stdpath("data") .. "/codeium/api-key"
+local codeium_directory = vim.fn.stdpath("data") .. "/codeium"
 local language_server = codeium_directory .. "language-server-v1.1.32"
 local tool_uname_binary = "/usr/bin/uname"
 local tool_uuidgen_binary = "/usr/bin/uuidgen"
