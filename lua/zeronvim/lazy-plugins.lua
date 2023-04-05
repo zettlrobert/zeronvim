@@ -22,7 +22,11 @@ require("lazy").setup({
     build = ":TSUpdate"
   },
 
+  -- commentstring based on cursor location
   "JoosepAlviste/nvim-ts-context-commentstring",
+
+  -- context of current element
+  "nvim-treesitter/nvim-treesitter-context",
 
   -- Colorscheme
   { "catppuccin/nvim", name = "catppuccin" },
