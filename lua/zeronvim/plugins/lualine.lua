@@ -19,7 +19,7 @@ local diagnostics = {
 local diff = {
   "diff",
   colored = false,
-  symbols = { added = " ", modified = " ", removed = " " }, -- TODO: changes diff symbols
+  symbols = { added = " ", modified = " ", removed = " " },
   cond = hide_in_width
 }
 
@@ -28,8 +28,8 @@ if lualine then
     options = {
       icons_enabled = true,
       theme = 'auto',
-      component_separators = { left = '', right = '' },
-      section_separators = { left = '', right = '' },
+      component_separators = '|',
+      section_separators = { left = '', right = '' },
       disabled_filetypes = {
         statusline = {},
         winbar = {},
@@ -48,7 +48,7 @@ if lualine then
       lualine_b = { 'branch', diff, diagnostics },
       lualine_c = { 'filename', 'searchcount' },
       lualine_x = { 'encoding', 'fileformat', 'filetype' },
-      lualine_y = { 'progress' },
+      lualine_y = { 'windows', 'tabs', 'progress' },
       lualine_z = { 'location' }
     },
     inactive_sections = {
