@@ -14,6 +14,7 @@ local diagnostics = {
   colored = false,
   update_in_insert = false,
   always_visible = true,
+  lualine
 }
 
 local diff = {
@@ -28,8 +29,8 @@ if lualine then
     options = {
       icons_enabled = true,
       theme = 'auto',
-      component_separators = '|',
-      section_separators = { left = '', right = '' },
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
       disabled_filetypes = {
         statusline = {},
         winbar = {},
