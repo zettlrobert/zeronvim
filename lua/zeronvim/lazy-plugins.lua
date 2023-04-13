@@ -109,7 +109,7 @@ require("lazy").setup({
     },
     config = function()
       require("codeium").setup(
-        require "codeium".config
+        require("codeium").config
       )
     end
   },
