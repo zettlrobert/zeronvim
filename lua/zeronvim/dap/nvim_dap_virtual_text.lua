@@ -4,7 +4,6 @@ local M = {}
 
 if nvim_dap_virtual_text then
   M.setup = function()
-    vim.notify("nvim_dap_virtual_text module, loaded")
     nvim_dap_virtual_text.setup()
   end
 end
