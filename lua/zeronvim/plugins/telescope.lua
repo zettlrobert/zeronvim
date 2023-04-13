@@ -4,8 +4,6 @@ local telescope_builtin = utils.protected_plugin_call("telescope.builtin")
 local M = {}
 
 if telescope then
-  vim.notify("Telescope Config Loaded...")
-
   telescope.setup {
     defaults = {
       path_display = { "smart" },
