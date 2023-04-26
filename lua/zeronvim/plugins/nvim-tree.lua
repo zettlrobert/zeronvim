@@ -29,15 +29,6 @@ if nvim_tree then
       number = false,
       relativenumber = true,
       signcolumn = "yes",
-      mappings = {
-        custom_only = false,
-        list = {
-          -- user mappings go here
-          { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
-          { key = "h", action = "close_node"},
-          { key = "v", action = "vsplit" },
-        },
-      },
       float = {
         enable = false,
         quit_on_focus_loss = true,
