@@ -44,3 +44,5 @@ luac.out
 
 # Plugins
 plugin/
+# WARN: If we want to freeze plugins we have to track lazy-lock.json
+lazy-lock.json
