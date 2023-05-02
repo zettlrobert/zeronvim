@@ -53,7 +53,7 @@ local options = {
   foldmethod = "expr", -- foldexpr gives t he foldlevel of a line
   foldexpr = "nvim_treesitter#foldexpr()", -- expression, used for when foldmethod is expr in this case treesitter
   title = true, -- when on title of the window will be set to titlestring
-  titlestring = custom_titlestring -- this option will be used for the title of the current window
+  titlestring = custom_titlestring, -- this option will be used for the title of the current window
 }
 
 -- Set option with value from options array

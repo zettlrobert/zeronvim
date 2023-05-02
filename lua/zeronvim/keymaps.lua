@@ -133,9 +133,9 @@ keymap("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
   { silent = true, desc = "Toggle Trouble Quickfix List" })
 keymap("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
   { silent = true, desc = "Toggle Trouble LSP References" })
-keymap("n", "<leader>todo", "<cmd>TodoQuickFix<cr>", { silent = true, desc = "Project wide todos"})
-keymap("n", "<leader>to", "<cmd>TodoTrouble<cr>", { silent = true, desc = "Trouble Project wide todos"})
-keymap("n", "<leader>todol", "<cmd>TodoLocList<cr>", { silent = true, desc = "File wide todos"})
+keymap("n", "<leader>todo", "<cmd>TodoQuickFix<cr>", { silent = true, desc = "Project wide todos" })
+keymap("n", "<leader>to", "<cmd>TodoTrouble<cr>", { silent = true, desc = "Trouble Project wide todos" })
+keymap("n", "<leader>todol", "<cmd>TodoLocList<cr>", { silent = true, desc = "File wide todos" })
 keymap("n", "]t", todo_comments.todo_comments.jump_next, { silent = true, desc = "Next todo comment" })
 keymap("n", "[t", todo_comments.todo_comments.jump_prev, { silent = true, desc = "Previous todo comment" })
 
