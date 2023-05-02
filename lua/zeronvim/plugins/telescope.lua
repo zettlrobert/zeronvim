@@ -4,8 +4,6 @@ local telescope = utils.protected_plugin_call("telescope")
 local telescope_builtin = utils.protected_plugin_call("telescope.builtin")
 local M = {}
 
-local telescope = require("telescope")
-
 if telescope then
   telescope.setup {
     defaults = {
