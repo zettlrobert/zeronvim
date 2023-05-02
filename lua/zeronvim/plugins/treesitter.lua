@@ -18,6 +18,10 @@ if treesitter_configs then
       enable = true
     },
 
+    autotag = {
+      enable = true
+    },
+
     highlight = {
       enable = true,
       -- list of language that will be disabled

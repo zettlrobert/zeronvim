@@ -22,6 +22,8 @@ require("lazy").setup({
     build = ":TSUpdate"
   },
 
+  "windwp/nvim-ts-autotag",
+
   -- commentstring based on cursor location
   "JoosepAlviste/nvim-ts-context-commentstring",
 
