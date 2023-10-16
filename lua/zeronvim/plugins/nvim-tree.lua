@@ -17,7 +17,6 @@ if nvim_tree then
     reload_on_bufenter = true,
     respect_buf_cwd = false,
     on_attach = "disable",
-    remove_keymaps = false,
     select_prompts = false,
     view = {
       adaptive_size = true,
