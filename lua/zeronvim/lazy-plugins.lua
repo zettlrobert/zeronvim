@@ -21,6 +21,10 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate"
   },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    requires = "nvim-treesitter/nvim-treesitter",
+  },
 
   "windwp/nvim-ts-autotag",
 
@@ -31,7 +35,7 @@ require("lazy").setup({
   "nvim-treesitter/nvim-treesitter-context",
 
   -- Colorscheme
-  { "catppuccin/nvim", name = "catppuccin" },
+  { "catppuccin/nvim",                     name = "catppuccin" },
 
   -- Lualine
   "nvim-lualine/lualine.nvim",
@@ -40,7 +44,7 @@ require("lazy").setup({
   "nvim-tree/nvim-tree.lua",
 
   -- Indentlines
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl",       opts = {} },
 
   -- Icons
   "nvim-tree/nvim-web-devicons",
