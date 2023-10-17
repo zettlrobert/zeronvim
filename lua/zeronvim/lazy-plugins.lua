@@ -40,7 +40,7 @@ require("lazy").setup({
   "nvim-tree/nvim-tree.lua",
 
   -- Indentlines
-  "lukas-reineke/indent-blankline.nvim",
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
   -- Icons
   "nvim-tree/nvim-web-devicons",
