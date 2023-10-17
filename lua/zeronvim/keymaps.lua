@@ -92,7 +92,7 @@ keymap('n', '<leader>tailog', utils.toggle_codeium.open_codium_log, {})
 
 -- Spellchecking
 keymap('n', '<leader>spell', spelling.toggle_spell_check, {})
-keymap('n', '<leader>cr', spelling.add_to_dictionary, {})
+keymap('n', '<leader>sa', spelling.add_to_dictionary, {})
 
 -- Folding
 keymap('n', '<leader>zo', folding.openFoldUnderCursor, {})

@@ -1,8 +1,9 @@
 -- Imports
 local get_title_string = require "zeronvim.utils.get_titlestring"
 
--- Path to personal dictionlary - checking with ltex-ls
-local spellfilePath = vim.fn.stdpath "config" .. "/dictionary/utf-8.add"
+-- Path to personal dictionary - checking with ltex-ls
+local spellfilePath = vim.fn.stdpath("config") .. "/spell/en.spellfile.utf-8.add"
+vim.notify_once("spellfilePath:" .. spellfilePath)
 
 -- The computated titlestring to assign to the option
 local custom_titlestring = get_title_string.get_title_string()
@@ -48,7 +49,7 @@ local options = {
   updatetime = 250, -- updatetime - if this many millisecond's nothing is typed the swap file will be written to disk
   wrap = false, -- this option changes how text is displayed
   spellfile = spellfilePath, -- path to our custom dictionary
-  spelllang = { "en_us", "de_de" }, -- languages we do spellchecking for, if we enable it
+  spelllang = { "en_us","de_de" },  -- languages we do spellchecking for, if we enable it
   foldlevel = 20, -- the result is a number, which is the foldlevel of line
   foldmethod = "expr", -- foldexpr gives t he foldlevel of a line
   foldexpr = "nvim_treesitter#foldexpr()", -- expression, used for when foldmethod is expr in this case treesitter
