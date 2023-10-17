@@ -22,7 +22,6 @@ if nvim_tree then
       adaptive_size = true,
       centralize_selection = false,
       width = 35,
-      hide_root_folder = false,
       side = "left",
       preserve_window_proportions = true,
       number = false,
