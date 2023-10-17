@@ -21,7 +21,7 @@ return {
   function ()
     require"ltex_extra".setup {
       load_langs = {"en-US", "de-DE" },
-      init_check = true,
+      init_check = false,
       path = vim.fn.stdpath "config" .. "/dictionary/dictionary.txt",
       log_level = "none",
     }
