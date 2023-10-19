@@ -26,7 +26,7 @@ if mason_lspconfig and lspconfig and handlers then
       -- "graphql",
       "html",
       "jsonls",
-      "ltex",
+      -- "ltex",
       -- "sumneko_lua",
       "lua_ls",
       -- "rnix",
