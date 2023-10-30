@@ -22,3 +22,13 @@ userType
 userCredentials
 UserGenerator
 accountData
+overWriteJwtExpiration
+overwriteJwtExpiration
+storedEncryptedPassword
+auth
+signIn
+gqlFetchAdapater
+jwt
+useSession
+getSession
+SessionProvider
