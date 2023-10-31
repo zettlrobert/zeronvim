@@ -67,6 +67,9 @@ keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
 -- NVIM TREE
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
+-- Zen Mode
+keymap("n", "<leader>zen", ":ZenMode<CR>", opts)
+
 -- Telescope
 local telescope_builtin = require('telescope.builtin')
 keymap('n', '<leader>ff', telescope_builtin.find_files, {})

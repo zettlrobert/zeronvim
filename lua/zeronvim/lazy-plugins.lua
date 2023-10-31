@@ -106,6 +106,15 @@ require("lazy").setup({
   -- Syntax
   "jxnblk/vim-mdx-js",
 
+  -- Zen
+  {
+    "folke/zen-mode.nvim",
+    dependencies = {
+      "folke/twilight.nvim",
+    },
+    opts = require("zeronvim.plugins.zen").config
+  },
+
   -- AI Codeium
   {
     "jcdickinson/codeium.nvim",
