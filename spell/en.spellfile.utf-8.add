@@ -32,4 +32,16 @@ jwt
 useSession
 getSession
 SessionProvider
-/
+eval
+nixpkgs
+pkgs
+stdenv
+mkDerivation
+reuseability
+dev
+devShells
+utils
+eachSystem
+linux
+aarch64
+allSystems
