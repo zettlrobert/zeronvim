@@ -100,5 +100,18 @@ ctx
 req
 timestamp
 nestjs
+<<<<<<< Updated upstream
 default
 default
+=======
+addon
+nx
+addons
+lifecycle
+userId
+constructorProps
+ILifecycleStatusHistory
+UserTimestamp
+ObjectId
+ULifecycleStatusTypes
+>>>>>>> Stashed changes
