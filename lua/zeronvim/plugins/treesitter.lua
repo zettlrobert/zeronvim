@@ -1,6 +1,6 @@
 local utils = require "zeronvim.utils"
 local treesitter_configs = utils.protected_plugin_call("nvim-treesitter.configs")
-local treesitter_context = utils.protected_plugin_call("treesitter-context")
+local ts_context_commentstring = utils.protected_plugin_call("treesitter-context")
 
 if treesitter_configs then
   treesitter_configs.setup {
@@ -35,7 +35,7 @@ if treesitter_configs then
 
     indent = { enable = true },
 
-    context_commentstring = {
+    ts_context_commentstring = {
       enable          = true,
       enablue_autocmd = false
     },
@@ -90,8 +90,8 @@ if treesitter_configs then
   }
 end
 
-if treesitter_context then
-  treesitter_context.setup {
+if ts_context_commentstring then
+  ts_context_commentstring.setup {
     enable = true,
     max_lines = 0,
     min_window_height = 0,
