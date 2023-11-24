@@ -123,3 +123,6 @@ azul
 url
 baseUrl
 localhost
+resolvers
+wildcard
+mongodb
