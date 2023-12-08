@@ -35,7 +35,10 @@ require("lazy").setup({
   "nvim-treesitter/nvim-treesitter-context",
 
   -- Colorscheme
-  { "catppuccin/nvim",                     name = "catppuccin" },
+  { "catppuccin/nvim",      name = "catppuccin" },
+
+  -- LSP Color Fix
+  "folke/lsp-colors.nvim",
 
   -- Lualine
   "nvim-lualine/lualine.nvim",
@@ -44,7 +47,7 @@ require("lazy").setup({
   "nvim-tree/nvim-tree.lua",
 
   -- Indentlines
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl",       opts = {} },
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
   -- Icons
   "nvim-tree/nvim-web-devicons",
