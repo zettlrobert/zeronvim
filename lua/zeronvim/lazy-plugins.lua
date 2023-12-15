@@ -55,6 +55,9 @@ require("lazy").setup({
   -- Gitsigns
   "lewis6991/gitsigns.nvim",
 
+  -- Diffview
+  "sindrets/diffview.nvim",
+
   -- Comments
   "numToStr/Comment.nvim",
 
