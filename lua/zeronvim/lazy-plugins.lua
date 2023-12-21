@@ -35,7 +35,32 @@ require("lazy").setup({
   "nvim-treesitter/nvim-treesitter-context",
 
   -- Colorscheme
-  { "catppuccin/nvim",      name = "catppuccin" },
+  { "catppuccin/nvim",                     name = "catppuccin" },
+
+  -- neorg
+  {
+    "nvim-neorg/neorg",
+    build = ":Neorg sync-parsers",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("neorg").setup {
+        load = {
+          ["core.defaults"] = {},  -- Loads default behaviour
+          ["core.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.dirman"] = {      -- Manages Neorg workspaces
+            config = {
+              workspaces = {
+                zettlrobert = "~/notes/zettl",
+                zerodev = "~/notes/zerodev-solutions",
+                mobilehead = "~/notes/mobilehead",
+              },
+              default_workspace = "zettlrobert",
+            }
+          },
+        },
+      }
+    end,
+  },
 
   -- LSP Color Fix
   "folke/lsp-colors.nvim",
@@ -47,7 +72,7 @@ require("lazy").setup({
   "nvim-tree/nvim-tree.lua",
 
   -- Indentlines
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl",       opts = {} },
 
   -- Icons
   "nvim-tree/nvim-web-devicons",
