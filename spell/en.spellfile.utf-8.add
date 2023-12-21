@@ -144,3 +144,15 @@ TODOs
 ULR
 statefull
 URQLProvider
+DynamicModule
+MongodbConnectionModule
+graphql
+UI
+AuthenticationInfo
+isLoading
+gqlFetchAdapter
+authenticationAction
+requestPolicy
+OperationResult
+executeQuery
+CandidateQuery
