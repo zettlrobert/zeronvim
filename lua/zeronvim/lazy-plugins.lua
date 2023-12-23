@@ -35,7 +35,9 @@ require("lazy").setup({
   "nvim-treesitter/nvim-treesitter-context",
 
   -- Colorscheme
-  { "catppuccin/nvim",                     name = "catppuccin" },
+  { "catppuccin/nvim",      name = "catppuccin" },
+  { "rebelot/kanagawa.nvim" },
+  { 'rose-pine/neovim',     name = 'rose-pine' },
 
   -- neorg
   {
