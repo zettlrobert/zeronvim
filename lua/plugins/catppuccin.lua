@@ -1,4 +1,6 @@
--- Fix color issues
+-- https://github.com/catppuccin/nvim - Soothign pastel theme for Neovim
+
+-- Manual adjustments to the color scheme
 local crust = "#11111B"
 local mantle = "#181825"
 local rosewater = "#F5e0DC"
@@ -16,7 +18,8 @@ return {
         dim_inactive = {
           enabled = false,
         },
-        transparent_background = false,
+        -- This option ensures, we do not override our set colors
+        transparent_background = true,
         term_colors = true,
         dap = {
           enabled = false,
