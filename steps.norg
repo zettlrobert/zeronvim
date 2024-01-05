@@ -1,2 +1,32 @@
 * Configuration
   - ( ) look into treesitter configuration, compare with old setup
+  - ( ) install kanagawa, and rose-pine themes, create/look into theme switcher
+  - ( ) migrate utility functions
+  -- tab - new tab and close tab
+  -- wrapping
+
+** Plugins
+*** Required
+    - (x) zen
+    - (x) treesitter
+    - (x) gitsigns
+    - (x) telescope
+    - ( ) neorg
+    - ( ) trouble
+    - ( ) toggleterm
+    - ( ) todo-comments
+    - ( ) comment
+    - ( ) codeium
+    - ( ) nvim-tree
+    - ( ) navic
+    - ( ) lualine
+    - ( ) cmp
+    - ( ) colorpicer - ccc
+
+*** Optional
+    - ( ) indentlines
+
+*** Additional Configuration
+    - (-) gitsigns
+    - (-) treesitter
+    - (-) telescope
