@@ -16,5 +16,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Require Neovim Options
 require('options')
 
+-- Require generic keymaps, plugin specific keymaps are located in the plugin file
+require('keymaps')
+
 -- Require Plugins
 require("lazy").setup("plugins")
