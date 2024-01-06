@@ -1,5 +1,3 @@
-local utils = require("utils")
-
 local keymap = vim.keymap.set
 
 -- Window Navigation
