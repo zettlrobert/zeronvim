@@ -12,10 +12,7 @@ end
 M.get_user = function()
   local os = require('os')
   local user = os.getenv("USER")
-  print(user)
   return user
 end
-
-M.get_user()
 
 return M

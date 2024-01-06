@@ -3,11 +3,12 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    tag = "v0.9.1",
     config = function()
       local config = require("nvim-treesitter.configs")
       config.setup({
-        ensure_installed = "all",
-        sync_install = false,
+        ensure_installed = { "typescript", "lua", "c", "norg", "go", "rust", "bash", "yaml" },
+        sync_install = true,
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },

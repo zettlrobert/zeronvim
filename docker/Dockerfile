@@ -45,6 +45,8 @@ RUN pacman -Sy \
     fzf \
     prettier \
     xclip \
+    ttf-meslo-nerd \
+    clang \
     --noconfirm
 
 # Add user
