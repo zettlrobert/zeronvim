@@ -117,6 +117,7 @@ WORKDIR /home/${USER_NAME}/neovim
 USER root
 RUN make CMAKE_BUILD_TYPE=Release install
 USER ${USER_NAME}
+ENV USER=${USER_NAME}
 WORKDIR /home/${USER_NAME}
 
 # aliases
