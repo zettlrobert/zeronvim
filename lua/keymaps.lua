@@ -45,15 +45,6 @@ keymap("n", "<A-j>", ":m .+1<CR>", { desc = "Move current line down" })
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move current selection up" })
 keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move current selection down" })
 
--- Telescope
-keymap('n', '<leader>ff', utils.telescope_builtin.find_files, { desc = "Telescope find files" })
-keymap('n', '<leader>fy', utils.telescope_find_env,
-  { desc = "Telescope find environment files" })
-keymap('n', '<leader>fg', utils.telescope_builtin.live_grep, { desc = "Telescope live grep" })
-keymap('n', '<leader>fb', utils.telescope_builtin.buffers, { desc = "Telescope opened buffers" })
-keymap('n', '<leader>fh', utils.telescope_builtin.help_tags, { desc = "Telescope help tags" })
-keymap('n', '<leader>key', utils.telescope_builtin.keymaps, { desc = "Telescope keymaps" })
-
 -- LSP
 keymap("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 keymap("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
