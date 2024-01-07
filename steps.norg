@@ -12,6 +12,11 @@
     - (x) gitsigns
     - (x) telescope
     - (x) neorg
+    - ( ) undotree
+    - ( ) lsp
+    - ( ) snipets
+    - ( ) cmp
+    - ( ) fidget
     - ( ) trouble
     - ( ) toggleterm
     - ( ) todo-comments
@@ -20,7 +25,6 @@
     - ( ) nvim-tree
     - ( ) navic
     - ( ) lualine
-    - ( ) cmp
     - ( ) colorpicer - ccc
 
 *** Optional
