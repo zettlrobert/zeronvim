@@ -1,47 +1,118 @@
+local icons = require("icons")
+
 return {
-  {
+  "neovim/nvim-lspconfig",
+  dependencies = {
     "williamboman/mason.nvim",
-    lazy = false,
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  {
     "williamboman/mason-lspconfig.nvim",
-    lazy = false,
-    opts = {
-      auto_install = true,
-    },
   },
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    config = function()
-      local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-      if status_ok then
-        return cmp_nvim_lsp.default_capabilities()
-      end
+  config = function()
+    local mason = require("mason")
+    local nvim_lspconfig = require("lspconfig")
+    local mason_lspconfig = require("mason-lspconfig")
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-      capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-          "documentation",
-          "detail",
-          "additionalTextEdits",
-        },
+    -- Handle Binary Installation of Servers
+    mason.setup({
+      ui = {
+        icons = {
+          package_installed = icons.mason.package_installed,
+          package_pending = icons.mason.package_pending,
+          package_uninstalled = icons.mason.package_uninstalled,
+        }
+      },
+      keymaps = {
+        toggle_package_expand = "<CR>",
+        install_package = "i",
+        update_package = "u",
+        check_package_version = "c",
+        update_all_packages = "U",
+        check_outdated_packages = "C",
+        uninstall_package = "X",
+        cancel_installation = "<C-c>",
+        apply_language_filter = "<C-f>",
       }
+    })
 
-      local lspconfig = require("lspconfig")
-      lspconfig.tsserver.setup({
-        capabilities = capabilities
+    -- 
+    local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+    lsp_capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        "documentation",
+        "detail",
+        "additionalTextEdits",
+      },
+    }
+
+    -- Default LSP Handler
+    local default_handler = function(server)
+      nvim_lspconfig[server].setup({
+        capabilities = lsp_capabilities
       })
-      lspconfig.html.setup({
-        capabilities = capabilities
-      })
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
-    end,
-  },
+    end
+
+    -- Handle the LSP setup
+    mason_lspconfig.setup({
+      ensure_installed = {
+        "bashls",
+        "clangd",
+        "cmake",
+        "cssls",
+        "cssmodules_ls",
+        "dockerls",
+        "docker_compose_language_service",
+        "eslint",
+        "gopls",
+        "graphql",
+        "html",
+        "htmx",
+        "biome",
+        "tsserver",
+        "lua_ls",
+        "marksman",
+        "mdx_analyzer",
+        --"nil_ls",
+        "prismals",
+        "pyright",
+        "rust_analyzer",
+        "sqls",
+        "svelte",
+        "taplo",
+        "tailwindcss",
+        "terraformls",
+        "tflint",
+        "volar",
+        "yamlls"
+      },
+      automatic_installation = true,
+      handlers = {
+        default_handler
+      }
+    })
+
+    -- local function, for better assignment in lsp keymaps
+    local function list_workspace_folders()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end
+
+    -- Autocommand to setup keybinds on lsp attach
+    vim.api.nvim_create_autocmd('LspAttach', {
+      desc = 'LSP actions',
+      callback = function(event)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+        vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
+        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action)
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+        vim.keymap.set('n', '<space>sig', vim.lsp.buf.signature_help) -- todo: define better keymap
+        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
+        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
+        vim.keymap.set('n', '<space>wl', list_workspace_folders)
+        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename)
+      end
+    })
+  end
 }
