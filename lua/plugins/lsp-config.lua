@@ -5,13 +5,15 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "WhoIsSethDaniel/mason-tool-installer.nvim"
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
     local mason = require("mason")
     local nvim_lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
     local mason_tool_installer = require("mason-tool-installer")
+    local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
     -- Handle Binary Installation of Servers
     mason.setup({
@@ -35,8 +37,16 @@ return {
       }
     })
 
+    -- Create object that represent the capabilities of the Neovim completion plugin
+    local cmp_capabilities = cmp_nvim_lsp.default_capabilities()
+
+    -- Creates a new object that represents the capabilities of the LSP client
     local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+
+    -- Enable lsp completion with snippets
     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+    -- Set the properties that the LSP client will resolve when completing items
     lsp_capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = {
         "documentation",
@@ -45,10 +55,13 @@ return {
       },
     }
 
+    -- Merges the capabilities of the Neovim completion plugin and the LSP client into one object
+    local extended_capabilities = vim.tbl_deep_extend('force', lsp_capabilities, cmp_capabilities)
+
     -- Default LSP Handler
     local default_handler = function(server)
       nvim_lspconfig[server].setup({
-        capabilities = lsp_capabilities
+        capabilities = extended_capabilities
       })
     end
 
@@ -88,6 +101,7 @@ return {
       automatic_installation = true,
       handlers = {
         default_handler,
+        -- Add overwerites for language specific handlers
       }
     })
 
