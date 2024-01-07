@@ -95,7 +95,8 @@ return {
     mason_tool_installer.setup({
       ensure_installed = {
         "stylua",
-        "prettierd"
+        "prettierd",
+        "eslint_d"
       }
     })
 
@@ -109,7 +110,6 @@ return {
       desc = 'LSP actions',
       callback = function(event)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-        vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action)

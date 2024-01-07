@@ -22,7 +22,8 @@ return {
             }
           end
         })
-      }
+      },
+      null_ls.builtins.diagnostics.eslint_d
     })
 
     vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
