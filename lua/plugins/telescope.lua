@@ -1,19 +1,30 @@
 return {
   'nvim-telescope/telescope.nvim',
   tag = '0.1.5',
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-ui-select.nvim'
+  },
   config = function()
     local keymap = vim.keymap.set
     local telescope_builtin = require('telescope.builtin')
     local telescope = require('telescope')
+    local telescope_themes = require('telescope.themes')
 
-    telescope.setup {
+    telescope.setup({
       pickers = {
         find_files = {
           find_command = { 'rg', '--hidden', '--files' },
         }
-      }
-    }
+      },
+      extensions = {
+        ["ui-select"] = {
+          telescope_themes.get_dropdown {}
+        }
+      },
+    })
+
+    telescope.load_extension('ui-select')
 
     local find_env_file = function()
       if telescope_builtin.builtin then
