@@ -25,3 +25,6 @@ require("lazy").setup("plugins")
 
 -- Require generic keymaps, plugin specific keymaps are located in the plugin file
 require('keymaps')
+
+-- Diagnostics Configuration
+require('diagnostics')
