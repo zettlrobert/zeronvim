@@ -5,11 +5,13 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
+    "WhoIsSethDaniel/mason-tool-installer.nvim"
   },
   config = function()
     local mason = require("mason")
     local nvim_lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
+    local mason_tool_installer = require("mason-tool-installer")
 
     -- Handle Binary Installation of Servers
     mason.setup({
@@ -33,7 +35,6 @@ return {
       }
     })
 
-    -- 
     local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
     lsp_capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -66,7 +67,7 @@ return {
         "graphql",
         "html",
         "htmx",
-        "biome",
+        --"biome",
         "tsserver",
         "lua_ls",
         "marksman",
@@ -86,7 +87,15 @@ return {
       },
       automatic_installation = true,
       handlers = {
-        default_handler
+        default_handler,
+      }
+    })
+
+    -- Hanlde the auto installation of tools via Mason
+    mason_tool_installer.setup({
+      ensure_installed = {
+        "stylua",
+        "prettierd"
       }
     })
 
@@ -100,7 +109,7 @@ return {
       desc = 'LSP actions',
       callback = function(event)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-        vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end)
+        vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action)
