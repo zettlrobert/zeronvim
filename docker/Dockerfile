@@ -47,6 +47,7 @@ RUN pacman -Sy \
     xclip \
     ttf-firacode-nerd \
     clang \
+    cargo \
     --noconfirm
 
 # Add user
