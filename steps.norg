@@ -12,7 +12,8 @@
     - (x) gitsigns
     - (x) telescope
     - (x) neorg
-    - ( ) undotree
+    - (x) undotree
+    - (x) lualine
     - ( ) lsp
     - ( ) snipets
     - ( ) cmp
@@ -24,7 +25,6 @@
     - ( ) codeium
     - ( ) nvim-tree
     - ( ) navic
-    - ( ) lualine
     - ( ) colorpicer - ccc
 
 *** Optional
