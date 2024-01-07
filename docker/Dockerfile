@@ -45,7 +45,7 @@ RUN pacman -Sy \
     fzf \
     prettier \
     xclip \
-    ttf-meslo-nerd \
+    ttf-firacode-nerd \
     clang \
     --noconfirm
 
