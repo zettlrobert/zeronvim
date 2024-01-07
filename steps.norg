@@ -19,16 +19,21 @@
     - ( ) cmp
     - ( ) fidget
     - ( ) trouble
+    - ( ) todo-comments
     - ( ) toggleterm
     - ( ) todo-comments
     - ( ) comment
     - ( ) codeium
-    - ( ) nvim-tree
+    - ( ) nvim-tree - or alternative file explorer
     - ( ) navic
     - ( ) colorpicer - ccc
+    - ( ) diffview
+    - ( ) debugging
 
-*** Optional
+  * Optional
     - ( ) indentlines
+    - ( ) navic
+    - ( ) toggleterm - is it not easier to just open a new terminal emulator tab
 
 *** Additional Configuration
     - (-) gitsigns
