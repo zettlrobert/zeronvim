@@ -10,6 +10,7 @@ return {
     local telescope_builtin = require('telescope.builtin')
     local telescope = require('telescope')
     local telescope_themes = require('telescope.themes')
+    local trouble = require("trouble.providers.telescope")
 
     telescope.setup({
       pickers = {
@@ -22,6 +23,12 @@ return {
           telescope_themes.get_dropdown {}
         }
       },
+      defaults = {
+        mappings = {
+          i = { ["<c-y>"] = trouble.open_with_trouble },
+          n = { ["<c-y>"] = trouble.open_with_trouble },
+        }
+      }
     })
 
     telescope.load_extension('ui-select')
