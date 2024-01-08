@@ -14,29 +14,35 @@
     - (x) neorg
     - (x) undotree
     - (x) lualine
-    - ( ) lsp
-    - ( ) snipets
-    - ( ) cmp
-    - ( ) fidget
-    - ( ) trouble
+    - (x) lsp
+    - (x) fidget
+    - (x) formatting - null-ls - generalized lsp for communication with inbuilt lsp client
+    - (x) cmp
+    - (x) snippets
+    - (x) trouble
+    - ( ) diagnostics config - make pretty
+    - ( ) codeium
     - ( ) todo-comments
     - ( ) toggleterm
     - ( ) todo-comments
     - ( ) comment
-    - ( ) codeium
     - ( ) nvim-tree - or alternative file explorer
     - ( ) navic
     - ( ) colorpicer - ccc
     - ( ) diffview
     - ( ) debugging
+    - ( ) biome - lsp configuration
+    - ( ) refactor: lualine icons into icons file
 
   * Optional
     - ( ) indentlines
     - ( ) navic
     - ( ) toggleterm - is it not easier to just open a new terminal emulator tab
+    - ( ) https://github.com/f3fora/cmp-spell spell completion source - grammarly latex lsp?
 
 *** Additional Configuration
     - (-) gitsigns
     - (-) treesitter
     - (-) telescope
     - (-) neorg
+    - (-) fidget
