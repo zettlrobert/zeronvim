@@ -9,8 +9,8 @@ if telescope then
     defaults = {
       path_display = { "smart" },
       mappings = {
-        i = { ["<C-q>"] = trouble.open_with_trouble },
-        n = { ["<C-q>"] = trouble.open_with_trouble },
+        i = { ["<C-y>"] = trouble.open_with_trouble },
+        n = { ["<C-y>"] = trouble.open_with_trouble },
       },
     },
     pickers = {
