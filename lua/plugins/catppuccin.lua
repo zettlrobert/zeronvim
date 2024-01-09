@@ -22,14 +22,6 @@ return {
         -- This option ensures, we do not override our set colors
         transparent_background = true,
         term_colors = true,
-        --            dap = {
-        --              enabled = false,
-        --              enable_ui = false,
-        --            },
-        --            indent_blankline = {
-        --              enabled = true,
-        --              colored_indent_levels = false,
-        --            },
       })
       --
       -- Set colorscheme

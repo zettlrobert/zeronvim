@@ -20,11 +20,10 @@
     - (x) cmp
     - (x) snippets
     - (x) trouble
-    - ( ) diagnostics config - make pretty
+    - (x) diagnostics config - make pretty
     - ( ) codeium
     - ( ) todo-comments
     - ( ) toggleterm
-    - ( ) todo-comments
     - ( ) comment
     - ( ) nvim-tree - or alternative file explorer
     - ( ) navic
@@ -39,6 +38,7 @@
     - ( ) navic
     - ( ) toggleterm - is it not easier to just open a new terminal emulator tab
     - ( ) https://github.com/f3fora/cmp-spell spell completion source - grammarly latex lsp?
+    - ( ) todo-comments
 
 *** Additional Configuration
     - (-) gitsigns
@@ -46,3 +46,5 @@
     - (-) telescope
     - (-) neorg
     - (-) fidget
+    - ( ) diy improved window https://github.com/cseickel/diagnostic-window.nvim/tree/main/ftdetect
+

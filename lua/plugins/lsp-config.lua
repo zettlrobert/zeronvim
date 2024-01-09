@@ -101,11 +101,16 @@ return {
       automatic_installation = true,
       handlers = {
         default_handler,
-        -- Add overwerites for language specific handlers
+        -- Add overwrites for language specific handlers
       }
     })
 
-    -- Hanlde the auto installation of tools via Mason
+    -- Ensure Hover Doc has rounded border
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "rounded",
+    })
+
+    -- Handle the auto installation of tools via Mason
     mason_tool_installer.setup({
       ensure_installed = {
         "stylua",
