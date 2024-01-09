@@ -9,8 +9,6 @@ local options = {
   breakindent = true,
   -- Number of screen lines to use for the command-line, cmdheight - Number of screen lines to use for the command-line, space to display messages space to display messages
   cmdheight = 2,
-  -- comma-separated list of screen columns
-  colorcolumn = "125",
   -- comma-separated list of options for Insert mode completion
   completeopt = { "menuone", "noselect", "preview" },
   -- determine how text with the 'conceal' syntax attribute :syn-conceal is shown
