@@ -52,4 +52,15 @@ M.diagnostics = {
     { name = "DiagnosticSignInfo", text = "" },
   }
 }
+
+M.todo_comments = {
+  Bug = " ",
+  Info = " ",
+  Hack = " ",
+  Warn = " ",
+  Perf = "",
+  Note = " ",
+  Test = "⏲ "
+}
+
 return M

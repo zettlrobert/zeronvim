@@ -23,18 +23,18 @@
     - (x) diagnostics config - make pretty
     - (x) comment
     -- (x) nvim-treesitter-commentstring
-    - ( ) todo-comments
+    - (x) todo-comments
+    - ( ) navic
     - ( ) codeium
     - ( ) toggleterm
     - ( ) oil/neo-tree/nvim-tree - or alternative file explorer
-    - ( ) navic
     - ( ) colorpicer - ccc
     - ( ) diffview
     - ( ) debugging
+    - ( ) keymaps quickfix list
     - ( ) biome - lsp configuration
     - ( ) refactor: lualine icons into icons file
 
-    - ( ) commentstring based on cursor location "JoosepAlviste/nvim-ts-context-commentstring",
     - ( ) context of current element "nvim-treesitter/nvim-treesitter-context",
     - ( ) { 'rose-pine/neovim',     name = 'rose-pine' },
 
