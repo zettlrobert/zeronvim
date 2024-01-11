@@ -21,9 +21,10 @@
     - (x) snippets
     - (x) trouble
     - (x) diagnostics config - make pretty
+    - (x) comment
+    -- (x) nvim-treesitter-commentstring
     - ( ) todo-comments
     - ( ) codeium
-    - ( ) comment
     - ( ) toggleterm
     - ( ) oil/neo-tree/nvim-tree - or alternative file explorer
     - ( ) navic
@@ -48,7 +49,6 @@
     - (-) gitsigns
     - (-) treesitter
     -- nivm-treesitter-context
-    -- nvim-treesitter-commentstring
     -- nvim-treesitter-textobjects
     - (-) telescope
     - (-) neorg
