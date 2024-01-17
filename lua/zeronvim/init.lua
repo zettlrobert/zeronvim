@@ -33,6 +33,8 @@ require "zeronvim.plugins.toggleterm"
 require "zeronvim.plugins.trouble"
 require "zeronvim.plugins.todo-comments"
 
+require "zeronvim.autocommands";
+
 -- Ai
 require "zeronvim.plugins.codeium"
 
