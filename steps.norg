@@ -37,7 +37,7 @@
     - (x) codeium
     - ( ) toggleterm
     - (x) nvim-tree - or alternative file explorer
-    - ( ) colorpicer - ccc
+    - (x) colorpicer - ccc
     - ( ) diffview
     - ( ) debugging
     - ( ) keymaps quickfix list
@@ -69,4 +69,5 @@
     - (-) diy improved window https://github.com/cseickel/diagnostic-window.nvim/tree/main/ftdetect
     - (-) navic - better colors look at breadcrump progression
     - ( ) keymaps descriptions
+    - ( ) plugin to toggle plugins
 
