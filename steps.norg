@@ -24,7 +24,16 @@
     - (x) comment
     -- (x) nvim-treesitter-commentstring
     - (x) todo-comments
-    - ( ) navic
+    - (-) navic
+    - ( ) autocommand for conceallevel (also legacy)
+    - ( ) writing tools
+    -- vale
+    -- null-ls.nvim
+    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#cspell}[cspell]
+    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell}[codespell]
+    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell}[proselint] - recommends {https://valentjn.github.io/ltex/}[ltex]
+    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#spell}[spell]
+    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#write_good}[writegood]
     - ( ) codeium
     - ( ) toggleterm
     - ( ) oil/neo-tree/nvim-tree - or alternative file explorer
@@ -43,7 +52,9 @@
     - ( ) navic
     - ( ) toggleterm - is it not easier to just open a new terminal emulator tab
     - ( ) https://github.com/f3fora/cmp-spell spell completion source - grammarly latex lsp?
+    -- ( ) https://github.com/f3fora/cmp-spell
     - ( ) todo-comments
+    - ( ) marks
 
 *** Additional Configuration
     - (-) gitsigns
@@ -51,7 +62,10 @@
     -- nivm-treesitter-context
     -- nvim-treesitter-textobjects
     - (-) telescope
+    - (-) {https://github.com/SmiteshP/nvim-navbuddy}[Navbody - Companion to Navic]
     - (-) neorg
+    -- {https://github.com/nvim-neorg/neorg-telescope}[neorg-telescope]
     - (-) fidget
-    - ( ) diy improved window https://github.com/cseickel/diagnostic-window.nvim/tree/main/ftdetect
+    - (-) diy improved window https://github.com/cseickel/diagnostic-window.nvim/tree/main/ftdetect
+    - (-) navic - better colors look at breadcrump progression
 
