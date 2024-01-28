@@ -23,6 +23,9 @@ require('options')
 -- Require Plugins
 require("lazy").setup("plugins")
 
+-- Require Autocommands
+require("autocommands/conceallevel")
+
 -- Require generic keymaps, plugin specific keymaps are located in the plugin file
 require('keymaps')
 
