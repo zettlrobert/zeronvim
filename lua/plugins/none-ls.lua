@@ -2,12 +2,19 @@
 return {
   "nvimtools/none-ls.nvim",
   config = function()
-    local null_ls = require('null-ls')
+    local null_ls = require("null-ls")
 
     null_ls.setup({
       sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting['prettier'].with({
+        null_ls.builtins.formatting["stylua"].with({
+          extra_args = function()
+            return {
+              "--indent-type=Spaces",
+              "--indent-width=2",
+            }
+          end,
+        }),
+        null_ls.builtins.formatting["prettier"].with({
           extra_args = function()
             return {
               "--printWidth=80",
@@ -18,14 +25,14 @@ return {
               "--semi",
               "--useTabs=false",
               "--tabWidth=2",
-              "--arrowParens=always"
+              "--arrowParens=always",
             }
-          end
-        })
+          end,
+        }),
       },
-      null_ls.builtins.diagnostics.eslint_d
+      null_ls.builtins.diagnostics.eslint_d,
     })
 
-    vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
-  end
+    vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format" })
+  end,
 }

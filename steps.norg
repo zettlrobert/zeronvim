@@ -46,6 +46,8 @@
 
     - ( ) context of current element "nvim-treesitter/nvim-treesitter-context",
     - ( ) { 'rose-pine/neovim',     name = 'rose-pine' },
+    - ( ) better tabs
+    - ( ) keybinds buffernext bufferprevious
 
   * Optional
     - ( ) indentlines
