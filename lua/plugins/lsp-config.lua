@@ -14,6 +14,7 @@ return {
     local mason_lspconfig = require("mason-lspconfig")
     local mason_tool_installer = require("mason-tool-installer")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local navic = require("nvim-navic")
 
     -- Handle Binary Installation of Servers
     mason.setup({
@@ -61,7 +62,23 @@ return {
     -- Default LSP Handler
     local default_handler = function(server)
       nvim_lspconfig[server].setup({
-        capabilities = extended_capabilities
+        -- Attach navic in the default handler
+        capabilities = extended_capabilities,
+        on_attach = function(client, bufnr)
+          -- Setup Keybinds
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references)
+          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
+          vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action)
+          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration)
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+          vim.keymap.set('n', '<space>sig', vim.lsp.buf.signature_help)
+          vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
+          vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
+          vim.keymap.set('n', '<space>wl', vim.lsp.buf.list_workspace_folders)
+          vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition)
+          vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename)
+        end,
       })
     end
 
@@ -95,13 +112,13 @@ return {
         "tailwindcss",
         "terraformls",
         "tflint",
+        "vuels",
         "volar",
         "yamlls"
       },
       automatic_installation = true,
       handlers = {
         default_handler,
-        -- Add overwrites for language specific handlers
       }
     })
 
@@ -123,24 +140,5 @@ return {
     local function list_workspace_folders()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end
-
-    -- Autocommand to setup keybinds on lsp attach
-    vim.api.nvim_create_autocmd('LspAttach', {
-      desc = 'LSP actions',
-      callback = function(event)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
-        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action)
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
-        vim.keymap.set('n', '<space>sig', vim.lsp.buf.signature_help) -- todo: define better keymap
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
-        vim.keymap.set('n', '<space>wl', list_workspace_folders)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename)
-      end
-    })
   end
 }
