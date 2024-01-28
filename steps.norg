@@ -36,7 +36,7 @@
     --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#write_good}[writegood]
     - ( ) codeium
     - ( ) toggleterm
-    - ( ) oil/neo-tree/nvim-tree - or alternative file explorer
+    - (x) nvim-tree - or alternative file explorer
     - ( ) colorpicer - ccc
     - ( ) diffview
     - ( ) debugging
@@ -68,4 +68,5 @@
     - (-) fidget
     - (-) diy improved window https://github.com/cseickel/diagnostic-window.nvim/tree/main/ftdetect
     - (-) navic - better colors look at breadcrump progression
+    - ( ) keymaps descriptions
 
