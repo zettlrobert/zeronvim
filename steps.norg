@@ -22,24 +22,25 @@
     - (x) trouble
     - (x) diagnostics config - make pretty
     - (x) comment
-    -- (x) nvim-treesitter-commentstring
+    - (x) nvim-treesitter-commentstring
+    - (x) codeium
     - (x) todo-comments
     - (x) window title
-    - (-) navic
-    - ( ) autocommand for conceallevel (also legacy)
-    - ( ) writing tools
-    -- vale
-    -- null-ls.nvim
-    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#cspell}[cspell]
-    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell}[codespell]
-    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell}[proselint] - recommends {https://valentjn.github.io/ltex/}[ltex]
-    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#spell}[spell]
-    --- {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#write_good}[writegood]
-    - (x) codeium
-    - ( ) toggleterm
+    - (x) autocommand for conceallevel (also legacy)
+    - (x) feat: autocommand json files conceallevel
     - (x) nvim-tree - or alternative file explorer
     - (x) colorpicer - ccc
-    - ( ) feat: autocommand json files conceallevel
+    - (-) navic
+    - (-) writing tools
+    -- (x) vim native spell setup
+    -- ( ) vale
+    -- ( ) null-ls.nvim
+    --- ( ) {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#cspell}[cspell]
+    --- ( ) {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell}[codespell]
+    --- ( ) {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell}[proselint] - recommends {https://valentjn.github.io/ltex/}[ltex]
+    --- ( ) {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#spell}[spell]
+    --- ( ) {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#write_good}[writegood]
+    - ( ) toggleterm
     - ( ) diffview
     - ( ) debugging
     - ( ) keymaps quickfix list
