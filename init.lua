@@ -32,3 +32,6 @@ require("keymaps")
 
 -- Diagnostics Configuration
 require("diagnostics")
+
+-- Custom Coded Config
+require("config")

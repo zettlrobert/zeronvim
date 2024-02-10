@@ -5,12 +5,12 @@ M.protected_plugin = function(plugin)
   if status_ok then
     return loaded_plugin
   else
-    error('Could not load plugin: ' .. plugin)
+    error("Could not load plugin: " .. plugin)
   end
 end
 
 M.get_user = function()
-  local os = require('os')
+  local os = require("os")
   local user = os.getenv("USER")
   return user
 end
@@ -32,6 +32,16 @@ M.get_system_binary = function(binary)
 
     return binary_path
   end
+end
+
+M.get_current_working_directory = function()
+  local current_working_directory = vim.fn.getcwd()
+  return current_working_directory
+end
+
+M.get_project_name = function()
+  local project_name = string.match(vim.fn.getcwd(), "/(%w+)$")
+  return project_name or vim.fn.getcwd()
 end
 
 return M
