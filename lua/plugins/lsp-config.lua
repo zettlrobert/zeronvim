@@ -1,4 +1,4 @@
-local icons = require("icons")
+local icons = require("assets.icons")
 
 return {
   "neovim/nvim-lspconfig",
@@ -23,7 +23,7 @@ return {
           package_installed = icons.mason.package_installed,
           package_pending = icons.mason.package_pending,
           package_uninstalled = icons.mason.package_uninstalled,
-        }
+        },
       },
       keymaps = {
         toggle_package_expand = "<CR>",
@@ -35,7 +35,7 @@ return {
         uninstall_package = "X",
         cancel_installation = "<C-c>",
         apply_language_filter = "<C-f>",
-      }
+      },
     })
 
     -- Create object that represent the capabilities of the Neovim completion plugin
@@ -57,7 +57,7 @@ return {
     }
 
     -- Merges the capabilities of the Neovim completion plugin and the LSP client into one object
-    local extended_capabilities = vim.tbl_deep_extend('force', lsp_capabilities, cmp_capabilities)
+    local extended_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, cmp_capabilities)
 
     -- Default LSP Handler
     local default_handler = function(server)
@@ -66,18 +66,18 @@ return {
         capabilities = extended_capabilities,
         on_attach = function(client, bufnr)
           -- Setup Keybinds
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-          vim.keymap.set('n', 'gr', vim.lsp.buf.references)
-          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
-          vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action)
-          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration)
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
-          vim.keymap.set('n', '<space>sig', vim.lsp.buf.signature_help)
-          vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
-          vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
-          vim.keymap.set('n', '<space>wl', vim.lsp.buf.list_workspace_folders)
-          vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition)
-          vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename)
+          vim.keymap.set("n", "K", vim.lsp.buf.hover)
+          vim.keymap.set("n", "gr", vim.lsp.buf.references)
+          vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+          vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action)
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+          vim.keymap.set("n", "<space>sig", vim.lsp.buf.signature_help)
+          vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder)
+          vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder)
+          vim.keymap.set("n", "<space>wl", vim.lsp.buf.list_workspace_folders)
+          vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition)
+          vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
         end,
       })
     end
@@ -114,12 +114,12 @@ return {
         "tflint",
         "vuels",
         "volar",
-        "yamlls"
+        "yamlls",
       },
       automatic_installation = true,
       handlers = {
         default_handler,
-      }
+      },
     })
 
     -- Ensure Hover Doc has rounded border
@@ -132,13 +132,13 @@ return {
       ensure_installed = {
         "stylua",
         "prettierd",
-        "eslint_d"
-      }
+        "eslint_d",
+      },
     })
 
     -- local function, for better assignment in lsp keymaps
     local function list_workspace_folders()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end
-  end
+  end,
 }

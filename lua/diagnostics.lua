@@ -1,4 +1,4 @@
-local icons = require('icons')
+local icons = require('assets.icons')
 
 -- Global Diagnostics Keybinds
 vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)

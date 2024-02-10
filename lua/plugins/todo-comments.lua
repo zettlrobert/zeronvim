@@ -4,7 +4,7 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     local todo_comments = require("todo-comments")
-    local icons = require("icons")
+    local icons = require("assets.icons")
     local keymap = vim.keymap.set
 
     todo_comments.setup({

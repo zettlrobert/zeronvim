@@ -3,7 +3,7 @@ return {
   config = function()
     local nvim_tree = require("nvim-tree")
     local nvim_tree_api = require("nvim-tree.api")
-    local icons = require("icons")
+    local icons = require("assets.icons")
 
 
     nvim_tree.setup({

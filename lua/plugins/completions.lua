@@ -22,7 +22,7 @@ return {
     "hrsh7th/cmp-calc",
   },
   config = function()
-    local icons = require("icons")
+    local icons = require("assets.icons")
     local cmp = require('cmp')
     local luasnip = require('luasnip')
 

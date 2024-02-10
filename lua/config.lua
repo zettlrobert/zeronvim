@@ -1,5 +1,5 @@
 local utils = require("utils")
-local icons = require("icons")
+local icons = require("assets.icons")
 
 -- Set the Window Titlte
 local function set_window_title()
