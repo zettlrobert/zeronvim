@@ -38,6 +38,7 @@
     - ( ) toggleterm
     - (x) nvim-tree - or alternative file explorer
     - (x) colorpicer - ccc
+    - ( ) feat: autocommand json files conceallevel
     - ( ) diffview
     - ( ) debugging
     - ( ) keymaps quickfix list
@@ -73,3 +74,22 @@
     - ( ) keymaps descriptions
     - ( ) plugin to toggle plugins
 
+
+
+
+* BUG
+  - COMMIT_EDITMSG
+    @code bash
+    Error executing vim.schedule lua callback: /usr/local/share/nvim/runtime/lua/vim/lsp.lua:889: Error executing lua: vim/keymap.lua:0: E31: No such mapping                                                                                                                                                                                                                                             
+    stack traceback:                                                                                                                                                                                                                                                                                                                                                                                      
+    [C]: in function 'nvim_buf_del_keymap'                                                                                                                                                                                                                                                                                                                                                        
+    vim/keymap.lua: in function 'del'                                                                                                                                                                                                                                                                                                                                                             
+    /usr/local/share/nvim/runtime/lua/vim/lsp.lua:892: in function </usr/local/share/nvim/runtime/lua/vim/lsp.lua:889>                                                                                                                                                                                                                                                                            
+    [C]: in function 'nvim_buf_call'                                                                                                                                                                                                                                                                                                                                                              
+    /usr/local/share/nvim/runtime/lua/vim/lsp.lua:889: in function 'reset_defaults'                                                                                                                                                                                                                                                                                                               
+    /usr/local/share/nvim/runtime/lua/vim/lsp.lua:926: in function </usr/local/share/nvim/runtime/lua/vim/lsp.lua:912>                                                                                                                                                                                                                                                                            
+    stack traceback:                                                                                                                                                                                                                                                                                                                                                                                      
+    [C]: in function 'nvim_buf_call'                                                                                                                                                                                                                                                                                                                                                              
+    /usr/local/share/nvim/runtime/lua/vim/lsp.lua:889: in function 'reset_defaults'                                                                                                                                                                                                                                                                                                               
+    /usr/local/share/nvim/runtime/lua/vim/lsp.lua:926: in function </usr/local/share/nvim/runtime/lua/vim/lsp.lua:912>    
+    @end
