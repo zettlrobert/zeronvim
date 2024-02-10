@@ -35,3 +35,6 @@ require("diagnostics")
 
 -- Custom Coded Config
 require("config")
+
+-- Writing
+require("writing")
