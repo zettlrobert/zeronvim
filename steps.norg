@@ -24,6 +24,7 @@
     - (x) comment
     -- (x) nvim-treesitter-commentstring
     - (x) todo-comments
+    - (x) window title
     - (-) navic
     - ( ) autocommand for conceallevel (also legacy)
     - ( ) writing tools
@@ -73,9 +74,6 @@
     - (-) navic - better colors look at breadcrump progression
     - ( ) keymaps descriptions
     - ( ) plugin to toggle plugins
-
-
-
 
 * BUG
   - COMMIT_EDITMSG

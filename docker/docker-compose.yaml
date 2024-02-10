@@ -7,5 +7,5 @@ services:
     tty: true
     volumes:
       - ../:/home/zerovim/.config/nvim
-      - ../../LunarVim/:home/LunarVim
-      - ../../../notes/zettl/:home/notes/zettl
+      - ../../LunarVim/:/home/zerovim/LunarVim
+      - ../../../notes/zettl/:/home/zerovim/notes/zettl
