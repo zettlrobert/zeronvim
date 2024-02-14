@@ -29,6 +29,9 @@ return {
             }
           end,
         }),
+        null_ls.builtins.diagnostics["vale"].with({
+          filetypes = { "markdown", "text", "norg" },
+        }),
       },
       null_ls.builtins.diagnostics.eslint_d,
     })

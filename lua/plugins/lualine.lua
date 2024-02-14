@@ -61,7 +61,7 @@ return {
         lualine_y = {},
         lualine_z = {}
       },
-      tabline = {},
+
       winbar = {},
       inactive_winbar = {},
       extensions = {}

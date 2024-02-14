@@ -5,6 +5,13 @@
   -- tab - new tab and close tab
   -- wrapping
 
+** System Requirements
+   - ( ) Node
+   - ( ) Go
+   - ( ) Python
+   - ( ) Cargo
+   - ( ) Java
+
 ** Plugins
 *** Required
     - (x) zen
@@ -13,7 +20,9 @@
     - (x) telescope
     - (x) neorg
     - (x) undotree
-    - (x) lualine
+    - (-) lualine
+    -- (x) core
+    -- ( ) buffer tabline
     - (x) lsp
     - (x) fidget
     - (x) formatting - null-ls - generalized lsp for communication with inbuilt lsp client
@@ -37,6 +46,8 @@
     - (-) writing tools
     -- (x) vim native spell setup
     -- ( ) vale
+    --- ( ) vale as binary on system with config in $HOEM/.vale.ini
+    --- ( ) vale plugin with downloaded binary and config
     -- ( ) null-ls.nvim
     --- ( ) {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#cspell}[cspell]
     --- ( ) {https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell}[codespell]
