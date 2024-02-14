@@ -28,12 +28,12 @@ return {
               "--arrowParens=always",
             }
           end,
-        }),
-        null_ls.builtins.diagnostics["vale"].with({
-          filetypes = { "markdown", "text", "norg" },
-        }),
+        })
       },
       null_ls.builtins.diagnostics.eslint_d,
+      -- null_ls.builtins.diagnostics["vale"].with({
+      --   filetypes = { "markdown", "text", "norg" },
+      -- }),
     })
 
     vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format" })
