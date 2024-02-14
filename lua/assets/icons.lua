@@ -93,5 +93,11 @@ M.Utils = {
   project = " "
 }
 
+M.Dashboard = {
+  NEW_FILE = " ",
+  FIND_FILE = " ",
+  LIVE_GREP = "󰱼 ",
+  CLOSE = "󱎘 "
+}
 
 return M

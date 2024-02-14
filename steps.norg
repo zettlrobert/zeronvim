@@ -30,6 +30,9 @@
     - (x) feat: autocommand json files conceallevel
     - (x) nvim-tree - or alternative file explorer
     - (x) colorpicer - ccc
+    - (x) dashboard
+    -- ( ) quotes
+    -- ( ) date
     - (-) navic
     - (-) writing tools
     -- (x) vim native spell setup
@@ -46,6 +49,7 @@
     - ( ) keymaps quickfix list
     - ( ) biome - lsp configuration
     - ( ) refactor: lualine icons into icons file
+    - ( ) neovim session https://github.com/Shatur/neovim-session-manager
 
     - ( ) context of current element "nvim-treesitter/nvim-treesitter-context",
     - ( ) { 'rose-pine/neovim',     name = 'rose-pine' },
