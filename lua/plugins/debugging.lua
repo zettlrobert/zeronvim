@@ -2,6 +2,8 @@ return {
   "mfussenegger/nvim-dap",
   dependencies = {
     "rcarriga/nvim-dap-ui",
+    "nvim-neotest/nvim-nio"
+    -- https://github.com/folke/neodev.nvim
   },
   config = function()
     local keymaps = vim.keymap.set
