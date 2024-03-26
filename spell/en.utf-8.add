@@ -125,3 +125,6 @@ reproducibility
 init
 linter
 opinioned
+func
+fmt
+Println
