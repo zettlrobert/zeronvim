@@ -1,5 +1,6 @@
 return {
   "nvim-neorg/neorg",
+  tag = "v7.0.0",
   build = ":Neorg sync-parsers",
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
