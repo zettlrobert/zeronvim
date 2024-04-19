@@ -1,17 +1,17 @@
 local icons = require("assets.icons")
 
 return {
-  "neovim/nvim-lspconfig",
+  "williamboman/mason-lspconfig.nvim",
   dependencies = {
+    "neovim/nvim-lspconfig", -- mason-lspconfig needs to be installed first
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
     local mason = require("mason")
-    local nvim_lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
+    local nvim_lspconfig = require("lspconfig")
     local mason_tool_installer = require("mason-tool-installer")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local navic = require("nvim-navic")
@@ -38,6 +38,11 @@ return {
       },
     })
 
+    -- Setup and configure navic
+    navic.setup({
+      highlight = true,
+    })
+
     -- Create object that represent the capabilities of the Neovim completion plugin
     local cmp_capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -62,10 +67,9 @@ return {
     -- Default LSP Handler
     local default_handler = function(server)
       nvim_lspconfig[server].setup({
-        -- Attach navic in the default handler
         capabilities = extended_capabilities,
         on_attach = function(client, bufnr)
-          -- Setup Keybinds
+          -- Setup Keymaps
           vim.keymap.set("n", "K", vim.lsp.buf.hover)
           vim.keymap.set("n", "gr", vim.lsp.buf.references)
           vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
@@ -78,7 +82,14 @@ return {
           vim.keymap.set("n", "<space>wl", vim.lsp.buf.list_workspace_folders)
           vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition)
           vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
+
+          -- Attach navic
+          navic.attach(client, bufnr)
         end,
+      })
+
+      nvim_lspconfig["tsserver"].setup({
+        root_dir = nvim_lspconfig.util.root_pattern("package.json", ".git"),
       })
     end
 
