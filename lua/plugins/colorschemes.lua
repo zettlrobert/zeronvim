@@ -4,8 +4,8 @@
 local crust = "#11111B"
 local mantle = "#181825"
 local rosewater = "#F5e0DC"
-local none = 'none'
---
+local none = "none"
+
 return {
   {
     "catppuccin/nvim",
@@ -25,7 +25,7 @@ return {
       })
       --
       -- Set colorscheme
-      vim.cmd.colorscheme "catppuccin"
+      vim.cmd.colorscheme("catppuccin")
       --
       --Cursorline Configuration
       vim.api.nvim_set_hl(0, "CursorLine", { bg = crust })
@@ -37,11 +37,10 @@ return {
       vim.api.nvim_set_hl(0, "VertSplit", { fg = crust, bg = none })
       --
       -- Set Background Color
-      vim.api.nvim_set_hl(0, 'Normal', { bg = mantle })
-    end
-
+      vim.api.nvim_set_hl(0, "Normal", { bg = mantle })
+    end,
   },
   {
     "rebelot/kanagawa.nvim",
-  }
+  },
 }
