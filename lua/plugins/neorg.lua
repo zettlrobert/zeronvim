@@ -23,6 +23,7 @@ return {
           }
         },
         ["core.summary"] = {},
+        ["core.export"] = {},
       },
     }
   end,
