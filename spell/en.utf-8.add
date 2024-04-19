@@ -322,3 +322,7 @@ neovim
 autocommands
 BufEnter
 Keymaps
+Luarocks
+Analytics
+fullstack
+Routertable
