@@ -39,7 +39,7 @@ return {
       },
 
       enabled = function()
-        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or cmp_dap.is_dap_buffer()
+        return vim.api.nvim_get_option_value("buftype", {}) ~= "prompt" or cmp_dap.is_dap_buffer()
       end,
 
       window = {
