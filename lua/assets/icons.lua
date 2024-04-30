@@ -41,7 +41,8 @@ M.kind = {
   Unit = "",
   Value = "",
   Variable = "",
-  Codeium = "󰁨 "
+  Codeium = "󰁨 ",
+  Dap = ""
 }
 
 M.diagnostics = {
