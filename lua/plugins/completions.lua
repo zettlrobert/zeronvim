@@ -16,15 +16,17 @@ return {
     "rafamadriz/friendly-snippets",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
+    --"hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lua",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-calc",
+    "rcarriga/cmp-dap",
   },
   config = function()
     local icons = require("assets.icons")
-    local cmp = require('cmp')
-    local luasnip = require('luasnip')
+    local cmp = require("cmp")
+    local luasnip = require("luasnip")
+    local cmp_dap = require("cmp_dap")
 
     -- Load Snippets from friendly-snippets into luasnip
     require("luasnip.loaders.from_vscode").lazy_load()
@@ -36,23 +38,27 @@ return {
         end,
       },
 
+      enabled = function()
+        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or cmp_dap.is_dap_buffer()
+      end,
+
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
 
       mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
       }),
 
       sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
+        { name = "nvim_lsp" },
         { name = "nvim_lua" },
-        { name = 'luasnip' },
+        { name = "luasnip" },
         { name = "path" },
         { name = "buffer" },
         { name = "treesitter" },
@@ -60,16 +66,23 @@ return {
         { name = "nvim_lsp_signature_help" },
         { name = "conventionalcommits" },
         { name = "calc" },
-        { name = "codeium" }
+        { name = "codeium" },
       }, {
-        { name = 'buffer' },
+        { name = "buffer" },
       }),
+
+      filetype = {
+        "dap-repl",
+        "dapui_watches",
+        "dapui_hover",
+        { sources = { { name = "dap" } } },
+      },
 
       formatting = {
         fields = { "kind", "abbr", "menu" },
         -- Formatting function for the `vim_item` object, which represents an entry in the completion menu.
         format = function(entry, vim_item)
-          vim_item.kind = string.format('%s %s', icons.kind[vim_item.kind], vim_item.kind)
+          vim_item.kind = string.format("%s %s", icons.kind[vim_item.kind], vim_item.kind)
           vim_item.menu = ({
             nvim_lsp = "[LSP]",
             nvim_lua = "[NVIM_LUA]",
@@ -79,15 +92,16 @@ return {
             treesitter = "[TREESITTER]",
             codeium = "[AI]",
             calc = "[CALC]",
-            omni = "[OMNI]"
+            omni = "[OMNI]",
+            dap = "[DAP]",
           })[entry.source.name]
           return vim_item
         end,
       },
 
       experimental = {
-        ghost_text = true
-      }
+        ghost_text = true,
+      },
     })
-  end
+  end,
 }
