@@ -7,14 +7,23 @@ return {
     "williamboman/mason.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     "hrsh7th/cmp-nvim-lsp",
+    -- Breadcrumbs
+    "SmiteshP/nvim-navic",
+    "SmiteshP/nvim-navbuddy",
+    "LunarVim/breadcrumbs.nvim",
+    "MunifTanjim/nui.nvim",
+    "pmizio/typescript-tools.nvim",
   },
   config = function()
     local mason = require("mason")
+    local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
-    local nvim_lspconfig = require("lspconfig")
     local mason_tool_installer = require("mason-tool-installer")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local navic = require("nvim-navic")
+    local breadcrumbs = require("breadcrumbs")
+    local navbuddy = require("nvim-navbuddy")
+    local typescript_tools = require("typescript-tools")
 
     -- Handle Binary Installation of Servers
     mason.setup({
@@ -36,11 +45,6 @@ return {
         cancel_installation = "<C-c>",
         apply_language_filter = "<C-f>",
       },
-    })
-
-    -- Setup and configure navic
-    navic.setup({
-      highlight = true,
     })
 
     -- Create object that represent the capabilities of the Neovim completion plugin
@@ -66,7 +70,7 @@ return {
 
     -- Default LSP Handler
     local default_handler = function(server)
-      nvim_lspconfig[server].setup({
+      lspconfig[server].setup({
         capabilities = extended_capabilities,
         on_attach = function(client, bufnr)
           -- Setup Keymaps
@@ -82,14 +86,17 @@ return {
           vim.keymap.set("n", "<space>wl", vim.lsp.buf.list_workspace_folders)
           vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition)
           vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
-
-          -- Attach navic
-          navic.attach(client, bufnr)
         end,
       })
 
-      nvim_lspconfig["tsserver"].setup({
-        root_dir = nvim_lspconfig.util.root_pattern("package.json", ".git"),
+      -- Typescript
+      lspconfig["tsserver"].setup({
+        root_dir = lspconfig.util.root_pattern("package.json", ".git"),
+        filetypes = { "javascript", "typescript", "typescriptreact", "jsx", "javascriptreact" },
+        preference = {
+          "typescript-tools",
+          "tsserver"
+        }
       })
     end
 
@@ -123,11 +130,12 @@ return {
         "tailwindcss",
         "terraformls",
         "tflint",
-        "vuels",
-        "volar",
+        --"volar",
+        --"vuels",
         "yamlls",
       },
-      automatic_installation = true,
+
+      automatic_installation = false,
       handlers = {
         default_handler,
       },
@@ -138,12 +146,17 @@ return {
       border = "rounded",
     })
 
+    -- Typescript tools replace the default tsserver
+
     -- Handle the auto installation of tools via Mason
     mason_tool_installer.setup({
       ensure_installed = {
         "stylua",
         "prettierd",
         "eslint_d",
+        -- DAP
+        "js-debug-adapter",
+        "delve"
       },
     })
 
@@ -151,5 +164,43 @@ return {
     local function list_workspace_folders()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end
+
+    -- https://github.com/pmizio/typescript-tools.nvim
+    typescript_tools.setup({
+      filetypes = {
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue", -- This needed to be
+      },
+      settings = {
+        tsserver_plugins = {
+          "@vue/typescript-plugin",
+        },
+      },
+    })
+
+    navic.setup({
+      lsp = {
+        auto_attach = true,
+        preference = {
+          "typescript-tools",
+          "tsserver",
+          "volar",
+        },
+      },
+      highlight = true,
+    })
+
+    breadcrumbs.setup({})
+
+    navbuddy.setup({
+      lsp = {
+        auto_attach = true,
+      },
+    })
+
+    vim.keymap.set("n", "<leader>s", navbuddy.open, { desc = "Open navbuddy" })
   end,
 }
