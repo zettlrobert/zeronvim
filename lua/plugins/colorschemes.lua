@@ -22,6 +22,31 @@ return {
         -- This option ensures, we do not override our set colors
         transparent_background = true,
         term_colors = true,
+        integrations = {
+          navic = {
+            enabled = true,
+            custom_bg = "NONE",
+          },
+          dap = {
+            enabled = true,
+            enable_ui = true,
+          },
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              errors = { "italic" },
+              hints = { "italic" },
+              warnings = { "italic" },
+              information = { "italic" },
+            },
+            underlines = {
+              errors = { "underline" },
+              hints = { "underline" },
+              warnings = { "underline" },
+              information = { "underline" },
+            },
+          },
+        },
       })
       --
       -- Set colorscheme
