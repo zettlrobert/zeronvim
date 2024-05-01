@@ -2,6 +2,7 @@
 -- [ ] add close toggle for dapui
 -- [ ] dap telescope -- how to use appropriately
 -- [ ] dapui - setup (icons, pretty, etc)
+-- [ ] jest setup dap-vscode-js
 
 -- Every language needs it's adapter and own configuration
 -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
