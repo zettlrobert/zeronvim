@@ -89,15 +89,20 @@ return {
         end,
       })
 
+      -- Prevent tsserver from initializing
+      if lspconfig["tsserver"] then
+        return
+      end
+
       -- Typescript
-      lspconfig["tsserver"].setup({
-        root_dir = lspconfig.util.root_pattern("package.json", ".git"),
-        filetypes = { "javascript", "typescript", "typescriptreact", "jsx", "javascriptreact" },
-        preference = {
-          "typescript-tools",
-          "tsserver"
-        }
-      })
+      --      lspconfig["tsserver"].setup({
+      --        root_dir = lspconfig.util.root_pattern("package.json", ".git"),
+      --        filetypes = { "javascript", "typescript", "typescriptreact", "jsx", "javascriptreact" },
+      --        preference = {
+      --          "typescript-tools",
+      --          "tsserver"
+      --        }
+      --      })
     end
 
     -- Handle the LSP setup
@@ -116,7 +121,7 @@ return {
         "html",
         "htmx",
         --"biome",
-        "tsserver",
+        --"tsserver",
         "lua_ls",
         "marksman",
         "mdx_analyzer",
@@ -155,8 +160,7 @@ return {
         "prettierd",
         "eslint_d",
         -- DAP
-        "js-debug-adapter",
-        "delve"
+        "delve",
       },
     })
 
@@ -186,7 +190,6 @@ return {
         auto_attach = true,
         preference = {
           "typescript-tools",
-          "tsserver",
           "volar",
         },
       },
