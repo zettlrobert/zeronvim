@@ -400,3 +400,4 @@ authExchange
 CombinedError
 GraphQLErrors
 refreshAuth
+parallelization
