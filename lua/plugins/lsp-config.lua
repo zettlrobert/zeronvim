@@ -89,20 +89,17 @@ return {
         end,
       })
 
-      -- Prevent tsserver from initializing
-      if lspconfig["tsserver"] then
-        return
-      end
-
-      -- Typescript
-      --      lspconfig["tsserver"].setup({
-      --        root_dir = lspconfig.util.root_pattern("package.json", ".git"),
-      --        filetypes = { "javascript", "typescript", "typescriptreact", "jsx", "javascriptreact" },
-      --        preference = {
-      --          "typescript-tools",
-      --          "tsserver"
-      --        }
-      --      })
+      lspconfig["volar"].setup({
+        filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+        init_options = {
+          vue = {
+            hybridMode = false,
+          },
+          typescript = {
+            tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+          },
+        },
+      })
     end
 
     -- Handle the LSP setup
@@ -171,16 +168,50 @@ return {
 
     -- https://github.com/pmizio/typescript-tools.nvim
     typescript_tools.setup({
+      root_dir = lspconfig.util.root_pattern("package.json", ".git"),
       filetypes = {
         "javascript",
         "javascriptreact",
         "typescript",
         "typescriptreact",
-        "vue", -- This needed to be
+        --"vue",
       },
       settings = {
+        -- spawn additional tsserver instance to calculate diagnostics on it
+        separate_diagnostic_server = true,
+        -- "change"|"insert_leave" determine when the client asks the server about diagnostic
+        publish_diagnostic_on = "change",
+        expose_as_code_action = "all",
+        -- string|nil - specify a custom path to `tsserver.js` file, if this is nil or file under path
+        -- not exists then standard path resolution strategy is applied
+        tsserver_path = nil,
+        -- (see 💅 `styled-components` support section)
+        -- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
+        -- memory limit in megabytes or "auto"(basically no limit)
+        tsserver_max_memory = "auto",
+        -- described below
+        -- mirror of VSCode's `typescript.suggest.completeFunctionCalls`
+        complete_function_calls = true,
+        include_completions_with_insert_text = true,
+        -- CodeLens
+        -- WARNING: Experimental feature also in VSCode, because it might hit performance of server.
+        -- possible values: ("off"|"all"|"implementations_only"|"references_only")
+        code_lens = "off",
+        -- by default code lenses are displayed on all referencable values and for some of you it can
+        -- be too much this option reduce count of them by removing member references from lenses
+        disable_member_code_lens = true,
+        -- JSXCloseTag
+        -- WARNING: it is disabled by default (maybe you configuration or distro already uses nvim-ts-autotag,
+        -- that maybe have a conflict if enable this feature. )
+        jsx_close_tag = {
+          enable = false,
+          filetypes = { "javascriptreact", "typescriptreact" },
+        },
+        -- specify a list of plugins to load by tsserver, e.g., for support `styled-components`
         tsserver_plugins = {
-          "@vue/typescript-plugin",
+          -- name = "@vue/typescript-plugin",
+          -- location = vim.fn.stdpath("data") .. "/mason/bin/vue-language-server",
+          -- languages = { "vue" },
         },
       },
     })
@@ -190,7 +221,6 @@ return {
         auto_attach = true,
         preference = {
           "typescript-tools",
-          "volar",
         },
       },
       highlight = true,
