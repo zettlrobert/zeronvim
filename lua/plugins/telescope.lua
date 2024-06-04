@@ -9,7 +9,6 @@ return {
     local telescope_builtin = require('telescope.builtin')
     local telescope = require('telescope')
     local telescope_themes = require('telescope.themes')
-    local trouble = require("trouble.providers.telescope")
 
     telescope.setup({
       pickers = {
@@ -24,8 +23,8 @@ return {
       },
       defaults = {
         mappings = {
-          i = { ["<c-y>"] = trouble.open_with_trouble },
-          n = { ["<c-y>"] = trouble.open_with_trouble },
+--          i = { ["<c-y>"] = trouble_sources_telescope.open() },
+--         n = { ["<c-y>"] = trouble_sources_telescope.open() },
         }
       }
     })
