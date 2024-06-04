@@ -39,7 +39,7 @@ return {
     end, { desc = "Trouble next item" })
 
     keymaps("n", "<leader>tp", function()
-      trouble.prevoius({ skip_groups = true, jump = true })
+      trouble.previous({ skip_groups = true, jump = true })
     end, { desc = "Trouble previous item" })
   end,
 }
