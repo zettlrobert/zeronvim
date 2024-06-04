@@ -8,6 +8,8 @@
 -- https://github.com/hrsh7th/cmp-nvim-lua - nvim-cmp source for neovim Lua API.
 -- https://github.com/hrsh7th/cmp-buffer -- nvim-cmp source for buffer words
 -- https://github.com/hrsh7th/cmp-calc -- nvim-cmp source for math calculation.
+-- https://github.com/rcarriga/cmp-dap -- nvim-cmp source for nvim-dap REPL and nvim-dap-ui buffers
+-- https://github.com/tzachar/cmp-ai -- cmp-ai source for ollama completion
 return {
   "hrsh7th/nvim-cmp",
   dependencies = {
