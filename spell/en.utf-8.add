@@ -401,3 +401,5 @@ CombinedError
 GraphQLErrors
 refreshAuth
 parallelization
+eslint
+MacOs
