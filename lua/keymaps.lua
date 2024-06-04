@@ -16,10 +16,8 @@ keymap("n", "<C-u>", "<C-u>zz", { desc = "Move page up and center" })
 -- Resize Buffer with arrow keys
 keymap("n", "<C-Up>", ":resize -2<CR>", { desc = "Decrase vertical size of current window" })
 keymap("n", "<C-Down>", ":resize +2<CR>", { desc = "Increase vertical size of current window" })
-keymap("n", "<C-Left>", ":vertical resize -2<CR>",
-  { desc = "Decrase horizontal size of current window" })
-keymap("n", "<C-Right>", ":vertical resize +2<CR>",
-  { desc = "Increase horizontal size of current window" })
+keymap("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrase horizontal size of current window" })
+keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase horizontal size of current window" })
 
 -- Manual indenting
 keymap("v", "<", "<gv", { desc = "Increase indentation of visual selection" })
@@ -27,15 +25,14 @@ keymap("v", ">", ">gv", { desc = "Decrease indentation of visual selection" })
 
 -- Copy to System Clipboard
 -- We escape " to select the register and type + y to copy in every mode
-keymap('n', '<leader>y', "\"+y",
-  { desc = "Copy the result of the following expression to system clipboard" })
-keymap('v', '<leader>y', "\"+y", { desc = "Copy visual selection to system clipboard" })
+keymap("n", "<leader>y", '"+y', { desc = "Copy the result of the following expression to system clipboard" })
+keymap("v", "<leader>y", '"+y', { desc = "Copy visual selection to system clipboard" })
 
 -- Concatenation
 keymap("n", "J", "mzJ`z", { desc = "Concatenate with line below" })
 
 -- Paste selection without losing the current buffer
-keymap("x", "<leader>p", "\"_dP", { desc = "Paste without losing buffer" })
+keymap("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
 
 -- Move Current Lines up or down
 keymap("n", "<A-k>", ":m .-2<CR>", { desc = "Move current line up" })
@@ -48,3 +45,6 @@ keymap("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 keymap("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
 keymap("n", "<leader>gr", vim.lsp.buf.references, { desc = "Go to References" })
 keymap("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Execute Code Action" })
+
+-- Ollama Gen
+keymap({ "n", "v" }, "<leader>gen", ":Gen<CR>", { desc = "Run Ollama Gen" })
