@@ -40,7 +40,7 @@ return {
         node_path = "node",
         debugger_path = debugger_path,
         adapaters = adapters,
-        log_console_level = vim.log.levels.DEBUG,
+        log_console_level = vim.log.levels.WARN,
       })
 
       local js_based_filetypes = {
@@ -81,6 +81,28 @@ return {
             cwd = "${workspaceFolder}",
             console = "integratedTerminal",
             skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+          },
+
+          -- Debug single Vitest
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Vitest Horizon (pwa-node)",
+            autoAttachChildProcesses = true,
+            runtimeExecutable = "node",
+            runtimeArgs = {
+              "${workspaceFolder}/node_modules/vitest/vitest.mjs",
+              "--inspect-brk",
+              "${file}",
+              "--no-file-parallelism",
+              "--poolOptions.threads.singleThread",
+              "true",
+            },
+            rootPath = "${workspaceFolder}",
+            cwd = "${workspaceFolder}",
+            console = "integratedTerminal",
+            skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+            sourceMaps = true,
           },
 
           -- Debug nodejs processes (make sure to add --inspect when you run the process)
