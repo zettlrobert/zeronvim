@@ -90,13 +90,25 @@ return {
       })
 
       lspconfig["volar"].setup({
-        filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+        filetypes = { "vue" },
         init_options = {
           vue = {
             hybridMode = false,
           },
           typescript = {
             tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+          },
+        },
+      })
+
+      --https://github.com/LazyVim/LazyVim/issues/3383#issuecomment-2140307981
+      lspconfig["eslint"].setup({
+        -- filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+        -- root_dir = lspconfig.util.root_pattern("package.json", ".git"),
+        settings = {
+          workingDirectories = { mode = "auto" },
+          experimental = {
+            useFlatConfig = false,
           },
         },
       })
@@ -112,7 +124,6 @@ return {
         "cssmodules_ls",
         "dockerls",
         "docker_compose_language_service",
-        "eslint",
         "gopls",
         "graphql",
         "html",
@@ -155,7 +166,7 @@ return {
       ensure_installed = {
         "stylua",
         "prettierd",
-        "eslint_d",
+        -- "eslint-lsp",
         -- DAP
         "delve",
       },
