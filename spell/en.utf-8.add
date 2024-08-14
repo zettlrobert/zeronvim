@@ -413,3 +413,7 @@ subHeader
 corepack
 webhooks
 devops
+stdout
+auditable
+namespace
+namespace
