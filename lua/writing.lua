@@ -36,12 +36,12 @@ vim.api.nvim_create_user_command("SpellCheckEnable", function()
   Spell.spellcheck_enable()
 end, {})
 
--- Command to toggle spellchecking english us
+-- Command to toggle spellchecking English us
 vim.api.nvim_create_user_command("SpellCheckEnglish", function()
   Spell.spellcheck_enable("en_us")
 end, {})
 
--- Command to toggle spellchecking german us
+-- Command to toggle spellchecking German us
 vim.api.nvim_create_user_command("SpellCheckGerman", function()
   Spell.spellcheck_enable("de_de")
 end, {})
