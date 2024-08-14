@@ -29,14 +29,16 @@ return {
             }
           end,
         }),
-      },
-      -- null_ls.builtins.diagnostics.eslint_d.with({
-      --   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-      -- }),
 
-      -- null_ls.builtins.diagnostics["vale"].with({
-      --   filetypes = { "markdown", "text", "norg" },
-      -- }),
+        -- Vale
+        null_ls.builtins.diagnostics.vale,
+
+        -- eslint_d
+        -- null_ls.builtins.diagnostics.eslint_d,
+        -- null_ls.builtins.diagnostics.eslint_d.with({
+        --   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+        -- }),
+      },
     })
 
     vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format" })
