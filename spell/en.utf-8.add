@@ -417,3 +417,17 @@ stdout
 auditable
 namespace
 namespace
+lua
+lazypath
+lazyvim
+nvim
+runtime
+prepend
+kanagawa
+colorscheme
+Treesitter
+ripgrep
+nixpkgs
+nestjs
+vitest
+targetDirectory
