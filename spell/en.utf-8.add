@@ -431,3 +431,8 @@ nixpkgs
 nestjs
 vitest
 targetDirectory
+NextLogger
+clientConfig
+nextjs
+IDevelopmentLogClientConfiguration
+namespaced
