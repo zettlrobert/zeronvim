@@ -102,31 +102,27 @@ return {
       })
 
       --https://github.com/LazyVim/LazyVim/issues/3383#issuecomment-2140307981
-      -- lspconfig["eslint"].setup({
-      --   filetypes = {
-      --     "javascript",
-      --     "javascriptreact",
-      --     "javascript.jsx",
-      --     "typescript",
-      --     "typescriptreact",
-      --     "typescript.tsx",
-      --     "vue",
-      --     "svelte",
-      --     "astro",
-      --   },
-      --   root_dir = lspconfig.util.root_pattern(".git", "tsconfig.base.json"),
-      --   settings = {
-      --     workingDirectories = { mode = "auto" },
-      --     experimental = {
-      --       -- allows to use flat config format
-      --       useFlatConfig = true,
-      --     },
-      --   },
-      --   flags = {
-      --     allow_incremental_sync = false,
-      --     debounce_text_changes = 1000,
-      --   },
-      -- })
+      lspconfig["eslint"].setup({
+        auto_attach = true,
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescriptreact",
+          "typescript.tsx",
+          "vue",
+          "svelte",
+          "astro",
+        },
+        root_dir = lspconfig.util.root_pattern(".git", "tsconfig.base.json", ".eslintrc.json"),
+        workingDirectory = {
+          mode = "auto",
+        },
+        settings = {
+          useFlatConfig = false, -- set if using flat config
+        },
+      })
 
       -- lspconfig["ltex"].setup({
       --   filetypes = { "markdown", "norg" },
