@@ -21,6 +21,7 @@ return {
           "markdown_inline",
           "json",
           "nix",
+          "http"
         },
         sync_install = true,
         auto_install = true,
