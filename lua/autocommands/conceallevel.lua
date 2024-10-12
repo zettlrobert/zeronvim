@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   pattern = { "*.md"},
-  command = "set conceallevel=0",
+  command = "set conceallevel=2",
   group = vim.api.nvim_create_augroup("markdown_no_conceal", { clear = true})
 })
 
