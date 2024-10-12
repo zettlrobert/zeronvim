@@ -3,7 +3,7 @@ local M = {}
 M.mason = {
   package_installed = "✓",
   package_pending = "➜",
-  package_uninstalled = "✗"
+  package_uninstalled = "✗",
 }
 
 M.kind = {
@@ -42,16 +42,14 @@ M.kind = {
   Value = "",
   Variable = "",
   Codeium = "󰁨 ",
-  Dap = ""
+  Dap = "",
 }
 
 M.diagnostics = {
-  signs = {
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
-  }
+  ["ERROR"] = "",
+  ["WARN"] = "",
+  ["HINT"] = "",
+  ["INFO"] = "",
 }
 
 M.todo_comments = {
@@ -61,7 +59,7 @@ M.todo_comments = {
   Warn = " ",
   Perf = "",
   Note = " ",
-  Test = "⏲ "
+  Test = "⏲ ",
 }
 
 M.Tree = {
@@ -86,19 +84,18 @@ M.Tree = {
     untracked = "★",
     deleted = "",
     ignored = "◌",
-
-  }
+  },
 }
 
 M.Utils = {
-  project = " "
+  project = " ",
 }
 
 M.Dashboard = {
   NEW_FILE = " ",
   FIND_FILE = " ",
   LIVE_GREP = "󰱼 ",
-  CLOSE = "󱎘 "
+  CLOSE = "󱎘 ",
 }
 
 return M
