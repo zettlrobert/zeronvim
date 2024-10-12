@@ -7,8 +7,8 @@ return {
   opts = {
     workspaces = {
       {
-        name = "zettl-md",
-        path = "~/notes/zettl-md",
+        name = "zettl",
+        path = "~/notes/zettl",
       },
     },
     ui = {
