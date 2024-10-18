@@ -3,6 +3,7 @@ return {
     -- Download and install the adapter protocol
     "microsoft/vscode-js-debug",
     build = {
+      "git reset .",
       "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
       -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#javascript
       -- The new setup requires the dapDebugServer, replacing the vsDebugServerBundle
