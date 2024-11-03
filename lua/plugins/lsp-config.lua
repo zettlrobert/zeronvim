@@ -160,7 +160,7 @@ return {
         "tailwindcss",
         "terraformls",
         "tflint",
-        --"volar",
+        "volar",
         --"vuels",
         "yamlls",
       },
@@ -183,7 +183,7 @@ return {
       ensure_installed = {
         "stylua",
         "prettierd",
-        -- "eslint-lsp",
+        "eslint-lsp",
         -- DAP
         "delve",
       },
