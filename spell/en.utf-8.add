@@ -478,3 +478,12 @@ mc
 commands
 mc
 cli
+LHDE
+minio
+loadEnvVariable
+env
+lint
+hostname
+MinioListService
+submodules
+mongosh
