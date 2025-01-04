@@ -26,7 +26,7 @@ require("lazy").setup("plugins")
 
 -- Require Autocommands
 require("autocommands.conceallevel")
-require("autocommands.alpha-dashboard")
+-- require("autocommands.alpha-dashboard")
 require("autocommands.spell-check")
 
 -- Require generic keymaps, plugin specific keymaps are located in the plugin file

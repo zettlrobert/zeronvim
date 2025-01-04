@@ -487,3 +487,7 @@ hostname
 MinioListService
 submodules
 mongosh
+Autocommand
+VimEnter
+argv
+NVIMTree

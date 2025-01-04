@@ -8,6 +8,7 @@ return {
       config.setup({
         ensure_installed = {
           "typescript",
+          "bash",
           "lua",
           "c",
           "norg",
@@ -21,7 +22,7 @@ return {
           "markdown_inline",
           "json",
           "nix",
-          "http"
+          "http",
         },
         sync_install = true,
         auto_install = true,

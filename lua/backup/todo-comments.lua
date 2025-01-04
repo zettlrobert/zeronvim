@@ -19,5 +19,5 @@ return {
         TEST = { icon = icons.todo_comments.Test, color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
       },
     })
-  end
+  end,
 }

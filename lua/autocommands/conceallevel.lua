@@ -6,12 +6,12 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 })
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-  pattern = { "*.md"},
+  pattern = { "*.md" },
   command = "set conceallevel=2",
-  group = vim.api.nvim_create_augroup("markdown_no_conceal", { clear = true})
+  group = vim.api.nvim_create_augroup("markdown_no_conceal", { clear = true }),
 })
 
--- JSON files should not be concealled
+-- JSON files should not be concealed
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   pattern = { "*.json" },
   command = "set conceallevel=0",
