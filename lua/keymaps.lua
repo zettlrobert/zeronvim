@@ -46,5 +46,30 @@ keymap("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
 keymap("n", "<leader>gr", vim.lsp.buf.references, { desc = "Go to References" })
 keymap("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Execute Code Action" })
 
+-- ------------------------------------------------------------------------------------------
+-- PLUGINS
+-- ------------------------------------------------------------------------------------------
+
 -- Ollama Gen
 keymap({ "n", "v" }, "<leader>gen", ":Gen<CR>", { desc = "Run Ollama Gen" })
+-- ------------------------------------------------------------------------------------------
+
+--
+-- NVIMTree
+local nvim_tree_api = require("nvim-tree.api")
+
+-- Toggle NVIMTree
+keymap("n", "<leader>e", function()
+  nvim_tree_api.tree.toggle({
+    path = "<args>",
+    find_file = false,
+    update_root = false,
+    focus = true,
+  })
+end, { desc = "Toggle Filetree" })
+
+-- Toggle NVIM Tree on current file
+keymap("n", "<leader>ntff", function()
+  nvim_tree_api.tree.find_file({ open = true, focus = true })
+end, { desc = "Focus current file in Filetree" })
+-- ------------------------------------------------------------------------------------------

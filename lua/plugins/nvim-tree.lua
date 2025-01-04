@@ -2,9 +2,7 @@ return {
   "nvim-tree/nvim-tree.lua",
   config = function()
     local nvim_tree = require("nvim-tree")
-    local nvim_tree_api = require("nvim-tree.api")
     local icons = require("assets.icons")
-
 
     nvim_tree.setup({
       auto_reload_on_write = true,
@@ -218,23 +216,5 @@ return {
         },
       },
     })
-
-    vim.keymap.set("n", "<leader>e",
-      function()
-        nvim_tree_api.tree.toggle({
-          path = "<args>",
-          find_file = false,
-          update_root = false,
-          focus = true
-        })
-      end,
-      { desc = "Toggle Filetree" })
-
-    vim.keymap.set("n", "<leader>ntff",
-      function()
-        nvim_tree_api.tree.find_file({ open = true, focus = true })
-      end,
-      { desc = "Focus current file in Filetree" }
-    )
-  end
+  end,
 }

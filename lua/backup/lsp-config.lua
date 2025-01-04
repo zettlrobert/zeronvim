@@ -3,6 +3,7 @@ local icons = require("assets.icons")
 return {
   "williamboman/mason-lspconfig.nvim",
   dependencies = {
+    "nvim-lua/plenary.nvim",
     "neovim/nvim-lspconfig", -- mason-lspconfig needs to be installed first
     "williamboman/mason.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -68,38 +69,96 @@ return {
     -- Merges the capabilities of the Neovim completion plugin and the LSP client into one object
     local extended_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, cmp_capabilities)
 
+    local function on_attach_handler(client, bufnr)
+      -- Setup Keymaps
+      vim.keymap.set("n", "K", vim.lsp.buf.hover)
+      vim.keymap.set("n", "gr", vim.lsp.buf.references)
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+      vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action)
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+      vim.keymap.set("n", "<space>sig", vim.lsp.buf.signature_help)
+      vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder)
+      vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder)
+      vim.keymap.set("n", "<space>wl", vim.lsp.buf.list_workspace_folders)
+      vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition)
+      vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
+    end
+
     -- Default LSP Handler
     local default_handler = function(server)
       lspconfig[server].setup({
         capabilities = extended_capabilities,
         on_attach = function(client, bufnr)
-          -- Setup Keymaps
-          vim.keymap.set("n", "K", vim.lsp.buf.hover)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
-          vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action)
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-          vim.keymap.set("n", "<space>sig", vim.lsp.buf.signature_help)
-          vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder)
-          vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder)
-          vim.keymap.set("n", "<space>wl", vim.lsp.buf.list_workspace_folders)
-          vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition)
-          vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
+          on_attach_handler(client, bufnr)
         end,
       })
 
+      -- lspconfig["volar"].setup({
+      --   filetypes = { "vue" },
+      --   init_options = {
+      --     vue = {
+      --       hybridMode = false,
+      --     },
+      --     typescript = {
+      --       tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+      --     },
+      --   },
+      -- })
+
+      -- lspconfig["ts_ls"].setup({
+      --   auto_attach = true,
+      --   workingDirectory = {
+      --     mode = "auto",
+      --   },
+      --   settings = {
+      --     expandableHover = true,
+      --   },
+      -- })
+
       lspconfig["volar"].setup({
-        filetypes = { "vue" },
         init_options = {
           vue = {
             hybridMode = false,
           },
+        },
+        settings = {
           typescript = {
-            tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+            inlayHints = {
+              enumMemberValues = {
+                enabled = true,
+              },
+              functionLikeReturnTypes = {
+                enabled = true,
+              },
+              propertyDeclarationTypes = {
+                enabled = true,
+              },
+              parameterTypes = {
+                enabled = true,
+                suppressWhenArgumentMatchesName = true,
+              },
+              variableTypes = {
+                enabled = true,
+              },
+            },
           },
         },
       })
+
+      -- lspconfig["ts_ls"].setup({
+      --   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+      --   init_options = {
+      --     plugins = {
+      --       {
+      --         name = "@vue/typescript-plugin",
+      --         location = vim.fn.stdpath("data")
+      --             .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+      --         languages = { "vue" },
+      --       },
+      --     },
+      --   },
+      -- })
 
       --https://github.com/LazyVim/LazyVim/issues/3383#issuecomment-2140307981
       lspconfig["eslint"].setup({
@@ -111,7 +170,6 @@ return {
           "typescript",
           "typescriptreact",
           "typescript.tsx",
-          "vue",
           "svelte",
           "astro",
         },
@@ -146,7 +204,7 @@ return {
         "html",
         "htmx",
         --"biome",
-        --"tsserver",
+        --"ts_ls",
         "lua_ls",
         "marksman",
         "mdx_analyzer",
@@ -160,6 +218,7 @@ return {
         "tailwindcss",
         "terraformls",
         "tflint",
+        "ts_ls",
         "volar",
         --"vuels",
         "yamlls",
@@ -172,7 +231,7 @@ return {
     })
 
     -- Ensure Hover Doc has rounded border
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.buf.hover({
       border = "rounded",
     })
 
@@ -196,35 +255,40 @@ return {
 
     -- https://github.com/pmizio/typescript-tools.nvim
     typescript_tools.setup({
-      root_dir = lspconfig.util.root_pattern("package.json", ".git"),
-      filetypes = {
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        --"vue",
-      },
       settings = {
         -- spawn additional tsserver instance to calculate diagnostics on it
-        separate_diagnostic_server = true,
+        separate_diagnostic_server = false,
         -- "change"|"insert_leave" determine when the client asks the server about diagnostic
-        publish_diagnostic_on = "change",
-        expose_as_code_action = "all",
+        publish_diagnostic_on = "insert_leave",
+        -- array of strings("fix_all"|"add_missing_imports"|"remove_unused"|
+        -- "remove_unused_imports"|"organize_imports") -- or string "all"
+        -- to include all supported code actions
+        -- specify commands exposed as code_actions
+        expose_as_code_action = {},
         -- string|nil - specify a custom path to `tsserver.js` file, if this is nil or file under path
         -- not exists then standard path resolution strategy is applied
         tsserver_path = nil,
+        -- specify a list of plugins to load by tsserver, e.g., for support `styled-components`
         -- (see 💅 `styled-components` support section)
+        tsserver_plugins = {
+          "@vue/typescript-plugin"
+        },
         -- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
         -- memory limit in megabytes or "auto"(basically no limit)
         tsserver_max_memory = "auto",
         -- described below
+        tsserver_format_options = {},
+        tsserver_file_preferences = {},
+        -- locale of all tsserver messages, supported locales you can find here:
+        -- https://github.com/microsoft/TypeScript/blob/3c221fc086be52b19801f6e8d82596d04607ede6/src/compiler/utilitiesPublic.ts#L620
+        tsserver_locale = "en",
         -- mirror of VSCode's `typescript.suggest.completeFunctionCalls`
-        complete_function_calls = true,
+        complete_function_calls = false,
         include_completions_with_insert_text = true,
         -- CodeLens
         -- WARNING: Experimental feature also in VSCode, because it might hit performance of server.
         -- possible values: ("off"|"all"|"implementations_only"|"references_only")
-        code_lens = "off",
+        code_lens = "all",
         -- by default code lenses are displayed on all referencable values and for some of you it can
         -- be too much this option reduce count of them by removing member references from lenses
         disable_member_code_lens = true,
@@ -234,12 +298,6 @@ return {
         jsx_close_tag = {
           enable = false,
           filetypes = { "javascriptreact", "typescriptreact" },
-        },
-        -- specify a list of plugins to load by tsserver, e.g., for support `styled-components`
-        tsserver_plugins = {
-          -- name = "@vue/typescript-plugin",
-          -- location = vim.fn.stdpath("data") .. "/mason/bin/vue-language-server",
-          -- languages = { "vue" },
         },
       },
     })

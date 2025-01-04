@@ -1,8 +1,4 @@
 -- https://github.com/folke/zen-mode.nvim - Distraction-free coding for Neovim
-
--- Set keymap for ZenMode
-vim.keymap.set("n", "<leader>zen", ":ZenMode<CR>", { desc = "Toggle ZenMode" })
-
 return {
   {
     "folke/zen-mode.nvim",
@@ -27,4 +23,8 @@ return {
       },
     },
   },
+  config = function()
+    -- Set keymap for ZenMode
+    vim.keymap.set("n", "<leader>zen", ":ZenMode<CR>", { desc = "Toggle ZenMode" })
+  end,
 }
