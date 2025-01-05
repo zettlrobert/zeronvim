@@ -491,3 +491,9 @@ Autocommand
 VimEnter
 argv
 NVIMTree
+Keybinds
+runtimepath
+runtimepaths
+treesitter
+parsers
+viewport

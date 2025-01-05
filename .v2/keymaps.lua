@@ -40,12 +40,6 @@ keymap("n", "<A-j>", ":m .+1<CR>", { desc = "Move current line down" })
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move current selection up" })
 keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move current selection down" })
 
--- LSP
-keymap("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
-keymap("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
-keymap("n", "<leader>gr", vim.lsp.buf.references, { desc = "Go to References" })
-keymap("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Execute Code Action" })
-
 -- ------------------------------------------------------------------------------------------
 -- PLUGINS
 -- ------------------------------------------------------------------------------------------
