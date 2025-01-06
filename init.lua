@@ -31,3 +31,6 @@ require("lazy").setup({
     { import = "config.plugins" },
   },
 })
+
+-- Require ALL custom utilities
+require("config.utils")
