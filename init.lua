@@ -32,5 +32,8 @@ require("lazy").setup({
   },
 })
 
+-- Require Neovim Options
+require("config.options")
+
 -- Require ALL custom utilities
 require("config.utils")
