@@ -1,4 +1,4 @@
--- https://github.com/catppuccin/nvim - Soothign pastel theme for Neovim
+-- https://github.com/catppuccin/nvim - Soothing pastel theme for Neovim
 
 -- Manual adjustments to the color scheme
 local crust = "#11111B"
@@ -52,7 +52,7 @@ return {
       -- Set colorscheme
       vim.cmd.colorscheme("catppuccin")
       --
-      --Cursorline Configuration
+      -- Cursorline Configuration
       vim.api.nvim_set_hl(0, "CursorLine", { bg = crust })
       --
       -- Line Number of current Line - if cursorline is not active use LineNr
