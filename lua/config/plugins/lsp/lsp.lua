@@ -44,6 +44,8 @@ return {
               useFlatConfig = false, -- set if using flat config
             },
           })
+
+          return
         end
 
         -- Auto Setup
