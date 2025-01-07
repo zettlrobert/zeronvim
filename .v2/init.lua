@@ -26,6 +26,7 @@ require("lazy").setup("plugins")
 
 -- Require Autocommands
 require("autocommands.conceallevel")
+
 -- require("autocommands.alpha-dashboard")
 require("autocommands.spell-check")
 
