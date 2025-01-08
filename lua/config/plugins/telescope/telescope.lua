@@ -1,12 +1,17 @@
 -- https://github.com/nvim-telescope/telescope.nvim
+-- https://github.com/nvim-telescope/telescope-fzf-native.nvim
+-- https://github.com/nvim-telescope/telescope-file-browser.nvim
 return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    { "nvim-telescope/telescope-fzf-native.nvim",  build = "make" },
+    { "nvim-telescope/telescope-file-browser.nvim" }
   },
   config = function()
-    require("telescope").setup({
+    local telescope = require("telescope")
+
+    telescope.setup({
       pickers = {
         find_files = {
           find_command = { "rg", "--hidden", "--files" },
@@ -18,10 +23,16 @@ return {
       },
       extensions = {
         fzf = {},
+        file_browser = {
+          theme = "ivy",
+          hijack_netrw = false,
+        }
       },
     })
 
-    require("telescope").load_extension("fzf")
+    -- Load teelscope extensiosn
+    telescope.load_extension("fzf")
+    telescope.load_extension("file_browser")
 
     -- Help tags
     vim.keymap.set("n", "<space>fh", require("telescope.builtin").help_tags, { desc = "Telescope help tags" })
@@ -39,11 +50,19 @@ return {
     -- Search files of installed neovim plugins
     vim.keymap.set("n", "<space>ep", function()
       require("telescope.builtin").find_files({
-        cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
+        cwd = vim.fs.joinpath(vim.fn.stdpath("data")[1], "lazy"),
       })
     end, { desc = "Telescope seraach files of installed neovim plugins" })
 
     -- Setup Multigrep
     require("config.plugins.telescope.multigrep").setup()
+
+    -- open file_browser with the path of the current buffer
+    vim.keymap.set("n", "<space>eff", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+
+    -- Alternatively, using lua API
+    vim.keymap.set("n", "<space>e", function()
+      telescope.extensions.file_browser.file_browser()
+    end, { desc = ":Telescope file_browser" })
   end,
 }
