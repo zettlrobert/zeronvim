@@ -36,12 +36,13 @@ return {
         ghost_text = { enabled = true },
 
         menu = {
+          border = "rounded",
           draw = {
             treesitter = { "lsp" },
             columns = {
               { "kind_icon", gap = 1 },
-              { "label", "label_description", gap = 1 },
-              { "kind", "source_name" },
+              { "label",     "label_description", gap = 1 },
+              { "kind",      "source_name" },
             },
           },
         },
