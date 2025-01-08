@@ -2,6 +2,7 @@
 return {
   {
     "https://github.com/folke/snacks.nvim",
+    enabled = true,
     config = function()
       local snacks = require("snacks")
 

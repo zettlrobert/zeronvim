@@ -9,6 +9,7 @@ return {
         ensure_installed = "all",
         sync_install = false,
         auto_install = true,
+        ignore_install = {},
         highlight = { enable = true },
         indent = { enable = true },
       })
