@@ -65,10 +65,10 @@ return {
     require("config.plugins.telescope.multigrep").setup()
 
     -- open file_browser with the path of the current buffer
-    vim.keymap.set("n", "<space>eff", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+    vim.keymap.set("n", "<space>ffb.", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
 
     -- Alternatively, using lua API
-    vim.keymap.set("n", "<space>e", function()
+    vim.keymap.set("n", "<space>ffb", function()
       telescope.extensions.file_browser.file_browser()
     end, { desc = ":Telescope file_browser" })
   end,
