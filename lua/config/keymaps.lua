@@ -36,3 +36,25 @@ keymap("n", "<A-k>", ":m .-2<CR>", { desc = "Move current line up" })
 keymap("n", "<A-j>", ":m .+1<CR>", { desc = "Move current line down" })
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move current selection up" })
 keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move current selection down" })
+
+-- NvimTree
+local nvim_tree_api = require("nvim-tree.api")
+
+--NvimTree toggle file tree
+vim.keymap.set("n", "<leader>e", function()
+    nvim_tree_api.tree.toggle({
+      path = "<args>",
+      find_file = false,
+      update_root = false,
+      focus = true,
+    })
+  end,
+  { desc = ":NvimTree toggle filetree" }
+)
+
+-- NvimTree open tree and focus current file in tree
+vim.keymap.set("n", "<leader>ntff", function()
+    nvim_tree_api.tree.find_file({ open = true, focus = true })
+  end,
+  { desc = ":NvimTree open tree and focus current file in tree" }
+)
