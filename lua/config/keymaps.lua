@@ -10,6 +10,9 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Move CursGo to right window" })
 keymap("n", "<C-d>", "<C-d>zz", { desc = "Move page down and center" })
 keymap("n", "<C-u>", "<C-u>zz", { desc = "Move page up and center" })
 
+-- Toggle search highlight
+keymap("n", "<leader>h", ":set hlsearch!<CR>", { desc = "Toggle search highlight" })
+
 -- Resize Buffer with arrow keys
 keymap("n", "<C-Up>", ":resize -2<CR>", { desc = "Decrase vertical size of current window" })
 keymap("n", "<C-Down>", ":resize +2<CR>", { desc = "Increase vertical size of current window" })
