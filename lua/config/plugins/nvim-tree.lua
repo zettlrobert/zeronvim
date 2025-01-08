@@ -1,12 +1,10 @@
 -- https://github.com/nvim-tree/nvim-tree.lua
 return {
   "nvim-tree/nvim-tree.lua",
+  enabled = true,
   config = function()
     local nvim_tree = require("nvim-tree")
-    local nvim_tree_api = require("nvim-tree.api")
     local icons = require("config.assets.icons")
-
-
 
     nvim_tree.setup({
       auto_reload_on_write = true,
@@ -44,13 +42,6 @@ return {
             col = 1,
           },
         },
-      },
-      git = {
-        enable = true,
-        ignore = true,
-        show_on_dirs = true,
-        show_on_open_dirs = true,
-        timeout = 400,
       },
       renderer = {
         add_trailing = false,
@@ -136,7 +127,7 @@ return {
           hint = icons.diagnostics.HINT,
           info = icons.diagnostics.INFO,
           warning = icons.diagnostics.WARN,
-          error = icons.diagnostics.ERROR
+          error = icons.diagnostics.ERROR,
         },
       },
       filters = {
@@ -150,6 +141,13 @@ return {
         enable = true,
         debounce_delay = 50,
         ignore_dirs = {},
+      },
+      git = {
+        enable = true,
+        ignore = true,
+        show_on_dirs = true,
+        show_on_open_dirs = true,
+        timeout = 400,
       },
       actions = {
         use_system_clipboard = true,
@@ -220,25 +218,6 @@ return {
         },
       },
     })
-
-    --NvimTree toggle file tree
-    vim.keymap.set("n", "<leader>e", function()
-        nvim_tree_api.tree.toggle({
-          path = "<args>",
-          find_file = false,
-          update_root = false,
-          focus = true,
-        })
-      end,
-      { desc = ":NvimTree toggle filetree" }
-    )
-
-    -- NvimTree open tree and focus current file in tree
-    vim.keymap.set("n", "<leader>ntff", function()
-        nvim_tree_api.tree.find_file({ open = true, focus = true })
-      end,
-      { desc = ":NvimTree open tree and focus current file in tree" }
-    )
   end,
 
 
