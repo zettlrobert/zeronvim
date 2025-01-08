@@ -35,5 +35,14 @@ require("lazy").setup({
 -- Require Neovim Options
 require("config.options")
 
+-- Require keymaps for sourcing
+require("config.utils.source")
+
+-- Require Format on save
+require("config.formatting")
+
 -- Require ALL custom utilities
 require("config.utils")
+
+-- Require window-title
+require("config.window-title")
