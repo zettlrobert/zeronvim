@@ -35,6 +35,12 @@ require("lazy").setup({
 -- Require Neovim Options
 require("config.options")
 
+-- Require neovim ui configurations, lsp hover, diagnostics...
+require("config.ui")
+
+-- Require keymaps
+require("config.keymaps")
+
 -- Require keymaps for sourcing
 require("config.utils.source")
 
