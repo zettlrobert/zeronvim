@@ -5,6 +5,7 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     dependencies = {
+      "saghen/blink.cmp",
       {
         "folke/lazydev.nvim",
         ft = "lua",
@@ -15,15 +16,20 @@ return {
         },
       },
     },
-    init = function()
+    config = function()
       local lspconfig = require("lspconfig")
       local server_list = require("config.plugins.lsp.servers").server_list
 
+      vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
+
       -- Iterate over all installed servers and setup
       for _, server in pairs(server_list) do
+        -- Auto Setup
+        lspconfig[server].setup({})
+
+        -- Overwrite for eslint-lsp
+        -- https://github.com/hrsh7th/vscode-langservers-extracted
         if server == "eslint" then
-          -- Overwrite for eslint-lsp
-          -- https://github.com/hrsh7th/vscode-langservers-extracted
           lspconfig["eslint"].setup({
             auto_attach = true,
             filetypes = {
@@ -44,12 +50,21 @@ return {
               useFlatConfig = false, -- set if using flat config
             },
           })
-
-          return
         end
 
-        -- Auto Setup
-        lspconfig[server].setup({})
+        if server == "volar" then
+          lspconfig["volar"].setup({
+            filetypes = { "vue" },
+            init_options = {
+              vue = {
+                hybridMode = false,
+              },
+              typescript = {
+                tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+              },
+            },
+          })
+        end
       end
     end,
   },

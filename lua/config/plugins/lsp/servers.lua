@@ -14,7 +14,7 @@ M.server_list = {
   ["gopls"] = "gopls",
   ["graphql"] = "graphql",
   ["html"] = "html",
-  ["htmx"] = "htmx",
+  -- ["htmx"] = "htmx", -- This is breaking typescript-tools
   ["lua_ls"] = "lua_ls",
   ["marksman"] = "marksman",
   ["mdx_analyzer"] = "mdx_analyzer",
@@ -25,11 +25,10 @@ M.server_list = {
   ["svelte"] = "svelte",
   ["tailwindcss"] = "tailwindcss",
   ["taplo"] = "taplo",
-
-  -- ["terraform-ls"] = "terraformls",
-  -- ["tflint"] = "tflint",
-  -- ["vue-language-server"] = "volar",
-  -- ["yaml-language-server"] = "yamlls",
+  ["terraformls"] = "terraformls",
+  ["tflint"] = "tflint",
+  ["volar"] = "volar",
+  ["yamlls"] = "yamlls",
 }
 
 -- TODO DAP
