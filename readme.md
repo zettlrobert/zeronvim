@@ -7,12 +7,12 @@ https://www.youtube.com/watch?v=bTWWFQZqzyI
 
 - [ ] sort and move utils from v2
 - [ ] codium setup (blink completion)
+    - [ ] codeium.lua
     - [ ] get_system_binary utils
 - [x] navic + navbuddy + breadcrumbs
 - [x] lazyvim smooth scrolling - neoscroll 
 - [ ] formatting with prettier + fmt keymap
 - [ ] blame.lua
-- [ ] codeium.lua
 - [ ] colorpicker.lua
 - [ ] colorschemes.lua
 - [ ] comment.lua
@@ -23,11 +23,11 @@ https://www.youtube.com/watch?v=bTWWFQZqzyI
 - [ ] fidget.lua
 - [ ] gen.lua
 - [ ] gitsigns.lua
-- [ ] indent-blankline.lua
-- [ ] lazydev.lua
-- [ ] lsp-config.lua
-- [ ] lsp-saga.lua
-- [ ] lsp.lua
+- [x] indent-blankline.lua --> replaced snacks indent
+- [x] lazydev.lua
+- [x] lsp-config.lua
+- [x] lsp-saga.lua
+- [x] lsp.lua
 - [ ] lualine.lua
 - [ ] mini-icons.lua
 - [ ] neorg.lua
@@ -41,11 +41,12 @@ https://www.youtube.com/watch?v=bTWWFQZqzyI
 - [ ] treesitter.lua
 - [ ] trouble.lua
 - [ ] trunk.lua
-- [ ] undotree.lua
+- [x] undotree.lua
 - [ ] zen
 
 - [ ] snacks
   - [x] animate
+  - [x] indent
   - [x] statuscolumn
   - [x] scroll
 
