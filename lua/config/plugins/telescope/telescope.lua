@@ -52,7 +52,7 @@ return {
       require("telescope.builtin").find_files({
         cwd = vim.fs.joinpath(vim.fn.stdpath("data")[1], "lazy"),
       })
-    end, { desc = "Telescope seraach files of installed neovim plugins" })
+    end, { desc = "Telescope search files of installed neovim plugins" })
 
     -- Setup Multigrep
     require("config.plugins.telescope.multigrep").setup()
