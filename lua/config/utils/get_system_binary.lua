@@ -1,7 +1,9 @@
 local M = {}
 
--- return the path to a local system binary via luo io.popen or nil if unavailable
-M.get_system_binary = function()
+--- Return the path to a local system binary via luo io.popen or nil if unavailable
+---@param binary string
+---@return string
+M.get_system_binary = function(binary)
   local handle = io.popen("whereis " .. binary)
 
   if handle then
@@ -12,8 +14,7 @@ M.get_system_binary = function()
     binary_path = binary_path:gsub("^%s*(.-)%s*$", "%1")
 
     if binary_path == "" then
-      vim.notify("Could not find system binary: " .. binary, vim.log.levels.WARN)
-      return nil
+      error("Could not find system binary: " .. binary, vim.log.levels.WARN)
     end
 
     return binary_path
