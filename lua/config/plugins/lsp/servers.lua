@@ -2,7 +2,7 @@ local M = {}
 
 -- List of servers that will be auto installed via mason
 -- The key is the mason name the value the language server identifier
-M.server_list = {
+M.language_servers = {
   ["bashls"] = "bashls",
   ["clangd"] = "clangd",
   ["cmake"] = "cmake",
@@ -31,15 +31,15 @@ M.server_list = {
   ["yamlls"] = "yamlls",
 }
 
--- TODO DAP
-local daps = {
+-- List of debug adapters that will be auto installed via mason-tool-installer
+M.debug_adapters = {
   ["delve"] = "delve",
 }
 
--- TODO Formatters
-local formatters = {
+-- List of formatters that will be auto installed via mason-tool-installer
+M.formatters = {
   ["prettierd"] = "prettierd",
-  ["stylua"] = "luau",
+  ["stylua"] = "stylua",
 }
 
 return M
