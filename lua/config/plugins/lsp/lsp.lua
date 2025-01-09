@@ -18,12 +18,12 @@ return {
     },
     config = function()
       local lspconfig = require("lspconfig")
-      local server_list = require("config.plugins.lsp.servers").server_list
+      local language_servers = require("config.plugins.lsp.servers").language_servers
 
       vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
 
       -- Iterate over all installed servers and setup
-      for _, server in pairs(server_list) do
+      for _, server in pairs(language_servers) do
         -- Auto Setup
         lspconfig[server].setup({})
 
