@@ -1,5 +1,6 @@
 return {
   "Exafunction/codeium.nvim",
+  -- dir = "~/repositories/codeium.nvim/",
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
@@ -30,7 +31,8 @@ return {
           gzip = gzip,
           language_server = language_server
         }
-      }
+      },
+      enable_cmp_source = true,
     })
   end
 }

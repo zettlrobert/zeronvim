@@ -1,10 +1,15 @@
+--https://github.com/hrsh7th/cmp-omni
+--https://github.com/rafamadriz/friendly-snippets
+--https://github.com/hrsh7th/cmp-omni
 return {
   {
     "saghen/blink.cmp",
     -- optional: provides snippets for the snippet source
     dependencies = {
+      "saghen/blink.compat",
+      -- { dir = "~/repositories/blink.compat" },
       "rafamadriz/friendly-snippets",
-      "saghen/blink.compat"
+      "hrsh7th/cmp-omni",
     },
     -- use a release tag to download pre-built binaries
     version = "*",
@@ -42,8 +47,8 @@ return {
             treesitter = { "lsp" },
             columns = {
               { "kind_icon", gap = 1 },
-              { "label",     "label_description", gap = 1 },
-              { "kind",      gap = 1,             "source_name" },
+              { gap = 1,     "label", "label_description", gap = 1 },
+              { "kind",      gap = 1, "source_name" },
             },
           },
         },
@@ -51,10 +56,14 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "codeium" },
+        default = { "lsp", "path", "snippets", "buffer", "omni", "codeium" },
 
         -- CMP completion sources
         providers = {
+          omni = {
+            name = "omni",
+            module = "blink.compat.source"
+          },
           codeium = {
             -- Same name as cmp source
             name = "codeium",
