@@ -23,6 +23,9 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase horizonta
 keymap("v", "<", "<gv", { desc = "Increase indentation of visual selection" })
 keymap("v", ">", ">gv", { desc = "Decrease indentation of visual selection" })
 
+-- Formatting
+keymap('n', '<leader>fmt', '<cmd>lua vim.lsp.buf.format({ async = true })<cr>', { desc = "Format the current buffer" })
+
 -- Copy to System Clipboard
 -- We escape " to select the register and type + y to copy in every mode
 keymap("n", "<leader>y", '"+y', { desc = "Copy the result of the following expression to system clipboard" })
@@ -60,7 +63,6 @@ vim.keymap.set("n", "<leader>ntff", function()
 )
 
 --Spellcheck
--- Keymaps
 vim.keymap.set("n", "<leader>spell", ":Spellcheck English<cR>", { desc = ":Spellcheck English" })
 
 vim.keymap.set("n", "<leader>spelloff", ":Spellcheck Disable<CR>", { desc = ":Spellcheck Disable" })
