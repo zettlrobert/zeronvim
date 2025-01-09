@@ -2,15 +2,16 @@ return {
   {
     "saghen/blink.cmp",
     -- optional: provides snippets for the snippet source
-    dependencies = "rafamadriz/friendly-snippets",
-
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "saghen/blink.compat"
+    },
     -- use a release tag to download pre-built binaries
     version = "*",
     -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
     -- build = 'cargo build --release',
     -- If you use nix, you can build from source using latest nightly rust with:
     -- build = 'nix run .#build-plugin',
-
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -42,16 +43,24 @@ return {
             columns = {
               { "kind_icon", gap = 1 },
               { "label",     "label_description", gap = 1 },
-              { "kind",      "source_name" },
+              { "kind",      gap = 1,             "source_name" },
             },
           },
         },
       },
-
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer", "codeium" },
+
+        -- CMP completion sources
+        providers = {
+          codeium = {
+            -- Same name as cmp source
+            name = "codeium",
+            module = "blink.compat.source"
+          }
+        }
       },
     },
     opts_extend = { "sources.default" },
