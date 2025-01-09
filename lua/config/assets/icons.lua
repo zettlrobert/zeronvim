@@ -1,6 +1,9 @@
 local M = {}
 
-M.titlestring = " "
+M.WindowTitle = {
+  project = " ",
+  file = " "
+}
 
 M.diagnostics = {
   ERROR = "",
