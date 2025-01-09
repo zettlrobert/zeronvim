@@ -58,3 +58,9 @@ vim.keymap.set("n", "<leader>ntff", function()
   end,
   { desc = ":NvimTree open tree and focus current file in tree" }
 )
+
+--Spellcheck
+-- Keymaps
+vim.keymap.set("n", "<leader>spell", ":Spellcheck English<cR>", { desc = ":Spellcheck English" })
+
+vim.keymap.set("n", "<leader>spelloff", ":Spellcheck Disable<CR>", { desc = ":Spellcheck Disable" })
