@@ -26,6 +26,13 @@ return {
       -- See the full "keymap" documentation for information on defining your own keymap.
       keymap = { preset = "default" },
 
+      -- Disable for some filetypes
+      enabled = function()
+        return not vim.tbl_contains({ 'oil' }, vim.bo.filetype)
+            and vim.bo.buftype ~= "prompt"
+            and vim.b.completion ~= false
+      end,
+
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = "mono",
