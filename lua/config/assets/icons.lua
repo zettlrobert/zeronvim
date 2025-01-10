@@ -2,10 +2,10 @@ local M = {}
 
 M.WindowTitle = {
   project = " ",
-  file = " "
+  file = " ",
 }
 
-M.diagnostics = {
+M.Diagnostics = {
   ERROR = "",
   WARN = "",
   HINT = "",
@@ -35,6 +35,16 @@ M.Tree = {
     deleted = "",
     ignored = "◌",
   },
+}
+
+M.TodoComments = {
+  Bug = " ",
+  Info = " ",
+  Hack = " ",
+  Warn = " ",
+  Perf = "",
+  Note = " ",
+  Test = "⏲ ",
 }
 
 return M

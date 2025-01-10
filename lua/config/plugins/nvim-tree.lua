@@ -124,10 +124,10 @@ return {
           max = vim.diagnostic.severity.ERROR,
         },
         icons = {
-          hint = icons.diagnostics.HINT,
-          info = icons.diagnostics.INFO,
-          warning = icons.diagnostics.WARN,
-          error = icons.diagnostics.ERROR,
+          hint = icons.Diagnostics.HINT,
+          info = icons.Diagnostics.INFO,
+          warning = icons.Diagnostics.WARN,
+          error = icons.Diagnostics.ERROR,
         },
       },
       filters = {
@@ -219,6 +219,4 @@ return {
       },
     })
   end,
-
-
 }
