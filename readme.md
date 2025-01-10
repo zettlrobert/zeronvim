@@ -1,10 +1,31 @@
-# LSP (2025)
+# Zeronvim
 
-[Advent of Neovim TJ](https://www.youtube.com/watch?v=bTWWFQZqzyI)
+## Requirements
+
+- tree-sitter
+
+## Known Bugs
+
+- [ ] border for vim.lsp.buf.hover
+
+---
 
 ## TODO
 
-### Core
+### DIY Features
+
+- [ ] Popup Modal with all the shortcuts i could want!
+  - LSP - gra, ctrl+]...
+  - Oil
+  - telescope file browser
+  - gitsigns
+- [ ] Scratchpad file with picker (telescope open nvim config example)
+
+### Refactors
+
+- [ ] update all keymaps to use vim.api.nvim_command instead of manual `":Command <CR>"`
+
+### Setup
 
 - [x] navic + navbuddy + breadcrumbs
 - [x] formatting
@@ -72,61 +93,3 @@
 - [ ] dashboard (mini or snacks)
 - [ ] session
 - [ ] keymaps descriptions
-
-  ### Refactors
-
-  - [ ] update all keymaps to use vim.api.nvim_command instead of manual `":Command <CR>"`
-
-  ***
-
-## Learn
-
-- [ ] read :h ins-completion
-
----
-
-## Features
-
-- [ ] Popup Modal with all the shortcuts i could want!
-  - LSP - gra, ctrl+]...
-  - Oil
-  - telescope file browser
-  - gitsigns
-- [ ] Scratchpad file with picker (telescope open nvim config example)
-
-## Note
-
-CTRL+XL - Complete Line after pattern
-
-## Bugs
-
-- [ ] border for vim.lsp.buf.hover
-
----
-
-## Debugging
-
-For me it was treesitter and an indent plugin, but lookup how to profile.
-It's quite easy to set up two profile keybindings (one to start, one to stop and open the log).
-Then you just start, write a bit, stop, look at log.
-You'll see at the very bottom a summary and entries that look like <SNR>[number] and how long they took.
-Then use :scriptnames to see what script/plugin the number belongs to.
-
-```lua
-wk.register({ p = { name = "Perf Profiling" } }, { prefix = "<leader>u" })
-
-vim.keymap.set("n", "<leader>ups", function()
-	vim.cmd([[
-		:profile start /tmp/nvim-profile.log
-		:profile func *
-		:profile file *
-	]])
-end, { desc = "Profile Start" })
-
-vim.keymap.set("n", "<leader>upe", function()
-	vim.cmd([[
-		:profile stop
-		:e /tmp/nvim-profile.log
-	]])
-end, { desc = "Profile End" })
-```
