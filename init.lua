@@ -1,57 +1,43 @@
--- Bootstrap lazy.nvim
+-- Define the path for lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
 end
 
--- Put lazy into the runtimepath for neovim
-vim.opt.runtimepath:prepend(lazypath)
+vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
+-- File for generic Neovim Keymaps - Lazy does require them to be loaded before the plugin, but keymaps contain plugin references
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
--- Setup lazy.nvim
-require("lazy").setup({
-  spec = {
-    { import = "config.plugins" },
-  },
-})
+vim.g.maplocalleader = " "
 
 -- Require Neovim Options
-require("config.options")
+require("options")
 
--- Require neovim ui configurations, lsp hover, diagnostics...
-require("config.ui")
+-- Require Plugins
+require("lazy").setup("plugins")
 
--- Require keymaps
-require("config.keymaps")
+-- Require Autocommands
+require("autocommands.conceallevel")
 
--- Require keymaps for sourcing
-require("config.utils.source")
+-- require("autocommands.alpha-dashboard")
+require("autocommands.spell-check")
 
--- Require Format on save
-require("config.formatting")
+-- Require generic keymaps, plugin specific keymaps are located in the plugin file
+require("keymaps")
 
--- Require ALL custom utilities
-require("config.utils")
+-- Diagnostics Configuration
+require("diagnostics")
 
--- Require window-title
-require("config.window-title")
+-- Custom Coded Config
+require("config")
 
--- Require spellcheck
-require("config.spellcheck")
+-- Writing
+require("writing")
