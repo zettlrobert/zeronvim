@@ -28,7 +28,7 @@ return {
 
       -- Disable for some filetypes
       enabled = function()
-        return not vim.tbl_contains({ 'oil' }, vim.bo.filetype)
+        return not vim.tbl_contains({ "oil" }, vim.bo.filetype)
             and vim.bo.buftype ~= "prompt"
             and vim.b.completion ~= false
       end,
@@ -54,8 +54,8 @@ return {
             treesitter = { "lsp" },
             columns = {
               { "kind_icon", gap = 1 },
-              { gap = 1,     "label", "label_description", gap = 1 },
-              { "kind",      gap = 1, "source_name" },
+              { "label",     "label_description", gap = 1 },
+              { "kind",      gap = 1,             "source_name" },
             },
           },
         },
@@ -63,20 +63,25 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "omni", "codeium" },
+        default = { "lsp", "path", "snippets", "buffer", "omni", "markdown", "codeium" },
 
         -- CMP completion sources
         providers = {
           omni = {
             name = "omni",
-            module = "blink.compat.source"
+            module = "blink.compat.source",
+          },
+          markdown = {
+            name = "RenderMarkdown",
+            module = "render-markdown.integ.blink",
+            fallbacks = { "lsp" },
           },
           codeium = {
             -- Same name as cmp source
             name = "codeium",
-            module = "blink.compat.source"
-          }
-        }
+            module = "blink.compat.source",
+          },
+        },
       },
     },
     opts_extend = { "sources.default" },
