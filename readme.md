@@ -6,23 +6,15 @@
 
 ### Core
 
-#### LSP Completion
-
 - [x] navic + navbuddy + breadcrumbs
 - [x] formatting
   - [x] with prettier
   - [x] fmt keymap
   - [x] none-ls.lua
-
-#### DAP
-
 - [ ] dap-go.lua
 - [ ] dap-vscode-js.lua
 - [ ] dap.lua
-
-#### UI
-
-- [ ] snacks
+- [-] snacks
   - [x] animate
   - [x] indent
   - [x] scroll
@@ -30,21 +22,13 @@
 - [x] fidget.lua
 - [x] bufferline - used lua line
 - [x] NvimTree
-
-#### AI
-
 - [x] codium setup (blink completion)
 - [ ] local AI for completions
 - [ ] gen.lua
-
-#### Utils
-
 - [x] sort and move utils from v2
-
   - [x] get_system_binary utils
   - [x] setup codeium.lua
   - [x] setup [blink.compat](https://github.com/saghen/blink.compat) for codeium completion
-
 - [x] Telescope file browser adjust keymaps (used for NvimTree)
 - [x] setup spellchecking and custom toggles
 - [x] colorpicker.lua
@@ -53,6 +37,7 @@
 - [-] obsidian.lua
 - [x] open in new tab and close current buffer - use telescope
 - [x] diagnostics add custom icons
+- [ ] lualine icons into icons file
 - [x] render-markdown.lua
 - [x] blame.lua
 - [x] completions.lua - blink.cmp
@@ -75,6 +60,18 @@
 - [x] zen
 - [ ] trunk.lua
 - [ ] vale
+- [~] none-ls.nvim
+  - [ ] [cspell](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#cspell)
+  - [ ] [codespell](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell)
+  - [ ] [proselint](https://valentjn.github.io/ltex/)
+  - [ ] [ltex](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell)
+  - [ ] [spell](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#spell)
+  - [ ] [writegood](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#write_good)
+- [ ] toggleterm
+- [ ] diffview
+- [ ] dashboard (mini or snacks)
+- [ ] session
+- [ ] keymaps descriptions
 
   ### Refactors
 
