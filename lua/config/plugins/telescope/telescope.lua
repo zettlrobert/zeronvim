@@ -13,15 +13,15 @@ return {
     telescope.setup({
       pickers = {
         find_files = {
-          find_command = { "rg", "--hidden", "--files" },
+          find_command = { "rg", "--files" },
           theme = "ivy",
         },
         help_tags = {
           theme = "ivy",
         },
         buffers = {
-          theme = "ivy"
-        }
+          theme = "ivy",
+        },
       },
       extensions = {
         fzf = {},
@@ -32,10 +32,18 @@ return {
     telescope.load_extension("fzf")
 
     -- Help tags
-    vim.keymap.set("n", "<space>fh", telescope_builtin.help_tags, { desc = "Telescope help tags" })
+    vim.keymap.set("n", "<space>fh", telescope_builtin.help_tags, { desc = ":Telescope help tags" })
 
-    -- Search all files in current directory
-    vim.keymap.set("n", "<space>ff", telescope_builtin.find_files, { desc = "Telescope find_files" })
+    -- Telescope find files
+    vim.keymap.set("n", "<space>ff", telescope_builtin.find_files, { desc = ":Telescope find_files" })
+
+    -- Telescope hidden find files
+    vim.keymap.set("n", "<space>f.", function()
+      telescope_builtin.find_files({
+        find_command = { "rg", "--hidden", "--files" },
+        theme = "ivy",
+      })
+    end, { desc = ":Telescope find_files hidden" })
 
     -- Search all open buffers
     vim.keymap.set("n", "<space>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
