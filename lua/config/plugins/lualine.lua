@@ -29,7 +29,7 @@ return {
     lualine.setup({
       options = {
         icons_enabled = true,
-        theme = "auto",
+        theme = "ayu_dark",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         disabled_filetypes = {
@@ -39,6 +39,7 @@ return {
         ignore_focus = {},
         always_divide_middle = true,
         globalstatus = true,
+        always_show_tabline = true,
         refresh = {
           statusline = 1000,
           tabline = 1000,
@@ -62,6 +63,15 @@ return {
         lualine_z = {},
       },
 
+      tabline = {
+        lualine_a = {
+          {
+            "tabs",
+            show_filename_only = true,
+            mode = 1,
+          },
+        },
+      },
       winbar = {},
       inactive_winbar = {},
       extensions = {},
