@@ -1,10 +1,10 @@
 -- local icons = require("assets.icons")
 
 -- Global Diagnostics Keybinds
-vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
-vim.keymap.set("n", "[d", vim.diagnostic.get_next)
-vim.keymap.set("n", "]d", vim.diagnostic.get_prev)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, { desc = "Diagnostics open floating window" })
+vim.keymap.set("n", "[d", vim.diagnostic.get_next, { desc = "Diagnostics get_next" })
+vim.keymap.set("n", "]d", vim.diagnostic.get_prev, { desc = "Diagnostics get_prev" })
+vim.keymap.set("n", "<space>lq", vim.diagnostic.setloclist, { desc = "Diagnostics set loclist" })
 
 -- Diagnostics Configuration
 local diagnostic_config = {
