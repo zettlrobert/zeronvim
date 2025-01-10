@@ -7,7 +7,6 @@ return {
     -- optional: provides snippets for the snippet source
     dependencies = {
       "saghen/blink.compat",
-      -- { dir = "~/repositories/blink.compat" },
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-omni",
     },
@@ -56,6 +55,20 @@ return {
               { "kind_icon", gap = 1 },
               { "label",     "label_description", gap = 1 },
               { "kind",      gap = 1,             "source_name" },
+            },
+            components = {
+              kind_icon = {
+                ellipsis = false,
+                text = function(ctx)
+                  local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+                  return kind_icon
+                end,
+                -- Optionally, you may also use the highlights from mini.icons
+                highlight = function(ctx)
+                  local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+                  return hl
+                end,
+              },
             },
           },
         },
