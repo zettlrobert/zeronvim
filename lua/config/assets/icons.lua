@@ -1,8 +1,10 @@
 local M = {}
 
-M.WindowTitle = {
-  project = " ",
-  file = " ",
+M.Dashboard = {
+  NEW_FILE = " ",
+  FIND_FILE = " ",
+  LIVE_GREP = "󰱼 ",
+  CLOSE = "󱎘 ",
 }
 
 M.Diagnostics = {
@@ -10,6 +12,16 @@ M.Diagnostics = {
   WARN = "",
   HINT = "",
   INFO = "",
+}
+
+M.TodoComments = {
+  Bug = " ",
+  Info = " ",
+  Hack = " ",
+  Warn = " ",
+  Perf = "",
+  Note = " ",
+  Test = "⏲ ",
 }
 
 M.Tree = {
@@ -37,14 +49,14 @@ M.Tree = {
   },
 }
 
-M.TodoComments = {
-  Bug = " ",
-  Info = " ",
-  Hack = " ",
-  Warn = " ",
-  Perf = "",
-  Note = " ",
-  Test = "⏲ ",
+M.Mason = {
+  package_installed = "✓",
+  package_pending = "➜",
+  package_uninstalled = "✗",
 }
 
+M.WindowTitle = {
+  project = " ",
+  file = " ",
+}
 return M
