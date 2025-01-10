@@ -52,3 +52,6 @@ require("config.utils")
 
 -- Require window-title
 require("config.window-title")
+
+-- Require spellcheck
+require("config.spellcheck")
