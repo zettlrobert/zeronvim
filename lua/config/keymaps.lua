@@ -24,7 +24,7 @@ keymap("v", "<", "<gv", { desc = "Increase indentation of visual selection" })
 keymap("v", ">", ">gv", { desc = "Decrease indentation of visual selection" })
 
 -- Formatting
-keymap('n', '<leader>fmt', '<cmd>lua vim.lsp.buf.format({ async = true })<cr>', { desc = "Format the current buffer" })
+keymap("n", "<leader>fmt", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", { desc = "Format the current buffer" })
 
 -- Copy to System Clipboard
 -- We escape " to select the register and type + y to copy in every mode
@@ -45,22 +45,18 @@ local nvim_tree_api = require("nvim-tree.api")
 
 --NvimTree toggle file tree
 vim.keymap.set("n", "<leader>e", function()
-    nvim_tree_api.tree.toggle({
-      path = "<args>",
-      find_file = false,
-      update_root = false,
-      focus = true,
-    })
-  end,
-  { desc = ":NvimTree toggle filetree" }
-)
+  nvim_tree_api.tree.toggle({
+    path = "<args>",
+    find_file = false,
+    update_root = false,
+    focus = true,
+  })
+end, { desc = ":NvimTree toggle filetree" })
 
 -- NvimTree open tree and focus current file in tree
 vim.keymap.set("n", "<leader>ntff", function()
-    nvim_tree_api.tree.find_file({ open = true, focus = true })
-  end,
-  { desc = ":NvimTree open tree and focus current file in tree" }
-)
+  nvim_tree_api.tree.find_file({ open = true, focus = true })
+end, { desc = ":NvimTree open tree and focus current file in tree" })
 
 --Spellcheck
 vim.keymap.set("n", "<leader>spell", ":Spellcheck English<cR>", { desc = ":Spellcheck English" })
