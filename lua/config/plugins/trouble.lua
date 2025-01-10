@@ -142,10 +142,5 @@ return {
     vim.keymap.set("n", "<leader>tp", function()
       trouble.prev(self, { skip_groups = true, jump = true })
     end, { desc = ":Trouble previous item" })
-
-    -- TODO: Continue here
-    vim.keymap.set("n", "<leader>todo", function()
-      trouble.toggle({ mode = "todo" })
-    end, { desc = ":Trouble toggle todos" })
   end,
 }
