@@ -508,3 +508,5 @@ Utils
 utils
 codeium
 compat
+stdin
+stderr
