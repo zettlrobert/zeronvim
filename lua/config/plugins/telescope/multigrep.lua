@@ -7,6 +7,8 @@ local conf = require("telescope.config").values
 
 local M = {}
 
+---Grep with multiple arguments
+---@param opts table
 local live_multigrep = function(opts)
   opts = opts or {}
   opts.cwd = opts.cwd or vim.uv.cwd()
@@ -40,14 +42,14 @@ local live_multigrep = function(opts)
   })
 
   pickers
-      .new(themes.get_ivy(opts), {
-        debounce = 100,
-        prompt_title = "Multi Grep",
-        finder = finder,
-        previewer = conf.grep_previewer(opts),
-        sorter = require("telescope.sorters").empty(),
-      })
-      :find()
+    .new(themes.get_ivy(opts), {
+      debounce = 100,
+      prompt_title = "Multi Grep With Args",
+      finder = finder,
+      previewer = conf.grep_previewer(opts),
+      sorter = require("telescope.sorters").empty(),
+    })
+    :find()
 end
 
 M.setup = function()

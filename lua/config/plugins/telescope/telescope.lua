@@ -22,6 +22,9 @@ return {
         buffers = {
           theme = "ivy",
         },
+        live_grep = {
+          theme = "ivy",
+        },
       },
       extensions = {
         fzf = {},
@@ -47,6 +50,9 @@ return {
 
     -- Search all open buffers
     vim.keymap.set("n", "<space>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
+
+    -- Live Grep
+    vim.keymap.set("n", "<space>fl", telescope_builtin.live_grep, { desc = "Telescope live grep" })
 
     -- Open the neovim config files
     vim.keymap.set("n", "<space>en", function()
