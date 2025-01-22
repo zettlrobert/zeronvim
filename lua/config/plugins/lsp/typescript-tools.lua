@@ -1,23 +1,33 @@
+--   Vue Plugin Config
+--   {
+--     name = "@vue/typescript-plugin",
+--     location = vim.fn.stdpath("data")
+--         .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+--     languages = { "vue" },
+--   },
+
 return {
   "pmizio/typescript-tools.nvim",
   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
   config = function()
     local typescript_tools = require("typescript-tools")
+    local lspconfig = require("lspconfig")
 
     -- https://github.com/pmizio/typescript-tools.nvim
     typescript_tools.setup({
+      root_dir = lspconfig.util.root_pattern(".git", "tsconfig.base.json", ".eslintrc.json"),
       filetypes = {
         "javascript",
         "javascriptreact",
         "typescript",
         "typescriptreact",
-        "vue",
+        -- "vue",
       },
       settings = {
         -- spawn additional tsserver instance to calculate diagnostics on it
-        separate_diagnostic_server = false,
+        separate_diagnostic_server = true,
         -- "change"|"insert_leave" determine when the client asks the server about diagnostic
-        publish_diagnostic_on = "insert_leave",
+        publish_diagnostic_on = "change",
         -- array of strings("fix_all"|"add_missing_imports"|"remove_unused"|
         -- "remove_unused_imports"|"organize_imports") -- or string "all"
         -- to include all supported code actions
@@ -28,9 +38,8 @@ return {
         tsserver_path = nil,
         -- specify a list of plugins to load by tsserver, e.g., for support `styled-components`
         -- (see 💅 `styled-components` support section)
-        tsserver_plugins = {
-          "@vue/typescript-plugin",
-        },
+        -- tsserver_plugins = {
+        -- },
         -- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
         -- memory limit in megabytes or "auto"(basically no limit)
         tsserver_max_memory = "auto",
