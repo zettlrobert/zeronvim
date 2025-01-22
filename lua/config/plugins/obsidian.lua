@@ -10,6 +10,10 @@ return {
         name = "zettl",
         path = "~/notes/zettl",
       },
+      {
+        name = "CitSci",
+        path = "~/zettl.robert@zerodev-solutions.com/CitSci/",
+      },
     },
     ui = {
       checkboxes = {},
