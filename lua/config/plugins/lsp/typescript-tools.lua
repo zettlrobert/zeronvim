@@ -15,6 +15,9 @@ return {
 
     -- https://github.com/pmizio/typescript-tools.nvim
     typescript_tools.setup({
+      on_attach = function(client, bufnr)
+        vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr })
+      end,
       root_dir = lspconfig.util.root_pattern(".git", "tsconfig.base.json", ".eslintrc.json"),
       filetypes = {
         "javascript",
@@ -32,7 +35,13 @@ return {
         -- "remove_unused_imports"|"organize_imports") -- or string "all"
         -- to include all supported code actions
         -- specify commands exposed as code_actions
-        expose_as_code_action = { "all" },
+        expose_as_code_action = {
+          "fix_all",
+          "add_missing_imports",
+          "remove_unused",
+          "remove_unused_imports",
+          "organize_imports",
+        },
         -- string|nil - specify a custom path to `tsserver.js` file, if this is nil or file under path
         -- not exists then standard path resolution strategy is applied
         tsserver_path = nil,
@@ -56,12 +65,12 @@ return {
         -- WARNING: Experimental feature also in VSCode, because it might hit performance of server.
         -- possible values: ("off"|"all"|"implementations_only"|"references_only")
         code_lens = "all",
-        -- by default code lenses are displayed on all referencable values and for some of you it can
-        -- be too much this option reduce count of them by removing member references from lenses
+        --   -- by default code lenses are displayed on all referencable values and for some of you it can
+        --   -- be too much this option reduce count of them by removing member references from lenses
         disable_member_code_lens = true,
-        -- JSXCloseTag
-        -- WARNING: it is disabled by default (maybe you configuration or distro already uses nvim-ts-autotag,
-        -- that maybe have a conflict if enable this feature. )
+        --   -- JSXCloseTag
+        --   -- WARNING: it is disabled by default (maybe you configuration or distro already uses nvim-ts-autotag,
+        --   -- that maybe have a conflict if enable this feature. )
         jsx_close_tag = {
           enable = false,
           filetypes = { "javascriptreact", "typescriptreact" },

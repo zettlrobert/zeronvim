@@ -20,7 +20,7 @@ return {
       local lspconfig = require("lspconfig")
       local language_servers = require("config.plugins.lsp.servers").language_servers
 
-      vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
+      vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
 
       -- Iterate over all installed servers and setup
       for _, server in pairs(language_servers) do
