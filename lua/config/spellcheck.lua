@@ -1,7 +1,5 @@
 local M = {}
 
-print("Read")
-
 -- This list represents the available spellcheck languages
 local LanguageCode = {
   ["English"] = "en_us",
@@ -17,7 +15,7 @@ local notifications = {
     ["de_de"] = "German",
     ["en_us"] = "English",
     spellfile = "Switched Spellfile to",
-  }
+  },
 }
 
 ---Returns the language code without the variant
@@ -57,7 +55,6 @@ local spellcheck_disable = function()
   vim.notify(notifications.spell.already_disabled)
 end
 
-
 ---Creates a command for spellchecking
 ---@param opts vim.api.keyset.create_user_command.command_args
 vim.api.nvim_create_user_command("Spellcheck", function(opts)
@@ -80,5 +77,5 @@ end, {
     end
 
     return commands
-  end
+  end,
 })
