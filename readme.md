@@ -14,7 +14,7 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 
 ## Plugin Docs
 
-- [Blink COmpletion - blink.cmp](https://cmp.saghen.dev/)
+- [Blink Completion - blink.cmp](https://cmp.saghen.dev/)
 - [NvimTree - File Explorer](https://docs.rockylinux.org/books/nvchad/nvchad_ui/nvimtree/)
 - [lazy.nvim](https://lazy.folke.io/)
 
@@ -22,6 +22,7 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 
 ## TODO
 
+- [ ] conceallevel for json files --> disabled
 - [ ] diffview - setup
 - [ ] close quickfix list when opened in trouble (quickfixlist filetype is `qf`)
 - [ ] eslint vue configuration parser https://stackoverflow.com/questions/66597732/eslint-vue-3-parsing-error-expected-eslint
