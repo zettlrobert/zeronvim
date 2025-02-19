@@ -67,8 +67,9 @@ return {
         lualine_a = {
           {
             "tabs",
-            show_filename_only = true,
+            -- show_filename_only = true,
             mode = 1,
+            use_mode_color = true,
           },
         },
       },
