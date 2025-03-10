@@ -1,5 +1,3 @@
-local M = {}
-
 -- This list represents the available spellcheck languages
 local LanguageCode = {
   ["English"] = "en_us",
