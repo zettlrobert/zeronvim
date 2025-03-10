@@ -1,4 +1,5 @@
 local keymap = vim.keymap.set
+local utils = require("config.utils")
 
 -- Window Navigation
 keymap("n", "<C-h>", "<C-w>h", { desc = "Move Cursor to left window" })
@@ -30,6 +31,17 @@ keymap("n", "<leader>fmt", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", 
 -- We escape " to select the register and type + y to copy in every mode
 keymap("n", "<leader>y", '"+y', { desc = "Copy the result of the following expression to system clipboard" })
 keymap("v", "<leader>y", '"+y', { desc = "Copy visual selection to system clipboard" })
+
+-- Copy Buffer Paths to Registers
+keymap("n", "<leader>cbr", utils.get_current_realtive_buffer_path,
+  { desc = "Copy the relative path of the current buffer to the r register" })
+
+keymap("n", "<leader>car", utils.get_current_absolute_buffer_path,
+  { desc = "Copy the absolute path of the current buffer to the a register" })
+
+-- Quickfix List
+keymap("n", "<leader>cln", ":cnext<CR>", { desc = "Next Quickfix Item" })
+keymap("n", "<leader>clp", ":cprevious<CR>", { desc = "Previous Quickfix Item" })
 
 -- Paste selection without losing the current buffer
 keymap("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
