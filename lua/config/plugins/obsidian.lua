@@ -16,8 +16,7 @@ return {
       },
     },
     ui = {
-      checkboxes = {},
-      bullets = {},
+      enable = false
     },
     -- Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
     completion = {
@@ -51,5 +50,5 @@ return {
         opts = { buffer = true, expr = true },
       },
     },
-  },
+  }
 }
