@@ -76,7 +76,17 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "omni", "markdown", "codeium" },
+        default = {
+          "lsp",
+          "path",
+          "snippets",
+          "buffer",
+          "omni",
+          "codeium",
+          -- "markview",
+          "markdown",
+          "obsidian"
+        },
 
         -- CMP completion sources
         providers = {
@@ -84,11 +94,22 @@ return {
             name = "omni",
             module = "blink.compat.source",
           },
+
           markdown = {
             name = "RenderMarkdown",
-            module = "render-markdown.integ.blink",
-            fallbacks = { "lsp" },
+            module = "render-markdown.integ.blink"
           },
+
+          -- markview = {
+          --   name = "markview",
+          --   module = "blink.compat.source"
+          -- },
+
+          obsidian = {
+            name = "obsidian",
+            module = "blink.compat.source"
+          },
+
           codeium = {
             -- Same name as cmp source
             name = "codeium",
