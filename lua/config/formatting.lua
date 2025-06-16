@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     -- @diagnostic disable-next-line
-    if client.supports_method("textDocument/formatting") then
+    if client:supports_method("textDocument/formatting") then
       -- Format the current buffer on safe
       vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = args.buf,

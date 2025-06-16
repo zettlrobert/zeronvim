@@ -33,11 +33,19 @@ keymap("n", "<leader>y", '"+y', { desc = "Copy the result of the following expre
 keymap("v", "<leader>y", '"+y', { desc = "Copy visual selection to system clipboard" })
 
 -- Copy Buffer Paths to Registers
-keymap("n", "<leader>cbr", utils.get_current_realtive_buffer_path,
-  { desc = "Copy the relative path of the current buffer to the r register" })
+keymap(
+  "n",
+  "<leader>cbr",
+  utils.get_current_realtive_buffer_path,
+  { desc = "Copy the relative path of the current buffer to the r register" }
+)
 
-keymap("n", "<leader>car", utils.get_current_absolute_buffer_path,
-  { desc = "Copy the absolute path of the current buffer to the a register" })
+keymap(
+  "n",
+  "<leader>car",
+  utils.get_current_absolute_buffer_path,
+  { desc = "Copy the absolute path of the current buffer to the a register" }
+)
 
 -- Quickfix List
 keymap("n", "<leader>cln", ":cnext<CR>", { desc = "Next Quickfix Item" })
@@ -71,6 +79,17 @@ vim.keymap.set("n", "<leader>ntff", function()
 end, { desc = ":NvimTree open tree and focus current file in tree" })
 
 --Spellcheck
-vim.keymap.set("n", "<leader>spell", ":Spellcheck English<cR>", { desc = ":Spellcheck English" })
-
+vim.keymap.set("n", "<leader>spell", ":Spellcheck English<CR>", { desc = ":Spellcheck English" })
 vim.keymap.set("n", "<leader>spelloff", ":Spellcheck Disable<CR>", { desc = ":Spellcheck Disable" })
+
+--CodeCompanion
+vim.keymap.set("n", "<leader>ccc", ":CodeCompanionChat Toggle<CR>", { desc = ":CodeCompanionChat" })
+vim.keymap.set("n", "<leader>action", ":CodeCompanionActions<CR>", { desc = ":CodeCompanion Action" })
+
+--RenderMarkdown
+vim.keymap.set(
+  "n",
+  "<leader>md",
+  ":RenderMarkdown buf_toggle<CR>",
+  { desc = ":RenderMarkdown Toggle for current buffer" }
+)

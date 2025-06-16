@@ -9,6 +9,7 @@ local M = {
   get_system_binary = require("config.utils.get_system_binary").get_system_binary,
   get_user = require("config.utils.get_user").get_user,
   protected_plugin_call = require("config.utils.protected_plugin_call").protected_plugin_call,
+  is_presentation_markdown = require("config.utils.is_presentation_markdown").is_presentation_markdown,
 }
 
 return M

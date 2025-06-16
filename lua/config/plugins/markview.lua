@@ -4,6 +4,9 @@ return {}
 --   "https://github.com/OXY2DEV/markview.nvim",
 --   lazy = false,
 --   dependencies = {
---     "saghen/blink.cmp"
---   }
+--     "saghen/blink.cmp",
+--   },
+--   preview = {
+--     icon_provider = "mini", -- "internal"
+--   },
 -- }
