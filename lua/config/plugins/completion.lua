@@ -28,8 +28,8 @@ return {
       -- Disable for some filetypes
       enabled = function()
         return not vim.tbl_contains({ "oil" }, vim.bo.filetype)
-            and vim.bo.buftype ~= "prompt"
-            and vim.b.completion ~= false
+          and vim.bo.buftype ~= "prompt"
+          and vim.b.completion ~= false
       end,
 
       appearance = {
@@ -53,8 +53,8 @@ return {
             treesitter = { "lsp" },
             columns = {
               { "kind_icon", gap = 1 },
-              { "label",     "label_description", gap = 1 },
-              { "kind",      gap = 1,             "source_name" },
+              { "label", "label_description", gap = 1 },
+              { "kind", gap = 1, "source_name" },
             },
             components = {
               kind_icon = {
@@ -84,8 +84,8 @@ return {
           "omni",
           "codeium",
           -- "markview",
+          "obsidian",
           "markdown",
-          "obsidian"
         },
 
         -- CMP completion sources
@@ -97,17 +97,12 @@ return {
 
           markdown = {
             name = "RenderMarkdown",
-            module = "render-markdown.integ.blink"
+            module = "render-markdown.integ.blink",
           },
-
-          -- markview = {
-          --   name = "markview",
-          --   module = "blink.compat.source"
-          -- },
 
           obsidian = {
             name = "obsidian",
-            module = "blink.compat.source"
+            module = "blink.compat.source",
           },
 
           codeium = {
