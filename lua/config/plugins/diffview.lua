@@ -4,8 +4,7 @@ return {
     config = function()
       local diffview = require("diffview")
 
-      print("Diffview Setup")
-
+      ---TODO: Configure Diffview
       diffview.setup({})
 
       vim.keymap.set("n", "<leader>gD", ":DiffviewOpen<CR>", { desc = "Diffview: Open Diffview" })
