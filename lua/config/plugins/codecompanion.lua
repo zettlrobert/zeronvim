@@ -17,7 +17,7 @@ return {
   "olimorris/codecompanion.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter"
+    "nvim-treesitter/nvim-treesitter",
   },
   config = function()
     local codecompanion = require("codecompanion")
@@ -27,15 +27,35 @@ return {
       --https://github.com/olimorris/codecompanion.nvim
       strategies = {
         chat = {
-          adapter = "deepseek-r1:32b"
+          -- adapter = "qwen2.5-coder:32b",
+          adapter = "qwen2.5-coder:32b",
         },
         inline = {
-          adapter = "deepseek-r1:32b"
-        }
+          adapter = "devstral",
+        },
+        cmd = {
+          adapter = "devstral",
+        },
       },
 
       --https://codecompanion.olimorris.dev/configuration/adapters.html
       adapters = {
+        ["devstral"] = function()
+          return cc_adapters.extend("ollama", {
+            name = "devstral",
+            schema = {
+              model = {
+                default = "devstral",
+              },
+              num_ctx = {
+                default = "devstral",
+              },
+              num_predict = {
+                default = 16384,
+              },
+            },
+          })
+        end,
         ["deepseek-r1:32b"] = function()
           return cc_adapters.extend("ollama", {
             name = "deepseek-r1:32b",
@@ -44,22 +64,88 @@ return {
                 default = "deepseek-r1:32b",
               },
               num_ctx = {
-                default = 16384
+                default = 16384,
               },
               num_predict = {
-                default = -1
-              }
-            }
+                default = -1,
+              },
+            },
+          })
+        end,
+        ---https://huggingface.co/Qwen/Qwen2.5-Coder-32B/blob/main/README.md
+        ["qwen2.5-coder:32b"] = function()
+          return cc_adapters.extend("ollama", {
+            name = "qwen2.5-coder:32b",
+            schema = {
+              model = {
+                default = "qwen2.5-coder:32b",
+              },
+              num_ctx = {
+                default = 16384,
+              },
+              num_predict = {
+                default = -1,
+              },
+            },
+          })
+        end,
+        ---https://ollama.com/library/deepseek-coder-v2
+        ["deepseek-coder-v2:latest"] = function()
+          return cc_adapters.extend("ollama", {
+            name = "deepseek-coder-v2:latest",
+            schema = {
+              model = {
+                default = "deepseek-coder-v2:latest",
+              },
+              num_ctx = {
+                default = 16384,
+              },
+              num_predict = {
+                default = -1,
+              },
+            },
+          })
+        end,
+        ["qwen3:32b"] = function()
+          return cc_adapters("ollama", {
+            name = "qwen3:32b",
+            schema = {
+              model = {
+                default = "qwen3:32b",
+              },
+              num_ctx = {
+                default = 16384,
+              },
+              num_predict = {
+                default = -1,
+              },
+            },
           })
         end,
       },
-
+      ---https://ollama.com/library/gemma3
+      ["gemma3:12b"] = function()
+        return cc_adapters("ollama", {
+          name = "gemma3:12b",
+          schema = {
+            model = {
+              default = "gemma3:12b",
+            },
+            num_ctx = {
+              default = 16384,
+            },
+            num_predict = {
+              default = -1,
+            },
+          },
+        })
+      end,
       --https://github.com/olimorris/codecompanion.nvim
       sources = {
         per_file = {
-          codecompanion = { "codecompanion" }
-        }
-      }
+          codecompanion = { "codecompanion" },
+        },
+      },
     })
-  end
+  end,
 }
