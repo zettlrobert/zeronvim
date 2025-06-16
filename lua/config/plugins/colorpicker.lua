@@ -11,7 +11,7 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>ccc", function()
+    vim.keymap.set("n", "<leader>color", function()
       vim.api.nvim_command("CccPick")
     end, { desc = ":Toggle CccPick - Colorpicker" })
   end,
