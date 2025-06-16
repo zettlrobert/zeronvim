@@ -1,6 +1,6 @@
---https://github.com/epwalsh/obsidian.nvim
+--https://github.com/obsidian-nvim/obsidian.nvim
 return {
-  "epwalsh/obsidian.nvim",
+  "obsidian-nvim/obsidian.nvim",
   version = "*",
   lazy = true,
   ft = "markdown",
@@ -14,15 +14,21 @@ return {
         name = "CitSci",
         path = "~/zettl.robert@zerodev-solutions.com/CitSci/",
       },
+      {
+        name = "zerodev-solutions",
+        path = "~/notes/zerodev-solutions",
+      },
+      {
+        name = "mobilehead",
+        path = "~/notes/mobilehead",
+      },
     },
     ui = {
-      enable = false
+      enable = false,
     },
     -- Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
     completion = {
-      -- Set to false to disable completion.
-      nvim_cmp = true,
-      -- Trigger completion at 2 chars.
+      blink = true,
       min_chars = 2,
     },
     -- Optional, configure key mappings. These are the defaults. If you don't want to set any keymappings this
@@ -50,5 +56,5 @@ return {
         opts = { buffer = true, expr = true },
       },
     },
-  }
+  },
 }
