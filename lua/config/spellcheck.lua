@@ -77,3 +77,12 @@ end, {
     return commands
   end,
 })
+
+---Creates autocommand to enable spellcheck in markdown files
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.md" },
+  callback = function()
+    spellcheck_enable(LanguageCode["English"])
+  end,
+  group = vim.api.nvim_create_augroup("SpellcheckAutocmd", { clear = true }),
+})
