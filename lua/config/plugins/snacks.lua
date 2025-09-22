@@ -9,23 +9,23 @@ return {
       snacks.setup({
         animate = {
           enabled = true,
-          easing = 'linear'
+          easing = "linear",
         },
 
         indent = {
           enabled = true,
-          hl = 'SnacksIndent',
+          hl = "SnacksIndent",
           animate = {
             enabled = false,
           },
           scope = {
-            hl = "ModeMsg"
-          }
+            hl = "ModeMsg",
+          },
         },
 
         scroll = {
           enabled = true,
-          easing = 'linear'
+          easing = "linear",
         },
 
         statuscolumn = {
@@ -40,8 +40,8 @@ return {
             -- patterns to match Git signs
             patterns = { "GitSign" },
           },
-        }
+        },
       })
-    end
-  }
+    end,
+  },
 }
