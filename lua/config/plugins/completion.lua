@@ -1,21 +1,64 @@
---https://github.com/hrsh7th/cmp-omni
 --https://github.com/rafamadriz/friendly-snippets
 --https://github.com/hrsh7th/cmp-omni
+
+--TODO: move to debug utils
+local function dump(o)
+  if type(o) == "table" then
+    local s = "{ "
+    for k, v in pairs(o) do
+      if type(k) ~= "number" then
+        k = '"' .. k .. '"'
+      end
+      s = s .. "[" .. k .. "] = " .. dump(v) .. ","
+    end
+    return s .. "} "
+  else
+    return tostring(o)
+  end
+end
+
 return {
   {
+    ---TODO: Move to dedicated plugin file
+    ---https://github.com/tzachar/cmp-ai
+    "tzachar/cmp-ai",
+    config = function()
+      local cmp_ai = require("cmp_ai.config")
+      cmp_ai:setup({
+        max_lines = 100,
+        provider = "Ollama",
+        provider_options = {
+          model = "qwen2.5-coder:7b-base-q6_K",
+          auto_unload = true,
+          prompt = function(lines_before, lines_after)
+            -- You may include filetype and/or other project-wise context in this string as well.
+            -- Consult model documentation in case there are special tokens for this.
+            return "<|fim_prefix|>" .. lines_before .. "<|fim_suffix|>" .. lines_after .. "<|fim_middle|>"
+          end,
+        },
+        notify = true,
+        notify_callback = function(msg)
+          vim.notify(msg)
+        end,
+        run_on_every_keystroke = false,
+      })
+    end,
+  },
+  {
     "saghen/blink.cmp",
-    -- optional: provides snippets for the snippet source
     dependencies = {
-      "saghen/blink.compat",
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-omni",
+      {
+        ---https://github.com/saghen/blink.compat
+        "saghen/blink.compat",
+        version = "2.*",
+        lazy = true,
+      },
     },
+    lazy = false,
     -- use a release tag to download pre-built binaries
     version = "*",
-    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-    -- If you use nix, you can build from source using latest nightly rust with:
-    -- build = 'nix run .#build-plugin',
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -28,13 +71,17 @@ return {
       -- Disable for some filetypes
       enabled = function()
         return not vim.tbl_contains({ "oil" }, vim.bo.filetype)
-          and vim.bo.buftype ~= "prompt"
-          and vim.b.completion ~= false
+            and vim.bo.buftype ~= "prompt"
+            and vim.b.completion ~= false
       end,
 
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = "mono",
+        kind_icons = {
+          codeium = "",
+          copilot = "",
+        },
       },
 
       -- Show signature
@@ -48,13 +95,11 @@ return {
         ghost_text = { enabled = true },
 
         menu = {
-          border = "rounded",
           draw = {
             treesitter = { "lsp" },
             columns = {
-              { "kind_icon", gap = 1 },
-              { "label", "label_description", gap = 1 },
-              { "kind", gap = 1, "source_name" },
+              { "kind_icon", "label",       "label_description", gap = 1 },
+              { "kind",      "source_name", gap = 1 },
             },
             components = {
               kind_icon = {
@@ -63,7 +108,7 @@ return {
                   local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
                   return kind_icon
                 end,
-                -- Optionally, you may also use the highlights from mini.icons
+                ---Optionally, you may also use the highlights from mini.icons
                 highlight = function(ctx)
                   local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
                   return hl
@@ -82,10 +127,12 @@ return {
           "snippets",
           "buffer",
           "omni",
-          "codeium",
-          -- "markview",
           "obsidian",
           "markdown",
+          "codeium",
+          "copilot",
+          -- NOTE: Disabled
+          -- "ollama", --ollama
         },
 
         -- CMP completion sources
@@ -108,7 +155,20 @@ return {
           codeium = {
             -- Same name as cmp source
             name = "codeium",
+            module = "codeium.blink",
+            async = true,
+          },
+
+          ollama = {
+            name = "cmp_ai", --ollama
             module = "blink.compat.source",
+          },
+
+          copilot = {
+            name = "copilot",
+            module = "blink-cmp-copilot",
+            score_offset = 100,
+            async = true,
           },
         },
       },
@@ -116,7 +176,3 @@ return {
     opts_extend = { "sources.default" },
   },
 }
-
--- ctrl+n       -- next
--- ctrl+p       -- previous
--- ctrl+y       -- confirm
