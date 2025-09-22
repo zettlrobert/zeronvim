@@ -8,9 +8,12 @@ return {
       navic.setup({
         lsp = {
           auto_attach = true,
+          preference = {
+            "typescript-tools",
+          },
         },
-        highlight = true
+        highlight = true,
       })
-    end
-  }
+    end,
+  },
 }
