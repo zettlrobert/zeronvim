@@ -1,5 +1,6 @@
+---https://github.com/Exafunction/windsurf.nvim
 return {
-  "Exafunction/codeium.nvim",
+  "Exafunction/windsurf.nvim",
   -- dir = "~/repositories/codeium.nvim/",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -29,10 +30,10 @@ return {
           uuidgen = uuidgen,
           curl = curl,
           gzip = gzip,
-          language_server = language_server
-        }
+          language_server = language_server,
+        },
       },
       enable_cmp_source = true,
     })
-  end
+  end,
 }
