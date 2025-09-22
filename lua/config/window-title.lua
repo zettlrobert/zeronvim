@@ -1,5 +1,32 @@
 local icons = require("config.assets.icons")
 
+---Return the folder containing the directory above the current working directory
+---@returns string
+local function get_parent_folder()
+  local cwd = vim.fn.getcwd()
+
+  -- Remove trailing slash if present
+  cwd = cwd:gsub("/$", "")
+
+  -- Find the parent directory
+  local parent_dir = cwd:match("(.+)/[^/]+$")
+
+  if parent_dir then
+    -- Extract the folder name from the parent directory
+    local parent = parent_dir:match("([^/]+)$")
+
+    if parent then
+      local parent_folder = parent .. "/"
+      return parent_folder
+    end
+  end
+
+  -- Fallback to cwd if no parent folder is found
+  return "cwd: "
+end
+
+get_parent_folder()
+
 ---Returns the project name via lua string matching
 ---@return string
 local function get_project_name()
@@ -25,7 +52,6 @@ local function get_project_name()
   return project_name
 end
 
-
 ---Checks if neovim was started with a director
 ---@return boolean
 local function is_project_directory()
@@ -50,20 +76,30 @@ end
 ---Generates the titlestring based on opened project or file
 ---@return string
 local function generate_window_title()
-  local prefix_project = icons.WindowTitle.project
-  local prefix_file = icons.WindowTitle.file
-  local prefix = prefix_file
-
-  local is_dir = is_project_directory()
-
-  if is_dir == true then
-    prefix = prefix_project
-  end
+  local is_project = is_project_directory()
+  local prefix = is_project and icons.WindowTitle.project or icons.WindowTitle.file
 
   local project_name = get_project_name()
+  local parent_folder = get_parent_folder()
 
-  return prefix .. project_name
+  -- Concatenate prefix, parent folder, and project name for the title
+  return prefix .. parent_folder .. project_name
 end
 
 ---Sets the window title
 vim.o.titlestring = generate_window_title()
+
+--- Sets the terminal window/tab title to the project name when Neovim is about to close
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+  pattern = { "*" },
+  callback = function()
+    local project_name = get_project_name()
+    local parent_folder = get_parent_folder() or ""
+    local exit_tab_title = parent_folder .. project_name
+
+    -- Set the terminal/tab title to the project name
+    vim.fn.chansend(vim.v.stderr, "\27]2;" .. exit_tab_title .. "\7")
+    vim.o.titlestring = exit_tab_title
+  end,
+  group = vim.api.nvim_create_augroup("WindowTitle", { clear = true }),
+})
