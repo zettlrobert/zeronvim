@@ -1,11 +1,4 @@
 -- https://github.com/catppuccin/nvim
-
--- Manual adjustments to the color scheme
-local crust = "#11111B"
-local mantle = "#181825"
-local rosewater = "#F5e0DC"
-local none = "none"
-
 return {
   {
     "catppuccin/nvim",
@@ -48,21 +41,6 @@ return {
           },
         },
       })
-
-      -- Set colorscheme
-      vim.cmd.colorscheme("catppuccin")
-
-      -- Cursorline Configuration
-      vim.api.nvim_set_hl(0, "CursorLine", { bg = crust })
-
-      -- Line Number of current Line - if Cursorline is not active use LineNr
-      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = rosewater })
-
-      -- Custom Color for Window Split Separator
-      vim.api.nvim_set_hl(0, "VertSplit", { fg = crust, bg = none })
-
-      -- Set Background Color
-      vim.api.nvim_set_hl(0, "Normal", { bg = mantle })
     end,
   },
 }
