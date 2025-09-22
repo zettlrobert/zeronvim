@@ -130,13 +130,13 @@ return {
           error = icons.Diagnostics.ERROR,
         },
       },
-      filters = {
-        dotfiles = false,
-        git_clean = false,
-        no_buffer = false,
-        custom = {},
-        exclude = {},
-      },
+      -- filters = {
+      --   dotfiles = false,
+      --   git_clean = false,
+      --   no_buffer = false,
+      --   custom = { ".git" },
+      --   exclude = {},
+      -- },
       filesystem_watchers = {
         enable = true,
         debounce_delay = 50,
@@ -144,7 +144,7 @@ return {
       },
       git = {
         enable = true,
-        ignore = true,
+        ignore = false,
         show_on_dirs = true,
         show_on_open_dirs = true,
         timeout = 400,
