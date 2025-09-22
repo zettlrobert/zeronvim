@@ -10,6 +10,18 @@ local M = {
   get_user = require("config.utils.get_user").get_user,
   protected_plugin_call = require("config.utils.protected_plugin_call").protected_plugin_call,
   is_presentation_markdown = require("config.utils.is_presentation_markdown").is_presentation_markdown,
+  patch_colorscheme = require("config.utils.patch_colorscheme"),
 }
+
+-- TODO: Move to autocommands
+--- Setting filetype to sh for .env* files
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = ".env*",
+  callback = function()
+    vim.notify("Setting filetype to sh for .env* file", vim.log.levels.INFO, { title = "Filetype Set" })
+
+    vim.bo.filetype = "sh"
+  end,
+})
 
 return M
