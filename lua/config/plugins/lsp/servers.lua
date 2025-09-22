@@ -25,9 +25,11 @@ M.language_servers = {
   ["svelte"] = "svelte",
   ["tailwindcss"] = "tailwindcss",
   ["taplo"] = "taplo",
-  ["terraformls"] = "terraformls",
+  --  ["terraformls"] = "terraformls",
+  -- ["tofu_ls"] = "tofu_ls",
   ["tflint"] = "tflint",
-  ["volar"] = "volar",
+  -- TODO: Fix vue
+  -- ["vuels"] = "vuels",
   ["yamlls"] = "yamlls",
 }
 

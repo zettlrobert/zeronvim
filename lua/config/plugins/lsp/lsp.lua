@@ -65,6 +65,12 @@ return {
             },
           })
         end
+
+        if server == "tofu_ls" then
+          lspconfig["tofu_ls"].setup({
+            filetypes = { "tf", "opentofu", "openapi", "terraform", "tfvars", "hcl" },
+          })
+        end
       end
     end,
   },
