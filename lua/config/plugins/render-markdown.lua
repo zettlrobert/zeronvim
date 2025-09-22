@@ -15,10 +15,9 @@ return {
 
     markdown.setup({
       enabled = true,
-      preset = "obsidian",
-      render_modes = true,
+      render_modes = { "n" },
       completions = {
-        blink = {
+        lsp = {
           enabled = true,
         },
       },
