@@ -27,123 +27,187 @@ return {
       --https://github.com/olimorris/codecompanion.nvim
       strategies = {
         chat = {
-          -- adapter = "qwen2.5-coder:32b",
-          adapter = "qwen2.5-coder:32b",
+          adapter = "gpt-oss",
+          completion_provider = "cmp",
+          tools = {
+            opts = {
+              auto_submit_errors = true,
+              auto_submit_success = true,
+            },
+          },
         },
         inline = {
-          adapter = "devstral",
+          adapter = "gpt-oss",
         },
         cmd = {
-          adapter = "devstral",
+          adapter = "gpt-oss",
         },
       },
 
       --https://codecompanion.olimorris.dev/configuration/adapters.html
       adapters = {
-        ["devstral"] = function()
-          return cc_adapters.extend("ollama", {
-            name = "devstral",
-            schema = {
-              model = {
-                default = "devstral",
+        http = {
+          --https://ollama.com/library/gpt-oss
+          ["gpt-oss"] = function()
+            return cc_adapters.extend("ollama", {
+              name = "gpt-oss",
+              schema = {
+                model = {
+                  default = "gpt-oss",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-              num_ctx = {
-                default = "devstral",
+            })
+          end,
+          ["devstral"] = function()
+            return cc_adapters.extend("ollama", {
+              name = "devstral",
+              schema = {
+                model = {
+                  default = "devstral",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-              num_predict = {
-                default = 16384,
+            })
+          end,
+          ["deepseek-r1:32b"] = function()
+            return cc_adapters.extend("ollama", {
+              name = "deepseek-r1:32b",
+              schema = {
+                model = {
+                  default = "deepseek-r1:32b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-            },
-          })
-        end,
-        ["deepseek-r1:32b"] = function()
-          return cc_adapters.extend("ollama", {
-            name = "deepseek-r1:32b",
-            schema = {
-              model = {
-                default = "deepseek-r1:32b",
+            })
+          end,
+          ---https://huggingface.co/Qwen/Qwen2.5-Coder-32B/blob/main/README.md
+          ["qwen2.5-coder:32b"] = function()
+            return cc_adapters.extend("ollama", {
+              name = "qwen2.5-coder:32b",
+              schema = {
+                model = {
+                  default = "qwen2.5-coder:32b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-              num_ctx = {
-                default = 16384,
+            })
+          end,
+          ---https://ollama.com/library/deepseek-coder-v2
+          ["deepseek-coder-v2:latest"] = function()
+            return cc_adapters.extend("ollama", {
+              name = "deepseek-coder-v2:latest",
+              schema = {
+                model = {
+                  default = "deepseek-coder-v2:latest",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-              num_predict = {
-                default = -1,
+            })
+          end,
+          ["qwen3:32b"] = function()
+            return cc_adapters("ollama", {
+              name = "qwen3:32b",
+              schema = {
+                model = {
+                  default = "qwen3:32b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-            },
-          })
-        end,
-        ---https://huggingface.co/Qwen/Qwen2.5-Coder-32B/blob/main/README.md
-        ["qwen2.5-coder:32b"] = function()
-          return cc_adapters.extend("ollama", {
-            name = "qwen2.5-coder:32b",
-            schema = {
-              model = {
-                default = "qwen2.5-coder:32b",
+            })
+          end,
+          ---https://ollama.com/library/gemma3
+          ["gemma3:12b"] = function()
+            return cc_adapters("ollama", {
+              name = "gemma3:12b",
+              schema = {
+                model = {
+                  default = "gemma3:12b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-              num_ctx = {
-                default = 16384,
+            })
+          end,
+          ---This is the issue-manager used to create github issues
+          ["gemma3-4b-issue-manager:latest"] = function()
+            return cc_adapters("ollama", {
+              name = "issue-manager",
+              schema = {
+                model = {
+                  default = "gemma3-4b-issue-manager:latest",
+                },
               },
-              num_predict = {
-                default = -1,
+            })
+          end,
+          ---https://ollama.com/library/gemma3n/tags
+          ["gemma3n:e4b"] = function()
+            return cc_adapters("ollama", {
+              name = "gemma3n:e4b",
+              schema = {
+                model = {
+                  default = "gemma3n:e4b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-            },
-          })
-        end,
-        ---https://ollama.com/library/deepseek-coder-v2
-        ["deepseek-coder-v2:latest"] = function()
-          return cc_adapters.extend("ollama", {
-            name = "deepseek-coder-v2:latest",
-            schema = {
-              model = {
-                default = "deepseek-coder-v2:latest",
-              },
-              num_ctx = {
-                default = 16384,
-              },
-              num_predict = {
-                default = -1,
-              },
-            },
-          })
-        end,
-        ["qwen3:32b"] = function()
-          return cc_adapters("ollama", {
-            name = "qwen3:32b",
-            schema = {
-              model = {
-                default = "qwen3:32b",
-              },
-              num_ctx = {
-                default = 16384,
-              },
-              num_predict = {
-                default = -1,
-              },
-            },
-          })
-        end,
+            })
+          end,
+        },
       },
-      ---https://ollama.com/library/gemma3
-      ["gemma3:12b"] = function()
-        return cc_adapters("ollama", {
-          name = "gemma3:12b",
-          schema = {
-            model = {
-              default = "gemma3:12b",
-            },
-            num_ctx = {
-              default = 16384,
-            },
-            num_predict = {
-              default = -1,
-            },
-          },
-        })
-      end,
+
       --https://github.com/olimorris/codecompanion.nvim
       sources = {
         per_file = {
           codecompanion = { "codecompanion" },
+        },
+      },
+
+      display = {
+        diff = {
+          enabled = true,
+          close_chat_at = 240,
+          layout = "vertical",
+          opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
+          provider = "mini_diff",
         },
       },
     })
