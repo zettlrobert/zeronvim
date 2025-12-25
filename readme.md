@@ -17,12 +17,14 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 - [Blink Completion - blink.cmp](https://cmp.saghen.dev/)
 - [NvimTree - File Explorer](https://docs.rockylinux.org/books/nvchad/nvchad_ui/nvimtree/)
 - [lazy.nvim](https://lazy.folke.io/)
+- Presentterm for Presentations
 
 ---
 
 ## TODO
 
-- [ ] conceallevel for json files --> disabled
+- [x] switch markdown renderer (https://github.com/OXY2DEV/markview.nvim)
+  - compare with render-markdown
 - [ ] diffview - setup
 - [ ] close quickfix list when opened in trouble (quickfixlist filetype is `qf`)
 - [ ] eslint vue configuration parser https://stackoverflow.com/questions/66597732/eslint-vue-3-parsing-error-expected-eslint
@@ -45,7 +47,6 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
   - [ ] [spell](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#spell)
   - [ ] [writegood](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#write_good)
 - [ ] toggleterm
-- [ ] dashboard (mini or snacks)
 
 ### DIY Features
 
@@ -116,3 +117,4 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 - [x] treesitter.lua
 - [x] undotree.lua
 - [x] zen
+- [x] conceallevel for json files --> disabled

@@ -39,6 +39,7 @@ local options = {
   foldmethod = "expr",                                                                    -- foldexpr gives t he foldlevel of a line
   foldexpr = "nvim_treesitter#foldexpr()",                                                -- expression, used for when foldmethod is expr in this case treesitter
   title = true,                                                                           -- when on title of the window will be set to titlestring
+  winborder = "rounded",                                                                  --Defines the default style of floating windows
   diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram", -- TODO: Look into diffopt
 }
 

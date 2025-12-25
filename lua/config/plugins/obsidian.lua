@@ -1,11 +1,9 @@
 --https://github.com/obsidian-nvim/obsidian.nvim
 return {
   "obsidian-nvim/obsidian.nvim",
-  version = "*",
-  lazy = true,
+  version = "v3.14.2", -- recommended, use latest release instead of latest commit
   ft = "markdown",
   opts = {
-    legacy_commands = false,
     workspaces = {
       {
         name = "zettl",
@@ -24,38 +22,17 @@ return {
         path = "~/notes/mobilehead",
       },
     },
+
+    legacy_commands = false,
+
     ui = {
-      enable = true,
+      enable = false,
     },
-    -- Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
+
     completion = {
+      nvim_cmp = false,
       blink = true,
       min_chars = 2,
     },
-    -- Optional, configure key mappings. These are the defaults. If you don't want to set any keymappings this
-    -- way then set 'mappings = {}'.
-    -- mappings = {
-    -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-    -- ["gf"] = {
-    --   action = function()
-    --     return require("obsidian").util.gf_passthrough()
-    --   end,
-    --   opts = { noremap = false, expr = true, buffer = true },
-    -- },
-    -- Toggle check-boxes.
-    -- ["<leader>ch"] = {
-    --   action = function()
-    --     return require("obsidian").util.toggle_checkbox()
-    --   end,
-    --   opts = { buffer = true },
-    -- },
-    -- Smart action depending on context, either follow link or toggle checkbox.
-    -- ["<cr>"] = {
-    --   action = function()
-    --     return require("obsidian").util.smart_action()
-    --   end,
-    --   opts = { buffer = true, expr = true },
-    -- },
-    -- },
   },
 }

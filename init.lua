@@ -37,8 +37,8 @@ vim.cmd("colorscheme catppuccin-mocha")
 -- Require Neovim Options
 require("config.options")
 
--- Require neovim ui configurations, lsp hover, diagnostics...
-require("config.ui")
+-- Require LSP
+require("config.lsp")
 
 -- Require keymaps
 require("config.keymaps")
