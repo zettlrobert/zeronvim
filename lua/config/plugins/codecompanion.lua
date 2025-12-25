@@ -1,5 +1,6 @@
 --[[
-@link ttps://github.com/olimorris/codecompanion.nvim
+@link https://github.com/olimorris/codecompanion.nvim
+@link https://github.com/ravitemer/mcphub.nvim
 
 `:CodeCompanionChat` - open a chat buffer which opens on a single response per turn basis
   - <C-s> send prompt
@@ -12,12 +13,28 @@ Code context can be added via Variables and `Slash Commands` in the chat buffer
   - #lsp - Shares LSP information and code for the current buffer
   - #viewport - Shares the buffers and lines that you see in the Neovim viewport
 
+
+TODO: Checkout plugins
+- render-markdown.nvim vs markview.nvim
+- impg-clip.nvim
+- ACP adapters - Agent Client Protocol
+  - https://codecompanion.olimorris.dev/configuration/adapters-acp
+  - https://agentclientprotocol.com/overview/introduction
+- using tools
+  - https://codecompanion.olimorris.dev/usage/chat-buffer/tools#available-tools
+- remap to codecompanion actions cc
+- add vim cmd to expands cc to codecompanion
+- look into rules
+  - https://codecompanion.olimorris.dev/configuration/rules
+- configure action aplette
+  - https://codecompanion.olimorris.dev/configuration/action-palette
 --]]
 return {
   "olimorris/codecompanion.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "ravitemer/mcphub.nvim",
   },
   config = function()
     local codecompanion = require("codecompanion")
@@ -25,7 +42,7 @@ return {
 
     codecompanion.setup({
       --https://github.com/olimorris/codecompanion.nvim
-      strategies = {
+      interactions = {
         chat = {
           adapter = "gpt-oss",
           completion_provider = "cmp",
@@ -42,8 +59,10 @@ return {
         cmd = {
           adapter = "gpt-oss",
         },
+        background = {
+          adapter = "gpt-oss",
+        },
       },
-
       --https://codecompanion.olimorris.dev/configuration/adapters.html
       adapters = {
         http = {
@@ -54,6 +73,22 @@ return {
               schema = {
                 model = {
                   default = "gpt-oss",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
+              },
+            })
+          end,
+          ["qwen3-next:80b"] = function()
+            return cc_adapters.extend("ollama", {
+              name = "qwen3-next:80b",
+              schema = {
+                model = {
+                  default = "qwen3-next:80b",
                 },
                 num_ctx = {
                   default = 16384,
