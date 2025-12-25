@@ -24,4 +24,18 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
+---TODO: Use utility function
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.presentation.md",
+  callback = function()
+    vim.notify(
+      "Setting conceallevel to 1 for presentation markdown",
+      vim.log.levels.INFO,
+      { title = "Conceallevel Set" }
+    )
+
+    vim.opt.conceallevel = 1
+  end,
+})
+
 return M
