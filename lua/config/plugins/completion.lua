@@ -127,7 +127,6 @@ return {
           "snippets",
           "buffer",
           "omni",
-          "obsidian",
           "markdown",
           "codeium",
           "copilot",
@@ -137,20 +136,15 @@ return {
 
         -- CMP completion sources
         providers = {
-          omni = {
-            name = "omni",
-            module = "blink.compat.source",
-          },
-
           markdown = {
             name = "RenderMarkdown",
             module = "render-markdown.integ.blink",
           },
 
-          obsidian = {
-            name = "obsidian",
-            module = "blink.compat.source",
-          },
+          -- obsidian = {
+          --   name = "obsidian",
+          --   mdouel = "blink.compat.source"
+          -- },
 
           codeium = {
             -- Same name as cmp source
