@@ -3,6 +3,7 @@ local M = {}
 -- List of servers that will be auto installed via mason
 -- The key is the mason name the value the language server identifier
 M.language_servers = {
+  ["vtsls"] = "vtsls",
   ["bashls"] = "bashls",
   ["clangd"] = "clangd",
   ["cmake"] = "cmake",
