@@ -1,5 +1,5 @@
-local keymap = vim.keymap.set
 local utils = require("config.utils")
+local keymap = vim.keymap.set
 
 -- Window Navigation
 keymap("n", "<C-h>", "<C-w>h", { desc = "Move Cursor to left window" })
@@ -48,8 +48,8 @@ keymap(
 )
 
 -- Quickfix List
-keymap("n", "<leader>cln", ":cnext<CR>", { desc = "Next Quickfix Item" })
-keymap("n", "<leader>clp", ":cprevious<CR>", { desc = "Previous Quickfix Item" })
+keymap("n", "<A-l>", ":cnext<CR>", { desc = "Next Quickfix Item" })
+keymap("n", "<A-h>", ":cprevious<CR>", { desc = "Previous Quickfix Item" })
 
 -- Paste selection without losing the current buffer
 keymap("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
