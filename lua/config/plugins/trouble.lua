@@ -66,12 +66,12 @@ return {
     end, { desc = ":Trouble toggle quickfix" })
 
     -- Automatically open trouble with quickfix list
-    vim.api.nvim_create_autocmd("QuickFixCmdPost", {
-      callback = function()
-        trouble.toggle(quickfixOpts)
-        -- Find solution to close quickfix list
-      end,
-    })
+    -- vim.api.nvim_create_autocmd("QuickFixCmdPost", {
+    --   callback = function()
+    --     trouble.toggle(quickfixOpts)
+    --     -- Find solution to close quickfix list
+    --   end,
+    -- })
 
     -- Toggle native quickfix list
     vim.keymap.set("n", "<leader>qq", function()
