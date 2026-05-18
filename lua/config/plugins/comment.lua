@@ -1,34 +1,35 @@
+-- https://github.com/numToStr/Comment.nvim
+-- Context-aware commentstring is handled natively by Neovim 0.10+ via
+-- :h vim.treesitter.commentstring, so the deprecated nvim-ts-context-commentstring
+-- plugin is no longer required.
+
 return {
   "numToStr/Comment.nvim",
-  dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
   config = function()
-    local comment = require("Comment")
-
-    comment.setup({
-      pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+    require("Comment").setup({
       padding = true,
       sticky = true,
-      ignore = 'nil',
+      ignore = "nil",
       mappings = {
         basic = true,
-        extra = true
+        extra = true,
       },
       toggler = {
-        block = 'gbc',
-        line = 'gcc'
+        block = "gbc",
+        line = "gcc",
       },
       post_hook = function()
         return
       end,
       extra = {
-        above = 'gcO',
-        below = 'gco',
-        eol = 'gcA'
+        above = "gcO",
+        below = "gco",
+        eol = "gcA",
       },
       opleader = {
-        block = 'gb',
-        line = 'gc'
-      }
+        block = "gb",
+        line = "gc",
+      },
     })
-  end
+  end,
 }
