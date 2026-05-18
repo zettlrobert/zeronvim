@@ -25,7 +25,16 @@ function M.servers_from_dir()
   return names
 end
 
-vim.lsp.enable(M.servers_from_dir())
+---Enable each server in isolation so a single broken lsp/<name>.lua
+---(e.g. one that returns nil or throws) cannot prevent the rest from loading.
+for _, name in ipairs(M.servers_from_dir()) do
+  local ok, err = pcall(vim.lsp.enable, name)
+  if not ok then
+    vim.schedule(function()
+      vim.notify(("LSP enable failed for %q: %s"):format(name, err), vim.log.levels.WARN)
+    end)
+  end
+end
 
 ---Enable LSP Completion
 vim.api.nvim_create_autocmd("LspAttach", {
