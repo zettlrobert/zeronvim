@@ -54,6 +54,11 @@ return {
     -- Live Grep
     vim.keymap.set("n", "<space>fl", telescope_builtin.live_grep, { desc = "Telescope live grep" })
 
+    -- LSP pickers (results can be sent to qflist via <C-q> inside the picker)
+    vim.keymap.set("n", "<space>fr", telescope_builtin.lsp_references, { desc = "Telescope LSP references" })
+    vim.keymap.set("n", "<space>fd", telescope_builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
+    vim.keymap.set("n", "<space>fD", telescope_builtin.diagnostics, { desc = "Telescope diagnostics" })
+
     -- Open the neovim config files
     vim.keymap.set("n", "<space>en", function()
       require("telescope.builtin").find_files({
