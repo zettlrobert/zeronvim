@@ -32,7 +32,9 @@ require("lazy").setup({
   },
 })
 
-vim.cmd("colorscheme catppuccin-mocha")
+-- pcall so a missing colorscheme (e.g. mid-Lazy-sync, fresh clone) doesn't
+-- abort init.lua and cascade into "loop or previous error" on later requires
+pcall(vim.cmd.colorscheme, "catppuccin-mocha")
 
 -- Require Neovim Options
 require("config.options")
