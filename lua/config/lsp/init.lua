@@ -36,28 +36,6 @@ for _, name in ipairs(M.servers_from_dir()) do
   end
 end
 
----Toggle an LSP server for the current buffer. Detaches if attached;
----attempts to attach if not. Useful for noisy linters like vale-ls when
----working on documents whose style intentionally diverges from configured rules.
----@param name string LSP server name (matches lsp/<name>.lua)
-function M.toggle_server(name)
-  local bufnr = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_clients({ bufnr = bufnr, name = name })
-  if #clients > 0 then
-    for _, client in ipairs(clients) do
-      vim.lsp.buf_detach_client(bufnr, client.id)
-    end
-    vim.notify(("LSP %s: detached from buffer"):format(name), vim.log.levels.INFO)
-  else
-    local ok, err = pcall(vim.cmd, "LspStart " .. name)
-    if ok then
-      vim.notify(("LSP %s: attached to buffer"):format(name), vim.log.levels.INFO)
-    else
-      vim.notify(("LSP %s: attach failed (%s)"):format(name, err), vim.log.levels.WARN)
-    end
-  end
-end
-
 ---Enable LSP Completion
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)

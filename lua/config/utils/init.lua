@@ -11,6 +11,7 @@ local M = {
   protected_plugin_call = require("config.utils.protected_plugin_call").protected_plugin_call,
   is_presentation_markdown = require("config.utils.is_presentation_markdown").is_presentation_markdown,
   patch_colorscheme = require("config.utils.patch_colorscheme"),
+  toggle_lsp_server = require("config.utils.toggle_lsp_server").toggle_lsp_server,
 }
 
 -- TODO: Move to autocommands

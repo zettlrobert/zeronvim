@@ -66,11 +66,11 @@ The toggle keymap is the right escape hatch when you're drafting something where
 |---|---|
 | `<leader>tv` | Toggle `vale_ls` attach/detach on the current buffer |
 
-Implementation: `M.toggle_server(name)` in `lua/config/lsp/init.lua`. Generic — bind it for other noisy LSPs too:
+Implementation: `toggle_lsp_server(name)` in `lua/config/utils/toggle_lsp_server.lua`, exposed as `require("config.utils").toggle_lsp_server`. Generic — bind it for other noisy LSPs too:
 
 ```lua
 vim.keymap.set("n", "<leader>te", function()
-  require("config.lsp").toggle_server("eslint")
+  require("config.utils").toggle_lsp_server("eslint")
 end, { desc = "Toggle eslint in current buffer" })
 ```
 
