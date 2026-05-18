@@ -8,7 +8,6 @@ return {
 
     nvim_tree.setup({
       auto_reload_on_write = true,
-      create_in_closed_folder = false,
       disable_netrw = true,
       hijack_cursor = true,
       hijack_netrw = true,
@@ -19,7 +18,7 @@ return {
       sync_root_with_cwd = false,
       reload_on_bufenter = true,
       respect_buf_cwd = false,
-      on_attach = "disable",
+      on_attach = "default",
       select_prompts = false,
       view = {
         adaptive_size = true,
@@ -109,10 +108,6 @@ return {
         enable = false,
         update_root = false,
         ignore_list = {},
-      },
-      system_open = {
-        cmd = "",
-        args = {},
       },
       diagnostics = {
         enable = false,
