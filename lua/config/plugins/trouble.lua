@@ -1,146 +1,85 @@
 -- https://github.com/folke/trouble.nvim
+--
+-- Trouble is an optional, persistent split-panel viewer over lists
+-- (diagnostics, quickfix, symbols, references, todos). It does NOT replace
+-- native quickfix navigation — `]q`/`[q` and `<leader>q*` (see keymaps.lua)
+-- are the primary workflow. Trouble is the "examine" alternative.
+--
+-- All trouble bindings live under `<leader>x*` (examine) for consistency.
+
 return {
   "folke/trouble.nvim",
+  cmd = "Trouble",
   config = function()
     local trouble = require("trouble")
 
-    vim.keymap.set("n", "<leader>tt", function()
-      trouble.toggle()
-    end, { desc = ":Trouble toggle" })
-
-    -- Diagnostics trouble options
-    local workspaceDiagnosticOpts = {
-      mode = "diagnostics",
-      multiline = true,
-      auto_preview = true,
-      win = {
-        type = "split",
-        relative = "editor",
-        position = "bottom",
-        size = 0.25,
-      },
+    -- Shared window opts: bottom split, 25% height
+    local bottom_split = {
+      type = "split",
+      relative = "editor",
+      position = "bottom",
+      size = 0.25,
     }
 
-    -- Keymap diagnostics
-    vim.keymap.set("n", "<leader>xx", function()
-      trouble.toggle(workspaceDiagnosticOpts)
-    end, { desc = ":Trouble toggle workspace diagnostics" })
+    -- Shared window opts: right split, 30% width
+    local right_split = {
+      type = "split",
+      relative = "editor",
+      position = "right",
+      size = 0.3,
+    }
 
-    -- Buffer diagnostics
-    local bufferDiagnotsicOpts = {
+    local function open(opts)
+      return function()
+        trouble.toggle(opts)
+      end
+    end
+
+    -- Diagnostics
+    vim.keymap.set("n", "<leader>xx", open({
       mode = "diagnostics",
       multiline = true,
       auto_preview = true,
-      win = {
-        type = "split",
-        relative = "editor",
-        position = "bottom",
-        size = 0.25,
-      },
+      win = bottom_split,
+    }), { desc = "Trouble: workspace diagnostics" })
+
+    vim.keymap.set("n", "<leader>xX", open({
+      mode = "diagnostics",
+      multiline = true,
+      auto_preview = true,
+      win = bottom_split,
       filter = { buf = 0 },
-    }
+    }), { desc = "Trouble: buffer diagnostics" })
 
-    -- Keymap diagnostics buffer
-    vim.keymap.set("n", "<leader>xX", function()
-      trouble.toggle(bufferDiagnotsicOpts)
-    end, {
-      desc = ":Trouble toggle buffer diagnostics",
-    })
-
-    -- Quickfix trouble options
-    local quickfixOpts = {
+    -- Quickfix / loclist views (don't fight native :copen / :lopen)
+    vim.keymap.set("n", "<leader>xq", open({
       mode = "quickfix",
       multiline = true,
       auto_preview = true,
-      win = {
-        type = "split",
-        relative = "editor",
-        position = "bottom",
-        size = 0.25,
-      },
-    }
+      win = bottom_split,
+    }), { desc = "Trouble: quickfix" })
 
-    -- Keymap quickfix list
-    vim.keymap.set("n", "<leader>xQ", function()
-      trouble.toggle(quickfixOpts)
-    end, { desc = ":Trouble toggle quickfix" })
+    vim.keymap.set("n", "<leader>xl", open({
+      mode = "loclist",
+      multiline = true,
+      auto_preview = true,
+      win = bottom_split,
+    }), { desc = "Trouble: loclist" })
 
-    -- Automatically open trouble with quickfix list
-    -- vim.api.nvim_create_autocmd("QuickFixCmdPost", {
-    --   callback = function()
-    --     trouble.toggle(quickfixOpts)
-    --     -- Find solution to close quickfix list
-    --   end,
-    -- })
-
-    -- Toggle native quickfix list
-    vim.keymap.set("n", "<leader>qq", function()
-      vim.api.nvim_command("cclose")
-    end, { desc = ":Toggle native quickfix list" })
-
-    -- Symbols trouble options
-    local symbolOpts = {
+    -- Symbols
+    vim.keymap.set("n", "<leader>xs", open({
       mode = "symbols",
       multiline = true,
       auto_preview = true,
-      win = {
-        type = "split",
-        relative = "editor",
-        position = "right",
-        size = 0.3,
-      },
-    }
+      win = right_split,
+    }), { desc = "Trouble: symbols" })
 
-    -- Keymap trouble toggle symbols
-    vim.keymap.set("n", "<leader>ts", function()
-      trouble.toggle(symbolOpts)
-    end, { desc = ":Trouble toggle symbols" })
-
-    -- LSP defintions/references options
-    -- TODO: Make it references
-    local lspTroubleOpts = {
+    -- LSP definitions / references
+    vim.keymap.set("n", "<leader>xr", open({
       mode = "lsp",
       multiline = true,
       auto_preview = true,
-      win = {
-        type = "split",
-        relative = "editor",
-        position = "right",
-        size = 0.3,
-      },
-    }
-
-    -- Keymap trouble toggle lsp defintions and references
-    vim.keymap.set("n", "<leader>cl", function()
-      trouble.toggle(lspTroubleOpts)
-    end, { desc = ":Trouble toggle lsp defintions and references" })
-
-    -- Loclist trouble opts
-    local loclistOpts = {
-      mode = "quickfix",
-      multiline = true,
-      auto_preview = true,
-      win = {
-        type = "split",
-        relative = "editor",
-        position = "bottom",
-        size = 0.25,
-      },
-    }
-
-    -- Keymap trouble toggle loclist
-    vim.keymap.set("n", "<leader>xL", function()
-      trouble.toggle(loclistOpts)
-    end, { desc = ":Trouble toggle loclist" })
-
-    -- Trouble next item
-    vim.keymap.set("n", "<leader>tn", function()
-      trouble.next(self, { skip_groups = true, jump = true })
-    end, { desc = ":Trouble next item" })
-
-    -- Trouble prev item
-    vim.keymap.set("n", "<leader>tp", function()
-      trouble.prev(self, { skip_groups = true, jump = true })
-    end, { desc = ":Trouble previous item" })
+      win = right_split,
+    }), { desc = "Trouble: lsp definitions and references" })
   end,
 }
