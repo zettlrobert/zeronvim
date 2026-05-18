@@ -1,19 +1,8 @@
 -- vtsls (TypeScript / JavaScript LSP wrapping tsserver)
 -- https://github.com/yioneko/vtsls
 -- Settings: https://github.com/yioneko/vtsls/blob/main/packages/service/configuration.schema.json
+-- Install: Mason -> vtsls (auto-installed via lua/config/plugins/mason.lua)
 -- :h lsp-config
-
-local function is_vtsls_installed()
-  return vim.fn.executable("vtsls") == 1
-end
-
-if is_vtsls_installed() == false then
-  vim.notify(
-    "vtsls is not installed. Please install it to enable the vtsls LSP server. https://github.com/yioneko/vtsls",
-    vim.log.levels.ERROR
-  )
-  return
-end
 
 return {
   cmd = { "vtsls", "--stdio" },

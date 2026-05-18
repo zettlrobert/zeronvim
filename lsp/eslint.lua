@@ -1,16 +1,8 @@
 -- vscode-eslint-language-server
 -- https://github.com/hrsh7th/vscode-langservers-extracted
 -- Settings: https://github.com/microsoft/vscode-eslint#settings-options
+-- Install: Mason -> eslint-lsp (auto-installed via lua/config/plugins/mason.lua)
 -- :h lsp-config
-
-local function is_vscode_eslint_installed()
-  return vim.fn.executable("vscode-eslint-language-server") == 1
-end
-
-if is_vscode_eslint_installed() == false then
-  vim.notify("vscode-eslint is not installed. Please install it to enable the eslint LSP server.")
-  return
-end
 
 return {
   cmd = { "vscode-eslint-language-server", "--stdio" },

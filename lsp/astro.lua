@@ -1,19 +1,7 @@
 -- astro-language-server
 -- https://github.com/withastro/language-tools
--- Install: Mason -> astro-language-server
+-- Install: Mason -> astro-language-server (auto-installed via lua/config/plugins/mason.lua)
 -- :h lsp-config
-
-local function is_astro_ls_installed()
-  return vim.fn.executable("astro-ls") == 1
-end
-
-if is_astro_ls_installed() == false then
-  vim.notify(
-    "astro-ls is not installed. Install via Mason (:Mason -> astro-language-server) to enable Astro LSP support.",
-    vim.log.levels.ERROR
-  )
-  return
-end
 
 return {
   cmd = { "astro-ls", "--stdio" },
