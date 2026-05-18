@@ -3,9 +3,9 @@ local keymap = vim.keymap.set
 
 -- Window Navigation
 keymap("n", "<C-h>", "<C-w>h", { desc = "Move Cursor to left window" })
-keymap("n", "<C-j>", "<C-w>j", { desc = "Move CursGo to lower window" })
-keymap("n", "<C-k>", "<C-w>k", { desc = "Move CursGo to upper window" })
-keymap("n", "<C-l>", "<C-w>l", { desc = "Move CursGo to right window" })
+keymap("n", "<C-j>", "<C-w>j", { desc = "Move Cursor to lower window" })
+keymap("n", "<C-k>", "<C-w>k", { desc = "Move Cursor to upper window" })
+keymap("n", "<C-l>", "<C-w>l", { desc = "Move Cursor to right window" })
 
 -- Jump up/down and center
 keymap("n", "<C-d>", "<C-d>zz", { desc = "Move page down and center" })
