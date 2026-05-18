@@ -9,7 +9,6 @@ return {
     require("Comment").setup({
       padding = true,
       sticky = true,
-      ignore = "nil",
       mappings = {
         basic = true,
         extra = true,
