@@ -1,5 +1,8 @@
---- TODO: use lua to check if executagbe is availalbe
---- check for tsgo binary
+-- tsgo (TypeScript Go port — experimental native TypeScript compiler)
+-- https://github.com/microsoft/typescript-go
+-- Install: npm i -g @typescript/native-preview  (provides `tsgo` binary)
+-- :h lsp-config
+
 local function is_tsgo_installed()
   return vim.fn.executable("tsgo") == 1
 end
@@ -10,7 +13,7 @@ if is_tsgo_installed() == false then
 end
 
 return {
-  cmd = { "tsgo --stdio" },
-  root_markers = { ".git" },
+  cmd = { "tsgo", "--stdio" },
+  root_markers = { "tsconfig.base.json", "nx.json", "package.json", ".git" },
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 }
