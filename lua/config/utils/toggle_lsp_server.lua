@@ -10,12 +10,13 @@ documents whose style intentionally diverges from the configured rules.
 local toggle_lsp_server = function(name)
   local bufnr = vim.api.nvim_get_current_buf()
   local clients = vim.lsp.get_clients({ bufnr = bufnr, name = name })
+  local title = "LSP toggle"
 
   if #clients > 0 then
     for _, client in ipairs(clients) do
       vim.lsp.buf_detach_client(bufnr, client.id)
     end
-    vim.notify(("LSP %s: detached from buffer"):format(name), vim.log.levels.INFO)
+    vim.notify(("%s: detached from buffer"):format(name), vim.log.levels.INFO, { title = title })
     return
   end
 
@@ -25,18 +26,19 @@ local toggle_lsp_server = function(name)
   -- because the client is already running globally after a detach.
   local config = vim.lsp.config[name]
   if not config then
-    vim.notify(("LSP %s: no config registered"):format(name), vim.log.levels.WARN)
+    vim.notify(("%s: no config registered"):format(name), vim.log.levels.WARN, { title = title })
     return
   end
 
   local final_config = vim.tbl_deep_extend("force", config, { name = name })
   local ok, client_id = pcall(vim.lsp.start, final_config, { bufnr = bufnr })
   if ok and client_id then
-    vim.notify(("LSP %s: attached to buffer"):format(name), vim.log.levels.INFO)
+    vim.notify(("%s: attached to buffer"):format(name), vim.log.levels.INFO, { title = title })
   else
     vim.notify(
-      ("LSP %s: attach failed (%s)"):format(name, ok and "no client id returned" or tostring(client_id)),
-      vim.log.levels.WARN
+      ("%s: attach failed (%s)"):format(name, ok and "no client id returned" or tostring(client_id)),
+      vim.log.levels.WARN,
+      { title = title }
     )
   end
 end
