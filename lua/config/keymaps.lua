@@ -111,6 +111,11 @@ end, { desc = ":NvimTree open tree and focus current file in tree" })
 vim.keymap.set("n", "<leader>spell", ":Spellcheck English<CR>", { desc = ":Spellcheck English" })
 vim.keymap.set("n", "<leader>spelloff", ":Spellcheck Disable<CR>", { desc = ":Spellcheck Disable" })
 
+-- LSP toggles (per-buffer). <leader>t* is the "toggle" namespace.
+vim.keymap.set("n", "<leader>tv", function()
+  require("config.lsp").toggle_server("vale_ls")
+end, { desc = "Toggle vale-ls (prose linting) in current buffer" })
+
 --CodeCompanion
 vim.keymap.set("n", "<leader>ccc", ":CodeCompanionChat Toggle<CR>", { desc = ":CodeCompanionChat" })
 vim.keymap.set("n", "<leader>action", ":CodeCompanionActions<CR>", { desc = ":CodeCompanion Action" })
