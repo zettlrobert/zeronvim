@@ -66,7 +66,6 @@ local nvim_tree_api = require("nvim-tree.api")
 --NvimTree toggle file tree
 vim.keymap.set("n", "<leader>e", function()
   nvim_tree_api.tree.toggle({
-    path = "<args>",
     find_file = false,
     update_root = false,
     focus = true,
