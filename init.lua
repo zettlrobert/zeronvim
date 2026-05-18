@@ -48,9 +48,6 @@ require("config.keymaps")
 -- Require keymaps for sourcing
 require("config.utils.source")
 
--- Require Format on save
-require("config.formatting")
-
 -- Require ALL custom utilities
 require("config.utils")
 
