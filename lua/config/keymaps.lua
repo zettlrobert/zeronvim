@@ -15,9 +15,9 @@ keymap("n", "<C-u>", "<C-u>zz", { desc = "Move page up and center" })
 keymap("n", "<leader>h", ":set hlsearch!<CR>", { desc = "Toggle search highlight" })
 
 -- Resize Buffer with arrow keys
-keymap("n", "<C-Up>", ":resize -2<CR>", { desc = "Decrase vertical size of current window" })
+keymap("n", "<C-Up>", ":resize -2<CR>", { desc = "Decrease vertical size of current window" })
 keymap("n", "<C-Down>", ":resize +2<CR>", { desc = "Increase vertical size of current window" })
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrase horizontal size of current window" })
+keymap("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease horizontal size of current window" })
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase horizontal size of current window" })
 
 -- Manual indenting
