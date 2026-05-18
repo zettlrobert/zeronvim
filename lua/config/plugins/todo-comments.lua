@@ -65,9 +65,9 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>todo", function()
+    vim.keymap.set("n", "<leader>xt", function()
       trouble.toggle({ mode = "todo" })
-    end, { desc = ":Trouble toggle todos" })
+    end, { desc = "Trouble: todos" })
 
     vim.keymap.set("n", "]t", function()
       require("todo-comments").jump_next()
