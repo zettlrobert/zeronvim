@@ -12,6 +12,7 @@ local M = {
   is_presentation_markdown = require("config.utils.is_presentation_markdown").is_presentation_markdown,
   patch_colorscheme = require("config.utils.patch_colorscheme"),
   toggle_lsp_server = require("config.utils.toggle_lsp_server").toggle_lsp_server,
+  toggle_spell = require("config.utils.toggle_spell").toggle_spell,
 }
 
 -- TODO: Move to autocommands

@@ -78,11 +78,12 @@ end, {
   end,
 })
 
----Creates autocommand to enable spellcheck in markdown files
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-  pattern = { "*.md" },
+---Auto-enable spellcheck for markdown. `spelllang` is configured globally
+---(en_us + de_de), so we just flip `spell` on — language detection covers both.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
   callback = function()
-    spellcheck_enable(LanguageCode["English"])
+    vim.opt_local.spell = true
   end,
   group = vim.api.nvim_create_augroup("SpellcheckAutocmd", { clear = true }),
 })

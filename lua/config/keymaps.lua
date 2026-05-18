@@ -107,11 +107,12 @@ vim.keymap.set("n", "<leader>ntff", function()
   require("nvim-tree.api").tree.find_file({ open = true, focus = true })
 end, { desc = ":NvimTree open tree and focus current file in tree" })
 
---Spellcheck
-vim.keymap.set("n", "<leader>spell", ":Spellcheck English<CR>", { desc = ":Spellcheck English" })
-vim.keymap.set("n", "<leader>spelloff", ":Spellcheck Disable<CR>", { desc = ":Spellcheck Disable" })
+-- Toggles. <leader>t* is the "toggle" namespace.
+-- For explicit language switching the :Spellcheck command still exists.
+vim.keymap.set("n", "<leader>ts", function()
+  require("config.utils").toggle_spell()
+end, { desc = "Toggle spellcheck in current window" })
 
--- LSP toggles (per-buffer). <leader>t* is the "toggle" namespace.
 vim.keymap.set("n", "<leader>tv", function()
   require("config.utils").toggle_lsp_server("vale_ls")
 end, { desc = "Toggle vale-ls (prose linting) in current buffer" })
