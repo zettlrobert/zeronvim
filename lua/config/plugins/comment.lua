@@ -17,9 +17,6 @@ return {
         block = "gbc",
         line = "gcc",
       },
-      post_hook = function()
-        return
-      end,
       extra = {
         above = "gcO",
         below = "gco",
