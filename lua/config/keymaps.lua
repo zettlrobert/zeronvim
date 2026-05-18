@@ -51,6 +51,38 @@ keymap(
 keymap("n", "<A-l>", ":cnext<CR>", { desc = "Next Quickfix Item" })
 keymap("n", "<A-h>", ":cprevious<CR>", { desc = "Previous Quickfix Item" })
 
+-- Quickfix navigation (vim-unimpaired style; <A-l>/<A-h> kept as alternatives)
+keymap("n", "]q", ":cnext<CR>", { desc = "Quickfix: next" })
+keymap("n", "[q", ":cprev<CR>", { desc = "Quickfix: prev" })
+keymap("n", "]Q", ":clast<CR>", { desc = "Quickfix: last" })
+keymap("n", "[Q", ":cfirst<CR>", { desc = "Quickfix: first" })
+
+-- Loclist navigation (mirrors quickfix)
+keymap("n", "]l", ":lnext<CR>", { desc = "Loclist: next" })
+keymap("n", "[l", ":lprev<CR>", { desc = "Loclist: prev" })
+keymap("n", "]L", ":llast<CR>", { desc = "Loclist: last" })
+keymap("n", "[L", ":lfirst<CR>", { desc = "Loclist: first" })
+
+-- Quickfix toggle (copen / cclose)
+keymap("n", "<leader>qq", function()
+  for _, w in ipairs(vim.fn.getwininfo()) do
+    if w.quickfix == 1 then
+      vim.cmd("cclose")
+      return
+    end
+  end
+  vim.cmd("copen")
+end, { desc = "Quickfix: toggle window" })
+
+-- Quickfix populators (workspace diagnostics)
+keymap("n", "<leader>qd", function()
+  vim.diagnostic.setqflist()
+end, { desc = "Quickfix: all workspace diagnostics" })
+
+keymap("n", "<leader>qe", function()
+  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
+end, { desc = "Quickfix: workspace errors only" })
+
 -- Paste selection without losing the current buffer
 keymap("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
 
