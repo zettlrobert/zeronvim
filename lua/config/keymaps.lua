@@ -21,8 +21,8 @@ keymap("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease horizontal
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase horizontal size of current window" })
 
 -- Manual indenting
-keymap("v", "<", "<gv", { desc = "Increase indentation of visual selection" })
-keymap("v", ">", ">gv", { desc = "Decrease indentation of visual selection" })
+keymap("v", "<", "<gv", { desc = "Decrease indentation of visual selection" })
+keymap("v", ">", ">gv", { desc = "Increase indentation of visual selection" })
 
 -- Formatting
 keymap("n", "<leader>fmt", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", { desc = "Format the current buffer" })
