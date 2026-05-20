@@ -63,7 +63,6 @@ return {
 					statusline = {},
 					winbar = {
 						"http",
-						"qf", -- leave quickfix/loclist winbar to lua/config/qf_heading.lua
 					},
 				},
 				ignore_focus = {},
@@ -105,7 +104,26 @@ return {
 			},
 			winbar = {},
 			inactive_winbar = {},
-			extensions = {},
+			extensions = {
+				-- Quickfix/loclist heading: see lua/config/utils/qf_heading.lua
+				{
+					winbar = {
+						lualine_a = {
+							function()
+								return require("config.utils.qf_heading").compute()
+							end,
+						},
+					},
+					inactive_winbar = {
+						lualine_a = {
+							function()
+								return require("config.utils.qf_heading").compute()
+							end,
+						},
+					},
+					filetypes = { "qf" },
+				},
+			},
 		})
 	end,
 }
