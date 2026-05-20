@@ -2,16 +2,18 @@ local M = {}
 
 --[[
 Compute the heading string shown in the winbar of quickfix and location
-list windows. Format: " Quickfix · 12 items " or " Location list · empty ".
+list windows. Format: " Quickfix · 3/12 " or " Location list · empty ".
 
 Returns "" when called from a non-qf window so it can be safely wired into
 lualine's global winbar config (which fires across all windows).
 
-Intentionally does NOT include the cursor-line position. Lualine re-renders
-winbar on every CursorMoved event — if the content changes per-keystroke we
-get visible flicker. The statusline already shows the cursor's line number,
-so the winbar's job is just "which list am I looking at?" — stable text
-that only changes when the list itself changes.
+The cursor_line/count pair reflects the qf window's own cursor position
+(what you see in the list).
+
+Known caveat: lualine refreshes winbar on every CursorMoved event, which
+causes a brief visible flicker on j/k. The flicker is the cost of having
+live position info. To eliminate it we'd need to bypass lualine entirely
+for winbar (separate refactor).
 ]]
 local function compute()
   local winid = vim.api.nvim_get_current_win()
@@ -28,7 +30,7 @@ local function compute()
   if count == 0 then
     return (" %s · empty "):format(label)
   end
-  return (" %s · %d items "):format(label, count)
+  return (" %s · %d/%d "):format(label, vim.fn.line("."), count)
 end
 
 M.compute = compute
