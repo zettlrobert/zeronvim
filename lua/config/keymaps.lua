@@ -117,6 +117,10 @@ vim.keymap.set("n", "<leader>tv", function()
   require("config.utils").toggle_lsp_server("vale_ls")
 end, { desc = "Toggle vale-ls (prose linting) in current buffer" })
 
+vim.keymap.set("n", "<leader>tt", function()
+  require("config.utils").toggle_lsp_server("tsgo")
+end, { desc = "Toggle tsgo (experimental TypeScript) in current buffer" })
+
 --CodeCompanion
 vim.keymap.set("n", "<leader>ccc", ":CodeCompanionChat Toggle<CR>", { desc = ":CodeCompanionChat" })
 vim.keymap.set("n", "<leader>action", ":CodeCompanionActions<CR>", { desc = ":CodeCompanion Action" })
