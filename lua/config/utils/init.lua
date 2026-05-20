@@ -14,6 +14,7 @@ local M = {
   toggle_lsp_server = require("config.utils.toggle_lsp_server").toggle_lsp_server,
   toggle_spell = require("config.utils.toggle_spell").toggle_spell,
   lsp_actions = require("config.utils.lsp_actions").lsp_actions,
+  lsp_servers = require("config.utils.lsp_servers").lsp_servers,
 }
 
 -- TODO: Move to autocommands

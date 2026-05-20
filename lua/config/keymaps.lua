@@ -117,9 +117,11 @@ vim.keymap.set("n", "<leader>tv", function()
   require("config.utils").toggle_lsp_server("vale_ls")
 end, { desc = "Toggle vale-ls (prose linting) in current buffer" })
 
-vim.keymap.set("n", "<leader>tt", function()
-  require("config.utils").toggle_lsp_server("tsgo")
-end, { desc = "Toggle tsgo (experimental TypeScript) in current buffer" })
+-- Generic LSP server picker — toggles attach state for any configured server.
+-- Replaces per-server toggles (e.g. tsgo) with a discoverable menu.
+vim.keymap.set("n", "<leader>tl", function()
+  require("config.utils").lsp_servers()
+end, { desc = "Toggle any LSP server (picker)" })
 
 -- LSP actions picker (categorized cheat-sheet menu over the cursor).
 -- <C-.> mirrors VS Code's Quick Fix shortcut (terminal must pass it through;
