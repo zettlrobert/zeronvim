@@ -121,6 +121,15 @@ vim.keymap.set("n", "<leader>tt", function()
   require("config.utils").toggle_lsp_server("tsgo")
 end, { desc = "Toggle tsgo (experimental TypeScript) in current buffer" })
 
+-- LSP actions picker (categorized cheat-sheet menu over the cursor).
+-- <C-.> mirrors VS Code's Quick Fix shortcut (terminal must pass it through;
+-- many do, some don't). <leader>la is the always-works fallback.
+local lsp_actions_picker = function()
+  require("config.utils").lsp_actions()
+end
+vim.keymap.set({ "n", "v" }, "<C-.>", lsp_actions_picker, { desc = "LSP actions menu" })
+vim.keymap.set({ "n", "v" }, "<leader>la", lsp_actions_picker, { desc = "LSP actions menu" })
+
 --CodeCompanion
 vim.keymap.set("n", "<leader>ccc", ":CodeCompanionChat Toggle<CR>", { desc = ":CodeCompanionChat" })
 vim.keymap.set("n", "<leader>action", ":CodeCompanionActions<CR>", { desc = ":CodeCompanion Action" })

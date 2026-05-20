@@ -13,6 +13,7 @@ local M = {
   patch_colorscheme = require("config.utils.patch_colorscheme"),
   toggle_lsp_server = require("config.utils.toggle_lsp_server").toggle_lsp_server,
   toggle_spell = require("config.utils.toggle_spell").toggle_spell,
+  lsp_actions = require("config.utils.lsp_actions").lsp_actions,
 }
 
 -- TODO: Move to autocommands
