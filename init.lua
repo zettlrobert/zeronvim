@@ -54,5 +54,8 @@ require("config.utils")
 -- Require window-title
 require("config.window-title")
 
+-- Require quickfix/loclist window heading
+require("config.qf_heading")
+
 -- Require spellcheck
 require("config.spellcheck")
