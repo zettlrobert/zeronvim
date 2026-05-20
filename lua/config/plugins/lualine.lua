@@ -63,6 +63,7 @@ return {
 					statusline = {},
 					winbar = {
 						"http",
+						"qf", -- leave quickfix/loclist winbar to lua/config/qf_heading.lua
 					},
 				},
 				ignore_focus = {},
