@@ -102,28 +102,26 @@ return {
 					},
 				},
 			},
-			winbar = {},
-			inactive_winbar = {},
-			extensions = {
-				-- Quickfix/loclist heading: see lua/config/utils/qf_heading.lua
-				{
-					winbar = {
-						lualine_a = {
-							function()
-								return require("config.utils.qf_heading").compute()
-							end,
-						},
-					},
-					inactive_winbar = {
-						lualine_a = {
-							function()
-								return require("config.utils.qf_heading").compute()
-							end,
-						},
-					},
-					filetypes = { "qf" },
+			-- Global winbar must be non-empty for lualine to wire up winbar
+			-- rendering at all (lualine.lua line 598 checks `next(winbar)`).
+			-- The compute function returns "" for non-qf windows, so this is
+			-- a no-op everywhere except quickfix/loclist windows where it
+			-- renders the heading. See lua/config/utils/qf_heading.lua.
+			winbar = {
+				lualine_c = {
+					function()
+						return require("config.utils.qf_heading").compute()
+					end,
 				},
 			},
+			inactive_winbar = {
+				lualine_c = {
+					function()
+						return require("config.utils.qf_heading").compute()
+					end,
+				},
+			},
+			extensions = {},
 		})
 	end,
 }
