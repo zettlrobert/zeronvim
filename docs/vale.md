@@ -2,13 +2,15 @@
 
 ## TLDR
 
-Vale checks prose for grammar, style, and writing conventions across `markdown`, `text`, `tex`, `rst`, and `mdx`. Wired as `vale-ls` LSP (see [lsp.md](lsp.md)), diagnostics surface like any other LSP warning. Toggle per-buffer with `<leader>tv` when the configured rules fight your writing style.
+Vale checks prose for grammar, style, and writing conventions. Wired as `vale-ls` LSP (see [lsp.md](lsp.md)) but **opt-in** — it never auto-attaches. Press `<leader>tv` to attach it to the current buffer when you want a prose pass; `<leader>tv` again to detach.
+
+Reason for opt-in: vale-ls diagnostics caused display flicker in editor buffers (e.g. `COMMIT_EDITMSG`, markdown drafts). Manual attach keeps it out of the way unless you've decided to invoke it.
 
 ## Files
 
 | Path | Role |
 |---|---|
-| `lsp/vale_ls.lua` | LSP config — filetypes, root markers, no special settings (vale-ls reads `.vale.ini` from the project root) |
+| `lsp/vale_ls.lua` | LSP config — registered with empty filetypes so it never auto-attaches; vale-ls reads `.vale.ini` from the project root when invoked |
 | `~/.vale.ini` or `<project>/.vale.ini` | Vale's own config — picks which style packages to apply, severity levels, exclusions |
 | `<project>/styles/` | Style package directory — populated by `vale sync` |
 
@@ -56,15 +58,15 @@ Vale flags everything matched by the active rules. When `Google.Acronyms` compla
 | **Per-line** | Append `<!-- vale Google.EmDash = NO -->` before, `<!-- vale Google.EmDash = YES -->` after — works in markdown |
 | **Per-file** | Add the comment at the top of the file |
 | **Per-project** | In `.vale.ini`, set `Google.EmDash = NO` under the `[*.md]` section |
-| **Per-buffer (session)** | `<leader>tv` — detach vale-ls from the current buffer |
 
-The toggle keymap is the right escape hatch when you're drafting something where the noise outweighs the signal, but you don't want to permanently silence the rule.
+Since vale-ls is opt-in (manual attach via `<leader>tv`), the everyday "just turn it off" escape hatch is to not attach it in the first place. Only attach when you want a deliberate prose pass.
 
 ## Toggle keymap
 
 | Keymap | Action |
 |---|---|
-| `<leader>tv` | Toggle `vale_ls` attach/detach on the current buffer |
+| `<leader>tv` | Attach vale-ls to the current buffer (or detach if already attached) |
+| `<leader>tl` | Generic LSP picker — pick any server to toggle, including vale-ls |
 
 Implementation: `toggle_lsp_server(name)` in `lua/config/utils/toggle_lsp_server.lua`, exposed as `require("config.utils").toggle_lsp_server`. Generic — bind it for other noisy LSPs too:
 
@@ -76,9 +78,9 @@ end, { desc = "Toggle eslint in current buffer" })
 
 ## Suggested workflow
 
-1. Keep `Google` + `write-good` enabled at the user/project level — they catch real issues.
-2. Silence the few rules that consistently produce noise in your writing via `.vale.ini` overrides (project-wide is best — keeps the team aligned).
-3. Use `<leader>tv` when you're heads-down drafting and even good rules slow you down. Re-toggle when you're ready to polish.
+1. Configure `Google` + `write-good` in `.vale.ini` at the user/project level — they're what fires when you do invoke vale.
+2. Silence the few rules that consistently produce noise via `.vale.ini` overrides (project-wide is best — keeps the team aligned).
+3. Draft normally with vale detached (default). When ready to polish, `<leader>tv` to attach for a prose pass. `<leader>tv` again when done.
 
 ## Related
 
