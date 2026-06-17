@@ -44,7 +44,7 @@ return {
       --https://github.com/olimorris/codecompanion.nvim
       interactions = {
         chat = {
-          adapter = "gpt-oss",
+          adapter = "qwen/qwen3.6-35b-a3b",
           completion_provider = "cmp",
           tools = {
             opts = {
@@ -54,13 +54,13 @@ return {
           },
         },
         inline = {
-          adapter = "gpt-oss",
+          adapter = "qwen/qwen3.6-35b-a3b",
         },
         cmd = {
-          adapter = "gpt-oss",
+          adapter = "qwen/qwen3.6-35b-a3b",
         },
         background = {
-          adapter = "gpt-oss",
+          adapter = "qwen/qwen3.6-35b-a3b",
         },
       },
       --https://codecompanion.olimorris.dev/configuration/adapters.html
@@ -76,6 +76,25 @@ return {
                 },
                 num_ctx = {
                   default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
+              },
+            })
+          end,
+          ["qwen/qwen3.6-35b-a3b"] = function()
+            return cc_adapters.extend("openai_compatible", {
+              name = "qwen/qwen3.6-35b-a3b",
+              env = {
+                url = "http://localhost:1234",
+              },
+              schema = {
+                model = {
+                  default = "qwen/qwen3.6-35b-a3b",
+                },
+                num_ctx = {
+                  default = 32000,
                 },
                 num_predict = {
                   default = -1,
@@ -243,6 +262,23 @@ return {
           layout = "vertical",
           opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
           provider = "mini_diff",
+        },
+      },
+
+      --[[
+      Extensions:
+      - mcphub: surfaces MCP servers (see plugins/mcphub.lua) as @{server__tool}
+        chat tools, /slash commands, and chat variables. Configure servers via
+        :MCPHub or ~/.config/mcphub/servers.json.
+      ]]
+      extensions = {
+        mcphub = {
+          callback = "mcphub.extensions.codecompanion",
+          opts = {
+            make_vars = true,
+            make_slash_commands = true,
+            show_result_in_chat = true,
+          },
         },
       },
     })
