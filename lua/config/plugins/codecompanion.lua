@@ -268,14 +268,19 @@ return {
       --[[
       Extensions:
       - mcphub: surfaces MCP servers (see plugins/mcphub.lua) as @{server__tool}
-        chat tools, /slash commands, and chat variables. Configure servers via
-        :MCPHub or ~/.config/mcphub/servers.json.
+        chat tools and /slash commands. Configure servers via :MCPHub or
+        ~/.config/mcphub/servers.json.
+
+      make_vars is intentionally disabled: mcphub's variables extension reads
+      config.interactions.chat.variables which doesn't exist in the current
+      CodeCompanion (replaced by context_management). Tools + slash commands
+      still work — those are the higher-value integrations anyway.
       ]]
       extensions = {
         mcphub = {
           callback = "mcphub.extensions.codecompanion",
           opts = {
-            make_vars = true,
+            make_vars = false,
             make_slash_commands = true,
             show_result_in_chat = true,
           },
