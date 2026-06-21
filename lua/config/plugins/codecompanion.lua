@@ -253,13 +253,6 @@ return {
         },
       },
 
-      --https://github.com/olimorris/codecompanion.nvim
-      sources = {
-        per_file = {
-          codecompanion = { "codecompanion" },
-        },
-      },
-
       display = {
         diff = {
           enabled = true,
