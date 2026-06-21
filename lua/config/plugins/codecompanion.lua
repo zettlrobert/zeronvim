@@ -190,7 +190,7 @@ return {
             })
           end,
           ["qwen3:32b"] = function()
-            return cc_adapters("ollama", {
+            return cc_adapters.extend("ollama", {
               name = "qwen3:32b",
               schema = {
                 model = {
@@ -207,7 +207,7 @@ return {
           end,
           ---https://ollama.com/library/gemma3
           ["gemma3:12b"] = function()
-            return cc_adapters("ollama", {
+            return cc_adapters.extend("ollama", {
               name = "gemma3:12b",
               schema = {
                 model = {
@@ -224,7 +224,7 @@ return {
           end,
           ---This is the issue-manager used to create github issues
           ["gemma3-4b-issue-manager:latest"] = function()
-            return cc_adapters("ollama", {
+            return cc_adapters.extend("ollama", {
               name = "issue-manager",
               schema = {
                 model = {
@@ -235,7 +235,7 @@ return {
           end,
           ---https://ollama.com/library/gemma3n/tags
           ["gemma3n:e4b"] = function()
-            return cc_adapters("ollama", {
+            return cc_adapters.extend("ollama", {
               name = "gemma3n:e4b",
               schema = {
                 model = {
