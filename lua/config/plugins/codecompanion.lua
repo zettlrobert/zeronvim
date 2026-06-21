@@ -45,7 +45,12 @@ return {
       interactions = {
         chat = {
           adapter = "qwen/qwen3.6-35b-a3b",
-          completion_provider = "cmp",
+          opts = {
+            -- completion_provider belongs under chat.opts (not chat directly).
+            -- Valid values: "blink" | "cmp" | "coc" | "default". We use blink.cmp
+            -- as the engine — see lua/config/plugins/completion.lua.
+            completion_provider = "blink",
+          },
           tools = {
             opts = {
               auto_submit_errors = true,
