@@ -14,6 +14,7 @@ M.formatters = {
 
 M.debug_adapters = {
   delve = "delve",
+  ["js-debug-adapter"] = "js-debug-adapter",
 }
 
 return M
