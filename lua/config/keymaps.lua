@@ -47,6 +47,13 @@ keymap(
   { desc = "Copy the absolute path of the current buffer to the a register" }
 )
 
+keymap(
+  "n",
+  "<leader>cary",
+  utils.get_current_absolute_buffer_path_with_cwd,
+  { desc = "Copy the absolute path of the current buffer with CWD to the y register (system clipboard)" }
+)
+
 -- Quickfix List
 keymap("n", "<A-l>", ":cnext<CR>", { desc = "Next Quickfix Item" })
 keymap("n", "<A-h>", ":cprevious<CR>", { desc = "Previous Quickfix Item" })
@@ -143,3 +150,53 @@ vim.keymap.set(
   ":RenderMarkdown buf_toggle<CR>",
   { desc = ":RenderMarkdown Toggle for current buffer" }
 )
+
+-- DAP (Debug Adapter Protocol) — namespace <leader>b (b for breakpoint/bug).
+-- Chose `b` because <leader>d is diagnostic float (vim.diagnostic.open_float).
+local dap_bind = function(lhs, fn, desc)
+  vim.keymap.set("n", lhs, function()
+    require("dap")[fn]()
+  end, { desc = desc })
+end
+dap_bind("<leader>bc", "continue", "DAP: continue / start")
+dap_bind("<leader>bi", "step_into", "DAP: step into")
+dap_bind("<leader>bo", "step_over", "DAP: step over")
+dap_bind("<leader>bO", "step_out", "DAP: step out")
+dap_bind("<leader>br", "toggle_repl", "DAP: toggle REPL")
+dap_bind("<leader>bl", "run_last", "DAP: run last")
+dap_bind("<leader>bx", "terminate", "DAP: terminate session (eXit)")
+dap_bind("<leader>bb", "toggle_breakpoint", "DAP: toggle breakpoint")
+vim.keymap.set("n", "<leader>bB", function()
+  require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, { desc = "DAP: conditional breakpoint" })
+vim.keymap.set("n", "<leader>bj", function()
+  require("dap").list_breakpoints()
+  vim.cmd("copen")
+end, { desc = "DAP: list breakpoints in quickfix" })
+vim.keymap.set("n", "<leader>bw", function()
+  require("dap").repl.open()
+  vim.cmd([[normal! iwatch ]] .. vim.fn.input("Watch expr: "))
+end, { desc = "DAP: add expression to watches" })
+vim.keymap.set("n", "<leader>bv", function()
+  require("dap-view").toggle()
+end, { desc = "DAP: toggle dap-view UI" })
+vim.keymap.set("n", "<leader>bu", function()
+  require("dapui").toggle()
+end, { desc = "DAP: toggle dap-ui UI" })
+
+-- Neotest — namespace <leader>T (capital to disambiguate from <leader>t toggle group).
+vim.keymap.set("n", "<leader>Tt", function()
+  require("neotest").run.run()
+end, { desc = "Test: run nearest" })
+vim.keymap.set("n", "<leader>Tf", function()
+  require("neotest").run.run(vim.fn.expand("%"))
+end, { desc = "Test: run current file" })
+vim.keymap.set("n", "<leader>Td", function()
+  require("neotest").run.run({ strategy = "dap" })
+end, { desc = "Test: debug nearest (with DAP)" })
+vim.keymap.set("n", "<leader>To", function()
+  require("neotest").output.open({ enter = true })
+end, { desc = "Test: open output" })
+vim.keymap.set("n", "<leader>Ts", function()
+  require("neotest").summary.toggle()
+end, { desc = "Test: toggle summary panel" })
