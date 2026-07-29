@@ -25,6 +25,8 @@ return {
       { "<leader>c", group = "codecompanion" },
       { "<leader>g", group = "git" },
       { "<leader>r", group = "review" },
+      { "<leader>b", group = "debug (dap)" },
+      { "<leader>T", group = "test (neotest)" },
     },
     icons = {
       -- Rely on nerd font icons where inferred; don't force icon prefix
