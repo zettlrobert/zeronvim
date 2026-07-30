@@ -24,6 +24,7 @@ return {
     },
     config = function()
       local zen_mode = require("zen-mode")
+      local kd = require("config.utils.keymap_desc")
 
       -- <leader>t namespace (toggle)
       vim.keymap.set("n", "<leader>tz", function()
@@ -33,7 +34,7 @@ return {
             gitsigns = { enabled = true },
           },
         })
-      end, { desc = "ZenMode: toggle" })
+      end, { desc = kd.format(kd.KIND.TOGGLE, kd.TOOL.ZenMode, "distraction-free mode") })
     end,
   },
 }
