@@ -32,26 +32,26 @@ keymap("n", "<leader>fmt", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", 
 keymap("n", "<leader>y", '"+y', { desc = "Copy the result of the following expression to system clipboard" })
 keymap("v", "<leader>y", '"+y', { desc = "Copy visual selection to system clipboard" })
 
--- Copy Buffer Paths to Registers
+-- Copy Buffer Paths to Registers — <leader>c namespace
 keymap(
   "n",
-  "<leader>cbr",
+  "<leader>cr",
   utils.get_current_realtive_buffer_path,
-  { desc = "Copy the relative path of the current buffer to the r register" }
+  { desc = "Copy: relative buffer path to r register" }
 )
 
 keymap(
   "n",
-  "<leader>car",
+  "<leader>ca",
   utils.get_current_absolute_buffer_path,
-  { desc = "Copy the absolute path of the current buffer to the a register" }
+  { desc = "Copy: absolute buffer path to a register" }
 )
 
 keymap(
   "n",
-  "<leader>cary",
+  "<leader>cA",
   utils.get_current_absolute_buffer_path_with_cwd,
-  { desc = "Copy the absolute path of the current buffer with CWD to the y register (system clipboard)" }
+  { desc = "Copy: absolute buffer path with CWD to system clipboard" }
 )
 
 -- Quickfix List
