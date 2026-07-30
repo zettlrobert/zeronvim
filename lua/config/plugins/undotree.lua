@@ -4,6 +4,7 @@ return {
   dependencies = "nvim-lua/plenary.nvim",
   config = function()
     local undotree = require("undotree")
+    local kd = require("config.utils.keymap_desc")
 
     undotree.setup({
       float_diff = true,
@@ -27,6 +28,8 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>u", undotree.toggle, { desc = "Undotree: toggle" })
+    vim.keymap.set("n", "<leader>u", undotree.toggle, {
+      desc = kd.format(kd.KIND.TOGGLE, kd.TOOL.Undotree, "undo history panel"),
+    })
   end,
 }
