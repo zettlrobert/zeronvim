@@ -53,7 +53,10 @@ local live_multigrep = function(opts)
 end
 
 M.setup = function()
-  vim.keymap.set("n", "<leader>fg", live_multigrep, { desc = "Telescope: multigrep (double-space separates glob)" })
+  local kd = require("config.utils.keymap_desc")
+  vim.keymap.set("n", "<leader>fg", live_multigrep, {
+    desc = kd.format(kd.KIND.SEARCH, kd.TOOL.Telescope, "multigrep (double-space separates glob)"),
+  })
 end
 
 return M
