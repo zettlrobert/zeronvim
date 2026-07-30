@@ -55,9 +55,12 @@ return {
     vim.keymap.set("n", "<leader>fl", telescope_builtin.live_grep, { desc = "Telescope live grep" })
 
     -- LSP pickers (results can be sent to qflist via <C-q> inside the picker)
-    vim.keymap.set("n", "<leader>fr", telescope_builtin.lsp_references, { desc = "Telescope LSP references" })
-    vim.keymap.set("n", "<leader>fd", telescope_builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
-    vim.keymap.set("n", "<leader>fD", telescope_builtin.diagnostics, { desc = "Telescope diagnostics" })
+    vim.keymap.set("n", "<leader>fr", telescope_builtin.lsp_references, { desc = "Find: LSP references" })
+    vim.keymap.set("n", "<leader>fd", telescope_builtin.lsp_definitions, { desc = "Find: LSP definitions" })
+    vim.keymap.set("n", "<leader>fD", telescope_builtin.diagnostics, { desc = "Find: diagnostics" })
+
+    -- Keymap picker (complements which-key: search by desc)
+    vim.keymap.set("n", "<leader>fk", telescope_builtin.keymaps, { desc = "Find: keymaps" })
 
     -- Open the neovim config files — <leader>f namespace (find)
     vim.keymap.set("n", "<leader>fn", function()
