@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
+vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, { desc = "LSP: code action (direct)" })
 
 ---Diagnostics
 vim.diagnostic.config({
