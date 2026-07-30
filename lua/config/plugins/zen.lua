@@ -25,15 +25,15 @@ return {
     config = function()
       local zen_mode = require("zen-mode")
 
-      -- Set keymap for ZenMode
-      vim.keymap.set("n", "<leader>zen", function()
+      -- <leader>t namespace (toggle)
+      vim.keymap.set("n", "<leader>tz", function()
         zen_mode.toggle({
           plugins = {
             twilight = { enabled = false },
             gitsigns = { enabled = true },
           },
         })
-      end, { desc = "Toggle ZenMode" })
+      end, { desc = "Toggle: zen mode" })
     end,
   },
 }
