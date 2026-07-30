@@ -24,8 +24,8 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase horizonta
 keymap("v", "<", "<gv", { desc = "Decrease indentation of visual selection" })
 keymap("v", ">", ">gv", { desc = "Increase indentation of visual selection" })
 
--- Formatting
-keymap("n", "<leader>fmt", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", { desc = "Format the current buffer" })
+-- Formatting — <leader>l namespace (lsp)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", { desc = "LSP: format current buffer" })
 
 -- Copy to System Clipboard
 -- We escape " to select the register and type + y to copy in every mode
