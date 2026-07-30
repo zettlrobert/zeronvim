@@ -6,14 +6,10 @@ return {
 
       gitsigns.setup()
 
-      vim.keymap.set("n", "<space>gsw", gitsigns.toggle_word_diff, { desc = "Gitsigns toggle word_diff" })
-      vim.keymap.set(
-        "n",
-        "<space>blame",
-        gitsigns.toggle_current_line_blame,
-        { desc = "Gitsigns toggle_current_line_blame" }
-      )
-      vim.keymap.set("n", "<space>gdiff", gitsigns.diffthis, { desc = "Gitsigns diffthis" })
+      -- <leader>g namespace (git)
+      vim.keymap.set("n", "<leader>gw", gitsigns.toggle_word_diff, { desc = "Git: toggle word diff" })
+      vim.keymap.set("n", "<leader>gb", gitsigns.toggle_current_line_blame, { desc = "Git: toggle current-line blame" })
+      vim.keymap.set("n", "<leader>gh", gitsigns.diffthis, { desc = "Git: hunk diff current file" })
     end,
   },
 }
