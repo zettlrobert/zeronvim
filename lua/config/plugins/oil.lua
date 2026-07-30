@@ -8,6 +8,8 @@ return {
     },
     config = function()
       local oil = require("oil")
+      local kd = require("config.utils.keymap_desc")
+      local K, T = kd.KIND, kd.TOOL
 
       oil.setup({
         default_file_explorer = false,
@@ -19,8 +21,8 @@ return {
         }
       })
 
-      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil: parent directory" })
-      vim.keymap.set("n", "<leader>-", oil.toggle_float, { desc = "Oil: parent directory (float)" })
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = kd.format(K.OPEN, T.Oil, "parent directory") })
+      vim.keymap.set("n", "<leader>-", oil.toggle_float, { desc = kd.format(K.OPEN, T.Oil, "parent directory (float)") })
     end
   }
 }
