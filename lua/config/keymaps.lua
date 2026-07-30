@@ -109,10 +109,10 @@ vim.keymap.set("n", "<leader>e", function()
   })
 end, { desc = ":NvimTree toggle filetree" })
 
--- NvimTree open tree and focus current file in tree
-vim.keymap.set("n", "<leader>ntff", function()
+-- NvimTree reveal current file in tree — <leader>e namespace (explorer)
+vim.keymap.set("n", "<leader>ef", function()
   require("nvim-tree.api").tree.find_file({ open = true, focus = true })
-end, { desc = ":NvimTree open tree and focus current file in tree" })
+end, { desc = "Explorer: find current file in tree" })
 
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.

@@ -59,19 +59,19 @@ return {
     vim.keymap.set("n", "<leader>fd", telescope_builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
     vim.keymap.set("n", "<leader>fD", telescope_builtin.diagnostics, { desc = "Telescope diagnostics" })
 
-    -- Open the neovim config files
-    vim.keymap.set("n", "<leader>en", function()
+    -- Open the neovim config files — <leader>f namespace (find)
+    vim.keymap.set("n", "<leader>fn", function()
       require("telescope.builtin").find_files({
         cwd = vim.fn.stdpath("config"),
       })
-    end, { desc = "Telescope open neovim configuration" })
+    end, { desc = "Find: nvim config files" })
 
     -- Search files of installed neovim plugins
-    vim.keymap.set("n", "<leader>ep", function()
+    vim.keymap.set("n", "<leader>fp", function()
       require("telescope.builtin").find_files({
         cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
       })
-    end, { desc = "Telescope search files of installed neovim plugins" })
+    end, { desc = "Find: installed plugin files" })
 
     -- Setup Multigrep
     require("config.plugins.telescope.multigrep").setup()
