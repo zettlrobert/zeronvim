@@ -61,8 +61,18 @@ return {
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = {},
+					-- Exclude filetypes that manage their own winbar. dap-ui
+					-- uses winbar for the section title + controls (play/step
+					-- buttons); lualine's global winbar would overwrite them.
 					winbar = {
 						"http",
+						"dap-repl",
+						"dapui_breakpoints",
+						"dapui_console",
+						"dapui_hover",
+						"dapui_scopes",
+						"dapui_stacks",
+						"dapui_watches",
 					},
 				},
 				ignore_focus = {},
