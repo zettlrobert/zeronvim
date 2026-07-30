@@ -177,12 +177,14 @@ vim.keymap.set("n", "<leader>bw", function()
   require("dap").repl.open()
   vim.cmd([[normal! iwatch ]] .. vim.fn.input("Watch expr: "))
 end, { desc = "DAP: add expression to watches" })
-vim.keymap.set("n", "<leader>bv", function()
+-- DAP UI toggles live under the toggle namespace, nested for consistency:
+-- <leader>t=toggle, <leader>td=toggle-debug, <leader>tdv=view / <leader>tdu=ui
+vim.keymap.set("n", "<leader>tdv", function()
   require("dap-view").toggle()
-end, { desc = "DAP: toggle dap-view UI" })
-vim.keymap.set("n", "<leader>bu", function()
+end, { desc = "Toggle: debug view (dap-view)" })
+vim.keymap.set("n", "<leader>tdu", function()
   require("dapui").toggle()
-end, { desc = "DAP: toggle dap-ui UI" })
+end, { desc = "Toggle: debug ui (dap-ui)" })
 
 -- Neotest — namespace <leader>T (capital to disambiguate from <leader>t toggle group).
 vim.keymap.set("n", "<leader>Tt", function()
