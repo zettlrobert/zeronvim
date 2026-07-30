@@ -5,18 +5,19 @@ return {
     dependencies = {
       "neovim/nvim-lspconfig",
       "MunifTanjim/nui.nvim",
-     "numToStr/Comment.nvim",
+      "numToStr/Comment.nvim",
     },
     config = function()
       local navbuddy = require("nvim-navbuddy")
 
       navbuddy.setup({
         lsp = {
-          auto_attach = true
-        }
+          auto_attach = true,
+        },
       })
 
-      vim.keymap.set("n", "<leader>s", navbuddy.open, { desc = "Navbuddy toggle navbuddy" })
-    end
-  }
+      -- <leader>s namespace (symbols) — room for future <leader>sd/sw
+      vim.keymap.set("n", "<leader>ss", navbuddy.open, { desc = "Symbols: navbuddy" })
+    end,
+  },
 }
