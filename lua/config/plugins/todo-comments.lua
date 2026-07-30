@@ -6,6 +6,8 @@ return {
     local trouble = require("trouble")
     local todo_comments = require("todo-comments")
     local icons = require("config.assets.icons")
+    local kd = require("config.utils.keymap_desc")
+    local K, T = kd.KIND, kd.TOOL
 
     todo_comments.setup({
       keywords = {
@@ -67,14 +69,14 @@ return {
 
     vim.keymap.set("n", "<leader>xt", function()
       trouble.toggle({ mode = "todo" })
-    end, { desc = "Trouble: todos" })
+    end, { desc = kd.format(K.OPEN, T.Trouble, "todos panel") })
 
     vim.keymap.set("n", "]t", function()
       require("todo-comments").jump_next()
-    end, { desc = "Todo: next comment" })
+    end, { desc = kd.format(K.JUMP, T.Todo, "next comment") })
 
     vim.keymap.set("n", "[t", function()
       require("todo-comments").jump_prev()
-    end, { desc = "Todo: previous comment" })
+    end, { desc = kd.format(K.JUMP, T.Todo, "previous comment") })
   end,
 }
