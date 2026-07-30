@@ -137,7 +137,8 @@ local lsp_actions_picker = function()
   require("config.utils").lsp_actions()
 end
 vim.keymap.set({ "n", "v" }, "<C-.>", lsp_actions_picker, { desc = "LSP actions menu" })
-vim.keymap.set({ "n", "v" }, "<leader>la", lsp_actions_picker, { desc = "LSP actions menu" })
+vim.keymap.set({ "n", "v" }, "<leader>la", lsp_actions_picker, { desc = "LSP: actions menu" })
+vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "LSP: rename symbol" })
 
 -- AI (CodeCompanion) — <leader>a namespace
 vim.keymap.set("n", "<leader>ac", ":CodeCompanionChat Toggle<CR>", { desc = "AI: CodeCompanion chat toggle" })
