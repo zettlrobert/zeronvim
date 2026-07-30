@@ -17,7 +17,8 @@ return {
       default_section = "scopes",
     },
     windows = {
-      height = 12,
+      -- Absolute row count when > 1, percentage when <= 1.
+      size = 12,
       terminal = {
         position = "right",
       },
