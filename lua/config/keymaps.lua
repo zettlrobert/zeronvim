@@ -139,9 +139,9 @@ end
 vim.keymap.set({ "n", "v" }, "<C-.>", lsp_actions_picker, { desc = "LSP actions menu" })
 vim.keymap.set({ "n", "v" }, "<leader>la", lsp_actions_picker, { desc = "LSP actions menu" })
 
---CodeCompanion
-vim.keymap.set("n", "<leader>ccc", ":CodeCompanionChat Toggle<CR>", { desc = ":CodeCompanionChat" })
-vim.keymap.set("n", "<leader>action", ":CodeCompanionActions<CR>", { desc = ":CodeCompanion Action" })
+-- AI (CodeCompanion) — <leader>a namespace
+vim.keymap.set("n", "<leader>ac", ":CodeCompanionChat Toggle<CR>", { desc = "AI: CodeCompanion chat toggle" })
+vim.keymap.set("n", "<leader>aa", ":CodeCompanionActions<CR>", { desc = "AI: CodeCompanion actions palette" })
 
 --RenderMarkdown
 vim.keymap.set(
