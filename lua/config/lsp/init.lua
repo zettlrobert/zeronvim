@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
 
 ---Diagnostics
 vim.diagnostic.config({
@@ -60,7 +60,7 @@ vim.diagnostic.config({
 -- [d/]d are Neovim 0.12 defaults using vim.diagnostic.jump; we deliberately
 -- don't override them here. Our previous overrides called get_next/get_prev
 -- which return diagnostic data but don't move the cursor.
-vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, { desc = "Diagnostics open floating window" })
-vim.keymap.set("n", "<space>lq", vim.diagnostic.setloclist, { desc = "Diagnostics set loclist" })
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Diagnostics open floating window" })
+vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, { desc = "Diagnostics set loclist" })
 
 return M
