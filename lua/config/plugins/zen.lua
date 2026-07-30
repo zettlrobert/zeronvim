@@ -33,7 +33,7 @@ return {
             gitsigns = { enabled = true },
           },
         })
-      end, { desc = "Toggle: zen mode" })
+      end, { desc = "ZenMode: toggle" })
     end,
   },
 }

@@ -35,10 +35,10 @@ return {
     telescope.load_extension("fzf")
 
     -- Help tags
-    vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = ":Telescope help tags" })
+    vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = "Telescope: help tags" })
 
     -- Telescope find files
-    vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = ":Telescope find_files" })
+    vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Telescope: files" })
 
     -- Telescope hidden find files
     vim.keymap.set("n", "<leader>f.", function()
@@ -46,35 +46,35 @@ return {
         find_command = { "rg", "--hidden", "--files" },
         theme = "ivy",
       })
-    end, { desc = ":Telescope find_files hidden" })
+    end, { desc = "Telescope: files (including hidden)" })
 
     -- Search all open buffers
-    vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
+    vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope: buffers" })
 
     -- Live Grep
-    vim.keymap.set("n", "<leader>fl", telescope_builtin.live_grep, { desc = "Telescope live grep" })
+    vim.keymap.set("n", "<leader>fl", telescope_builtin.live_grep, { desc = "Telescope: live grep" })
 
     -- LSP pickers (results can be sent to qflist via <C-q> inside the picker)
-    vim.keymap.set("n", "<leader>fr", telescope_builtin.lsp_references, { desc = "Find: LSP references" })
-    vim.keymap.set("n", "<leader>fd", telescope_builtin.lsp_definitions, { desc = "Find: LSP definitions" })
-    vim.keymap.set("n", "<leader>fD", telescope_builtin.diagnostics, { desc = "Find: diagnostics" })
+    vim.keymap.set("n", "<leader>fr", telescope_builtin.lsp_references, { desc = "Telescope: LSP references" })
+    vim.keymap.set("n", "<leader>fd", telescope_builtin.lsp_definitions, { desc = "Telescope: LSP definitions" })
+    vim.keymap.set("n", "<leader>fD", telescope_builtin.diagnostics, { desc = "Telescope: diagnostics" })
 
     -- Keymap picker (complements which-key: search by desc)
-    vim.keymap.set("n", "<leader>fk", telescope_builtin.keymaps, { desc = "Find: keymaps" })
+    vim.keymap.set("n", "<leader>fk", telescope_builtin.keymaps, { desc = "Telescope: keymaps" })
 
     -- Open the neovim config files — <leader>f namespace (find)
     vim.keymap.set("n", "<leader>fn", function()
       require("telescope.builtin").find_files({
         cwd = vim.fn.stdpath("config"),
       })
-    end, { desc = "Find: nvim config files" })
+    end, { desc = "Telescope: nvim config files" })
 
     -- Search files of installed neovim plugins
     vim.keymap.set("n", "<leader>fp", function()
       require("telescope.builtin").find_files({
         cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
       })
-    end, { desc = "Find: installed plugin files" })
+    end, { desc = "Telescope: installed plugin files" })
 
     -- Setup Multigrep
     require("config.plugins.telescope.multigrep").setup()

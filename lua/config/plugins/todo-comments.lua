@@ -71,10 +71,10 @@ return {
 
     vim.keymap.set("n", "]t", function()
       require("todo-comments").jump_next()
-    end, { desc = ":Trouble next todo comment" })
+    end, { desc = "Todo: next comment" })
 
     vim.keymap.set("n", "[t", function()
       require("todo-comments").jump_prev()
-    end, { desc = ":Trouble previous todo comment" })
+    end, { desc = "Todo: previous comment" })
   end,
 }

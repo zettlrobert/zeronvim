@@ -17,7 +17,7 @@ return {
       })
 
       -- <leader>s namespace (symbols) — room for future <leader>sd/sw
-      vim.keymap.set("n", "<leader>ss", navbuddy.open, { desc = "Symbols: navbuddy" })
+      vim.keymap.set("n", "<leader>ss", navbuddy.open, { desc = "Navbuddy: open" })
     end,
   },
 }

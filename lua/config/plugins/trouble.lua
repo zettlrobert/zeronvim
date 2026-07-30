@@ -57,7 +57,7 @@ return {
       multiline = true,
       auto_preview = true,
       win = bottom_split,
-    }), { desc = "Trouble: quickfix" })
+    }), { desc = "Trouble: quickfix panel" })
 
     vim.keymap.set("n", "<leader>xl", open({
       mode = "loclist",

@@ -46,7 +46,7 @@ return {
       function()
         require("which-key").show({ global = false })
       end,
-      desc = "Buffer-local keymaps (which-key)",
+      desc = "Which-key: buffer-local keymaps",
     },
   },
 }

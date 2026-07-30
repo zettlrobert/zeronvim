@@ -14,6 +14,6 @@ return {
     -- <leader>t namespace (toggle)
     vim.keymap.set("n", "<leader>tc", function()
       vim.api.nvim_command("CccPick")
-    end, { desc = "Toggle: color picker (ccc)" })
+    end, { desc = "CccPick: color picker" })
   end,
 }

@@ -27,6 +27,6 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>u", undotree.toggle, { desc = "Toggle undotree" })
+    vim.keymap.set("n", "<leader>u", undotree.toggle, { desc = "Undotree: toggle" })
   end,
 }

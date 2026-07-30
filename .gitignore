@@ -42,6 +42,9 @@ luac.out
 # Trunk
 .trunk/
 
+# Personal planning notes (per ~/.claude/rules/knowledge-base.md convention)
+.plan/
+
 # Plugins
 plugin/
 # WARN: If we want to freeze plugins we have to track lazy-lock.json

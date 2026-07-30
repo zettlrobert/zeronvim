@@ -62,6 +62,10 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 
 ### Refactors
 
+- [ ] LSP integration cleanup - consolidate three overlapping mechanisms into native Neovim 0.11 setup
+  - currently: mason-lspconfig auto-enables servers, `vim.lsp.enable()` re-enables some, `lsp/` dir has native configs
+  - target: mason for binary installation only, `lsp/` dir for all configs, `vim.lsp.enable()` as single source of truth
+  - drop `mason-lspconfig`, keep `mason-tool-installer` for installation
 - [ ] update all keymaps to use vim.api.nvim_command instead of manual `":Command <CR>"`
 
 ### Setup

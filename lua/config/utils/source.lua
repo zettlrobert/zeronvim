@@ -1,20 +1,20 @@
 -- Execute lua code from current file
-vim.keymap.set("n", "<space><space>x", function()
+vim.keymap.set("n", "<leader><leader>x", function()
   vim.api.nvim_command("source %")
 
   vim.notify("Executed current file via lua", vim.log.levels.INFO)
-end, { desc = "source: execute current file via lua" })
+end, { desc = "Source: execute current file" })
 
 -- Execute lua code from current line
-vim.keymap.set("n", "<space>x", function()
+vim.keymap.set("n", "<leader>x", function()
   vim.cmd(":.lua")
 
   vim.notify("Executed current line via lua", vim.log.levels.INFO)
-end, { desc = "source: execute current nvim config line via lua" })
+end, { desc = "Source: execute current line" })
 
 -- Execute visual selection lua code
-vim.keymap.set("v", "<space>x", ":lua<CR>", {
-  desc = "source: execute current nvim selection via lua",
+vim.keymap.set("v", "<leader>x", ":lua<CR>", {
+  desc = "Source: execute selection",
   callback = function()
     vim.notify("Executed current selection via lua", vim.log.levels.INFO)
   end,
