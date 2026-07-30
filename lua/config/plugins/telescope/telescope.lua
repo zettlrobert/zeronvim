@@ -35,13 +35,13 @@ return {
     telescope.load_extension("fzf")
 
     -- Help tags
-    vim.keymap.set("n", "<space>fh", telescope_builtin.help_tags, { desc = ":Telescope help tags" })
+    vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = ":Telescope help tags" })
 
     -- Telescope find files
-    vim.keymap.set("n", "<space>ff", telescope_builtin.find_files, { desc = ":Telescope find_files" })
+    vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = ":Telescope find_files" })
 
     -- Telescope hidden find files
-    vim.keymap.set("n", "<space>f.", function()
+    vim.keymap.set("n", "<leader>f.", function()
       telescope_builtin.find_files({
         find_command = { "rg", "--hidden", "--files" },
         theme = "ivy",
@@ -49,25 +49,25 @@ return {
     end, { desc = ":Telescope find_files hidden" })
 
     -- Search all open buffers
-    vim.keymap.set("n", "<space>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
+    vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
 
     -- Live Grep
-    vim.keymap.set("n", "<space>fl", telescope_builtin.live_grep, { desc = "Telescope live grep" })
+    vim.keymap.set("n", "<leader>fl", telescope_builtin.live_grep, { desc = "Telescope live grep" })
 
     -- LSP pickers (results can be sent to qflist via <C-q> inside the picker)
-    vim.keymap.set("n", "<space>fr", telescope_builtin.lsp_references, { desc = "Telescope LSP references" })
-    vim.keymap.set("n", "<space>fd", telescope_builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
-    vim.keymap.set("n", "<space>fD", telescope_builtin.diagnostics, { desc = "Telescope diagnostics" })
+    vim.keymap.set("n", "<leader>fr", telescope_builtin.lsp_references, { desc = "Telescope LSP references" })
+    vim.keymap.set("n", "<leader>fd", telescope_builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
+    vim.keymap.set("n", "<leader>fD", telescope_builtin.diagnostics, { desc = "Telescope diagnostics" })
 
     -- Open the neovim config files
-    vim.keymap.set("n", "<space>en", function()
+    vim.keymap.set("n", "<leader>en", function()
       require("telescope.builtin").find_files({
         cwd = vim.fn.stdpath("config"),
       })
     end, { desc = "Telescope open neovim configuration" })
 
     -- Search files of installed neovim plugins
-    vim.keymap.set("n", "<space>ep", function()
+    vim.keymap.set("n", "<leader>ep", function()
       require("telescope.builtin").find_files({
         cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
       })
