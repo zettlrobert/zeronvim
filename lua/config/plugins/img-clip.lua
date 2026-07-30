@@ -1,4 +1,6 @@
 --https://github.com/hakonharnes/img-clip.nvim
+local kd = require("config.utils.keymap_desc")
+
 return {
   "HakonHarnes/img-clip.nvim",
   event = "VeryLazy",
@@ -7,7 +9,6 @@ return {
     -- or leave it empty to use the default settings
   },
   keys = {
-    -- suggested keymap
-    { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste: image from clipboard (img-clip)" },
+    { "<leader>p", "<cmd>PasteImage<cr>", desc = kd.format(kd.KIND.PASTE, kd.TOOL.ImgClip, "image from clipboard") },
   },
 }
