@@ -12,6 +12,8 @@ return {
   cmd = "Trouble",
   config = function()
     local trouble = require("trouble")
+    local kd = require("config.utils.keymap_desc")
+    local K, T = kd.KIND, kd.TOOL
 
     -- Shared window opts: bottom split, 25% height
     local bottom_split = {
@@ -41,7 +43,7 @@ return {
       multiline = true,
       auto_preview = true,
       win = bottom_split,
-    }), { desc = "Trouble: workspace diagnostics" })
+    }), { desc = kd.format(K.OPEN, T.Trouble, "workspace diagnostics panel") })
 
     vim.keymap.set("n", "<leader>xX", open({
       mode = "diagnostics",
@@ -49,7 +51,7 @@ return {
       auto_preview = true,
       win = bottom_split,
       filter = { buf = 0 },
-    }), { desc = "Trouble: buffer diagnostics" })
+    }), { desc = kd.format(K.OPEN, T.Trouble, "buffer diagnostics panel") })
 
     -- Quickfix / loclist views (don't fight native :copen / :lopen)
     vim.keymap.set("n", "<leader>xq", open({
@@ -57,14 +59,14 @@ return {
       multiline = true,
       auto_preview = true,
       win = bottom_split,
-    }), { desc = "Trouble: quickfix panel" })
+    }), { desc = kd.format(K.OPEN, T.Trouble, "quickfix panel") })
 
     vim.keymap.set("n", "<leader>xl", open({
       mode = "loclist",
       multiline = true,
       auto_preview = true,
       win = bottom_split,
-    }), { desc = "Trouble: loclist" })
+    }), { desc = kd.format(K.OPEN, T.Trouble, "loclist panel") })
 
     -- Symbols
     vim.keymap.set("n", "<leader>xs", open({
@@ -72,7 +74,7 @@ return {
       multiline = true,
       auto_preview = true,
       win = right_split,
-    }), { desc = "Trouble: symbols" })
+    }), { desc = kd.format(K.OPEN, T.Trouble, "symbols panel") })
 
     -- LSP definitions / references
     vim.keymap.set("n", "<leader>xr", open({
@@ -80,6 +82,6 @@ return {
       multiline = true,
       auto_preview = true,
       win = right_split,
-    }), { desc = "Trouble: lsp definitions and references" })
+    }), { desc = kd.format(K.OPEN, T.Trouble, "LSP definitions + references") })
   end,
 }
