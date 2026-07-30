@@ -143,12 +143,12 @@ vim.keymap.set({ "n", "v" }, "<leader>la", lsp_actions_picker, { desc = "LSP act
 vim.keymap.set("n", "<leader>ac", ":CodeCompanionChat Toggle<CR>", { desc = "AI: CodeCompanion chat toggle" })
 vim.keymap.set("n", "<leader>aa", ":CodeCompanionActions<CR>", { desc = "AI: CodeCompanion actions palette" })
 
---RenderMarkdown
+-- Markdown — <leader>m namespace
 vim.keymap.set(
   "n",
-  "<leader>md",
+  "<leader>mr",
   ":RenderMarkdown buf_toggle<CR>",
-  { desc = ":RenderMarkdown Toggle for current buffer" }
+  { desc = "Markdown: toggle render for current buffer" }
 )
 
 -- DAP (Debug Adapter Protocol) — namespace <leader>b (b for breakpoint/bug).
