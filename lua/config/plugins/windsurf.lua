@@ -41,5 +41,11 @@ return {
     vim.keymap.set("n", "<leader>aw", function()
       require("config.utils.ai_toggle").toggle_windsurf()
     end, { desc = kd.format(K.TOGGLE, T.Windsurf, "AI suggestions") })
+
+    -- Default off. Enable on demand via <leader>aw or <leader>aA.
+    -- Deferred so codeium.setup has finished populating `codeium.s`.
+    vim.schedule(function()
+      require("config.utils.ai_toggle").disable_windsurf({ silent = true })
+    end)
   end,
 }

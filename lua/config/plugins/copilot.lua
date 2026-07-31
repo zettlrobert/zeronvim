@@ -101,5 +101,11 @@ return {
     vim.keymap.set("n", "<leader>ap", function()
       require("config.utils.ai_toggle").toggle_copilot()
     end, { desc = kd.format(K.TOGGLE, T.Copilot, "AI suggestions") })
+
+    -- Default off. Enable on demand via <leader>ap or <leader>aA.
+    -- Deferred so copilot.setup has finished initializing before disable runs.
+    vim.schedule(function()
+      require("config.utils.ai_toggle").disable_copilot({ silent = true })
+    end)
   end,
 }
