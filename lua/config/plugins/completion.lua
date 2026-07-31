@@ -19,32 +19,6 @@ end
 
 return {
   {
-    ---TODO: Move to dedicated plugin file
-    ---https://github.com/tzachar/cmp-ai
-    "tzachar/cmp-ai",
-    config = function()
-      local cmp_ai = require("cmp_ai.config")
-      cmp_ai:setup({
-        max_lines = 100,
-        provider = "Ollama",
-        provider_options = {
-          model = "qwen2.5-coder:7b-base-q6_K",
-          auto_unload = true,
-          prompt = function(lines_before, lines_after)
-            -- You may include filetype and/or other project-wise context in this string as well.
-            -- Consult model documentation in case there are special tokens for this.
-            return "<|fim_prefix|>" .. lines_before .. "<|fim_suffix|>" .. lines_after .. "<|fim_middle|>"
-          end,
-        },
-        notify = true,
-        notify_callback = function(msg)
-          vim.notify(msg)
-        end,
-        run_on_every_keystroke = false,
-      })
-    end,
-  },
-  {
     "saghen/blink.cmp",
     dependencies = {
       "rafamadriz/friendly-snippets",
@@ -130,8 +104,7 @@ return {
           "markdown",
           "codeium",
           "copilot",
-          -- NOTE: Disabled
-          -- "ollama", --ollama
+          "minuet",
         },
 
         -- CMP completion sources
@@ -141,11 +114,6 @@ return {
             module = "render-markdown.integ.blink",
           },
 
-          -- obsidian = {
-          --   name = "obsidian",
-          --   mdouel = "blink.compat.source"
-          -- },
-
           codeium = {
             -- Same name as cmp source
             name = "codeium",
@@ -153,16 +121,22 @@ return {
             async = true,
           },
 
-          ollama = {
-            name = "cmp_ai", --ollama
-            module = "blink.compat.source",
-          },
-
           copilot = {
             name = "copilot",
             module = "blink-cmp-copilot",
             score_offset = 100,
             async = true,
+          },
+
+          minuet = {
+            -- Local AI completion via minuet-ai.nvim (see minuet-ai.lua).
+            -- Timeout is generous — a 7B FIM request on Ollama can take
+            -- 1–3s on CPU, faster on GPU.
+            name = "minuet",
+            module = "minuet.blink",
+            async = true,
+            timeout_ms = 3000,
+            score_offset = 50,
           },
         },
       },
