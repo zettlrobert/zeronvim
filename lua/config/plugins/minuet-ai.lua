@@ -46,6 +46,13 @@ return {
       context_window = 12000, -- max input tokens sent to the model
     })
 
+    local kd = require("config.utils.keymap_desc")
+    local K, T = kd.KIND, kd.TOOL
+
+    vim.keymap.set("n", "<leader>am", function()
+      require("config.utils.ai_toggle").toggle_minuet()
+    end, { desc = kd.format(K.TOGGLE, T.Minuet, "local AI completion") })
+
     -- Default off. Enable on demand via <leader>am or <leader>aA.
     -- Deferred so require("minuet").config is populated before disable runs.
     vim.schedule(function()
