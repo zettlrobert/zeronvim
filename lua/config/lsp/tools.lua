@@ -16,9 +16,12 @@ M.formatters = {
 -- (eslint, vale_ls, tflint) are intentionally excluded to avoid double
 -- diagnostics.
 M.linters = {
-  markdownlint = "markdownlint",
-  shellcheck = "shellcheck",
+  actionlint = "actionlint",
+  ["golangci-lint"] = "golangci-lint",
   hadolint = "hadolint",
+  markdownlint = "markdownlint",
+  ruff = "ruff",
+  shellcheck = "shellcheck",
   yamllint = "yamllint",
 }
 
