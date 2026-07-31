@@ -52,6 +52,10 @@ return {
           timeout = 3000,
         },
 
+        -- Closes buffers without collapsing the window layout.
+        -- Callable as `Snacks.bufdelete()` or via `:lua Snacks.bufdelete()`.
+        bufdelete = { enabled = true },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
