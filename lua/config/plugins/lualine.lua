@@ -13,7 +13,7 @@ return {
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
 			sections = { "error", "warn" },
-			symbols = { error = " ", warn = " " },
+			symbols = { error = " ", warn = " " },
 			colored = false,
 			update_in_insert = false,
 			always_visible = true,
@@ -22,7 +22,7 @@ return {
 		local diff = {
 			"diff",
 			colored = false,
-			symbols = { added = " ", modified = " ", removed = " " },
+			symbols = { added = " ", modified = " ", removed = " " },
 			cond = hide_in_width,
 		}
 
@@ -53,12 +53,27 @@ return {
 
 		local filename = computeFilename()
 
+		-- AI provider status: "AI C+W" / "AI C" / "AI W" / "AI off".
+		-- Colored via named highlight groups so it follows the active colorscheme.
+		local ai_status = {
+			function()
+				return require("config.utils.ai_toggle").statusline()
+			end,
+			color = function()
+				local ai = require("config.utils.ai_toggle")
+				if ai.is_copilot_enabled() or ai.is_windsurf_enabled() then
+					return "String"
+				end
+				return "Comment"
+			end,
+		}
+
 		lualine.setup({
 			options = {
 				icons_enabled = true,
 				theme = "ayu_dark",
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
+				component_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = {},
 					-- Exclude filetypes that manage their own winbar. dap-ui
@@ -89,7 +104,7 @@ return {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", diff, diagnostics },
 				lualine_c = { "filename", "searchcount" },
-				lualine_x = { "encoding", "fileformat", "filetype" },
+				lualine_x = { ai_status, "encoding", "fileformat", "filetype" },
 				lualine_y = { "windows", "tabs", "progress" },
 				lualine_z = { "location" },
 			},
