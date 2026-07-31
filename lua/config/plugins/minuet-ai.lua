@@ -45,5 +45,11 @@ return {
       n_completions = 1, -- single suggestion per request keeps latency down
       context_window = 12000, -- max input tokens sent to the model
     })
+
+    -- Default off. Enable on demand via <leader>am or <leader>aA.
+    -- Deferred so require("minuet").config is populated before disable runs.
+    vim.schedule(function()
+      require("config.utils.ai_toggle").disable_minuet({ silent = true })
+    end)
   end,
 }

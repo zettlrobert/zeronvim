@@ -61,7 +61,7 @@ return {
 			end,
 			color = function()
 				local ai = require("config.utils.ai_toggle")
-				if ai.is_copilot_enabled() or ai.is_windsurf_enabled() then
+				if ai.is_copilot_enabled() or ai.is_windsurf_enabled() or ai.is_minuet_enabled() then
 					return "String"
 				end
 				return "Comment"

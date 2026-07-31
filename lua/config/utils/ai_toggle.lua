@@ -33,6 +33,14 @@ function M.is_windsurf_enabled()
   return codeium.s ~= nil and codeium.s.enabled == true
 end
 
+function M.is_minuet_enabled()
+  local ok, minuet = pcall(require, "minuet")
+  if not ok or not minuet.config or not minuet.config.blink then
+    return false
+  end
+  return minuet.config.blink.enable_auto_complete == true
+end
+
 -- ---------------------------------------------------------------------------
 -- Copilot actions
 -- ---------------------------------------------------------------------------
@@ -114,39 +122,85 @@ function M.toggle_windsurf()
 end
 
 -- ---------------------------------------------------------------------------
+-- Minuet actions
+-- ---------------------------------------------------------------------------
+
+-- Minuet's own :Minuet blink enable/disable/toggle emits "Minuet blink
+-- enabled/disabled" — we set the state field directly to bypass that and
+-- emit our own "Minuet: ..." for branding consistency.
+
+---@param opts? { silent?: boolean }
+function M.enable_minuet(opts)
+  opts = opts or {}
+  local ok, minuet = pcall(require, "minuet")
+  if not ok or not minuet.config or not minuet.config.blink then
+    return
+  end
+  minuet.config.blink.enable_auto_complete = true
+  if not opts.silent then
+    vim.notify("Minuet: enabled", vim.log.levels.INFO)
+  end
+end
+
+---@param opts? { silent?: boolean }
+function M.disable_minuet(opts)
+  opts = opts or {}
+  local ok, minuet = pcall(require, "minuet")
+  if not ok or not minuet.config or not minuet.config.blink then
+    return
+  end
+  minuet.config.blink.enable_auto_complete = false
+  if not opts.silent then
+    vim.notify("Minuet: disabled", vim.log.levels.INFO)
+  end
+end
+
+function M.toggle_minuet()
+  if M.is_minuet_enabled() then
+    M.disable_minuet()
+  else
+    M.enable_minuet()
+  end
+end
+
+-- ---------------------------------------------------------------------------
 -- Combined
 -- ---------------------------------------------------------------------------
 
--- Master toggle: if any provider is on → disable both. If both off → enable
--- both. One combined notification instead of two individual ones.
+-- Master toggle: if any provider is on → disable all. If all off → enable
+-- all. One combined notification instead of one per provider.
 function M.toggle_all()
-  local any_on = M.is_copilot_enabled() or M.is_windsurf_enabled()
+  local any_on = M.is_copilot_enabled() or M.is_windsurf_enabled() or M.is_minuet_enabled()
   if any_on then
     M.disable_copilot({ silent = true })
     M.disable_windsurf({ silent = true })
+    M.disable_minuet({ silent = true })
     vim.notify("AI: all disabled", vim.log.levels.INFO)
   else
     M.enable_copilot({ silent = true })
     M.enable_windsurf({ silent = true })
+    M.enable_minuet({ silent = true })
     vim.notify("AI: all enabled", vim.log.levels.INFO)
   end
 end
 
--- Called once at startup from each plugin's config to default both off.
+-- Called once at startup from each plugin's config to default them off.
 function M.startup_disable_all()
   M.disable_copilot({ silent = true })
   M.disable_windsurf({ silent = true })
+  M.disable_minuet({ silent = true })
 end
 
 -- ---------------------------------------------------------------------------
 -- Statusline
 -- ---------------------------------------------------------------------------
 
--- Compact indicator: "AI C+W" / "AI C" / "AI W" / "AI off".
+-- Compact indicator: "AI C+W+M" / subsets / "AI off".
 function M.statusline()
   local c = M.is_copilot_enabled()
   local w = M.is_windsurf_enabled()
-  if not c and not w then
+  local m = M.is_minuet_enabled()
+  if not c and not w and not m then
     return "AI off"
   end
   local marks = {}
@@ -155,6 +209,9 @@ function M.statusline()
   end
   if w then
     table.insert(marks, "W")
+  end
+  if m then
+    table.insert(marks, "M")
   end
   return "AI " .. table.concat(marks, "+")
 end
