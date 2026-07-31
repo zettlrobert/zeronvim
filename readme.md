@@ -25,47 +25,34 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 
 - [x] switch markdown renderer (https://github.com/OXY2DEV/markview.nvim)
   - compare with render-markdown
-- [ ] diffview - setup
-- [ ] close quickfix list when opened in trouble (quickfixlist filetype is `qf`)
-- [ ] eslint vue configuration parser https://stackoverflow.com/questions/66597732/eslint-vue-3-parsing-error-expected-eslint
-- [ ] lualine icons into icons file
+- [x] diffview - setup
+- [x] close quickfix list when opened in trouble (quickfixlist filetype is `qf`)
+- [x] lualine icons into icons file
 - [ ] session
 - [ ] Dashboard
   - [mini-starter](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md)
   - [alpha-nvim](https://github.com/goolord/alpha-nvim)
   - [snacks.nvim dashboard](https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md)
-- [ ] keymaps descriptions
-- [ ] dap-go.lua
-- [ ] dap-vscode-js.lua
-- [ ] dap.lua
-- [ ] vale
-- [~] none-ls.nvim
-  - [ ] [cspell](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#cspell)
-  - [ ] [codespell](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell)
-  - [ ] [proselint](https://valentjn.github.io/ltex/)
-  - [ ] [ltex](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#codespell)
-  - [ ] [spell](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#spell)
-  - [ ] [writegood](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#write_good)
+- [x] keymaps descriptions
+- [x] dap-go.lua
+- [x] dap-vscode-js.lua
+- [x] dap.lua
+- [x] vale
+- [x] none-ls.nvim → replaced by conform.nvim (formatters) + nvim-lint (linters)
 - [ ] toggleterm
 
 ### DIY Features
 
 - [ ] [Neovim confv 2024](https://www.youtube.com/watch?v=TUzdcB_PFJA&list=PLhlaLyAlbLlq9xWf2xm_9p422GgqvATXk&index=1)
-- [ ] Popup Modal with all the shortcuts i could want!
-  - LSP - gra, ctrl+]...
-  - Oil
-  - telescope file browser
-  - gitsigns
+- [x] Popup Modal with all the shortcuts i could want! → which-key.nvim
 - [ ] Scratchpad file with picker (telescope open nvim config example)
 - [ ] Add item to quickfix list via telescope without overwriting it
-- [ ] Spellcheck, keybind for enable and disabling (value included)
+- [x] Spellcheck, keybind for enable and disabling (value included)
 
 ### Refactors
 
-- [ ] LSP integration cleanup - consolidate three overlapping mechanisms into native Neovim 0.11 setup
-  - currently: mason-lspconfig auto-enables servers, `vim.lsp.enable()` re-enables some, `lsp/` dir has native configs
-  - target: mason for binary installation only, `lsp/` dir for all configs, `vim.lsp.enable()` as single source of truth
-  - drop `mason-lspconfig`, keep `mason-tool-installer` for installation
+- [x] LSP integration cleanup — consolidate three overlapping mechanisms into native Neovim 0.11+ setup
+  - mason for binary installation only; `lsp/` dir for all configs; `vim.lsp.enable()` as single source of truth
 - [ ] update all keymaps to use vim.api.nvim_command instead of manual `":Command <CR>"`
 
 ### Setup
@@ -76,19 +63,23 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 - [x] formatting
   - [x] with prettier
   - [x] fmt keymap
-  - [x] none-ls.lua
+  - [x] via conform.nvim (none-ls replacement)
 - [-] snacks
   - [x] animate
   - [x] indent
   - [x] scroll
   - [x] statuscolumn
+  - [x] picker (ui_select handler)
+  - [x] input
+  - [x] notifier
+  - [x] bufdelete
+  - [x] bigfile
 - [x] fidget.lua
 - [x] bufferline - used lua line
 - [x] NvimTree
 - [x] codium setup (blink completion)
 - [ ] local AI for completions
   - [cmp-ai](https://github.com/tzachar/cmp-ai)
-- [ ] gen.lua
 - [x] sort and move utils from v2
   - [x] get_system_binary utils
   - [x] setup codeium.lua
