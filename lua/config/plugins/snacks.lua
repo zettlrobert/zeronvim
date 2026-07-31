@@ -41,6 +41,10 @@ return {
           },
         },
 
+        -- Replaces vim.ui.input (LSP rename prompt, other single-line prompts).
+        -- Matches the ivy-styled picker for a consistent feel.
+        input = { enabled = true },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
