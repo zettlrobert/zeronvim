@@ -74,9 +74,12 @@ return {
         automatic_enable = false,
       })
 
-      -- Formatters & Debug Adapters
+      -- Formatters, Linters & Debug Adapters
       local mason_tools = {}
       for key, _ in pairs(tools.formatters) do
+        table.insert(mason_tools, key)
+      end
+      for key, _ in pairs(tools.linters) do
         table.insert(mason_tools, key)
       end
       for key, _ in pairs(tools.debug_adapters) do
