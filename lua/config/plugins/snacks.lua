@@ -40,6 +40,21 @@ return {
             patterns = { "GitSign" },
           },
         },
+
+        picker = {
+          enabled = true,
+          ui_select = true, -- register as vim.ui.select handler
+          sources = {
+            -- Ivy = bottom-anchored, matches the telescope-ivy theme used in
+            -- telescope pickers. Scoped to `select` so only vim.ui.select is
+            -- affected; other snacks.picker uses (if added later) keep defaults.
+            select = {
+              -- No preview: menu items (LSP actions, server toggles, etc.) have
+              -- nothing meaningful to preview and the pane just eats space.
+              layout = { preset = "ivy", preview = false },
+            },
+          },
+        },
       })
     end,
   },
