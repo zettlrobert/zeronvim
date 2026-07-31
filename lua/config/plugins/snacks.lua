@@ -56,6 +56,10 @@ return {
         -- Callable as `Snacks.bufdelete()` or via `:lua Snacks.bufdelete()`.
         bufdelete = { enabled = true },
 
+        -- Auto-disables treesitter, LSP, and other heavyweight features on
+        -- files above the size threshold to keep the editor responsive.
+        bigfile = { enabled = true },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
