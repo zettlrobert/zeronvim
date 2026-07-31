@@ -45,6 +45,13 @@ return {
         -- Matches the ivy-styled picker for a consistent feel.
         input = { enabled = true },
 
+        -- Replaces vim.notify with toast notifications plus history.
+        -- View past notifications: `:Snacks notifier show_history`.
+        notifier = {
+          enabled = true,
+          timeout = 3000,
+        },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
