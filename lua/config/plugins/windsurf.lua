@@ -38,11 +38,8 @@ return {
       enable_cmp_source = true,
     })
 
-    -- Server-level toggle. codeium.toggle() flips Server.enabled and its
-    -- enable/disable methods already emit their own notify.info messages,
-    -- so no extra vim.notify here.
     vim.keymap.set("n", "<leader>aw", function()
-      require("codeium").toggle()
+      require("config.utils.ai_toggle").toggle_windsurf()
     end, { desc = kd.format(K.TOGGLE, T.Windsurf, "AI suggestions") })
   end,
 }

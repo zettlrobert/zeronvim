@@ -98,19 +98,8 @@ return {
       server_opts_overrides = {},
     })
 
-    -- Global toggle. copilot.command.toggle() is per-buffer (attach/detach),
-    -- not the global on/off we want, so we call enable/disable directly and
-    -- read the state via copilot.client.is_disabled().
     vim.keymap.set("n", "<leader>ap", function()
-      local cmd = require("copilot.command")
-      local client = require("copilot.client")
-      if client.is_disabled() then
-        cmd.enable()
-        vim.notify("Copilot: enabled", vim.log.levels.INFO)
-      else
-        cmd.disable()
-        vim.notify("Copilot: disabled", vim.log.levels.INFO)
-      end
+      require("config.utils.ai_toggle").toggle_copilot()
     end, { desc = kd.format(K.TOGGLE, T.Copilot, "AI suggestions") })
   end,
 }

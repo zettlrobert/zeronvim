@@ -54,6 +54,7 @@ M.TOOL = {
   Flash = "Flash",
   Undotree = "Undotree",
   Navbuddy = "Navbuddy",
+  AI = "AI",
   CodeCompanion = "CodeCompanion",
   Copilot = "Copilot",
   Windsurf = "Windsurf",
