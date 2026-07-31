@@ -28,7 +28,11 @@ return {
           api_key = "TERM",
           name = "Ollama",
           end_point = "http://localhost:11434/v1/completions",
-          model = "qwen2.5-coder:7b",
+          -- Base variant is required for clean FIM completions. The plain
+          -- `qwen2.5-coder:7b` tag is the instruct (chat) variant, which
+          -- treats <|fim_prefix|>/<|fim_middle|> tokens loosely and produces
+          -- completions that overlap or shift by one character.
+          model = "qwen2.5-coder:7b-base",
           stream = true,
           optional = {
             max_tokens = 128,
@@ -44,6 +48,11 @@ return {
 
       n_completions = 1, -- single suggestion per request keeps latency down
       context_window = 12000, -- max input tokens sent to the model
+
+      -- Disable the auto-generated "first line only" duplicate entry. Reduces
+      -- edge cases in blink's item handling and avoids two-lines-shown vs
+      -- one-line-inserted mismatches.
+      add_single_line_entry = false,
     })
 
     local kd = require("config.utils.keymap_desc")

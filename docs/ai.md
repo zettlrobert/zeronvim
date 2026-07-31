@@ -77,7 +77,9 @@ Each plugin's config file calls `ai_toggle.disable_<provider>({silent = true})` 
 **Prerequisites:**
 
 - [Ollama](https://ollama.com/) installed and running on `:11434`
-- Model pulled: `ollama pull qwen2.5-coder:7b` (~4.7GB)
+- Model pulled: `ollama pull qwen2.5-coder:7b-base` (~4.7GB)
+
+**Important:** use the `-base` variant, not plain `:7b`. The default tag is the instruct (chat) variant, which handles FIM tokens loosely and produces completions that overlap or shift by one character. The base variant is FIM-native.
 
 **Verify:**
 
@@ -129,7 +131,7 @@ require("minuet").setup({
 |---|---|---|---|---|
 | `qwen2.5-coder:1.5b` | ~1GB | Very fast | Fast | Good |
 | `qwen2.5-coder:3b` | ~2GB | Very fast | Fast | Better |
-| `qwen2.5-coder:7b` (default) | ~4.7GB | Fast | Usable | Best local option |
+| `qwen2.5-coder:7b-base` (default) | ~4.7GB | Fast | Usable | Best local FIM option |
 | `qwen2.5-coder:14b` | ~9GB | Medium | Slow | Best local, needs 12GB+ VRAM |
 | `codellama:7b` | ~3.8GB | Fast | Usable | Meta's coding model |
 | `deepseek-coder-v2:16b` | ~9GB | Medium | Slow | Strong on Python/JS |
