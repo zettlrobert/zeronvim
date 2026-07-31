@@ -23,6 +23,7 @@ return {
       yaml = { "yamllint" },
       go = { "golangci-lint" },
       python = { "ruff" },
+      lua = { "selene" },
     }
 
     -- Filetype-based trigger: runs whichever linters are configured for the ft.

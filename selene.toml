@@ -1,0 +1,3 @@
+# selene lints this nvim config's own lua files.
+# `std = "vim"` loads the vim.toml std library alongside for vim globals.
+std = "vim"

@@ -1,0 +1,11 @@
+# selene std library defining Neovim's `vim` global.
+# Referenced from selene.toml via `std = "vim"`.
+# `base = "lua51"` extends the standard Lua 5.1 std with vim additions.
+[selene]
+base = "lua51"
+name = "vim"
+
+# Accept any `vim.*` access (namespace is huge and evolving; enumerating
+# every function/property would be maintenance burden with no gain).
+[vim]
+any = true

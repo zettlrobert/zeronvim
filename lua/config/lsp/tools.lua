@@ -21,6 +21,7 @@ M.linters = {
   hadolint = "hadolint",
   markdownlint = "markdownlint",
   ruff = "ruff",
+  selene = "selene",
   shellcheck = "shellcheck",
   yamllint = "yamllint",
 }
