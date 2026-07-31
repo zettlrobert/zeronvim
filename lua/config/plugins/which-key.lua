@@ -17,7 +17,7 @@ return {
     end,
     -- Group labels for the established `<leader>*` namespaces
     spec = {
-      { "<leader>a", group = "ai (codecompanion)" },
+      { "<leader>a", group = "ai" },
       { "<leader>b", group = "debug (dap)" },
       { "<leader>c", group = "copy (buffer paths)" },
       { "<leader>e", group = "explorer (nvim-tree)" },

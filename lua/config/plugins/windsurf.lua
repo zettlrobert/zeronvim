@@ -9,6 +9,8 @@ return {
     -- Imports
     local utils = require("config.utils")
     local codeium = require("codeium")
+    local kd = require("config.utils.keymap_desc")
+    local K, T = kd.KIND, kd.TOOL
 
     -- Paths
     local config = vim.fn.stdpath("data") .. "/codeium/codeium.json"
@@ -35,5 +37,12 @@ return {
       },
       enable_cmp_source = true,
     })
+
+    -- Server-level toggle. codeium.toggle() flips Server.enabled and its
+    -- enable/disable methods already emit their own notify.info messages,
+    -- so no extra vim.notify here.
+    vim.keymap.set("n", "<leader>aw", function()
+      require("codeium").toggle()
+    end, { desc = kd.format(K.TOGGLE, T.Windsurf, "AI suggestions") })
   end,
 }
