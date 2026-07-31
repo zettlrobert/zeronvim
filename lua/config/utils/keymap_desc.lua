@@ -68,6 +68,7 @@ M.TOOL = {
   ImgClip = "img-clip",
   Kulala = "Kulala",
   MCPHub = "MCPHub",
+  Notifier = "Notifier",
   WhichKey = "Which-key",
   -- Native / category
   LSP = "LSP",

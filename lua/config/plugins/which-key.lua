@@ -25,6 +25,7 @@ return {
       { "<leader>g", group = "git" },
       { "<leader>l", group = "lsp" },
       { "<leader>m", group = "markdown" },
+      { "<leader>n", group = "notifications" },
       { "<leader>q", group = "quickfix" },
       { "<leader>r", group = "review" },
       { "<leader>R", group = "REST / HTTP (kulala)" },

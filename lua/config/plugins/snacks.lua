@@ -4,6 +4,8 @@ return {
     "https://github.com/folke/snacks.nvim",
     config = function()
       local snacks = require("snacks")
+      local kd = require("config.utils.keymap_desc")
+      local K, T = kd.KIND, kd.TOOL
 
       snacks.setup({
         animate = {
@@ -75,6 +77,13 @@ return {
           },
         },
       })
+
+      -- Show the notifier's toast history. Useful when a notification faded
+      -- before you could read it, or to see errors from plugins that route
+      -- through vim.notify (e.g. minuet completion failures).
+      vim.keymap.set("n", "<leader>nh", function()
+        snacks.notifier.show_history()
+      end, { desc = kd.format(K.SHOW, T.Notifier, "notification history") })
     end,
   },
 }
