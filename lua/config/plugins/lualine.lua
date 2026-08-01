@@ -88,6 +88,38 @@ return {
 			end,
 		})
 
+		-- LSP client badges: compact per-buffer LSP indicator. Icons only, no
+		-- names, colored per-server via mini-icons hl groups. Capped at 6
+		-- icons then `+N`, hidden entirely in narrow windows via hide_in_width.
+		-- Falls back to a generic  gear icon for servers mini-icons doesn't map.
+		local lsp_clients = {
+			function()
+				local clients = vim.lsp.get_clients({ bufnr = 0 })
+				if #clients == 0 then
+					return ""
+				end
+				local mi_ok, mi = pcall(require, "mini.icons")
+				if not mi_ok then
+					return "LSP:" .. #clients
+				end
+				local parts = {}
+				local max = 6
+				for i, client in ipairs(clients) do
+					if i > max then
+						table.insert(parts, string.format("%%#Comment#+%d%%*", #clients - max))
+						break
+					end
+					local icon, hl = mi.get("lsp", client.name)
+					if not icon or icon == "" then
+						icon, hl = "", "Comment"
+					end
+					table.insert(parts, string.format("%%#%s#%s%%*", hl or "Comment", icon))
+				end
+				return table.concat(parts, " ")
+			end,
+			cond = hide_in_width,
+		}
+
 		lualine.setup({
 			options = {
 				icons_enabled = true,
@@ -124,7 +156,7 @@ return {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", diff, diagnostics },
 				lualine_c = { macro_recording, "filename", "searchcount" },
-				lualine_x = { ai_status, "encoding", "fileformat", "filetype" },
+				lualine_x = { lsp_clients, ai_status, "encoding", "fileformat", "filetype" },
 				lualine_y = { "windows", "tabs", "progress" },
 				lualine_z = { "location" },
 			},
