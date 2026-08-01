@@ -214,7 +214,7 @@ function M.statusline()
   local w = M.is_windsurf_enabled()
   local m = M.is_minuet_enabled()
   if not c and not w and not m then
-    return "%#Comment# off%*"
+    return "%#Comment#AI off%*"
   end
   local parts = {}
   if c then

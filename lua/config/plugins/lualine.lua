@@ -88,39 +88,22 @@ return {
 			end,
 		})
 
-		-- LSP client badges: compact per-buffer LSP indicator. Icons only, no
-		-- names, colored per-server via mini-icons hl groups. Capped at 6
-		-- icons then `+N`, hidden entirely in narrow windows via hide_in_width.
-		--
-		-- mini-icons' `lsp` category is for LSP CompletionItemKinds (Function,
-		-- Method, ...), NOT server names. It returns `?` with `MiniIconsRed`
-		-- for unknown names — detected via the third return value `is_default`.
-		-- When mini-icons has no explicit mapping (see mini-icons.lua), fall
-		-- back to a generic dim cog icon.
+		-- LSP client indicator: shows the buffer's filetype icon (from mini-icons)
+		-- plus the count of attached LSP clients. mini-icons has proper filetype
+		-- entries for lua/ts/py/etc. — no `?` fallback like the `lsp` category
+		-- for unmapped server names. Compact, always renders something meaningful.
 		local lsp_clients = {
 			function()
-				local clients = vim.lsp.get_clients({ bufnr = 0 })
-				if #clients == 0 then
+				local n = #vim.lsp.get_clients({ bufnr = 0 })
+				if n == 0 then
 					return ""
 				end
 				local mi_ok, mi = pcall(require, "mini.icons")
 				if not mi_ok then
-					return "LSP:" .. #clients
+					return "LSP:" .. n
 				end
-				local parts = {}
-				local max = 6
-				for i, client in ipairs(clients) do
-					if i > max then
-						table.insert(parts, string.format("%%#Comment#+%d%%*", #clients - max))
-						break
-					end
-					local icon, hl, is_default = mi.get("lsp", client.name)
-					if is_default then
-						icon, hl = "", "Comment"
-					end
-					table.insert(parts, string.format("%%#%s#%s%%*", hl or "Comment", icon))
-				end
-				return table.concat(parts, " ")
+				local icon, hl = mi.get("filetype", vim.bo.filetype)
+				return string.format("%%#%s#%s%%* %d", hl or "Comment", icon or "", n)
 			end,
 			cond = hide_in_width,
 		}
