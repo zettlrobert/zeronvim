@@ -8,9 +8,11 @@ return {
 
     return {
       lsp = {
-        codeium = { glyph = "", hl = "MiniIconsAzure" },
-        windsurf = { glyph = "", hl = "MiniIconsAzure" },
-        copilot = { glyph = "", hl = "MiniIconsGreen" },
+        codeium = { glyph = "", hl = "MiniIconsAzure" },
+        windsurf = { glyph = "", hl = "MiniIconsAzure" },
+        copilot = { glyph = "", hl = "MiniIconsGreen" },
+        minuet = { glyph = "", hl = "MiniIconsYellow" },
+        ollama = { glyph = "", hl = "MiniIconsYellow" },
       },
     }
   end,

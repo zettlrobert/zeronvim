@@ -53,18 +53,12 @@ return {
 
 		local filename = computeFilename()
 
-		-- AI provider status: "AI C+W" / "AI C" / "AI W" / "AI off".
-		-- Colored via named highlight groups so it follows the active colorscheme.
+		-- AI provider status: per-provider glyphs, each colored via embedded
+		-- statusline `%#HlGroup#` markup (see ai_toggle.statusline). Dim
+		-- " off" text when everything is disabled.
 		local ai_status = {
 			function()
 				return require("config.utils.ai_toggle").statusline()
-			end,
-			color = function()
-				local ai = require("config.utils.ai_toggle")
-				if ai.is_copilot_enabled() or ai.is_windsurf_enabled() or ai.is_minuet_enabled() then
-					return "String"
-				end
-				return "Comment"
 			end,
 		}
 

@@ -55,6 +55,7 @@ return {
         kind_icons = {
           codeium = "",
           copilot = "",
+          minuet = "",
         },
       },
 

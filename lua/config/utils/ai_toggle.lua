@@ -195,25 +195,37 @@ end
 -- Statusline
 -- ---------------------------------------------------------------------------
 
--- Compact indicator: "AI C+W+M" / subsets / "AI off".
+-- Per-provider glyphs, each colored by the same hl group used elsewhere for
+-- that provider (see lua/config/plugins/mini-icons.lua). Uses statusline
+-- `%#HlGroup#...%*` markup so each icon carries its own color without needing
+-- multiple lualine components.
+--
+-- Glyphs mirror the blink `kind_icons` in completion.lua and the mini-icons
+-- `lsp` entries — one source of truth per provider.
+local GLYPHS = {
+  copilot = { icon = "", hl = "MiniIconsGreen" },
+  windsurf = { icon = "", hl = "MiniIconsAzure" },
+  minuet = { icon = "", hl = "MiniIconsYellow" },
+}
+
 function M.statusline()
   local c = M.is_copilot_enabled()
   local w = M.is_windsurf_enabled()
   local m = M.is_minuet_enabled()
   if not c and not w and not m then
-    return "AI off"
+    return "%#Comment# off%*"
   end
-  local marks = {}
+  local parts = {}
   if c then
-    table.insert(marks, "C")
+    table.insert(parts, string.format("%%#%s#%s%%*", GLYPHS.copilot.hl, GLYPHS.copilot.icon))
   end
   if w then
-    table.insert(marks, "W")
+    table.insert(parts, string.format("%%#%s#%s%%*", GLYPHS.windsurf.hl, GLYPHS.windsurf.icon))
   end
   if m then
-    table.insert(marks, "M")
+    table.insert(parts, string.format("%%#%s#%s%%*", GLYPHS.minuet.hl, GLYPHS.minuet.icon))
   end
-  return "AI " .. table.concat(marks, "+")
+  return table.concat(parts, " ")
 end
 
 return M
