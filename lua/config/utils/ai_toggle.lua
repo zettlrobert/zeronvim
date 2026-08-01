@@ -205,6 +205,7 @@ end
 local GLYPHS = {
   copilot = { icon = "", hl = "MiniIconsGreen" },
   windsurf = { icon = "", hl = "MiniIconsAzure" },
+  -- nf-fa-microchip; older codepoint than nf-md-brain, works on more fonts.
   minuet = { icon = "", hl = "MiniIconsYellow" },
 }
 
