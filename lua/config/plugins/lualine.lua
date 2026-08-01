@@ -62,6 +62,32 @@ return {
 			end,
 		}
 
+		-- Macro recording indicator: shows `● @<reg>` while `q<reg>` is capturing.
+		-- Hidden otherwise via `cond`. Colored via the `Error` hl group so it
+		-- stays high-visibility across colorschemes.
+		local macro_recording = {
+			function()
+				local reg = vim.fn.reg_recording()
+				return reg ~= "" and ("● @" .. reg) or ""
+			end,
+			cond = function()
+				return vim.fn.reg_recording() ~= ""
+			end,
+			color = "Error",
+		}
+
+		-- Force lualine to refresh the moment recording starts/stops so the
+		-- indicator doesn't lag behind the 1000ms refresh interval.
+		vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
+			group = vim.api.nvim_create_augroup("LualineMacroRefresh", { clear = true }),
+			callback = function()
+				-- Defer so reg_recording() sees the post-event state on Leave.
+				vim.defer_fn(function()
+					require("lualine").refresh()
+				end, 50)
+			end,
+		})
+
 		lualine.setup({
 			options = {
 				icons_enabled = true,
@@ -97,7 +123,7 @@ return {
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", diff, diagnostics },
-				lualine_c = { "filename", "searchcount" },
+				lualine_c = { macro_recording, "filename", "searchcount" },
 				lualine_x = { ai_status, "encoding", "fileformat", "filetype" },
 				lualine_y = { "windows", "tabs", "progress" },
 				lualine_z = { "location" },
