@@ -62,6 +62,12 @@ return {
         -- files above the size threshold to keep the editor responsive.
         bigfile = { enabled = true },
 
+        -- Highlights other occurrences of the word under the cursor. This
+        -- config doesn't wire up LSP's own `textDocument/documentHighlight`,
+        -- so snacks.words fills the gap purely textually — works even in
+        -- filetypes without an LSP (markdown, plain text, config files).
+        words = { enabled = true },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
