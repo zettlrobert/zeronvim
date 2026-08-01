@@ -91,7 +91,12 @@ return {
 		-- LSP client badges: compact per-buffer LSP indicator. Icons only, no
 		-- names, colored per-server via mini-icons hl groups. Capped at 6
 		-- icons then `+N`, hidden entirely in narrow windows via hide_in_width.
-		-- Falls back to a generic  gear icon for servers mini-icons doesn't map.
+		--
+		-- mini-icons' `lsp` category is for LSP CompletionItemKinds (Function,
+		-- Method, ...), NOT server names. It returns `?` with `MiniIconsRed`
+		-- for unknown names — detected via the third return value `is_default`.
+		-- When mini-icons has no explicit mapping (see mini-icons.lua), fall
+		-- back to a generic dim cog icon.
 		local lsp_clients = {
 			function()
 				local clients = vim.lsp.get_clients({ bufnr = 0 })
@@ -109,8 +114,8 @@ return {
 						table.insert(parts, string.format("%%#Comment#+%d%%*", #clients - max))
 						break
 					end
-					local icon, hl = mi.get("lsp", client.name)
-					if not icon or icon == "" then
+					local icon, hl, is_default = mi.get("lsp", client.name)
+					if is_default then
 						icon, hl = "", "Comment"
 					end
 					table.insert(parts, string.format("%%#%s#%s%%*", hl or "Comment", icon))
