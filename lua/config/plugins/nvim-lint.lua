@@ -13,6 +13,9 @@ return {
   event = { "BufReadPost", "BufNewFile", "BufWritePost" },
   config = function()
     local lint = require("lint")
+    local toggle = require("config.utils.toggle_linter")
+    local kd = require("config.utils.keymap_desc")
+    local K, T = kd.KIND, kd.TOOL
     local group = vim.api.nvim_create_augroup("NvimLintTrigger", { clear = true })
 
     lint.linters_by_ft = {
@@ -26,11 +29,16 @@ return {
       lua = { "selene" },
     }
 
-    -- Filetype-based trigger: runs whichever linters are configured for the ft.
+    -- Filetype-based trigger: runs whichever linters are configured for the
+    -- ft, filtered through `toggle_linter` so per-linter disables stick.
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
       group = group,
       callback = function()
-        require("lint").try_lint()
+        local linters = lint.linters_by_ft[vim.bo.filetype] or {}
+        local enabled = toggle.filter(linters)
+        if #enabled > 0 then
+          lint.try_lint(enabled)
+        end
       end,
     })
 
@@ -40,8 +48,15 @@ return {
       group = group,
       pattern = { "*/.github/workflows/*.yml", "*/.github/workflows/*.yaml" },
       callback = function()
-        require("lint").try_lint("actionlint")
+        if toggle.is_enabled("actionlint") then
+          lint.try_lint("actionlint")
+        end
       end,
     })
+
+    -- <leader>t namespace (toggle)
+    vim.keymap.set("n", "<leader>tm", function()
+      toggle.toggle("markdownlint")
+    end, { desc = kd.format(K.TOGGLE, T.Markdownlint, "linter") })
   end,
 }

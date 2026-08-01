@@ -67,6 +67,7 @@ M.TOOL = {
   Todo = "Todo",
   ImgClip = "img-clip",
   Kulala = "Kulala",
+  Markdownlint = "Markdownlint",
   MCPHub = "MCPHub",
   Notifier = "Notifier",
   WhichKey = "Which-key",
