@@ -203,10 +203,10 @@ end
 -- Glyphs mirror the blink `kind_icons` in completion.lua and the mini-icons
 -- `lsp` entries — one source of truth per provider.
 local GLYPHS = {
-  copilot = { icon = "", hl = "MiniIconsGreen" },
-  windsurf = { icon = "", hl = "MiniIconsAzure" },
+  copilot = { icon = "", hl = "MiniIconsGreen" },
+  windsurf = { icon = "", hl = "MiniIconsAzure" },
   -- nf-fa-microchip; older codepoint than nf-md-brain, works on more fonts.
-  minuet = { icon = "", hl = "MiniIconsYellow" },
+  minuet = { icon = "", hl = "MiniIconsYellow" },
 }
 
 function M.statusline()
