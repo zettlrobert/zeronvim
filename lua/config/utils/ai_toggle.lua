@@ -203,10 +203,10 @@ end
 -- Glyphs mirror the blink `kind_icons` in completion.lua and the mini-icons
 -- `lsp` entries — one source of truth per provider.
 local GLYPHS = {
-  copilot = { icon = "", hl = "MiniIconsGreen" },
-  windsurf = { icon = "", hl = "MiniIconsAzure" },
+  copilot = { icon = "", name = "Copilot", hl = "MiniIconsGreen" },
+  windsurf = { icon = "", name = "Windsurf", hl = "MiniIconsAzure" },
   -- nf-fa-microchip; older codepoint than nf-md-brain, works on more fonts.
-  minuet = { icon = "", hl = "MiniIconsYellow" },
+  minuet = { icon = "", name = "Minuet", hl = "MiniIconsYellow" },
 }
 
 function M.statusline()
@@ -216,15 +216,15 @@ function M.statusline()
   if not c and not w and not m then
     return "%#Comment#AI off%*"
   end
-  local parts = {}
+  local parts = { "AI" }
   if c then
-    table.insert(parts, string.format("%%#%s#%s%%*", GLYPHS.copilot.hl, GLYPHS.copilot.icon))
+    table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.copilot.hl, GLYPHS.copilot.icon, GLYPHS.copilot.name))
   end
   if w then
-    table.insert(parts, string.format("%%#%s#%s%%*", GLYPHS.windsurf.hl, GLYPHS.windsurf.icon))
+    table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.windsurf.hl, GLYPHS.windsurf.icon, GLYPHS.windsurf.name))
   end
   if m then
-    table.insert(parts, string.format("%%#%s#%s%%*", GLYPHS.minuet.hl, GLYPHS.minuet.icon))
+    table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.minuet.hl, GLYPHS.minuet.icon, GLYPHS.minuet.name))
   end
   return table.concat(parts, " ")
 end
