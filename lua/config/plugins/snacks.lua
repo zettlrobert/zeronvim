@@ -68,6 +68,11 @@ return {
         -- filetypes without an LSP (markdown, plain text, config files).
         words = { enabled = true },
 
+        -- LSP-aware file rename: renaming a filename symbol via LSP also
+        -- renames the file on disk. Also lets file explorers (nvim-tree, oil)
+        -- fire LSP willRenameFiles so identifier references update project-wide.
+        rename = { enabled = true },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
