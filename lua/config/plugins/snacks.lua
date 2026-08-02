@@ -79,6 +79,35 @@ return {
         -- scratches for the current project.
         scratch = { enabled = true },
 
+        -- Startup landing page shown only when nvim opens with no file args
+        -- (bare `nvim`, not `nvim .` or `nvim <file>`). Quick actions +
+        -- recent files. Actions use `Snacks.dashboard.pick`, which routes
+        -- through snacks.picker for a consistent ivy look.
+        dashboard = {
+          enabled = true,
+          preset = {
+            keys = {
+              { icon = " ", key = "f", desc = "Find file", action = ":lua Snacks.dashboard.pick('files')" },
+              { icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
+              { icon = " ", key = "g", desc = "Find text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+              { icon = " ", key = "r", desc = "Recent files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+              {
+                icon = " ",
+                key = "c",
+                desc = "Config",
+                action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
+              },
+              { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+            },
+          },
+          sections = {
+            { section = "header" },
+            { section = "keys", gap = 1, padding = 1 },
+            { section = "recent_files", cwd = true, limit = 5, padding = 1 },
+            { section = "startup" },
+          },
+        },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
