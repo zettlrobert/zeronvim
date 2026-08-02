@@ -73,6 +73,12 @@ return {
         -- fire LSP willRenameFiles so identifier references update project-wide.
         rename = { enabled = true },
 
+        -- Persistent scratch buffers per-cwd. Replaces the pattern of creating
+        -- throwaway `todo.md` / `notes.md` files in project roots. Default ft
+        -- is markdown; picker at `<leader>S` lets you jump between saved
+        -- scratches for the current project.
+        scratch = { enabled = true },
+
         picker = {
           enabled = true,
           ui_select = true, -- register as vim.ui.select handler
@@ -95,6 +101,16 @@ return {
       vim.keymap.set("n", "<leader>nh", function()
         snacks.notifier.show_history()
       end, { desc = kd.format(K.SHOW, T.Notifier, "notification history") })
+
+      -- Scratch buffer keymaps. `<leader>.` opens/toggles the primary scratch
+      -- for this cwd (markdown by default). `<leader>S` opens the picker over
+      -- all scratches for this cwd — jump between multiple ongoing notes.
+      vim.keymap.set("n", "<leader>.", function()
+        snacks.scratch()
+      end, { desc = kd.format(K.OPEN, T.Scratch, "new scratch buffer") })
+      vim.keymap.set("n", "<leader>S", function()
+        snacks.scratch.select()
+      end, { desc = kd.format(K.PICK, T.Scratch, "select scratch buffer") })
     end,
   },
 }
