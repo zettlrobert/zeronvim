@@ -9,10 +9,24 @@ return {
   config = function()
     local telescope = require("telescope")
     local telescope_builtin = require("telescope.builtin")
+    local telescope_actions = require("telescope.actions")
     local kd = require("config.utils.keymap_desc")
     local K, T = kd.KIND, kd.TOOL
 
     telescope.setup({
+      defaults = {
+        mappings = {
+          -- <C-q> keeps its default (smart_send_to_qflist = REPLACE qf).
+          -- <C-a> appends to the existing qf without wiping prior results,
+          -- letting you accumulate matches across multiple searches.
+          i = {
+            ["<C-a>"] = telescope_actions.smart_add_to_qflist + telescope_actions.open_qflist,
+          },
+          n = {
+            ["<C-a>"] = telescope_actions.smart_add_to_qflist + telescope_actions.open_qflist,
+          },
+        },
+      },
       pickers = {
         find_files = {
           find_command = { "rg", "--files" },

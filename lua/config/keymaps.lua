@@ -85,6 +85,12 @@ keymap("n", "<leader>qe", function()
   vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
 end, { desc = kd.format(K.EDIT, T.Quickfix, "populate with workspace errors only") })
 
+-- Clear the qf list without closing its window. Useful when building a new
+-- set of entries via telescope `<C-a>` (append) after a prior collection.
+keymap("n", "<leader>qc", function()
+  vim.fn.setqflist({}, "r")
+end, { desc = kd.format(K.EDIT, T.Quickfix, "clear list") })
+
 -- Paste selection without losing the current buffer
 keymap("x", "<leader>p", '"_dP', { desc = kd.format(K.PASTE, T.Native, "without losing buffer") })
 
