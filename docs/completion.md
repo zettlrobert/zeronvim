@@ -14,8 +14,9 @@
 | `buffer` | built-in | Words from open buffers |
 | `omni` | `cmp-omni` via blink.compat | Filetype-specific `omnifunc` |
 | `markdown` | `render-markdown.nvim` | Markdown-aware completions |
-| `codeium` | codeium.blink | AI completions (Codeium) |
-| `copilot` | blink-cmp-copilot | AI completions (Copilot, score offset +100) |
+| `codeium` | codeium.blink | AI completions (Codeium / Windsurf, cloud) |
+| `copilot` | blink-cmp-copilot | AI completions (Copilot, cloud, score offset +100) |
+| `minuet` | minuet.blink | Local AI completions via Ollama FIM (`qwen2.5-coder:7b-base`, see [ai.md](ai.md)) |
 
 ## Disabled in
 
