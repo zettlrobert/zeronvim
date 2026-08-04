@@ -8,7 +8,7 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 
 ## Known Bugs
 
-- [ ] border for vim.lsp.buf.hover
+- [x] border for vim.lsp.buf.hover → rounded borders wired in `lsp/init.lua`
 
 ---
 
@@ -29,24 +29,21 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
 - [x] close quickfix list when opened in trouble (quickfixlist filetype is `qf`)
 - [x] lualine icons into icons file
 - [ ] session
-- [ ] Dashboard
-  - [mini-starter](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md)
-  - [alpha-nvim](https://github.com/goolord/alpha-nvim)
-  - [snacks.nvim dashboard](https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md)
+- [x] Dashboard → snacks.dashboard (shows on bare `nvim` launch)
 - [x] keymaps descriptions
 - [x] dap-go.lua
 - [x] dap-vscode-js.lua
 - [x] dap.lua
 - [x] vale
 - [x] none-ls.nvim → replaced by conform.nvim (formatters) + nvim-lint (linters)
-- [ ] toggleterm
+- [-] toggleterm — skipped, user uses a terminal multiplexer
 
 ### DIY Features
 
 - [ ] [Neovim confv 2024](https://www.youtube.com/watch?v=TUzdcB_PFJA&list=PLhlaLyAlbLlq9xWf2xm_9p422GgqvATXk&index=1)
 - [x] Popup Modal with all the shortcuts i could want! → which-key.nvim
-- [ ] Scratchpad file with picker (telescope open nvim config example)
-- [ ] Add item to quickfix list via telescope without overwriting it
+- [x] Scratchpad file with picker → snacks.scratch (`<leader>.` new, `<leader>S` pick)
+- [x] Add item to quickfix list via telescope without overwriting it → `<C-a>` in any telescope picker
 - [x] Spellcheck, keybind for enable and disabling (value included)
 
 ### Refactors
@@ -74,12 +71,15 @@ Good place to get started with neovim: [The Only Video You Need to Get STarted w
   - [x] notifier
   - [x] bufdelete
   - [x] bigfile
+  - [x] words
+  - [x] rename
+  - [x] scratch
+  - [x] dashboard
 - [x] fidget.lua
 - [x] bufferline - used lua line
 - [x] NvimTree
 - [x] codium setup (blink completion)
-- [ ] local AI for completions
-  - [cmp-ai](https://github.com/tzachar/cmp-ai)
+- [x] local AI for completions → [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim) + Ollama `qwen2.5-coder:7b-base` FIM; see `docs/ai.md`
 - [x] sort and move utils from v2
   - [x] get_system_binary utils
   - [x] setup codeium.lua
