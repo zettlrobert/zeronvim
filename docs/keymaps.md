@@ -8,7 +8,7 @@ Namespaces at a glance:
 
 | Prefix | Domain |
 |---|---|
-| `<leader>a` | AI (CodeCompanion) |
+| `<leader>a` | AI (CodeCompanion + Copilot/Windsurf/Minuet toggles) |
 | `<leader>b` | Debug (DAP runtime ops) |
 | `<leader>c` | Copy (buffer paths) |
 | `<leader>d` | Diagnostic float (single-key) |
@@ -17,6 +17,7 @@ Namespaces at a glance:
 | `<leader>g` | Git |
 | `<leader>l` | LSP |
 | `<leader>m` | Markdown |
+| `<leader>n` | Notifications |
 | `<leader>q` | Quickfix |
 | `<leader>r` | Review (planned) |
 | `<leader>R` | REST / HTTP (kulala) |
@@ -31,6 +32,12 @@ Namespaces at a glance:
 |---|---|
 | `<leader>ac` | CodeCompanion chat toggle |
 | `<leader>aa` | CodeCompanion actions palette |
+| `<leader>ap` | Toggle Copilot (global on/off) |
+| `<leader>aw` | Toggle Windsurf / Codeium (global on/off) |
+| `<leader>am` | Toggle Minuet local AI completion |
+| `<leader>aA` | Toggle all AI providers at once |
+
+All completion providers start disabled at nvim startup — see `docs/ai.md`.
 
 ## `<leader>b` — Debug (DAP runtime ops)
 
@@ -88,7 +95,7 @@ UI toggles moved to `<leader>tdv`/`<leader>tdu` under the toggle group.
 | `<leader>fn` | Nvim config files |
 | `<leader>fp` | Installed plugin files |
 
-Inside any picker: `<C-q>` sends all results to qflist, `<M-q>` sends selected.
+Inside any picker: `<C-q>` sends all results to qflist (REPLACE), `<C-a>` appends to qflist (ACCUMULATE across searches).
 
 ## `<leader>g` — Git
 
@@ -118,6 +125,12 @@ Native Neovim 0.11+ LSP defaults also available: `gd` (definition), `grn` (renam
 |---|---|
 | `<leader>mr` | Toggle render-markdown for current buffer |
 
+## `<leader>n` — Notifications
+
+| Key | Action |
+|---|---|
+| `<leader>nh` | Show snacks.notifier history (equivalent of `:messages` for `vim.notify` calls) |
+
 ## `<leader>q` — Quickfix
 
 | Key | Action |
@@ -125,6 +138,7 @@ Native Neovim 0.11+ LSP defaults also available: `gd` (definition), `grn` (renam
 | `<leader>qq` | Toggle quickfix window |
 | `<leader>qd` | Populate with all workspace diagnostics |
 | `<leader>qe` | Populate with workspace errors only |
+| `<leader>qc` | Clear the quickfix list (window stays open) |
 
 ## `<leader>r` — Review
 
@@ -150,6 +164,7 @@ Kulala installs `<leader>R{o,b,q,c,C,i,j,e,u,r,s,a,g,n,p,f,t,S,x,X}`. See `:help
 | `<leader>tl` | Toggle any LSP server (picker) |
 | `<leader>tz` | Toggle zen mode |
 | `<leader>tc` | Toggle color picker (ccc) |
+| `<leader>tm` | Toggle markdownlint (via `toggle_linter` util) |
 | `<leader>tdv` | Toggle debug view (dap-view) |
 | `<leader>tdu` | Toggle debug ui (dap-ui) |
 
@@ -185,6 +200,9 @@ Kulala installs `<leader>R{o,b,q,c,C,i,j,e,u,r,s,a,g,n,p,f,t,S,x,X}`. See `:help
 | `<leader>y` | Yank to system clipboard (n/v) |
 | `<leader>p` | Paste without losing buffer (x); paste image (n, img-clip) |
 | `<leader>?` | Which-key buffer keymaps |
+| `<leader>.` | New / toggle scratch buffer (snacks.scratch, per-cwd persistent) |
+| `<leader>S` | Pick from saved scratch buffers for current cwd |
+| `<leader>x` | Execute current line as Lua (`<leader><leader>x` runs the whole file) |
 
 ## Non-`<leader>` keymaps
 
