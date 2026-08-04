@@ -39,14 +39,16 @@ All three suggestion providers **start disabled** at nvim startup. Toggle on dem
 
 ## Statusline
 
-Right side of lualine, before encoding.
+Right side of lualine, before encoding. Format: `AI` prefix followed by `<icon> <name>` for each enabled provider, each in that provider's brand color.
 
 | Display | Meaning |
 |---|---|
-| `AI C+W+M` | All three providers active (`String` hl — green) |
-| `AI C+W` / `AI C+M` / `AI W+M` | Two active |
-| `AI C` / `AI W` / `AI M` | One active |
+| `AI  Copilot  Windsurf  Minuet` | All three active (each colored via `MiniIconsGreen`/`Azure`/`Yellow`) |
+| `AI  Copilot  Windsurf` | Two active (subsets in any combination) |
+| `AI  Copilot` / etc. | One active |
 | `AI off` | All disabled (`Comment` hl — dim) |
+
+Colors and glyphs are defined once in `ai_toggle.lua`'s `GLYPHS` table — the same values used by mini-icons (`lua/config/plugins/mini-icons.lua`) and blink's `kind_icons` (`completion.lua`). One source of truth per provider.
 
 ## Startup defaults
 
