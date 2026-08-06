@@ -27,5 +27,6 @@ end
 require("config.dap.typescript")
 require("config.dap.go")
 require("config.dap.python")
+require("config.dap.lua")
 
 return dap
