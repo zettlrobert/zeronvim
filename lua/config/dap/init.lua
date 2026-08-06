@@ -26,5 +26,6 @@ end
 -- Language-specific launch configs
 require("config.dap.typescript")
 require("config.dap.go")
+require("config.dap.python")
 
 return dap

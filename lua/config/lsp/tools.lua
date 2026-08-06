@@ -29,6 +29,7 @@ M.linters = {
 M.debug_adapters = {
   delve = "delve",
   ["js-debug-adapter"] = "js-debug-adapter",
+  debugpy = "debugpy",
 }
 
 return M
