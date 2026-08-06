@@ -9,7 +9,7 @@ M.get_current_relative_buffer_path = function()
   vim.notify("Relative buffer path set to register r", vim.log.levels.INFO)
 end
 
----Get the current absolut buffer path and set it to the a register
+---Get the current absolute buffer path and set it to the a register
 M.get_current_absolute_buffer_path = function()
   local absolute_buffer_path = vim.fn.expand("%:p")
 
@@ -18,14 +18,15 @@ M.get_current_absolute_buffer_path = function()
   vim.notify("Absolute buffer path set to register a", vim.log.levels.INFO)
 end
 
----Get the current absolute buffer path and the current working directory, concatenate them, and set it to the y register  (system clipboard)
+---Get the current absolute buffer path and set it to the system clipboard.
+---Uses `%:p` directly instead of composing cwd + %, which produced malformed
+---paths (e.g. `/home/x//etc/foo`) for buffers opened by absolute path.
 M.get_current_absolute_buffer_path_with_cwd = function()
-  local current_working_directory = vim.fn.getcwd()
-  local full_path = current_working_directory .. "/" .. vim.fn.expand("%")
+  local full_path = vim.fn.expand("%:p")
 
   vim.fn.setreg("+", full_path)
 
-  vim.notify("Full buffer path with CWD set to system clipboard", vim.log.levels.INFO)
+  vim.notify("Absolute buffer path set to system clipboard", vim.log.levels.INFO)
 end
 
 return M
