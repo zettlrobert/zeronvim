@@ -40,7 +40,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
       { title = "Conceallevel Set" }
     )
 
-    vim.opt.conceallevel = 1
+    -- opt_local scopes to the current buffer/window — using `vim.opt` here
+    -- leaked the setting globally and left conceallevel = 1 in every buffer
+    -- opened afterwards until nvim restarted.
+    vim.opt_local.conceallevel = 1
   end,
 })
 
