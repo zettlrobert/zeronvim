@@ -47,24 +47,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
----Rounded borders across LSP floats + diagnostic float. Matches the aesthetic
----already used by dap-ui and snacks components — one consistent look for all
----floating popups. Covers hover (`K`), signature help, and diagnostic float
----(`vim.diagnostic.open_float`, `<leader>d`).
----
----Neovim 0.12 deprecated `vim.lsp.with()`; we wrap the buf functions instead
----to inject `border = "rounded"` on every invocation.
+---Rounded borders across every floating window that doesn't specify its own
+---(LSP hover, signature help, diagnostic float, and any other unnamed float).
+---Matches the aesthetic used by dap-ui and snacks components. Neovim 0.11+
+---exposes this as a single global option — no need to wrap vim.lsp.buf.*
+---functions.
+vim.o.winborder = "rounded"
 vim.diagnostic.config({
   float = { border = "rounded" },
 })
-local orig_hover = vim.lsp.buf.hover
-vim.lsp.buf.hover = function(opts)
-  return orig_hover(vim.tbl_extend("force", { border = "rounded" }, opts or {}))
-end
-local orig_sig = vim.lsp.buf.signature_help
-vim.lsp.buf.signature_help = function(opts)
-  return orig_sig(vim.tbl_extend("force", { border = "rounded" }, opts or {}))
-end
 
 local kd = require("config.utils.keymap_desc")
 local K, T = kd.KIND, kd.TOOL
