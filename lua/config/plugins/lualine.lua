@@ -26,33 +26,6 @@ return {
 			cond = hide_in_width,
 		}
 
-		local function get_parent()
-			-- 0 represents the current buffer
-			local bufferPath = vim.api.nvim_buf_get_name(0)
-			local parentDir = vim.fn.fnamemodify(bufferPath, ":h")
-
-			-- vim.notify("bufferPath: " .. bufferPath)
-			-- vim.notify("parentPath: " .. parentDir)
-
-			-- check if current buffer is a file or a directory
-			local isDir = vim.fn.isdirectory(bufferPath) == 1
-
-			if isDir then
-				return ""
-			else
-				return parentDir
-			end
-		end
-
-		local function computeFilename()
-			local filename = vim.fn.expand("%:t")
-			local parentDir = get_parent()
-
-			return parentDir .. "/" .. filename
-		end
-
-		local filename = computeFilename()
-
 		-- AI provider status: per-provider glyphs, each colored via embedded
 		-- statusline `%#HlGroup#` markup (see ai_toggle.statusline). Dim
 		-- " off" text when everything is disabled.
