@@ -13,7 +13,9 @@ return {
   dependencies = {
     "nvim-neotest/nvim-nio",
     "nvim-lua/plenary.nvim",
-    "antoinemadec/FixCursorHold.nvim",
+    -- FixCursorHold.nvim dropped: was required only for Neovim < 0.10 where
+    -- CursorHold fired too aggressively. Fixed natively in 0.10+, this
+    -- config is on 0.12 — the shim is inert dead weight.
     "nvim-treesitter/nvim-treesitter",
     -- Adapters
     "marilari88/neotest-vitest",
