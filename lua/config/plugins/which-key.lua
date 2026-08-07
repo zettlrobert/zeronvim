@@ -26,6 +26,7 @@ return {
       { "<leader>l", group = "lsp" },
       { "<leader>m", group = "markdown" },
       { "<leader>n", group = "notifications" },
+      { "<leader>P", group = "persistence (sessions)" },
       { "<leader>q", group = "quickfix" },
       { "<leader>r", group = "review" },
       { "<leader>R", group = "REST / HTTP (kulala)" },

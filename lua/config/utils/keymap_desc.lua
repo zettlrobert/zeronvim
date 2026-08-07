@@ -61,6 +61,7 @@ M.TOOL = {
   Windsurf = "Windsurf",
   RenderMarkdown = "RenderMarkdown",
   Oil = "Oil",
+  Persistence = "Persistence",
   Scratch = "Scratch",
   ValeLS = "Vale-ls",
   ZenMode = "ZenMode",

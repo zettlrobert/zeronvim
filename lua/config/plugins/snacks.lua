@@ -92,6 +92,12 @@ return {
               { icon = " ", key = "g", desc = "Find text", action = ":lua Snacks.dashboard.pick('live_grep')" },
               { icon = " ", key = "r", desc = "Recent files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
               {
+                icon = "󰦛 ",
+                key = "s",
+                desc = "Restore session (cwd)",
+                action = ":lua require('persistence').load()",
+              },
+              {
                 icon = " ",
                 key = "c",
                 desc = "Config",

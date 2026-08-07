@@ -18,6 +18,7 @@ Namespaces at a glance:
 | `<leader>l` | LSP |
 | `<leader>m` | Markdown |
 | `<leader>n` | Notifications |
+| `<leader>P` | Persistence (session restore) |
 | `<leader>q` | Quickfix |
 | `<leader>r` | Review (planned) |
 | `<leader>R` | REST / HTTP (kulala) |
@@ -130,6 +131,16 @@ Native Neovim 0.11+ LSP defaults also available: `gd` (definition), `grn` (renam
 | Key | Action |
 |---|---|
 | `<leader>nh` | Show snacks.notifier history (equivalent of `:messages` for `vim.notify` calls) |
+
+## `<leader>P` — Persistence (session restore)
+
+| Key | Action |
+|---|---|
+| `<leader>Ps` | Restore session for current cwd |
+| `<leader>Pl` | Restore last session (any cwd) |
+| `<leader>Pd` | Stop autosaving this session |
+
+Sessions auto-save on `VimLeavePre`. Restore is manual — dashboard also exposes `s` as a quick action.
 
 ## `<leader>q` — Quickfix
 
