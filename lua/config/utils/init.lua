@@ -54,4 +54,13 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
+-- Briefly highlight yanked text so you can see what got copied. Uses the
+-- `IncSearch` highlight group by default and fades after ~150ms.
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("HighlightOnYank", { clear = true }),
+  callback = function()
+    vim.hl.on_yank()
+  end,
+})
+
 return M
