@@ -47,12 +47,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
----Rounded borders across every floating window that doesn't specify its own
----(LSP hover, signature help, diagnostic float, and any other unnamed float).
----Matches the aesthetic used by dap-ui and snacks components. Neovim 0.11+
----exposes this as a single global option — no need to wrap vim.lsp.buf.*
----functions.
-vim.o.winborder = "rounded"
+---Rounded diagnostic float. `winborder` is set globally in
+---`lua/config/options.lua` and covers LSP hover / signature help / any float
+---that doesn't request its own border; the diagnostic float has its own
+---`config({ float = ... })` API that needs to be set explicitly.
 vim.diagnostic.config({
   float = { border = "rounded" },
 })
