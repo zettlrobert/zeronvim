@@ -19,15 +19,22 @@ local M = {
   keymap_desc = require("config.utils.keymap_desc"),
 }
 
--- TODO: Move to autocommands
---- Setting filetype to sh for .env* files
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = ".env*",
-  callback = function()
-    vim.notify("Setting filetype to sh for .env* file", vim.log.levels.INFO, { title = "Filetype Set" })
-
-    vim.bo.filetype = "sh"
-  end,
+-- Filetype detection for `.env*` files → treat as shell. `vim.filetype.add`
+-- runs once at file open (not on every BufEnter) and doesn't fire notifications.
+-- Covers `.env` itself and any dot-suffixed variant like `.env.local`,
+-- `.env.production`, `.env.test`.
+--
+-- `filename` handles the exact `.env` case and beats Neovim's built-in
+-- `env` detection out of the box. `pattern` for the dot-suffixed variants
+-- needs an explicit `priority` bump to win over the built-in — the shell
+-- filetype gives useful highlighting for the `KEY=value` syntax.
+vim.filetype.add({
+  filename = {
+    [".env"] = "sh",
+  },
+  pattern = {
+    ["%.env%..*"] = { "sh", { priority = 100 } },
+  },
 })
 
 ---TODO: Use utility function
