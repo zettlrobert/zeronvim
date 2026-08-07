@@ -59,8 +59,13 @@ return {
         },
       },
 
-      -- Show signature
-      signature = { enabled = true },
+      -- Show signature. Blink's signature window doesn't inherit
+      -- `vim.o.winborder`; it has its own border config that defaults to
+      -- `"padded"`. Force `rounded` to match every other float in the config.
+      signature = {
+        enabled = true,
+        window = { border = "rounded" },
+      },
 
       completion = {
         -- Show documentation when selecting a completion item
