@@ -27,13 +27,23 @@ end
 
 ---Enable each server in isolation so a single broken lsp/<name>.lua
 ---(e.g. one that returns nil or throws) cannot prevent the rest from loading.
+---
+---Servers the user has explicitly disabled (persistent state in
+---~/.local/state/nvim/lsp-toggles.json) are skipped — vim.lsp.enable would
+---otherwise register FileType autocmds that keep re-attaching them on
+---`:e` / new buffers, defeating the toggle.
+local toggle = require("config.utils.toggle_lsp_server")
 for _, name in ipairs(M.servers_from_dir()) do
+  if toggle.is_disabled(name) then
+    goto continue
+  end
   local ok, err = pcall(vim.lsp.enable, name)
   if not ok then
     vim.schedule(function()
       vim.notify(("LSP enable failed for %q: %s"):format(name, err), vim.log.levels.WARN)
     end)
   end
+  ::continue::
 end
 
 ---Enable LSP Completion. Guard against a nil client — get_client_by_id can

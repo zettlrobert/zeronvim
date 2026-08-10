@@ -57,16 +57,35 @@ end
 
 load_state()
 
--- Re-apply the disabled state on every LSP attach. This is what makes the
--- toggle stick across :e, across newly-opened files, and across restarts
--- (state is loaded above before any LspAttach can fire).
+-- Re-apply the disabled state on every LSP attach AND on buffer read /
+-- filetype change. LspAttach alone wasn't enough for `:e` — some re-attach
+-- paths (buffer reload with a lingering client, FileType-driven reattach)
+-- didn't route through LspAttach reliably. BufReadPost + FileType provide a
+-- fallback: any disabled server that made it onto the buffer gets detached.
+local group = vim.api.nvim_create_augroup("ToggleLspServerPersistDisabled", { clear = true })
+
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("ToggleLspServerPersistDisabled", { clear = true }),
+  group = group,
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client and disabled[client.name] then
       vim.lsp.buf_detach_client(ev.buf, client.id)
     end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufReadPost", "FileType" }, {
+  group = group,
+  callback = function(ev)
+    -- Scheduled so late-attaching clients are visible in get_clients() by
+    -- the time we look — some plugins attach after the sync event handlers.
+    vim.schedule(function()
+      for _, client in ipairs(vim.lsp.get_clients({ bufnr = ev.buf })) do
+        if disabled[client.name] then
+          vim.lsp.buf_detach_client(ev.buf, client.id)
+        end
+      end
+    end)
   end,
 })
 
