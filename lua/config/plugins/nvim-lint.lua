@@ -24,7 +24,10 @@ return {
       bash = { "shellcheck" },
       dockerfile = { "hadolint" },
       yaml = { "yamllint" },
-      go = { "golangci-lint" },
+      -- nvim-lint's built-in linter name is `golangcilint` (no dash);
+      -- the Mason binary is `golangci-lint` (with dash). Two different names
+      -- for the same tool.
+      go = { "golangcilint" },
       python = { "ruff" },
       lua = { "selene" },
     }
