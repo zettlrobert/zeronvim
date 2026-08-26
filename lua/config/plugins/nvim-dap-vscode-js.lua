@@ -12,8 +12,13 @@ return {
   dependencies = { "mfussenegger/nvim-dap" },
   event = "VeryLazy",
   config = function()
-    local mason_registry = require("mason-registry")
-    local js_debug_path = mason_registry.get_package("js-debug-adapter"):get_install_path()
+    -- Compute path directly instead of via `mason-registry:get_install_path()`.
+    -- Mason 2.x's Package API changed and the method was returning nil on
+    -- some machines, causing the whole config to error and never register
+    -- `pwa-node` / `pwa-chrome` adapters (dap.adapters was missing them).
+    -- The install path is stable — Mason always puts packages under
+    -- `<stdpath('data')>/mason/packages/<name>`.
+    local js_debug_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
 
     require("dap-vscode-js").setup({
       debugger_path = js_debug_path,
