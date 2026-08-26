@@ -32,10 +32,6 @@ return {
         border = "thick",
         highlight = "CodeBlock",
       },
-      -- Disable LaTeX rendering: needs the `latex` treesitter parser plus
-      -- `utftex` / `latex2text` binaries none of which we install. Every
-      -- `:checkhealth render-markdown` complained about the missing pieces.
-      latex = { enabled = false },
     })
   end,
 }
