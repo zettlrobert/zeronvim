@@ -2,6 +2,12 @@
 return {
   {
     "https://github.com/folke/snacks.nvim",
+    -- Snacks recommends priority 1000+ so it loads early enough for the
+    -- highlight groups other plugins query to already exist. Without it,
+    -- `:checkhealth snacks` throws an internal `attempt to index local 'fg'
+    -- (a nil value)` when snacks color helpers run against un-defined hl
+    -- groups. Priority is a lazy.nvim scheduling knob, not runtime.
+    priority = 1000,
     config = function()
       local snacks = require("snacks")
       local kd = require("config.utils.keymap_desc")
