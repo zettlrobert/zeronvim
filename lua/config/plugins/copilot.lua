@@ -1,6 +1,10 @@
 ---https://github.com/zbirenbaum/copilot.lua
 return {
   "zbirenbaum/copilot.lua",
+  -- Pinned: newer HEAD regressed to `vim.lsp.stop_client` (deprecated in 0.12)
+  -- and prints a deprecation toast on every startup that disables copilot.
+  -- v3.0.1 uses the modern `client:stop()` method — no deprecation noise.
+  version = "v3.0.1",
   dependencies = {
     "giuxtaposition/blink-cmp-copilot",
   },
@@ -69,7 +73,9 @@ return {
       logger = {
         file = vim.fn.stdpath("log") .. "/copilot-lua.log",
         file_log_level = vim.log.levels.OFF,
-        print_log_level = vim.log.levels.WARN,
+        -- ERROR (not WARN) so copilot's own "copilot is disabled" WARN toast
+        -- doesn't fire every startup when our startup_disable_all runs.
+        print_log_level = vim.log.levels.ERROR,
         trace_lsp = "off", -- "off" | "messages" | "verbose"
         trace_lsp_progress = false,
         log_lsp_messages = false,
