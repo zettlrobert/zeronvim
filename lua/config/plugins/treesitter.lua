@@ -42,6 +42,7 @@ return {
       "terraform",
       "tsx",
       "typescript",
+      "typst",
       "vim",
       "vimdoc",
       "yaml",
