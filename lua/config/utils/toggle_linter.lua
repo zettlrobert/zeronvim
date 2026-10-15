@@ -10,7 +10,7 @@ in-memory only — reset on every nvim restart.
 Usage:
 
   local tl = require("config.utils.toggle_linter")
-  tl.toggle("markdownlint")
+  tl.toggle("markdownlint-cli2")
   tl.enable("shellcheck")
   tl.disable("hadolint")
 

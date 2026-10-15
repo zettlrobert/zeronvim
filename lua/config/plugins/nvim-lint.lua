@@ -19,7 +19,7 @@ return {
     local group = vim.api.nvim_create_augroup("NvimLintTrigger", { clear = true })
 
     lint.linters_by_ft = {
-      markdown = { "markdownlint" },
+      markdown = { "markdownlint-cli2" },
       sh = { "shellcheck" },
       bash = { "shellcheck" },
       dockerfile = { "hadolint" },
@@ -31,6 +31,24 @@ return {
       python = { "ruff" },
       lua = { "selene" },
     }
+
+    -- Lint like the git hooks (github:zettlrobert/githooks): use the profile's copy of each shared linter when
+    -- present, so the version matches the hooks; Mason's copy stays the fallback on machines without it.
+    -- Only these linters: a global Mason PATH = "append" would also swap LSPs and formatters (rust-analyzer,
+    -- ruff, tsgo) for older or broken copies on PATH.
+    local profile_bin = vim.fn.expand("~/.nix-profile/bin/")
+    for _, name in ipairs({ "shellcheck", "yamllint", "hadolint", "actionlint", "markdownlint-cli2" }) do
+      if vim.fn.executable(profile_bin .. name) == 1 then
+        lint.linters[name].cmd = profile_bin .. name
+      end
+    end
+
+    -- markdownlint-cli2 has no user config: start from the shared rules. A repo .markdownlint-cli2.yaml still
+    -- merges on top (found from the working directory). Without the profile it uses its defaults.
+    local md_rules = vim.fn.expand("~/.nix-profile/share/githooks/markdownlint.yaml")
+    if vim.fn.filereadable(md_rules) == 1 then
+      lint.linters["markdownlint-cli2"].args = { "--config", md_rules, "-" }
+    end
 
     -- Filetype-based trigger: runs whichever linters are configured for the
     -- ft, filtered through `toggle_linter` so per-linter disables stick.
@@ -59,7 +77,7 @@ return {
 
     -- <leader>t namespace (toggle)
     vim.keymap.set("n", "<leader>tm", function()
-      toggle.toggle("markdownlint")
+      toggle.toggle("markdownlint-cli2")
     end, { desc = kd.format(K.TOGGLE, T.Markdownlint, "linter") })
   end,
 }
