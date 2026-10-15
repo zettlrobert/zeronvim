@@ -10,7 +10,8 @@ local function patchColors()
   -- fall back to a sentinel so the notify doesn't crash on concatenation.
   local currentColorScheme = vim.g.colors_name or "<none>"
 
-  vim.notify_once("Current colorscheme = " .. currentColorScheme, vim.log.levels.INFO)
+  -- Vim Log the initial colorscheme
+  -- vim.notify_once("Current colorscheme = " .. currentColorScheme, vim.log.levels.TRACE)
 
   if currentColorScheme == "catppuccin-mocha" then
     -- Cursorline Configuration
