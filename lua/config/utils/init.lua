@@ -17,6 +17,7 @@ local M = {
   lsp_actions = require("config.utils.lsp_actions").lsp_actions,
   lsp_servers = require("config.utils.lsp_servers").lsp_servers,
   keymap_desc = require("config.utils.keymap_desc"),
+  lint_versions = require("config.utils.lint_versions"),
 }
 
 -- Filetype detection for `.env*` files → treat as shell. `vim.filetype.add`
