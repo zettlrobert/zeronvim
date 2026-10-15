@@ -175,7 +175,7 @@ Kulala installs `<leader>R{o,b,q,c,C,i,j,e,u,r,s,a,g,n,p,f,t,S,x,X}`. See `:help
 | `<leader>tl` | Toggle any LSP server (picker) |
 | `<leader>tz` | Toggle zen mode |
 | `<leader>tc` | Toggle color picker (ccc) |
-| `<leader>tm` | Toggle markdownlint (via `toggle_linter` util) |
+| `<leader>tm` | Toggle markdownlint-cli2 (via `toggle_linter` util) |
 | `<leader>tdv` | Toggle debug view (dap-view) |
 | `<leader>tdu` | Toggle debug ui (dap-ui) |
 
