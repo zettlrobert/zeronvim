@@ -18,7 +18,8 @@
 |---|---|
 | `lua` | stylua |
 | `javascript`, `javascriptreact`, `typescript`, `typescriptreact` | prettierd |
-| `json`, `jsonc`, `yaml`, `html`, `css`, `scss`, `markdown`, `mdx`, `astro`, `svelte`, `vue` | prettierd |
+| `json`, `jsonc`, `html`, `css`, `scss`, `mdx`, `astro`, `svelte`, `vue` | prettierd |
+| `markdown`, `yaml` | prettierd, only in a prettier project, with its settings; no LSP fallback |
 | anything else with an LSP that supports `textDocument/formatting` | LSP (via `lsp_format = "fallback"`) |
 
 So `eslint --fix` on save still works for JS/TS because vscode-eslint-language-server provides formatting — conform handles prettierd, LSP handles eslint.
@@ -40,6 +41,11 @@ formatters = {
 ```
 
 Note: these are passed on every invocation, ignoring any project `.prettierrc`. Drop them if you want per-project config to win.
+
+Markdown and YAML use `prettierd_project` instead: no flags, and `require_cwd = true`, so it runs only where it finds a
+`.prettierrc*`, a `prettier.config.*` or a `"prettier"` key in `package.json`. Elsewhere nothing rewrites them on save, and
+the git hooks' markdownlint `--fix` and yamllint apply. LSP fallback is off for both, because yamlls would otherwise
+reformat with its own prettier defaults.
 
 ## Add a new formatter
 
