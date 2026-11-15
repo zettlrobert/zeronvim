@@ -5,7 +5,7 @@ Centralized state, actions, and statusline component for the AI providers
 Notification format is normalized: "Copilot: enabled/disabled" and
 "Minuet: enabled/disabled".
 
-Every function is pcall-guarded so calls from the statusline / keymaps
+Every plugin call is pcall-guarded so calls from the statusline / keymaps
 don't break if a plugin failed to load.
 
 Lazy loading: both plugins are `lazy = true` and only load when a
@@ -16,28 +16,81 @@ vim.schedule; `with_plugin` queues the enable after that (vim.schedule is
 FIFO), so the enable wins.
 ]]
 
+local icons = require("config.assets.icons")
+
 local M = {}
 
--- lazy.nvim plugin names, used to check and trigger loading.
-local PLUGIN = {
-  copilot = "copilot.lua",
-  minuet = "minuet-ai.nvim",
+---@alias AiProvider "copilot"|"minuet"
+
+---@class AiProviderSpec
+---@field plugin string lazy.nvim plugin name, used to check and trigger loading
+---@field name string display name in notifications and the statusline
+---@field icon string statusline glyph (shared with blink and mini.icons)
+---@field hl string statusline highlight (same group mini.icons uses)
+---@field get fun(): boolean current state; only called once the plugin is loaded
+---@field set fun(on: boolean) switch the provider; only called once loaded
+
+-- Minuet's own :Minuet blink enable/disable/toggle emits "Minuet blink
+-- enabled/disabled", so its state field is set directly to keep the
+-- "Minuet: ..." notification format.
+local function minuet_blink()
+  local ok, minuet = pcall(require, "minuet")
+  return ok and minuet.config and minuet.config.blink or nil
+end
+
+---@type table<AiProvider, AiProviderSpec>
+local PROVIDERS = {
+  copilot = {
+    plugin = "copilot.lua",
+    name = "Copilot",
+    icon = icons.AI.Copilot,
+    hl = "MiniIconsGreen",
+    get = function()
+      local ok, client = pcall(require, "copilot.client")
+      return ok and not client.is_disabled()
+    end,
+    set = function(on)
+      local ok, cmd = pcall(require, "copilot.command")
+      if ok then
+        pcall(on and cmd.enable or cmd.disable)
+      end
+    end,
+  },
+  minuet = {
+    plugin = "minuet-ai.nvim",
+    name = "Minuet",
+    icon = icons.AI.Minuet,
+    hl = "MiniIconsYellow",
+    get = function()
+      local blink = minuet_blink()
+      return blink ~= nil and blink.enable_auto_complete == true
+    end,
+    set = function(on)
+      local blink = minuet_blink()
+      if blink then
+        blink.enable_auto_complete = on
+      end
+    end,
+  },
 }
 
----@param provider "copilot"|"minuet"
+-- Statusline order
+local ORDER = { "copilot", "minuet" }
+
+---@param provider AiProvider
 ---@return boolean
 function M.is_loaded(provider)
   local ok, lazy_config = pcall(require, "lazy.core.config")
   if not ok then
     return false
   end
-  local plugin = lazy_config.plugins[PLUGIN[provider]]
+  local plugin = lazy_config.plugins[PROVIDERS[provider].plugin]
   return plugin ~= nil and plugin._.loaded ~= nil
 end
 
 ---Run `fn` with the provider's plugin loaded. On first load, defer `fn` so it
 ---runs after the plugin's own scheduled default-off.
----@param provider "copilot"|"minuet"
+---@param provider AiProvider
 ---@param fn fun()
 local function with_plugin(provider, fn)
   if M.is_loaded(provider) then
@@ -45,179 +98,109 @@ local function with_plugin(provider, fn)
     return
   end
   local ok = pcall(function()
-    require("lazy").load({ plugins = { PLUGIN[provider] } })
+    require("lazy").load({ plugins = { PROVIDERS[provider].plugin } })
   end)
   if ok then
     vim.schedule(fn)
   end
 end
 
--- ---------------------------------------------------------------------------
--- State queries
--- ---------------------------------------------------------------------------
+local function refresh_statusline()
+  if package.loaded["lualine"] then
+    pcall(require("lualine").refresh)
+  end
+end
 
+---@param provider AiProvider
+---@return boolean
+function M.is_enabled(provider)
+  return M.is_loaded(provider) and PROVIDERS[provider].get()
+end
+
+---Switch a provider on or off. Enabling loads its plugin; disabling a provider
+---that never loaded is a no-op (never loaded means never enabled).
+---@param provider AiProvider
+---@param on boolean
+---@param opts? { silent?: boolean }
+function M.set(provider, on, opts)
+  opts = opts or {}
+  local spec = PROVIDERS[provider]
+  local function apply()
+    spec.set(on)
+    if not opts.silent then
+      vim.notify(spec.name .. ": " .. (on and "enabled" or "disabled"), vim.log.levels.INFO)
+    end
+    refresh_statusline()
+  end
+  if on then
+    with_plugin(provider, apply)
+  elseif M.is_loaded(provider) then
+    apply()
+  end
+end
+
+---@param provider AiProvider
+function M.toggle(provider)
+  M.set(provider, not M.is_enabled(provider))
+end
+
+-- Named wrappers used by keymaps, lualine, completion.lua and plugin configs.
 function M.is_copilot_enabled()
-  if not M.is_loaded("copilot") then
-    return false
-  end
-  local ok, client = pcall(require, "copilot.client")
-  if not ok then
-    return false
-  end
-  return not client.is_disabled()
+  return M.is_enabled("copilot")
 end
-
 function M.is_minuet_enabled()
-  if not M.is_loaded("minuet") then
-    return false
-  end
-  local ok, minuet = pcall(require, "minuet")
-  if not ok or not minuet.config or not minuet.config.blink then
-    return false
-  end
-  return minuet.config.blink.enable_auto_complete == true
+  return M.is_enabled("minuet")
 end
-
--- ---------------------------------------------------------------------------
--- Copilot actions
--- ---------------------------------------------------------------------------
-
 ---@param opts? { silent?: boolean }
 function M.enable_copilot(opts)
-  opts = opts or {}
-  with_plugin("copilot", function()
-    local ok, cmd = pcall(require, "copilot.command")
-    if not ok then
-      return
-    end
-    cmd.enable()
-    if not opts.silent then
-      vim.notify("Copilot: enabled", vim.log.levels.INFO)
-    end
-  end)
+  M.set("copilot", true, opts)
 end
-
 ---@param opts? { silent?: boolean }
 function M.disable_copilot(opts)
-  opts = opts or {}
-  if not M.is_loaded("copilot") then
-    return -- never loaded means never enabled
-  end
-  local ok, cmd = pcall(require, "copilot.command")
-  if not ok then
-    return
-  end
-  cmd.disable()
-  if not opts.silent then
-    vim.notify("Copilot: disabled", vim.log.levels.INFO)
-  end
+  M.set("copilot", false, opts)
 end
-
-function M.toggle_copilot()
-  if M.is_copilot_enabled() then
-    M.disable_copilot()
-  else
-    M.enable_copilot()
-  end
-end
-
--- ---------------------------------------------------------------------------
--- Minuet actions
--- ---------------------------------------------------------------------------
-
--- Minuet's own :Minuet blink enable/disable/toggle emits "Minuet blink
--- enabled/disabled" — we set the state field directly to bypass that and
--- emit our own "Minuet: ..." for branding consistency.
-
 ---@param opts? { silent?: boolean }
 function M.enable_minuet(opts)
-  opts = opts or {}
-  with_plugin("minuet", function()
-    local ok, minuet = pcall(require, "minuet")
-    if not ok or not minuet.config or not minuet.config.blink then
-      return
-    end
-    minuet.config.blink.enable_auto_complete = true
-    if not opts.silent then
-      vim.notify("Minuet: enabled", vim.log.levels.INFO)
-    end
-  end)
+  M.set("minuet", true, opts)
 end
-
 ---@param opts? { silent?: boolean }
 function M.disable_minuet(opts)
-  opts = opts or {}
-  if not M.is_loaded("minuet") then
-    return
-  end
-  local ok, minuet = pcall(require, "minuet")
-  if not ok or not minuet.config or not minuet.config.blink then
-    return
-  end
-  minuet.config.blink.enable_auto_complete = false
-  if not opts.silent then
-    vim.notify("Minuet: disabled", vim.log.levels.INFO)
-  end
+  M.set("minuet", false, opts)
 end
-
+function M.toggle_copilot()
+  M.toggle("copilot")
+end
 function M.toggle_minuet()
-  if M.is_minuet_enabled() then
-    M.disable_minuet()
-  else
-    M.enable_minuet()
-  end
+  M.toggle("minuet")
 end
-
--- ---------------------------------------------------------------------------
--- Combined
--- ---------------------------------------------------------------------------
 
 -- Master toggle: if any provider is on → disable all. If all off → enable
 -- all. One combined notification instead of one per provider.
 function M.toggle_all()
-  local any_on = M.is_copilot_enabled() or M.is_minuet_enabled()
-  if any_on then
-    M.disable_copilot({ silent = true })
-    M.disable_minuet({ silent = true })
-    vim.notify("AI: all disabled", vim.log.levels.INFO)
-  else
-    M.enable_copilot({ silent = true })
-    M.enable_minuet({ silent = true })
-    vim.notify("AI: all enabled", vim.log.levels.INFO)
+  local any_on = false
+  for _, provider in ipairs(ORDER) do
+    any_on = any_on or M.is_enabled(provider)
   end
+  for _, provider in ipairs(ORDER) do
+    M.set(provider, not any_on, { silent = true })
+  end
+  vim.notify("AI: all " .. (any_on and "disabled" or "enabled"), vim.log.levels.INFO)
 end
 
--- ---------------------------------------------------------------------------
--- Statusline
--- ---------------------------------------------------------------------------
-
--- Per-provider glyphs, each colored by the same hl group used elsewhere for
--- that provider (see lua/config/plugins/mini-icons.lua). Uses statusline
--- `%#HlGroup#...%*` markup so each icon carries its own color without needing
--- multiple lualine components.
---
--- Glyphs mirror the blink `kind_icons` in completion.lua and the mini-icons
--- `lsp` entries — one source of truth per provider.
-local GLYPHS = {
-  copilot = { icon = "", name = "Copilot", hl = "MiniIconsGreen" },
-  -- nf-fa-microchip; older codepoint than nf-md-brain, works on more fonts.
-  minuet = { icon = "", name = "Minuet", hl = "MiniIconsYellow" },
-}
-
+-- Statusline: each enabled provider's glyph, colored with its own hl group via
+-- `%#HlGroup#...%*` markup, so one lualine component carries several colors.
 function M.statusline()
-  local c = M.is_copilot_enabled()
-  local m = M.is_minuet_enabled()
-  if not c and not m then
+  local parts = {}
+  for _, provider in ipairs(ORDER) do
+    if M.is_enabled(provider) then
+      local spec = PROVIDERS[provider]
+      parts[#parts + 1] = string.format("%%#%s#%s %s%%*", spec.hl, spec.icon, spec.name)
+    end
+  end
+  if #parts == 0 then
     return "%#Comment#AI off%*"
   end
-  local parts = { "AI" }
-  if c then
-    table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.copilot.hl, GLYPHS.copilot.icon, GLYPHS.copilot.name))
-  end
-  if m then
-    table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.minuet.hl, GLYPHS.minuet.icon, GLYPHS.minuet.name))
-  end
-  return table.concat(parts, " ")
+  return "AI " .. table.concat(parts, " ")
 end
 
 return M

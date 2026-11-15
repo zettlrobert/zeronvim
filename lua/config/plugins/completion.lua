@@ -46,8 +46,8 @@ return {
       appearance = {
         nerd_font_variant = "mono",
         kind_icons = {
-          copilot = "",
-          minuet = "",
+          copilot = require("config.assets.icons").AI.Copilot,
+          minuet = require("config.assets.icons").AI.Minuet,
         },
       },
 

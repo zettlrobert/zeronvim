@@ -1,14 +1,13 @@
 --https://github.com/nvim-mini/mini.icons
+local icons = require("config.assets.icons")
 
 return {
   "nvim-mini/mini.icons",
   version = "*",
   opts = {
     lsp = {
-      copilot = { glyph = "", hl = "MiniIconsGreen" },
-      -- Font-awesome microchip (nf-fa-microchip). Universally supported
-      -- across older nerd-font versions; older codepoint than nf-md-brain.
-      minuet = { glyph = "", hl = "MiniIconsYellow" },
+      copilot = { glyph = icons.AI.Copilot, hl = "MiniIconsGreen" },
+      minuet = { glyph = icons.AI.Minuet, hl = "MiniIconsYellow" },
       ollama = { glyph = "", hl = "MiniIconsYellow" },
     },
   },
