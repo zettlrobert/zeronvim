@@ -11,15 +11,15 @@ category name for native vim things like Window/Motion/Line/Indent).
 
 Usage:
 
-  local kd = require("config.utils.keymap_desc")
-  local K, T = kd.KIND, kd.TOOL
+  local keymap_desc = require("config.utils.keymap_desc")
+  local KIND, TOOL = keymap_desc.KIND, keymap_desc.TOOL
 
   vim.keymap.set("n", "<leader>bb", ..., {
-    desc = kd.format(K.DEBUG, T.DAP, "toggle breakpoint"),
+    desc = keymap_desc.format(KIND.DEBUG, TOOL.DAP, "toggle breakpoint"),
   })
   -- → "[DEBUG] [DAP] toggle breakpoint"
 
-Both K.X and T.X return their string value. An unknown key errors
+Both KIND.X and TOOL.X return their string value. An unknown key errors
 immediately (see the metatables below) instead of producing broken desc strings.
 ]]
 
@@ -85,7 +85,7 @@ M.TOOL = {
   Source = "Source",
 }
 
--- Strict lookup: an unknown key (a typo like T.Telscope) raises an error
+-- Strict lookup: an unknown key (a typo like TOOL.Telscope) raises an error
 -- naming the key instead of rendering "[nil]" in the description.
 for name, tbl in pairs({ KIND = M.KIND, TOOL = M.TOOL }) do
   setmetatable(tbl, {

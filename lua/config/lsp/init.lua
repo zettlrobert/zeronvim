@@ -83,11 +83,11 @@ vim.diagnostic.config({
   float = { border = "rounded" },
 })
 
-local kd = require("config.utils.keymap_desc")
-local K, T = kd.KIND, kd.TOOL
+local keymap_desc = require("config.utils.keymap_desc")
+local KIND, TOOL = keymap_desc.KIND, keymap_desc.TOOL
 
 vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, {
-  desc = kd.format(K.EDIT, T.LSP, "code action (direct)"),
+  desc = keymap_desc.format(KIND.EDIT, TOOL.LSP, "code action (direct)"),
 })
 
 ---Diagnostics
@@ -103,10 +103,10 @@ vim.diagnostic.config({
 -- don't override them here. Our previous overrides called get_next/get_prev
 -- which return diagnostic data but don't move the cursor.
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {
-  desc = kd.format(K.SHOW, T.Diagnostic, "float at cursor"),
+  desc = keymap_desc.format(KIND.SHOW, TOOL.Diagnostic, "float at cursor"),
 })
 vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, {
-  desc = kd.format(K.EDIT, T.Diagnostic, "populate loclist"),
+  desc = keymap_desc.format(KIND.EDIT, TOOL.Diagnostic, "populate loclist"),
 })
 
 return M
