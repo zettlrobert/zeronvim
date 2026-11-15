@@ -90,26 +90,47 @@ keymap("n", "<leader>cA", utils.copy_path.copy_absolute_clipboard, {
   desc = keymap_desc.format(KIND.COPY, TOOL.Native, "absolute buffer path with CWD to system clipboard"),
 })
 
--- Quickfix List
-keymap("n", "<A-l>", "<cmd>cnext<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "next (alt binding)") })
+-- Quickfix and loclist navigation (vim-unimpaired style; <A-l>/<A-h> kept as
+-- alternatives). Same behavior as Neovim's built-in maps, spelled out for
+-- visibility: ]q/[q take a count (3]q jumps three entries), ]Q/[Q with a count
+-- jump to that entry number, and errors such as "No more items" echo without a
+-- stack trace.
+
+---Keymap callback that runs a list command with the typed count.
+---@param command string Ex command, e.g. "cnext"
+---@param count_as_index? boolean true: a count names an entry (:clast 3), no count runs it bare
+---@return fun()
+local function list_jump(command, count_as_index)
+  return function()
+    local count = vim.v.count1
+    if count_as_index then
+      count = vim.v.count ~= 0 and vim.v.count or nil
+    end
+    local ok, err = pcall(vim.api.nvim_cmd, { cmd = command, count = count }, {})
+    if not ok then
+      vim.api.nvim_echo({ { err:sub(#"Vim:" + 1) } }, true, { err = true })
+    end
+  end
+end
+
+keymap("n", "]q", list_jump("cnext"), { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "next") })
+keymap("n", "[q", list_jump("cprevious"), { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "prev") })
+keymap("n", "]Q", list_jump("clast", true), { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "last") })
+keymap("n", "[Q", list_jump("cfirst", true), { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "first") })
+
+keymap("n", "]l", list_jump("lnext"), { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "next") })
+keymap("n", "[l", list_jump("lprevious"), { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "prev") })
+keymap("n", "]L", list_jump("llast", true), { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "last") })
+keymap("n", "[L", list_jump("lfirst", true), { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "first") })
+
+-- Alternative quickfix next/prev on <A-l>/<A-h>
+keymap("n", "<A-l>", list_jump("cnext"), { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "next (alt binding)") })
 keymap(
   "n",
   "<A-h>",
-  "<cmd>cprevious<CR>",
+  list_jump("cprevious"),
   { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "prev (alt binding)") }
 )
-
--- Quickfix navigation (vim-unimpaired style; <A-l>/<A-h> kept as alternatives)
-keymap("n", "]q", "<cmd>cnext<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "next") })
-keymap("n", "[q", "<cmd>cprev<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "prev") })
-keymap("n", "]Q", "<cmd>clast<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "last") })
-keymap("n", "[Q", "<cmd>cfirst<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Quickfix, "first") })
-
--- Loclist navigation (mirrors quickfix)
-keymap("n", "]l", "<cmd>lnext<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "next") })
-keymap("n", "[l", "<cmd>lprev<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "prev") })
-keymap("n", "]L", "<cmd>llast<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "last") })
-keymap("n", "[L", "<cmd>lfirst<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL.Loclist, "first") })
 
 -- Quickfix toggle (copen / cclose)
 keymap("n", "<leader>qq", function()

@@ -16,12 +16,15 @@ Native quickfix is the spine: populate (`:grep`, `<leader>qd`, telescope `<C-q>`
 
 | Keymap | Command | Action |
 |---|---|---|
-| `]q` | `:cnext` | Next item |
-| `[q` | `:cprev` | Previous item |
-| `]Q` | `:clast` | Last item |
-| `[Q` | `:cfirst` | First item |
-| `<A-l>` | `:cnext` | Next (alternative) |
-| `<A-h>` | `:cprevious` | Previous (alternative) |
+| `]q` | `:cnext` | Next item; `3]q` skips three |
+| `[q` | `:cprevious` | Previous item; takes a count |
+| `]Q` | `:clast` | Last item; `5]Q` jumps to item 5 |
+| `[Q` | `:cfirst` | First item; takes an item number like `]Q` |
+| `<A-l>` | `:cnext` | Next (alternative); takes a count |
+| `<A-h>` | `:cprevious` | Previous (alternative); takes a count |
+
+The loclist maps (`]l`, `[l`, `]L`, `[L`) take counts the same way. Errors such as `E553: No more items` echo
+without a stack trace.
 
 ### View
 
