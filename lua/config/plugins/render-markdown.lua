@@ -10,36 +10,42 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "nvim-tree/nvim-web-devicons",
   },
-  config = function()
-    local markdown = require("render-markdown")
-
-    local code_block = "#222235"
-
-    vim.api.nvim_set_hl(0, "CodeBlock", { bg = code_block })
-
-    markdown.setup({
-      enabled = true,
-      render_modes = { "n" },
-      -- No LaTeX math in the notes, and the latex parser is not installed.
-      -- Typst can't stand in: its math syntax differs and render-markdown only
-      -- hands formulas to a LaTeX-to-unicode converter (utftex/latex2text).
-      latex = { enabled = false },
-      completions = {
-        lsp = {
-          enabled = true,
-        },
+  opts = {
+    enabled = true,
+    render_modes = { "n" },
+    -- No LaTeX math in the notes, and the latex parser is not installed.
+    -- Typst can't stand in: its math syntax differs and render-markdown only
+    -- hands formulas to a LaTeX-to-unicode converter (utftex/latex2text).
+    latex = { enabled = false },
+    completions = {
+      lsp = {
+        enabled = true,
       },
-      heading = {
-        sign = false,
-        width = "block",
-        min_width = 120,
-      },
-      code = {
-        position = "right",
-        width = "block",
-        border = "thick",
-        highlight = "CodeBlock",
-      },
+    },
+    heading = {
+      sign = false,
+      width = "block",
+      min_width = 120,
+    },
+    code = {
+      position = "right",
+      width = "block",
+      border = "thick",
+      highlight = "CodeBlock",
+    },
+  },
+  config = function(_, opts)
+    -- Background for fenced code blocks (`code.highlight` above). Set again on
+    -- every :colorscheme, which clears custom groups.
+    local function set_code_block_hl()
+      vim.api.nvim_set_hl(0, "CodeBlock", { bg = "#222235" })
+    end
+    set_code_block_hl()
+    vim.api.nvim_create_autocmd("ColorScheme", {
+      group = vim.api.nvim_create_augroup("config.render_markdown", { clear = true }),
+      callback = set_code_block_hl,
     })
+
+    require("render-markdown").setup(opts)
   end,
 }
