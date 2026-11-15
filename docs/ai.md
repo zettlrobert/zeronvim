@@ -2,151 +2,150 @@
 
 ## TLDR
 
-Three complementary AI tools, all toggleable and default-off:
+Three AI tools. Copilot and Minuet start disabled; toggle them with `<leader>a*`. The statusline shows which are on.
 
 | Tool | Kind | Backend | When to use |
 |---|---|---|---|
-| **Copilot** | Suggestions + completion | GitHub cloud | High-quality general completion (subscription) |
-| **Minuet** | Completion (blink source) | Local Ollama | Offline, privacy-preserving completion |
-| **CodeCompanion** | Chat + inline edit | Local Ollama adapters | Multi-turn work, explain, refactor |
-
-Both suggestion providers **start disabled** at nvim startup. Toggle on demand via `<leader>a*`. Statusline shows current state.
+| **Copilot** | Inline suggestions + blink source | GitHub cloud | General completion (subscription) |
+| **Minuet** | Blink completion source | Local Ollama (FIM) | Offline, private completion |
+| **CodeCompanion** | Chat + inline edit | Local OpenAI-compatible server (default) or Ollama | Multi-turn work, explain, refactor |
 
 ## Files
 
 | Path | Role |
 |---|---|
-| `lua/config/plugins/copilot.lua` | Copilot spec (lazy, loaded on first enable or `:Copilot`) + default-off on load |
-| `lua/config/plugins/minuet-ai.lua` | Minuet spec (lazy) + Ollama backend config + default-off on load |
-| `lua/config/plugins/completion.lua` | Blink source registration for all AI providers |
-| `lua/config/plugins/codecompanion.lua` | CodeCompanion chat + inline adapter config (Ollama-heavy) |
-| `lua/config/utils/ai_toggle.lua` | Centralized state, per-provider actions, combined toggle, statusline component |
-| `lua/config/plugins/lualine.lua` | Wires `ai_toggle.statusline()` into `lualine_x` |
-| `lua/config/utils/keymap_desc.lua` | `T.Copilot`, `T.Minuet`, `T.AI` enum entries |
-| `lua/config/keymaps.lua` | `<leader>ap`, `<leader>am`, `<leader>aA` toggles |
+| `lua/config/plugins/copilot.lua` | Copilot spec (lazy; loads on first enable or `:Copilot`), defaults itself off |
+| `lua/config/plugins/minuet-ai.lua` | Minuet spec (lazy), Ollama backend, defaults itself off |
+| `lua/config/plugins/completion.lua` | Blink sources; `copilot`/`minuet` are listed only while enabled |
+| `lua/config/plugins/codecompanion.lua` | CodeCompanion adapters, mcphub extension |
+| `lua/config/utils/ai_toggle.lua` | Provider table, enable/disable/toggle, `toggle_all()`, statusline component |
+| `lua/config/plugins/lualine.lua` | Puts `ai_toggle.statusline()` in `lualine_x` |
+| `lua/config/keymaps.lua` | `<leader>a*` keymaps |
 
 ## Keymaps
 
 | Key | Action |
 |---|---|
-| `<leader>ac` | Toggle CodeCompanion chat panel |
+| `<leader>ac` | Toggle CodeCompanion chat |
 | `<leader>aa` | CodeCompanion actions palette |
-| `<leader>ap` | Toggle Copilot on/off (global) |
-| `<leader>am` | Toggle Minuet (local AI completion) on/off |
-| `<leader>aA` | Combined toggle — enable all if any off, disable all if any on |
+| `<leader>ap` | Toggle Copilot (global) |
+| `<leader>am` | Toggle Minuet |
+| `<leader>aA` | Any provider on: disable all. All off: enable all |
+
+Copilot's own suggestion keys (insert mode): `<M-l>` accept, `<M-]>`/`<M-[>` next/previous, `<C-]>` dismiss.
+`auto_trigger` is off.
 
 ## Statusline
 
-Right side of lualine, before encoding. Format: `AI` prefix followed by `<icon> <name>` for each enabled provider, each in that provider's brand color.
+Right side of lualine, between the LSP client count and the encoding.
 
 | Display | Meaning |
 |---|---|
-| `AI  Copilot  Minuet` | Both active (colored via `MiniIconsGreen`/`Yellow`) |
-| `AI  Copilot` / etc. | One active |
-| `AI off` | All disabled (`Comment` hl — dim) |
+| `AI <icon> Copilot <icon> Minuet` | Both on, each in its own color (`MiniIconsGreen` / `MiniIconsYellow`) |
+| `AI <icon> Copilot` | One on |
+| `AI off` | All off (dim, `Comment` highlight) |
 
-Colors and glyphs are defined once in `ai_toggle.lua`'s `GLYPHS` table — the same values used by mini-icons (`lua/config/plugins/mini-icons.lua`) and blink's `kind_icons` (`completion.lua`). One source of truth per provider.
+Glyphs come from `icons.AI` in `lua/config/assets/icons.lua`. mini-icons and blink's `kind_icons` use the same glyphs
+and highlights.
 
 ## Startup defaults
 
-Both completion providers start **disabled**. Reasons:
+Copilot and Minuet start disabled:
 
-- No network chatter (Copilot) when nvim opens
-- No spinning up Ollama inference (Minuet) unless requested
-- Explicit opt-in — decide per session which providers you want
-- No surprise API costs on subscription plans
+- No network traffic to Copilot when nvim opens.
+- No Ollama inference until you ask for it.
+- You opt in per session.
 
-The plugins are lazy and only load on first enable. Each plugin's config still schedules `ai_toggle.disable_<provider>({silent = true})`, so any other load path (`:checkhealth`, a `require`) also starts off; `ai_toggle` queues its enable after that. To make a provider always-on, drop that block and give the spec `event = "InsertEnter"`.
+Both plugins are lazy and load on first enable. Each plugin's `config` also schedules
+`ai_toggle.disable_<provider>({ silent = true })`, so other load paths (`:checkhealth`, a `require`) start off too. `ai_toggle` queues its enable after
+that disable, so an explicit enable wins.
+
+To make a provider always on: remove that scheduled disable and give the spec `event = "InsertEnter"`.
 
 ## Setup requirements
 
 ### Copilot
 
-- `node` v20+ on PATH
-- Sign in once via `:Copilot auth`
-- GitHub Copilot subscription
+- `node` v20+ on `PATH`.
+- A GitHub Copilot subscription.
+- Sign in once: `:Copilot auth`.
 
-### Minuet (local AI completion via Ollama)
+The plugin is pinned to `^3.2`, which downloads the native `copilot-language-server` on first use. Older tags fail with
+"could not find server (bad install?)".
 
-**Prerequisites:**
+### Minuet (local completion via Ollama)
 
-- [Ollama](https://ollama.com/) installed and running on `:11434`
-- Model pulled: `ollama pull qwen2.5-coder:7b-base` (~4.7GB)
+1. Install [Ollama](https://ollama.com/) and run it on `:11434`.
+2. Pull the model: `ollama pull qwen2.5-coder:7b-base` (~4.7GB).
+3. Verify: `curl http://localhost:11434/api/tags | grep qwen2.5-coder`.
 
-**Important:** use the `-base` variant, not plain `:7b`. The default tag is the instruct (chat) variant, which handles FIM tokens loosely and produces completions that overlap or shift by one character. The base variant is FIM-native.
+Use the `-base` tag, not plain `:7b`. The default tag is the instruct (chat) variant. It handles FIM tokens loosely, so
+completions overlap or shift by one character.
 
-**Verify:**
+First use:
 
-```bash
-curl http://localhost:11434/api/tags | grep qwen2.5-coder
-```
+1. `<leader>am` (or `<leader>aA`).
+2. Type in a code file. Minuet items appear in the blink menu next to LSP and buffer items.
+3. `<C-Space>` opens the menu if it does not appear.
 
-**First use:**
-
-1. `<leader>am` (or `<leader>aA`) to enable
-2. Start typing in a code file — completions appear in the blink menu alongside LSP/buffer suggestions
-3. `<C-Space>` to force-open the completion menu if it doesn't auto-appear
-
-Backend config lives in `lua/config/plugins/minuet-ai.lua`. See "Switching Minuet backends" below.
+Requests are paced by `throttle = 1500` and `debounce = 400` (ms). The blink source times out after 3000 ms.
 
 ### CodeCompanion
 
-- Ollama running locally on `:11434` (default)
-- Adapters + models configured inline — see `lua/config/plugins/codecompanion.lua`
+- Default adapter for chat, inline, cmd and background: `qwen/qwen3.6-35b-a3b`, an `openai_compatible` adapter at
+  `http://localhost:1234`.
+- The other adapters (`gpt-oss`, `devstral`, `qwen3:32b` and more) extend `ollama` and need Ollama on `:11434`.
+- MCP tools come from mcphub (`:MCPHub`, `~/.config/mcphub/servers.json`).
 
 ## Switching Minuet backends
 
-Minuet currently points at local Ollama. To swap or add a backend (e.g., when Fenrir goes public), edit `lua/config/plugins/minuet-ai.lua`:
+Minuet points at local Ollama. To change the backend, edit `provider_options` in `lua/config/plugins/minuet-ai.lua`:
 
 ```lua
-require("minuet").setup({
-  provider = "openai_fim_compatible",  -- for FIM endpoints (Ollama, Fenrir if compat)
-  provider_options = {
-    openai_fim_compatible = {
-      api_key = "TERM",                 -- or a real env var if the backend needs auth
-      name = "Fenrir",                  -- display name in the completion menu
-      end_point = "http://fenrir.internal:8080/v1/completions",
-      model = "some-code-model",
-      stream = true,
-    },
+provider = "openai_fim_compatible",
+provider_options = {
+  openai_fim_compatible = {
+    api_key = "TERM", -- name of an env var; TERM always exists, so no auth leaks
+    name = "Fenrir", -- display name in the completion menu
+    end_point = "http://fenrir.internal:8080/v1/completions",
+    model = "some-code-model",
+    stream = true,
   },
-})
+},
 ```
 
-**When Fenrir gets an OpenAI-compatible endpoint:**
+When Fenrir gets an OpenAI-compatible endpoint:
 
-1. Update `end_point` + `model`
-2. Add fallback support by registering multiple `provider_options` — minuet allows switching at runtime via `:Minuet change_provider <name>`
-3. Consider adding `<leader>aB` picker via `Snacks.picker` for runtime backend selection
+1. Update `end_point` and `model`.
+2. Register several `provider_options` and switch at runtime with `:Minuet change_provider <name>`.
+3. Optionally add a `<leader>aB` backend picker.
 
-**Model recommendations for Ollama:**
+Ollama models for FIM:
 
-| Model | Size | Speed on GPU | Speed on CPU | Quality |
+| Model | Size | GPU | CPU | Quality |
 |---|---|---|---|---|
 | `qwen2.5-coder:1.5b` | ~1GB | Very fast | Fast | Good |
 | `qwen2.5-coder:3b` | ~2GB | Very fast | Fast | Better |
 | `qwen2.5-coder:7b-base` (default) | ~4.7GB | Fast | Usable | Best local FIM option |
-| `qwen2.5-coder:14b` | ~9GB | Medium | Slow | Best local, needs 12GB+ VRAM |
+| `qwen2.5-coder:14b` | ~9GB | Medium | Slow | Needs 12GB+ VRAM |
 | `codellama:7b` | ~3.8GB | Fast | Usable | Meta's coding model |
 | `deepseek-coder-v2:16b` | ~9GB | Medium | Slow | Strong on Python/JS |
 
 ## Adding a new AI provider
 
-Follow the Copilot / Minuet pattern:
-
-1. Add plugin file under `lua/config/plugins/<provider>.lua`.
-2. Extend `ai_toggle.lua`:
-   - `is_<provider>_enabled()`
-   - `enable_<provider>({silent})` / `disable_<provider>({silent})`
-   - `toggle_<provider>()`
-   - Add it to `PLUGIN` and update `toggle_all()` and `statusline()`.
-3. Add `T.<Provider>` to `lua/config/utils/keymap_desc.lua`.
-4. Wire a `<leader>a<key>` toggle in the plugin file.
-5. If it's a blink source, register in `completion.lua` (both `sources.default` and `providers`).
-6. Add rows to the Keymaps and Setup tables in this doc.
+1. Add the plugin spec at `lua/config/plugins/<provider>.lua`: `lazy = true`, and schedule
+   `ai_toggle.set("<provider>", false, { silent = true })` at the end of `config`.
+2. In `lua/config/utils/ai_toggle.lua`: add an entry to `PROVIDERS` (`plugin`, `name`, `icon`, `hl`, `get`, `set`), add
+   it to `ORDER`, and add the named wrappers (`toggle_<provider>` and so on) if keymaps need them.
+3. Add the glyph to `icons.AI` in `lua/config/assets/icons.lua`, and `<Provider>` to `TOOL` in
+   `lua/config/utils/keymap_desc.lua`.
+4. Add a `<leader>a<key>` keymap in `lua/config/keymaps.lua`.
+5. For a blink source: add it to `sources.providers` in `completion.lua`, and insert it in the `sources.default`
+   function behind an `is_enabled` check.
+6. Update the tables in this doc.
 
 ## Related
 
-- [completion.md](completion.md) — blink.cmp source stack; AI providers register here as sources.
-- [keymaps.md](keymaps.md) — full keymap reference.
-- `.plan/chore-nvim-improvements/PLAN.md` section 1 — Fenrir backend integration status.
+- [completion.md](completion.md) - blink.cmp sources; Copilot and Minuet register here.
+- [keymaps.md](keymaps.md) - full keymap reference.
+- `.plan/chore-nvim-improvements/PLAN.md` section 1 - Fenrir backend status.
