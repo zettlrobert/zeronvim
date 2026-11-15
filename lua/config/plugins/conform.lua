@@ -1,6 +1,7 @@
 -- https://github.com/stevearc/conform.nvim
 -- Replaces the deprecated none-ls (null-ls fork) for formatting.
--- LSP-based formatting (e.g. eslint --fix) still works via lsp_format = "fallback".
+-- lsp_format = "fallback" uses LSP formatting only for filetypes without a conform
+-- formatter, so JS/TS get prettierd and no ESLint fixes on save.
 
 return {
   "stevearc/conform.nvim",
