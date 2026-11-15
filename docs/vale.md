@@ -2,21 +2,23 @@
 
 ## TLDR
 
-Vale checks prose for grammar, style, and writing conventions. Wired as `vale-ls` LSP (see [lsp.md](lsp.md)) but **opt-in** — it never auto-attaches. Press `<leader>tv` to attach it to the current buffer when you want a prose pass; `<leader>tv` again to detach.
+Vale checks prose against style rules. It runs as the `vale-ls` LSP (see [lsp.md](lsp.md)) but never attaches on its
+own: `after/lsp/vale_ls.lua` sets `filetypes = {}`. Attach it to the current buffer when you want a prose pass:
+`<leader>tl`, then pick `vale_ls`.
 
-Reason for opt-in: vale-ls diagnostics caused display flicker in editor buffers (e.g. `COMMIT_EDITMSG`, markdown drafts). Manual attach keeps it out of the way unless you've decided to invoke it.
+Why on demand: vale-ls diagnostics caused display flicker in editor buffers (e.g. `COMMIT_EDITMSG`, markdown drafts).
 
 ## Files
 
 | Path | Role |
 |---|---|
-| `after/lsp/vale_ls.lua` | LSP config — registered with empty filetypes so it never auto-attaches; vale-ls reads `.vale.ini` from the project root when invoked |
-| `~/.vale.ini` or `<project>/.vale.ini` | Vale's own config — picks which style packages to apply, severity levels, exclusions |
-| `<project>/styles/` | Style package directory — populated by `vale sync` |
+| `after/lsp/vale_ls.lua` | LSP config: `cmd = { "vale-ls" }`, `root_markers = { ".vale.ini", "_vale.ini", ".git" }`, no filetypes |
+| `~/.vale.ini` or `<project>/.vale.ini` | Vale's config: style packages, alert level, exclusions |
+| `<project>/styles/` | Style packages, filled by `vale sync` |
 
-## Setup (one-time per project)
+## Setup (once per project)
 
-Vale only emits diagnostics when it finds a `.vale.ini` in the project root or an ancestor. Minimal setup:
+Vale reports nothing without a `.vale.ini` in the project root or an ancestor. Minimal config:
 
 ```ini
 # .vale.ini
@@ -30,67 +32,80 @@ Packages = Google, write-good
 BasedOnStyles = Vale, Google, write-good
 ```
 
-Then download the rule packages:
+Download the packages:
 
 ```bash
 vale sync
 ```
 
-This populates `styles/` with `Google/`, `write-good/`, etc. — git-ignore that directory.
+This fills `styles/` with `Google/`, `write-good/` and so on. Git-ignore that directory.
 
 ## Common style packages
 
 | Package | Focus | Notes |
 |---|---|---|
-| `Vale` | Built-in core checks (spelling, repetition) | Always on by default |
-| `Google` | [Google developer docs style guide](https://developers.google.com/style) | Strict, opinionated. Common noise: `Google.Acronyms`, `Google.EmDash`, `Google.WordList` |
-| `Microsoft` | [Microsoft Writing Style Guide](https://learn.microsoft.com/style-guide/) | Similar to Google, slightly looser |
-| `write-good` | Common writing weaknesses (passive voice, wordiness) | Less prescriptive |
-| `proselint` | [proselint](https://github.com/amperser/proselint) rules — clichés, jargon | Curated, opinionated |
-| `alex` | Inclusive language checks | Flags potentially insensitive wording |
+| `Vale` | Built-in core checks (spelling, repetition) | On by default |
+| `Google` | [Google developer docs style guide](https://developers.google.com/style) | Strict. Common noise: `Google.Acronyms`, `Google.EmDash`, `Google.WordList` |
+| `Microsoft` | [Microsoft Writing Style Guide](https://learn.microsoft.com/style-guide/) | Like Google, slightly looser |
+| `write-good` | Passive voice, wordiness | Less prescriptive |
+| `proselint` | [proselint](https://github.com/amperser/proselint) rules: clichés, jargon | Opinionated |
+| `alex` | Inclusive language | Flags possibly insensitive wording |
 
 ## Tuning noisy rules
 
-Vale flags everything matched by the active rules. When `Google.Acronyms` complains every time you write `LSP` or `Google.EmDash` flags every `—`, you have three options ranked by scope:
-
 | Scope | How |
 |---|---|
-| **Per-line** | Append `<!-- vale Google.EmDash = NO -->` before, `<!-- vale Google.EmDash = YES -->` after — works in markdown |
-| **Per-file** | Add the comment at the top of the file |
-| **Per-project** | In `.vale.ini`, set `Google.EmDash = NO` under the `[*.md]` section |
+| **Block** | `<!-- vale Google.EmDash = NO -->` before, `<!-- vale Google.EmDash = YES -->` after (markdown) |
+| **File** | The `= NO` comment at the top of the file |
+| **Project** | `Google.EmDash = NO` under `[*.md]` in `.vale.ini` |
 
-Since vale-ls is opt-in (manual attach via `<leader>tv`), the everyday "just turn it off" escape hatch is to not attach it in the first place. Only attach when you want a deliberate prose pass.
+Since vale-ls is on demand, the simplest escape hatch is to leave it detached.
 
-## Toggle keymap
+## Toggle keymaps
 
-| Keymap | Action |
+| Key | Action |
 |---|---|
-| `<leader>tv` | Attach vale-ls to the current buffer (or detach if already attached) |
-| `<leader>tl` | Generic LSP picker — pick any server to toggle, including vale-ls |
+| `<leader>tl` | LSP picker over every server in `after/lsp/` |
+| `<leader>tv` | Flip vale_ls's persisted on/off state |
 
-Implementation: `toggle_lsp_server(name)` in `lua/config/utils/lsp_toggle.lua`, exposed as `require("config.utils").toggle_lsp_server`. Generic — bind it for other noisy LSPs too:
+Picker states and what selecting does:
+
+| Marker | State | Selecting it |
+|---|---|---|
+| `○` | not attached | Attach to this buffer only |
+| `●` | attached | Turn off everywhere, persisted |
+| `✕` | disabled (persisted) | Turn on everywhere and attach here |
+
+Persisted state lives in `~/.local/state/nvim/lsp-toggles.json` and survives restarts.
+
+`<leader>tv` calls `toggle_lsp_server("vale_ls")` from `lua/config/utils/lsp_toggle.lua`. It flips the persisted state,
+not the attachment. vale_ls starts "on" (enabled, but with no filetypes), so the first press disables it and nothing
+visible changes. The second press enables it and attaches to the current buffer. Prefer the picker for a one-off pass.
+
+The helper works for any server. To bind one for another noisy LSP:
 
 ```lua
 vim.keymap.set("n", "<leader>te", function()
   require("config.utils").toggle_lsp_server("eslint")
-end, { desc = "Toggle eslint in current buffer" })
+end, { desc = keymap_desc.format(KIND.TOGGLE, TOOL.LSP, "eslint") })
 ```
 
 ## Suggested workflow
 
-1. Configure `Google` + `write-good` in `.vale.ini` at the user/project level — they're what fires when you do invoke vale.
-2. Silence the few rules that consistently produce noise via `.vale.ini` overrides (project-wide is best — keeps the team aligned).
-3. Draft normally with vale detached (default). When ready to polish, `<leader>tv` to attach for a prose pass. `<leader>tv` again when done.
+1. Configure `Google` + `write-good` in `.vale.ini` at user or project level.
+2. Silence consistently noisy rules in `.vale.ini`. Project-wide keeps a team aligned.
+3. Draft with vale detached. To polish: `<leader>tl`, pick `vale_ls`. To finish: pick it again (this turns it off and
+   persists that).
 
 ## Related
 
-- [lsp.md](lsp.md) — vale-ls follows the standard `after/lsp/<name>.lua` pattern.
-- [linting.md](linting.md) — broader LSP-first linting overview.
-- [nvim-lists.md](nvim-lists.md) — vale diagnostics flow into the loclist via `<space>lq` and the quickfix via `<leader>qd`.
+- [lsp.md](lsp.md) - vale-ls follows the standard `after/lsp/<name>.lua` pattern.
+- [linting.md](linting.md) - LSP-first linting overview.
+- [nvim-lists.md](nvim-lists.md) - send vale diagnostics to the loclist (`<leader>lq`) or quickfix (`<leader>qd`).
 
 ## References
 
-- Vale homepage: <https://vale.sh>
+- Vale: <https://vale.sh>
 - vale-ls: <https://github.com/errata-ai/vale-ls>
 - Style package registry: <https://vale.sh/explorer>
 - Config reference: <https://vale.sh/docs/topics/config>
