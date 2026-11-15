@@ -37,6 +37,7 @@ M.Tree = {
     EMPTY = "",
     EMPTY_OPEN = "",
     SYMLINK = "",
+    SYMLINK_OPEN = "",
   },
   Git = {
     unstaged = "✗",
