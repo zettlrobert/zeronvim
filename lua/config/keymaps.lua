@@ -163,6 +163,17 @@ keymap("n", "<leader>S", function()
   require("snacks").scratch.select()
 end, { desc = kd.format(K.PICK, T.Scratch, "select scratch buffer") })
 
+-- Persistence — <leader>P namespace (sessions)
+keymap("n", "<leader>Ps", function()
+  require("persistence").load()
+end, { desc = kd.format(K.OPEN, T.Persistence, "restore session for cwd") })
+keymap("n", "<leader>Pl", function()
+  require("persistence").load({ last = true })
+end, { desc = kd.format(K.OPEN, T.Persistence, "restore last session (any cwd)") })
+keymap("n", "<leader>Pd", function()
+  require("persistence").stop()
+end, { desc = kd.format(K.TOGGLE, T.Persistence, "stop autosave for this session") })
+
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.
 vim.keymap.set("n", "<leader>ts", function()
