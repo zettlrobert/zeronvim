@@ -15,12 +15,14 @@ Filenames in `after/lsp/` are the **single source of truth** for both `vim.lsp.e
 
 ## How to add a server
 
-1. Create `lsp/<server_name>.lua` (use the LSP server identifier from [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/tree/master/lsp), e.g. `gopls`, `vtsls`).
+1. Create `after/lsp/<server_name>.lua` (use the LSP server identifier from [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/tree/master/lsp), e.g. `gopls`, `vtsls`).
 2. Add a doc-link header and return the config table:
    ```lua
    -- foo-language-server
    -- https://github.com/foo/foo-ls
-   return { cmd = { "foo-ls" }, filetypes = { "foo" }, root_markers = { ".git" } }
+   return {} -- lspconfig supplies cmd/filetypes; only add keys you mean to override
+   -- for a server lspconfig does not know:
+   -- return { cmd = { "foo-ls" }, filetypes = { "foo" }, root_markers = { ".git" } }
    ```
 3. Restart nvim. Mason auto-installs if it knows the server; otherwise install the binary manually.
 
@@ -28,7 +30,7 @@ For minimal customization: `return {}` is enough — nvim-lspconfig ships sensib
 
 ## External-only servers
 
-Servers Mason can't install (e.g. `nil_ls` from nixpkgs, experimental `tsgo` from npm) still get an `after/lsp/*.lua` file. The Mason filter in `mason.lua` skips them automatically — install the binary yourself.
+Servers Mason can't install (e.g. `nil_ls` from nixpkgs, or a binary you build yourself) still get an `after/lsp/*.lua` file. The Mason filter in `mason.lua` skips them automatically — install the binary yourself.
 
 ## Why this works
 

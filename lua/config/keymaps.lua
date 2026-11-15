@@ -126,7 +126,7 @@ vim.keymap.set("n", "<leader>tv", function()
 end, { desc = kd.format(K.TOGGLE, T.ValeLS, "prose linting") })
 
 -- Generic LSP server picker — toggles attach state for any configured server.
--- Replaces per-server toggles (e.g. tsgo) with a discoverable menu.
+-- Replaces per-server toggles with a discoverable menu.
 vim.keymap.set("n", "<leader>tl", function()
   require("config.utils").lsp_servers()
 end, { desc = kd.format(K.PICK, T.LSP, "toggle server") })

@@ -8,7 +8,7 @@ showing each server's state for the current buffer. Selecting an item:
   ○ not attached         → attach it to this buffer only (attach_here)
 
 Useful for:
-  - Toggling experimental servers (tsgo) on-demand without per-server keymaps
+  - Toggling servers on-demand without per-server keymaps
   - Quickly silencing a noisy linter (vale_ls)
   - Seeing at a glance what's wired up vs what's attached right now
 

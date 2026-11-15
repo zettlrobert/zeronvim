@@ -10,7 +10,7 @@ vim.lsp.enable(name, on):
     vim.lsp.enable for saved names at startup, so it stays off after restart.
   - ON: vim.lsp.enable(name) attaches to every matching buffer now and later.
     If the current buffer still has no client (its filetype is not in the
-    server's filetypes, e.g. the on-demand vale_ls/tsgo), attach_here() starts
+    server's filetypes, e.g. the on-demand vale_ls), attach_here() starts
     it for this buffer only.
 
 Useful as an escape hatch for noisy linters (e.g. vale-ls).

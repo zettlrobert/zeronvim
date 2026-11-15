@@ -35,7 +35,7 @@ return {
     -- Lint like the git hooks (github:zettlrobert/githooks): use the profile's copy of each shared linter when
     -- present, so the version matches the hooks; Mason's copy stays the fallback on machines without it.
     -- Only these linters: a global Mason PATH = "append" would also swap LSPs and formatters (rust-analyzer,
-    -- ruff, tsgo) for older or broken copies on PATH.
+    -- ruff, tsc) for older or broken copies on PATH.
     -- :LintVersions compares both copies (lua/config/utils/lint_versions.lua).
     local lv = require("config.utils.lint_versions")
     for _, name in ipairs(lv.shared) do

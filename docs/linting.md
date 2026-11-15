@@ -22,7 +22,7 @@ Two-layer setup: **LSP servers** for tools that ship as language servers (eslint
 |---|---|---|
 | eslint | `after/lsp/eslint.lua` | JS/TS/JSX/TSX (also Svelte, Astro) |
 | vale-ls | `after/lsp/vale_ls.lua` | Prose in `markdown`, `text`, `tex`, `rst`, `mdx` |
-| vtsls | `after/lsp/vtsls.lua` | TypeScript type errors |
+| tsc | `after/lsp/tsc.lua` | TypeScript type errors (TypeScript 7; vtsls in Vue workspaces) |
 | tflint | `after/lsp/tflint.lua` | Terraform |
 | Treesitter parsers | Built-in | Syntax errors via highlight regions |
 
@@ -73,7 +73,7 @@ machines without the profile. Rules come from the same place:
 A repo's own config still wins for each tool.
 
 Only these five are swapped. A global Mason `PATH = "append"` would also swap LSPs and formatters (rust-analyzer, ruff,
-tsgo) for older or broken copies on `PATH`.
+tsc) for older or broken copies on `PATH`.
 
 **Version drift.** `:LintVersions` shows the profile's and Mason's version of each and which copy the editor uses. A
 few seconds after startup the same check runs in the background; when Mason has a newer version than the profile, a
