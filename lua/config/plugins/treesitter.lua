@@ -53,6 +53,7 @@ return {
     -- doesn't break buffer loading — mirrors the defensiveness pattern in
     -- lua/config/lsp/init.lua.
     vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("config.treesitter", { clear = true }),
       callback = function(args)
         local bufnr = args.buf
         local ok = pcall(vim.treesitter.start, bufnr)

@@ -3,6 +3,10 @@
 
 vim.opt_local.conceallevel = 2
 
+-- Spellcheck prose. `spelllang` is configured globally (en_us + de_de), so
+-- only `spell` needs turning on.
+vim.opt_local.spell = true
+
 -- Soft wrap at the window edge, break at word boundaries, preserve indent
 -- on wrapped lines, mark continuation lines with a subtle prefix.
 vim.opt_local.wrap = true

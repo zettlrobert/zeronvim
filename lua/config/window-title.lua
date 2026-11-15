@@ -91,7 +91,6 @@ vim.o.titlestring = generate_window_title()
 
 --- Sets the terminal window/tab title to the project name when Neovim is about to close
 vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
-  pattern = { "*" },
   callback = function()
     local project_name = get_project_name()
     local parent_folder = get_parent_folder() or ""

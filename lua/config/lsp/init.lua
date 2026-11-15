@@ -55,6 +55,7 @@ end
 ---Enable LSP Completion. Guard against a nil client — get_client_by_id can
 ---return nil if the client stopped between LspAttach firing and this callback.
 vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("config.lsp.attach", { clear = true }),
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client and client:supports_method("textDocument/completion") then

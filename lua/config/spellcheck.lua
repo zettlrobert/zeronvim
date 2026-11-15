@@ -78,12 +78,4 @@ end, {
   end,
 })
 
----Auto-enable spellcheck for markdown. `spelllang` is configured globally
----(en_us + de_de), so we just flip `spell` on — language detection covers both.
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.spell = true
-  end,
-  group = vim.api.nvim_create_augroup("SpellcheckAutocmd", { clear = true }),
-})
+-- Markdown turns spell on in after/ftplugin/markdown.lua.
