@@ -55,8 +55,14 @@ require("config.keymaps")
 -- Require keymaps for sourcing
 require("config.utils.source")
 
--- Require ALL custom utilities
-require("config.utils")
+-- Editor-wide autocmds (yank highlight, presentation markdown)
+require("config.autocmds")
+
+-- :LintVersions and its startup check
+require("config.utils.lint_versions")
+
+-- :PatchColors and the catppuccin highlight patches
+require("config.utils.patch_colorscheme")
 
 -- Require window-title
 require("config.window-title")
