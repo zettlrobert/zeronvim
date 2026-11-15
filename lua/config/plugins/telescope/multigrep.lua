@@ -1,4 +1,5 @@
 -- If a live grep is spaced with two spaces and filter file extension can be added
+-- Not a plugin spec: required on demand by the <leader>fg keymap in config/keymaps.lua.
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local themes = require("telescope.themes")
@@ -9,7 +10,7 @@ local M = {}
 
 ---Grep with multiple arguments
 ---@param opts table
-local live_multigrep = function(opts)
+M.live_multigrep = function(opts)
   opts = opts or {}
   opts.cwd = opts.cwd or vim.uv.cwd()
 
@@ -52,13 +53,6 @@ local live_multigrep = function(opts)
       sorter = require("telescope.sorters").empty(),
     })
     :find()
-end
-
-M.setup = function()
-  local kd = require("config.utils.keymap_desc")
-  vim.keymap.set("n", "<leader>fg", live_multigrep, {
-    desc = kd.format(kd.KIND.SEARCH, kd.TOOL.Telescope, "multigrep (double-space separates glob)"),
-  })
 end
 
 return M

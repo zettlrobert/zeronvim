@@ -115,6 +115,37 @@ vim.keymap.set("n", "<leader>ef", function()
   require("nvim-tree.api").tree.find_file({ open = true, focus = true })
 end, { desc = kd.format(K.OPEN, T.NvimTree, "reveal current file") })
 
+-- Telescope — <leader>f namespace (find). Each map requires telescope, which
+-- loads the lazy plugin on first use.
+local telescope_pick = function(picker, opts)
+  return function()
+    require("telescope.builtin")[picker](opts)
+  end
+end
+keymap("n", "<leader>fh", telescope_pick("help_tags"), { desc = kd.format(K.PICK, T.Telescope, "help tags") })
+keymap("n", "<leader>ff", telescope_pick("find_files"), { desc = kd.format(K.PICK, T.Telescope, "files") })
+keymap("n", "<leader>f.", telescope_pick("find_files", {
+  find_command = { "rg", "--hidden", "--files" },
+  theme = "ivy",
+}), { desc = kd.format(K.PICK, T.Telescope, "files (including hidden)") })
+keymap("n", "<leader>fb", telescope_pick("buffers"), { desc = kd.format(K.PICK, T.Telescope, "buffers") })
+keymap("n", "<leader>fl", telescope_pick("live_grep"), { desc = kd.format(K.SEARCH, T.Telescope, "live grep") })
+keymap("n", "<leader>fg", function()
+  require("config.plugins.telescope.multigrep").live_multigrep()
+end, { desc = kd.format(K.SEARCH, T.Telescope, "multigrep (double-space separates glob)") })
+-- LSP pickers (results can be sent to qflist via <C-q> inside the picker)
+keymap("n", "<leader>fr", telescope_pick("lsp_references"), { desc = kd.format(K.PICK, T.Telescope, "LSP references") })
+keymap("n", "<leader>fd", telescope_pick("lsp_definitions"), { desc = kd.format(K.PICK, T.Telescope, "LSP definitions") })
+keymap("n", "<leader>fD", telescope_pick("diagnostics"), { desc = kd.format(K.PICK, T.Telescope, "diagnostics") })
+-- Keymap picker (complements which-key: search by desc)
+keymap("n", "<leader>fk", telescope_pick("keymaps"), { desc = kd.format(K.PICK, T.Telescope, "keymaps") })
+keymap("n", "<leader>fn", function()
+  require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
+end, { desc = kd.format(K.PICK, T.Telescope, "nvim config files") })
+keymap("n", "<leader>fp", function()
+  require("telescope.builtin").find_files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
+end, { desc = kd.format(K.PICK, T.Telescope, "installed plugin files") })
+
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.
 vim.keymap.set("n", "<leader>ts", function()
