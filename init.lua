@@ -25,6 +25,9 @@ vim.opt.runtimepath:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Disable remote-plugin providers before any plugin can probe them.
+require("config.providers")
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
