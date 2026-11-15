@@ -54,6 +54,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client and client:supports_method("textDocument/completion") then
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
     end
+
+    -- Breadcrumbs (nvim-navic) and the symbol tree (nvim-navbuddy). The
+    -- require() loads each lazy plugin on the first symbol-capable attach.
+    -- navic keeps one client per buffer and warns on a second, so only the
+    -- first symbol server wins; navbuddy dedupes by itself.
+    if client and client:supports_method("textDocument/documentSymbol") then
+      if vim.b[ev.buf].navic_client_id == nil then
+        require("nvim-navic").attach(client, ev.buf)
+      end
+      require("nvim-navbuddy").attach(client, ev.buf)
+    end
   end,
 })
 

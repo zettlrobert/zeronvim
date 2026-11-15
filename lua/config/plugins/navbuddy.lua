@@ -1,4 +1,6 @@
 -- https://github.com/SmiteshP/nvim-navbuddy
+local kd = require("config.utils.keymap_desc")
+
 return {
   {
     "SmiteshP/nvim-navbuddy",
@@ -7,19 +9,26 @@ return {
       "MunifTanjim/nui.nvim",
       "numToStr/Comment.nvim",
     },
+    -- Attached from lua/config/lsp/init.lua like nvim-navic. With auto_attach
+    -- on, a late load walks existing clients through the deprecated
+    -- vim.lsp.get_buffers_by_client_id.
+    keys = {
+      -- <leader>s namespace (symbols) — room for future <leader>sd/sw
+      {
+        "<leader>ss",
+        function()
+          require("nvim-navbuddy").open()
+        end,
+        desc = kd.format(kd.KIND.OPEN, kd.TOOL.Navbuddy, "symbol tree"),
+      },
+    },
     config = function()
       local navbuddy = require("nvim-navbuddy")
-      local kd = require("config.utils.keymap_desc")
 
       navbuddy.setup({
         lsp = {
-          auto_attach = true,
+          auto_attach = false,
         },
-      })
-
-      -- <leader>s namespace (symbols) — room for future <leader>sd/sw
-      vim.keymap.set("n", "<leader>ss", navbuddy.open, {
-        desc = kd.format(kd.KIND.OPEN, kd.TOOL.Navbuddy, "symbol tree"),
       })
     end,
   },
