@@ -81,6 +81,27 @@ return {
 			cond = hide_in_width,
 		}
 
+		-- Winbar breadcrumbs (replaces breadcrumbs.nvim, whose winbar this
+		-- lualine winbar overwrote on every refresh). File icon + name, then the
+		-- nvim-navic symbol path. The navic component checks package.loaded so it
+		-- never loads navic itself: navic stays lazy until an LSP attaches (see
+		-- lua/config/lsp/init.lua). navic's bundled "navic" component would
+		-- require it on setup.
+		local not_qf = function()
+			return vim.bo.buftype ~= "quickfix"
+		end
+		local qf_heading = function()
+			return require("config.utils.qf_heading").compute()
+		end
+		local navic_location = {
+			function()
+				return require("nvim-navic").get_location()
+			end,
+			cond = function()
+				return package.loaded["nvim-navic"] ~= nil and require("nvim-navic").is_available()
+			end,
+		}
+
 		lualine.setup({
 			options = {
 				icons_enabled = true,
@@ -93,6 +114,18 @@ return {
 					-- uses winbar for the section title + controls (play/step
 					-- buttons); lualine's global winbar would overwrite them.
 					winbar = {
+						"",
+						"help",
+						"lazy",
+						"NvimTree",
+						"Trouble",
+						"trouble",
+						"oil",
+						"undotree",
+						"undotreeDiff",
+						"notify",
+						"neotest-summary",
+						"dap-terminal",
 						"http",
 						"dap-repl",
 						"dapui_breakpoints",
@@ -140,23 +173,22 @@ return {
 					},
 				},
 			},
-			-- Global winbar must be non-empty for lualine to wire up winbar
-			-- rendering at all (lualine.lua line 598 checks `next(winbar)`).
-			-- The compute function returns "" for non-qf windows, so this is
-			-- a no-op everywhere except quickfix/loclist windows where it
-			-- renders the heading. See lua/config/utils/qf_heading.lua.
+			-- Quickfix/loclist windows show their heading (config/utils/qf_heading.lua),
+			-- every other window shows the breadcrumbs. Filetypes listed in
+			-- options.disabled_filetypes.winbar get no winbar.
 			winbar = {
 				lualine_c = {
-					function()
-						return require("config.utils.qf_heading").compute()
-					end,
+					qf_heading,
+					{ "filetype", icon_only = true, cond = not_qf },
+					{ "filename", path = 0, cond = not_qf },
+					navic_location,
 				},
 			},
 			inactive_winbar = {
 				lualine_c = {
-					function()
-						return require("config.utils.qf_heading").compute()
-					end,
+					qf_heading,
+					{ "filetype", icon_only = true, cond = not_qf },
+					{ "filename", path = 0, cond = not_qf },
 				},
 			},
 			extensions = {},
