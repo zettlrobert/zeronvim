@@ -31,6 +31,16 @@ TODO: Checkout plugins
 --]]
 return {
   "olimorris/codecompanion.nvim",
+  -- Loaded on first use. The <leader>ac / <leader>aa keymaps in
+  -- config/keymaps.lua call these commands, so they trigger the load too.
+  cmd = {
+    "CodeCompanion",
+    "CodeCompanionChat",
+    "CodeCompanionActions",
+    "CodeCompanionCmd",
+    "CodeCompanionCLI",
+    "CodeCompanionCodeReview",
+  },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
