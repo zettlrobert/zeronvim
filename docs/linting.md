@@ -8,7 +8,7 @@ Two-layer setup: **LSP servers** for tools that ship as language servers (eslint
 
 | Path | Role |
 |---|---|
-| `lsp/*.lua` | LSP-based linters (see [lsp.md](lsp.md)) |
+| `after/lsp/*.lua` | LSP-based linters (see [lsp.md](lsp.md)) |
 | `lua/config/plugins/nvim-lint.lua` | nvim-lint plugin spec + filetype → linter map + autocmds |
 | `lua/config/lsp/tools.lua` | Mason install list for linter binaries (`M.linters`) |
 | `lua/config/utils/toggle_linter.lua` | Runtime per-linter enable/disable |
@@ -20,10 +20,10 @@ Two-layer setup: **LSP servers** for tools that ship as language servers (eslint
 
 | Tool | LSP file | What it lints |
 |---|---|---|
-| eslint | `lsp/eslint.lua` | JS/TS/JSX/TSX (also Svelte, Astro) |
-| vale-ls | `lsp/vale_ls.lua` | Prose in `markdown`, `text`, `tex`, `rst`, `mdx` |
-| vtsls | `lsp/vtsls.lua` | TypeScript type errors |
-| tflint | `lsp/tflint.lua` | Terraform |
+| eslint | `after/lsp/eslint.lua` | JS/TS/JSX/TSX (also Svelte, Astro) |
+| vale-ls | `after/lsp/vale_ls.lua` | Prose in `markdown`, `text`, `tex`, `rst`, `mdx` |
+| vtsls | `after/lsp/vtsls.lua` | TypeScript type errors |
+| tflint | `after/lsp/tflint.lua` | Terraform |
 | Treesitter parsers | Built-in | Syntax errors via highlight regions |
 
 ## Active nvim-lint linters
@@ -97,7 +97,7 @@ Configured in `lua/config/lsp/init.lua`:
 
 ## Add a linter that ships as an LSP
 
-Same as adding any LSP server — see [lsp.md](lsp.md). Just drop a file in `lsp/`.
+Same as adding any LSP server — see [lsp.md](lsp.md). Just drop a file in `after/lsp/`.
 
 ## Add a linter that does NOT ship as an LSP
 

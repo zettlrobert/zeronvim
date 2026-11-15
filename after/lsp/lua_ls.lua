@@ -3,19 +3,10 @@
 -- Settings: https://luals.github.io/wiki/settings/
 -- :h lsp-config
 
+-- cmd, filetypes and root_markers come from nvim-lspconfig (its markers are
+-- grouped by priority and include .emmyrc.json). Override: settings only.
+
 return {
-  cmd = { "lua-language-server" },
-  filetypes = { "lua" },
-  root_markers = {
-    ".luarc.json",
-    ".luarc.jsonc",
-    ".luacheckrc",
-    ".stylua.toml",
-    "stylua.toml",
-    "selene.toml",
-    "selene.yml",
-    ".git",
-  },
   settings = {
     Lua = {
       workspace = {

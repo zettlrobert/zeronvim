@@ -1,9 +1,15 @@
 ---[[
 ---Single source of truth for LSP wiring.
 ---
----The filenames in ~/.config/nvim/lsp/ drive both `vim.lsp.enable()` (here)
+---The filenames in ~/.config/nvim/after/lsp/ drive both `vim.lsp.enable()` (here)
 ---and mason-lspconfig's `ensure_installed` (see lua/config/plugins/mason.lua).
----To add a server: drop a file in lsp/. To remove one: delete the file.
+---To add a server: drop a file in after/lsp/. To remove one: delete the file.
+---
+---Why after/lsp/ and not lsp/: nvim-lspconfig ships the defaults (cmd,
+---filetypes, root_dir) as lsp/<name>.lua. Neovim merges every lsp/<name>.lua
+---on the runtimepath in rtp order, so plugin files placed after ours would
+---win. after/lsp/ is merged later, so our overrides take precedence
+---(:h lsp-config-merge).
 ---
 ---Formatters + debug adapters live in lua/config/lsp/tools.lua because they
 ---have no per-server config file convention; mason-tool-installer wants a list.
@@ -11,10 +17,10 @@
 
 local M = {}
 
----Scan ~/.config/nvim/lsp/ and return the list of server names with the
+---Scan ~/.config/nvim/after/lsp/ and return the list of server names with the
 ---.lua extension stripped. Used by this module and by mason.lua.
 function M.servers_from_dir()
-  local dir = vim.fn.stdpath("config") .. "/lsp"
+  local dir = vim.fs.joinpath(vim.fn.stdpath("config"), "after", "lsp")
   local names = {}
   for name, t in vim.fs.dir(dir) do
     if t == "file" and name:match("%.lua$") then
@@ -25,7 +31,7 @@ function M.servers_from_dir()
   return names
 end
 
----Enable each server in isolation so a single broken lsp/<name>.lua
+---Enable each server in isolation so a single broken after/lsp/<name>.lua
 ---(e.g. one that returns nil or throws) cannot prevent the rest from loading.
 ---
 ---Servers the user has explicitly disabled (persistent state in

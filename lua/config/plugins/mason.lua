@@ -4,7 +4,7 @@
 --
 -- LSP servers to install are derived from filenames in ~/.config/nvim/lsp/
 -- (filtered to what mason-lspconfig knows about — e.g. nil_ls and tsgo have
--- lsp/ configs but no Mason package, so they're skipped here).
+-- after/lsp/ configs but no Mason package, so they're skipped here).
 -- Formatters + debug adapters come from lua/config/lsp/tools.lua.
 
 return {
@@ -22,7 +22,7 @@ return {
       local tools = require("config.lsp.tools")
       local icons = require("config.assets.icons")
 
-      --- Intersect the lsp/ filenames with the servers mason-lspconfig knows
+      --- Intersect the after/lsp/ filenames with the servers mason-lspconfig knows
       --- about, so we don't ask Mason to install things it can't (nil_ls, tsgo).
       local function mason_installable_lsps()
         local all = lsp.servers_from_dir()
@@ -58,7 +58,7 @@ return {
       mason_lspconfig.setup({
         ensure_installed = mason_installable_lsps(),
         -- We call vim.lsp.enable() ourselves in config.lsp from the scanned
-        -- lsp/ filenames — disable mason-lspconfig's auto-enable to avoid
+        -- after/lsp/ filenames — disable mason-lspconfig's auto-enable to avoid
         -- double-enabling.
         automatic_enable = false,
       })

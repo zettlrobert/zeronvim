@@ -4,8 +4,11 @@
 -- Settings: https://github.com/tailwindlabs/tailwindcss-intellisense/blob/HEAD/packages/tailwindcss-language-server/README.md
 -- :h lsp-config
 
+-- cmd (prefers the project's node_modules/.bin) and root_dir come from
+-- nvim-lspconfig; its root_dir also finds Tailwind v4 projects, which have no
+-- tailwind.config file. Override: a narrower filetype list than upstream's.
+
 return {
-  cmd = { "tailwindcss-language-server", "--stdio" },
   filetypes = {
     "html",
     "css",
@@ -18,14 +21,5 @@ return {
     "astro",
     "vue",
     "mdx",
-  },
-  -- Only attaches when one of these config files is present in the project,
-  -- so safe to enable globally — non-tailwind projects will simply not attach
-  root_markers = {
-    "tailwind.config.js",
-    "tailwind.config.cjs",
-    "tailwind.config.mjs",
-    "tailwind.config.ts",
-    "postcss.config.js",
   },
 }

@@ -1,7 +1,7 @@
 -- https://github.com/mfussenegger/nvim-lint
 -- Runs external linters that aren't LSP servers and surfaces their output
 -- via vim.diagnostic. Complements conform.nvim (formatting) and the LSP
--- servers configured under lsp/.
+-- servers configured under after/lsp/.
 --
 -- Filetypes with LSP-based linting (eslint, vale_ls, tflint) are intentionally
 -- omitted here — no double diagnostics.

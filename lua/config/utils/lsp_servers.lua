@@ -1,7 +1,7 @@
 local M = {}
 
 --[[
-Picker over every configured LSP server (everything with a lsp/<name>.lua),
+Picker over every configured LSP server (everything with an after/lsp/<name>.lua),
 showing each server's state for the current buffer. Selecting an item:
   ✕ disabled (persisted) → turn it on everywhere (toggle_lsp_server.set)
   ● attached             → turn it off everywhere (persisted)

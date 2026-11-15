@@ -10,7 +10,7 @@ Reason for opt-in: vale-ls diagnostics caused display flicker in editor buffers 
 
 | Path | Role |
 |---|---|
-| `lsp/vale_ls.lua` | LSP config — registered with empty filetypes so it never auto-attaches; vale-ls reads `.vale.ini` from the project root when invoked |
+| `after/lsp/vale_ls.lua` | LSP config — registered with empty filetypes so it never auto-attaches; vale-ls reads `.vale.ini` from the project root when invoked |
 | `~/.vale.ini` or `<project>/.vale.ini` | Vale's own config — picks which style packages to apply, severity levels, exclusions |
 | `<project>/styles/` | Style package directory — populated by `vale sync` |
 
@@ -84,7 +84,7 @@ end, { desc = "Toggle eslint in current buffer" })
 
 ## Related
 
-- [lsp.md](lsp.md) — vale-ls follows the standard `lsp/<name>.lua` pattern.
+- [lsp.md](lsp.md) — vale-ls follows the standard `after/lsp/<name>.lua` pattern.
 - [linting.md](linting.md) — broader LSP-first linting overview.
 - [nvim-lists.md](nvim-lists.md) — vale diagnostics flow into the loclist via `<space>lq` and the quickfix via `<leader>qd`.
 

@@ -10,7 +10,7 @@ vim.filetype.add({
   extension = {
     -- OpenTofu files use Terraform syntax. Neovim has no built-in `.tofu`
     -- detection, and the terraform filetype gets the treesitter parser and
-    -- tofu_ls (see lsp/tofu_ls.lua).
+    -- tofu_ls (see after/lsp/tofu_ls.lua).
     tofu = "terraform",
   },
   -- `.env*` files → shell. `filename` handles the exact `.env` case and beats
