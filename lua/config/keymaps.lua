@@ -262,6 +262,21 @@ vim.keymap.set("n", "<leader>ts", function()
   require("config.utils").toggle_spell()
 end, { desc = kd.format(K.TOGGLE, T.Native, "spellcheck") })
 
+vim.keymap.set("n", "<leader>tm", function()
+  require("config.utils.toggle_linter").toggle("markdownlint-cli2")
+end, { desc = kd.format(K.TOGGLE, T.Markdownlint, "linter") })
+
+vim.keymap.set("n", "<leader>tc", "<cmd>CccPick<CR>", { desc = kd.format(K.OPEN, T.CccPick, "color picker") })
+
+vim.keymap.set("n", "<leader>tz", function()
+  require("zen-mode").toggle({
+    plugins = {
+      twilight = { enabled = false },
+      gitsigns = { enabled = true },
+    },
+  })
+end, { desc = kd.format(K.TOGGLE, T.ZenMode, "distraction-free mode") })
+
 vim.keymap.set("n", "<leader>tv", function()
   require("config.utils").toggle_lsp_server("vale_ls")
 end, { desc = kd.format(K.TOGGLE, T.ValeLS, "prose linting") })

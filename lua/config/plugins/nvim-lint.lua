@@ -14,8 +14,6 @@ return {
   config = function()
     local lint = require("lint")
     local toggle = require("config.utils.toggle_linter")
-    local kd = require("config.utils.keymap_desc")
-    local K, T = kd.KIND, kd.TOOL
     local group = vim.api.nvim_create_augroup("NvimLintTrigger", { clear = true })
 
     lint.linters_by_ft = {
@@ -75,10 +73,5 @@ return {
         end
       end,
     })
-
-    -- <leader>t namespace (toggle)
-    vim.keymap.set("n", "<leader>tm", function()
-      toggle.toggle("markdownlint-cli2")
-    end, { desc = kd.format(K.TOGGLE, T.Markdownlint, "linter") })
   end,
 }
