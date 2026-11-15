@@ -1,9 +1,27 @@
 --https://github.com/folke/zen-mode.nvim
+local kd = require("config.utils.keymap_desc")
+
 return {
   {
     "folke/zen-mode.nvim",
     dependencies = {
       "folke/twilight.nvim",
+    },
+    cmd = "ZenMode",
+    keys = {
+      -- <leader>t namespace (toggle)
+      {
+        "<leader>tz",
+        function()
+          require("zen-mode").toggle({
+            plugins = {
+              twilight = { enabled = false },
+              gitsigns = { enabled = true },
+            },
+          })
+        end,
+        desc = kd.format(kd.KIND.TOGGLE, kd.TOOL.ZenMode, "distraction-free mode"),
+      },
     },
     opts = {
       window = {
@@ -22,19 +40,5 @@ return {
         gitsigns = { enabled = false },
       },
     },
-    config = function()
-      local zen_mode = require("zen-mode")
-      local kd = require("config.utils.keymap_desc")
-
-      -- <leader>t namespace (toggle)
-      vim.keymap.set("n", "<leader>tz", function()
-        zen_mode.toggle({
-          plugins = {
-            twilight = { enabled = false },
-            gitsigns = { enabled = true },
-          },
-        })
-      end, { desc = kd.format(kd.KIND.TOGGLE, kd.TOOL.ZenMode, "distraction-free mode") })
-    end,
   },
 }
