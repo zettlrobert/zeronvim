@@ -2,29 +2,28 @@
 
 ## TLDR
 
-Four complementary AI tools, all toggleable and default-off:
+Three complementary AI tools, all toggleable and default-off:
 
 | Tool | Kind | Backend | When to use |
 |---|---|---|---|
 | **Copilot** | Suggestions + completion | GitHub cloud | High-quality general completion (subscription) |
-| **Windsurf / Codeium** | Suggestions + completion | Codeium cloud | Free-tier completion fallback |
 | **Minuet** | Completion (blink source) | Local Ollama | Offline, privacy-preserving completion |
 | **CodeCompanion** | Chat + inline edit | Local Ollama adapters | Multi-turn work, explain, refactor |
 
-All three suggestion providers **start disabled** at nvim startup. Toggle on demand via `<leader>a*`. Statusline shows current state.
+Both suggestion providers **start disabled** at nvim startup. Toggle on demand via `<leader>a*`. Statusline shows current state.
 
 ## Files
 
 | Path | Role |
 |---|---|
-| `lua/config/plugins/copilot.lua` | Copilot spec + `<leader>ap` toggle + startup disable |
-| `lua/config/plugins/windsurf.lua` | Windsurf/Codeium spec + `<leader>aw` toggle + startup disable |
-| `lua/config/plugins/minuet-ai.lua` | Minuet spec + Ollama backend config + `<leader>am` toggle + startup disable |
+| `lua/config/plugins/copilot.lua` | Copilot spec (lazy, loaded on first enable or `:Copilot`) + default-off on load |
+| `lua/config/plugins/minuet-ai.lua` | Minuet spec (lazy) + Ollama backend config + default-off on load |
 | `lua/config/plugins/completion.lua` | Blink source registration for all AI providers |
 | `lua/config/plugins/codecompanion.lua` | CodeCompanion chat + inline adapter config (Ollama-heavy) |
 | `lua/config/utils/ai_toggle.lua` | Centralized state, per-provider actions, combined toggle, statusline component |
 | `lua/config/plugins/lualine.lua` | Wires `ai_toggle.statusline()` into `lualine_x` |
-| `lua/config/utils/keymap_desc.lua` | `T.Copilot`, `T.Windsurf`, `T.Minuet`, `T.AI` enum entries |
+| `lua/config/utils/keymap_desc.lua` | `T.Copilot`, `T.Minuet`, `T.AI` enum entries |
+| `lua/config/keymaps.lua` | `<leader>ap`, `<leader>am`, `<leader>aA` toggles |
 
 ## Keymaps
 
@@ -33,7 +32,6 @@ All three suggestion providers **start disabled** at nvim startup. Toggle on dem
 | `<leader>ac` | Toggle CodeCompanion chat panel |
 | `<leader>aa` | CodeCompanion actions palette |
 | `<leader>ap` | Toggle Copilot on/off (global) |
-| `<leader>aw` | Toggle Windsurf on/off (global) |
 | `<leader>am` | Toggle Minuet (local AI completion) on/off |
 | `<leader>aA` | Combined toggle — enable all if any off, disable all if any on |
 
@@ -43,8 +41,7 @@ Right side of lualine, before encoding. Format: `AI` prefix followed by `<icon> 
 
 | Display | Meaning |
 |---|---|
-| `AI  Copilot  Windsurf  Minuet` | All three active (each colored via `MiniIconsGreen`/`Azure`/`Yellow`) |
-| `AI  Copilot  Windsurf` | Two active (subsets in any combination) |
+| `AI  Copilot  Minuet` | Both active (colored via `MiniIconsGreen`/`Yellow`) |
 | `AI  Copilot` / etc. | One active |
 | `AI off` | All disabled (`Comment` hl — dim) |
 
@@ -52,14 +49,14 @@ Colors and glyphs are defined once in `ai_toggle.lua`'s `GLYPHS` table — the s
 
 ## Startup defaults
 
-All three completion providers start **disabled**. Reasons:
+Both completion providers start **disabled**. Reasons:
 
-- No network chatter (Copilot / Windsurf) when nvim opens
+- No network chatter (Copilot) when nvim opens
 - No spinning up Ollama inference (Minuet) unless requested
 - Explicit opt-in — decide per session which providers you want
 - No surprise API costs on subscription plans
 
-Each plugin's config file calls `ai_toggle.disable_<provider>({silent = true})` via `vim.schedule` after setup. To restore always-on for one provider, remove that block from its plugin file. To disable one at startup and keep others on, invert the pattern.
+The plugins are lazy and only load on first enable. Each plugin's config still schedules `ai_toggle.disable_<provider>({silent = true})`, so any other load path (`:checkhealth`, a `require`) also starts off; `ai_toggle` queues its enable after that. To make a provider always-on, drop that block and give the spec `event = "InsertEnter"`.
 
 ## Setup requirements
 
@@ -68,11 +65,6 @@ Each plugin's config file calls `ai_toggle.disable_<provider>({silent = true})` 
 - `node` v20+ on PATH
 - Sign in once via `:Copilot auth`
 - GitHub Copilot subscription
-
-### Windsurf / Codeium
-
-- Free tier — no subscription
-- Authenticate via `:Codeium Auth` (opens browser once)
 
 ### Minuet (local AI completion via Ollama)
 
@@ -140,14 +132,14 @@ require("minuet").setup({
 
 ## Adding a new AI provider
 
-Follow the Copilot / Windsurf / Minuet pattern:
+Follow the Copilot / Minuet pattern:
 
 1. Add plugin file under `lua/config/plugins/<provider>.lua`.
 2. Extend `ai_toggle.lua`:
    - `is_<provider>_enabled()`
    - `enable_<provider>({silent})` / `disable_<provider>({silent})`
    - `toggle_<provider>()`
-   - Update `toggle_all()`, `startup_disable_all()`, and `statusline()`.
+   - Add it to `PLUGIN` and update `toggle_all()` and `statusline()`.
 3. Add `T.<Provider>` to `lua/config/utils/keymap_desc.lua`.
 4. Wire a `<leader>a<key>` toggle in the plugin file.
 5. If it's a blink source, register in `completion.lua` (both `sources.default` and `providers`).

@@ -8,8 +8,6 @@ return {
 
     return {
       lsp = {
-        codeium = { glyph = "", hl = "MiniIconsAzure" },
-        windsurf = { glyph = "", hl = "MiniIconsAzure" },
         copilot = { glyph = "", hl = "MiniIconsGreen" },
         -- Font-awesome microchip (nf-fa-microchip). Universally supported
         -- across older nerd-font versions; older codepoint than nf-md-brain.

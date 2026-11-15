@@ -53,7 +53,6 @@ return {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = "mono",
         kind_icons = {
-          codeium = "",
           copilot = "",
           minuet = "",
         },
@@ -108,9 +107,6 @@ return {
         default = function()
           local ai = require("config.utils.ai_toggle")
           local sources = { "lsp", "path", "snippets", "buffer", "omni" }
-          if ai.is_windsurf_enabled() then
-            table.insert(sources, "codeium")
-          end
           if ai.is_copilot_enabled() then
             table.insert(sources, "copilot")
           end
@@ -134,12 +130,6 @@ return {
             module = "render-markdown.integ.blink",
           },
 
-          codeium = {
-            -- Same name as cmp source
-            name = "codeium",
-            module = "codeium.blink",
-            async = true,
-          },
 
           copilot = {
             name = "copilot",

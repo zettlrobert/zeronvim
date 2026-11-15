@@ -1,16 +1,14 @@
 --[[
 Centralized state, actions, and statusline component for the AI providers
-(Copilot + Windsurf/Codeium).
+(Copilot + Minuet).
 
 Notification format is normalized: "Copilot: enabled/disabled" and
-"Windsurf: enabled/disabled" — bypassing codeium's internal "Codeium
-enabled" toast to keep the branding consistent with the plugin's public
-name.
+"Minuet: enabled/disabled".
 
 Every function is pcall-guarded so calls from the statusline / keymaps
 don't break if a plugin failed to load.
 
-Lazy loading: the three plugins are `lazy = true` and only load when a
+Lazy loading: both plugins are `lazy = true` and only load when a
 provider is first enabled. A provider whose plugin is not loaded counts as
 off, and the state queries never `require` it, so the statusline does not
 pull a plugin in. Each plugin's config still defaults itself off via
@@ -23,11 +21,10 @@ local M = {}
 -- lazy.nvim plugin names, used to check and trigger loading.
 local PLUGIN = {
   copilot = "copilot.lua",
-  windsurf = "windsurf.nvim",
   minuet = "minuet-ai.nvim",
 }
 
----@param provider "copilot"|"windsurf"|"minuet"
+---@param provider "copilot"|"minuet"
 ---@return boolean
 function M.is_loaded(provider)
   local ok, lazy_config = pcall(require, "lazy.core.config")
@@ -40,7 +37,7 @@ end
 
 ---Run `fn` with the provider's plugin loaded. On first load, defer `fn` so it
 ---runs after the plugin's own scheduled default-off.
----@param provider "copilot"|"windsurf"|"minuet"
+---@param provider "copilot"|"minuet"
 ---@param fn fun()
 local function with_plugin(provider, fn)
   if M.is_loaded(provider) then
@@ -68,17 +65,6 @@ function M.is_copilot_enabled()
     return false
   end
   return not client.is_disabled()
-end
-
-function M.is_windsurf_enabled()
-  if not M.is_loaded("windsurf") then
-    return false
-  end
-  local ok, codeium = pcall(require, "codeium")
-  if not ok then
-    return false
-  end
-  return codeium.s ~= nil and codeium.s.enabled == true
 end
 
 function M.is_minuet_enabled()
@@ -136,53 +122,6 @@ function M.toggle_copilot()
 end
 
 -- ---------------------------------------------------------------------------
--- Windsurf actions
--- ---------------------------------------------------------------------------
-
--- Set enabled directly on the server table instead of calling
--- codeium.enable/disable — those emit their own "Codeium enabled" notify
--- which conflicts with the "Windsurf: enabled" branding.
-
----@param opts? { silent?: boolean }
-function M.enable_windsurf(opts)
-  opts = opts or {}
-  with_plugin("windsurf", function()
-    local ok, codeium = pcall(require, "codeium")
-    if not ok or not codeium.s then
-      return
-    end
-    codeium.s.enabled = true
-    if not opts.silent then
-      vim.notify("Windsurf: enabled", vim.log.levels.INFO)
-    end
-  end)
-end
-
----@param opts? { silent?: boolean }
-function M.disable_windsurf(opts)
-  opts = opts or {}
-  if not M.is_loaded("windsurf") then
-    return
-  end
-  local ok, codeium = pcall(require, "codeium")
-  if not ok or not codeium.s then
-    return
-  end
-  codeium.s.enabled = false
-  if not opts.silent then
-    vim.notify("Windsurf: disabled", vim.log.levels.INFO)
-  end
-end
-
-function M.toggle_windsurf()
-  if M.is_windsurf_enabled() then
-    M.disable_windsurf()
-  else
-    M.enable_windsurf()
-  end
-end
-
--- ---------------------------------------------------------------------------
 -- Minuet actions
 -- ---------------------------------------------------------------------------
 
@@ -236,15 +175,13 @@ end
 -- Master toggle: if any provider is on → disable all. If all off → enable
 -- all. One combined notification instead of one per provider.
 function M.toggle_all()
-  local any_on = M.is_copilot_enabled() or M.is_windsurf_enabled() or M.is_minuet_enabled()
+  local any_on = M.is_copilot_enabled() or M.is_minuet_enabled()
   if any_on then
     M.disable_copilot({ silent = true })
-    M.disable_windsurf({ silent = true })
     M.disable_minuet({ silent = true })
     vim.notify("AI: all disabled", vim.log.levels.INFO)
   else
     M.enable_copilot({ silent = true })
-    M.enable_windsurf({ silent = true })
     M.enable_minuet({ silent = true })
     vim.notify("AI: all enabled", vim.log.levels.INFO)
   end
@@ -263,24 +200,19 @@ end
 -- `lsp` entries — one source of truth per provider.
 local GLYPHS = {
   copilot = { icon = "", name = "Copilot", hl = "MiniIconsGreen" },
-  windsurf = { icon = "", name = "Windsurf", hl = "MiniIconsAzure" },
   -- nf-fa-microchip; older codepoint than nf-md-brain, works on more fonts.
   minuet = { icon = "", name = "Minuet", hl = "MiniIconsYellow" },
 }
 
 function M.statusline()
   local c = M.is_copilot_enabled()
-  local w = M.is_windsurf_enabled()
   local m = M.is_minuet_enabled()
-  if not c and not w and not m then
+  if not c and not m then
     return "%#Comment#AI off%*"
   end
   local parts = { "AI" }
   if c then
     table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.copilot.hl, GLYPHS.copilot.icon, GLYPHS.copilot.name))
-  end
-  if w then
-    table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.windsurf.hl, GLYPHS.windsurf.icon, GLYPHS.windsurf.name))
   end
   if m then
     table.insert(parts, string.format("%%#%s#%s %s%%*", GLYPHS.minuet.hl, GLYPHS.minuet.icon, GLYPHS.minuet.name))

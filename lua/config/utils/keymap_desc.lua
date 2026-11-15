@@ -58,7 +58,6 @@ M.TOOL = {
   CodeCompanion = "CodeCompanion",
   Copilot = "Copilot",
   Minuet = "Minuet",
-  Windsurf = "Windsurf",
   RenderMarkdown = "RenderMarkdown",
   Oil = "Oil",
   Persistence = "Persistence",

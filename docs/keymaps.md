@@ -8,7 +8,7 @@ Namespaces at a glance:
 
 | Prefix | Domain |
 |---|---|
-| `<leader>a` | AI (CodeCompanion + Copilot/Windsurf/Minuet toggles) |
+| `<leader>a` | AI (CodeCompanion + Copilot/Minuet toggles) |
 | `<leader>b` | Debug (DAP runtime ops) |
 | `<leader>c` | Copy (buffer paths) |
 | `<leader>d` | Diagnostic float (single-key) |
@@ -34,7 +34,6 @@ Namespaces at a glance:
 | `<leader>ac` | CodeCompanion chat toggle |
 | `<leader>aa` | CodeCompanion actions palette |
 | `<leader>ap` | Toggle Copilot (global on/off) |
-| `<leader>aw` | Toggle Windsurf / Codeium (global on/off) |
 | `<leader>am` | Toggle Minuet local AI completion |
 | `<leader>aA` | Toggle all AI providers at once |
 
