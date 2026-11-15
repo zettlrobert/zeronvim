@@ -28,6 +28,9 @@ vim.g.maplocalleader = "\\"
 -- Disable remote-plugin providers before any plugin can probe them.
 require("config.providers")
 
+-- Filetype detection additions (.tofu, .env*). Must run before files open.
+require("config.filetypes")
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
