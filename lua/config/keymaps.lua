@@ -26,8 +26,14 @@ keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = kd.format(K.EDI
 keymap("v", "<", "<gv", { desc = kd.format(K.INDENT, T.Native, "decrease (preserves selection)") })
 keymap("v", ">", ">gv", { desc = kd.format(K.INDENT, T.Native, "increase (preserves selection)") })
 
--- Formatting — <leader>l namespace (lsp)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", {
+-- Formatting — <leader>l namespace (lsp). Same formatters as format-on-save
+-- (lua/config/plugins/conform.lua): conform first, LSP only as a fallback, and
+-- no LSP fallback for markdown and yaml.
+keymap("n", "<leader>lf", function()
+  local ft = vim.bo.filetype
+  local lsp_format = (ft == "markdown" or ft == "yaml") and "never" or "fallback"
+  require("conform").format({ async = true, lsp_format = lsp_format })
+end, {
   desc = kd.format(K.RUN, T.LSP, "format current buffer"),
 })
 
