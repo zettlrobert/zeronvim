@@ -1,6 +1,9 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
+    -- Loads with the first real file buffer. The <leader>g keymaps below are
+    -- defined at that point, which is the first time they have anything to do.
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     config = function()
       local gitsigns = require("gitsigns")
       local kd = require("config.utils.keymap_desc")
