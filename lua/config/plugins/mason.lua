@@ -1,5 +1,5 @@
--- https://github.com/williamboman/mason.nvim
--- https://github.com/williamboman/mason-lspconfig.nvim
+-- https://github.com/mason-org/mason.nvim
+-- https://github.com/mason-org/mason-lspconfig.nvim
 -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
 --
 -- LSP servers to install are derived from filenames in ~/.config/nvim/lsp/
@@ -9,9 +9,9 @@
 
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     dependencies = {
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()

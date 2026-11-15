@@ -1,7 +1,7 @@
 -- https://github.com/folke/snacks.nvim
 return {
   {
-    "https://github.com/folke/snacks.nvim",
+    "folke/snacks.nvim",
     -- Snacks recommends priority 1000+ so it loads early enough for the
     -- highlight groups other plugins query to already exist. Without it,
     -- `:checkhealth snacks` throws an internal `attempt to index local 'fg'
