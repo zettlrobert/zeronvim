@@ -19,6 +19,7 @@ local VUE_DEPS = { "vue", "nuxt" }
 ---@type table<string, boolean> package.json path → lists vue/nuxt
 local cache = {}
 
+---Whether a package.json lists vue or nuxt as a dependency. Cached per path.
 ---@param path string
 ---@return boolean
 local function package_json_has_vue(path)

@@ -5,6 +5,7 @@ return {
   config = function()
     local lualine = require("lualine")
 
+    ---Show a component only in windows wider than 80 columns.
     local hide_in_width = function()
       return vim.fn.winwidth(0) > 80
     end
@@ -87,9 +88,11 @@ return {
     -- never loads navic itself: navic stays lazy until an LSP attaches (see
     -- lua/config/lsp/init.lua). navic's bundled "navic" component would
     -- require it on setup.
+    ---Whether the current buffer is not a quickfix or location list.
     local not_qf = function()
       return vim.bo.buftype ~= "quickfix"
     end
+    ---Quickfix heading; required on use so the module stays unloaded elsewhere.
     local qf_heading = function()
       return require("config.utils.qf_heading").compute()
     end

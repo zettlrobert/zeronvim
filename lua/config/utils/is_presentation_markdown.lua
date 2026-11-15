@@ -1,10 +1,8 @@
 local M = {}
 
---[[
-Returns true if the buffer is a presentation markdown file (*.presentation.md).
-Used by conform.lua to skip format-on-save for those files. Pure predicate:
-the presentation conceallevel is set by the BufEnter autocmd in config/autocmds.lua.
-]]
+---Whether the buffer is a presentation markdown file (*.presentation.md).
+---conform.lua uses it to skip format-on-save. Pure predicate: the presentation
+---conceallevel is set by the BufEnter autocmd in lua/config/autocmds.lua.
 ---@param bufnr? integer defaults to the current buffer
 ---@return boolean
 local is_presentation_markdown = function(bufnr)

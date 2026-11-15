@@ -45,6 +45,7 @@ end
 ---@param callback fun(rows: { name: string, profile: string|nil, mason: string|nil }[])
 function M.collect(callback)
   local rows, pending = {}, #M.shared * 2
+  ---Count down finished reads; hand over the rows once all are in.
   local function done()
     pending = pending - 1
     if pending == 0 then
@@ -66,11 +67,14 @@ function M.collect(callback)
   end
 end
 
----@return boolean true when Mason's version is newer than the profile's
+---Whether Mason ships a newer version than the nix profile.
+---@return boolean
 local function mason_newer(row)
   return row.profile ~= nil and row.mason ~= nil and vim.version.gt(row.mason, row.profile)
 end
 
+---Which copy nvim-lint runs: "profile", "mason" or "-" when neither exists.
+---@return string
 local function editor_uses(row)
   if vim.fn.executable(M.profile_bin .. row.name) == 1 then
     return "profile"
@@ -78,13 +82,19 @@ local function editor_uses(row)
   return vim.fn.executable(mason_bin .. row.name) == 1 and "mason" or "-"
 end
 
----Pad by display width: string.format pads by bytes and the ↑ is three.
+---Right-pad `text` to `width` display cells. string.format pads by bytes, and
+---the ↑ marker is three bytes wide.
+---@param text string
+---@param width integer
+---@return string
 local function pad(text, width)
   return text .. (" "):rep(width - vim.fn.strdisplaywidth(text))
 end
 
----@return string[] the :LintVersions table
+---Render the :LintVersions table, one line per linter plus a header.
+---@return string[]
 function M.format(rows)
+  ---One aligned table row.
   local function line(name, profile, mason, uses)
     return pad(name, 20) .. pad(profile, 18) .. pad(mason, 11) .. uses
   end
@@ -96,10 +106,14 @@ function M.format(rows)
   return lines
 end
 
+---Version pairs already warned about, keyed by linter name.
+---@return table<string, string>
 local function load_warned()
   return state.read(STATE) or {}
 end
 
+---Persist the warned pairs, replacing the previous set.
+---@param warned table<string, string>
 local function save_warned(warned)
   state.write(STATE, warned)
 end

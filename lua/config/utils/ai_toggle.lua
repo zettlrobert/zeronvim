@@ -30,9 +30,11 @@ local M = {}
 ---@field get fun(): boolean current state; only called once the plugin is loaded
 ---@field set fun(on: boolean) switch the provider; only called once loaded
 
--- Minuet's own :Minuet blink enable/disable/toggle emits "Minuet blink
--- enabled/disabled", so its state field is set directly to keep the
--- "Minuet: ..." notification format.
+---Minuet's blink config table, or nil when minuet is not loaded.
+---Minuet's own :Minuet blink enable/disable/toggle emits "Minuet blink
+---enabled/disabled", so its state field is set directly to keep the
+---"Minuet: ..." notification format.
+---@return table|nil
 local function minuet_blink()
   local ok, minuet = pcall(require, "minuet")
   return ok and minuet.config and minuet.config.blink or nil
@@ -77,6 +79,7 @@ local PROVIDERS = {
 -- Statusline order
 local ORDER = { "copilot", "minuet" }
 
+---Whether lazy.nvim has loaded the provider's plugin.
 ---@param provider AiProvider
 ---@return boolean
 function M.is_loaded(provider)
@@ -105,12 +108,14 @@ local function with_plugin(provider, callback)
   end
 end
 
+---Redraw lualine so the AI component reflects the new state.
 local function refresh_statusline()
   if package.loaded["lualine"] then
     pcall(require("lualine").refresh)
   end
 end
 
+---Whether the provider's plugin is loaded and switched on.
 ---@param provider AiProvider
 ---@return boolean
 function M.is_enabled(provider)
@@ -125,6 +130,7 @@ end
 function M.set(provider, on, opts)
   opts = opts or {}
   local spec = PROVIDERS[provider]
+  ---Switch the loaded plugin, notify and refresh the statusline.
   local function apply()
     spec.set(on)
     if not opts.silent then
@@ -139,19 +145,23 @@ function M.set(provider, on, opts)
   end
 end
 
+---Flip a provider between on and off.
 ---@param provider AiProvider
 function M.toggle(provider)
   M.set(provider, not M.is_enabled(provider))
 end
 
 -- Named wrappers used by keymaps, lualine, completion.lua and plugin configs.
+
+---@return boolean
 function M.is_copilot_enabled()
   return M.is_enabled("copilot")
 end
+---@return boolean
 function M.is_minuet_enabled()
   return M.is_enabled("minuet")
 end
----@param opts? { silent?: boolean }
+---@param opts? { silent?: boolean } silent skips the notification
 function M.enable_copilot(opts)
   M.set("copilot", true, opts)
 end
@@ -174,8 +184,8 @@ function M.toggle_minuet()
   M.toggle("minuet")
 end
 
--- Master toggle: if any provider is on → disable all. If all off → enable
--- all. One combined notification instead of one per provider.
+---Master toggle: if any provider is on, disable all; if all are off, enable
+---all. Sends one combined notification instead of one per provider.
 function M.toggle_all()
   local any_on = false
   for _, provider in ipairs(ORDER) do
@@ -187,8 +197,10 @@ function M.toggle_all()
   vim.notify("AI: all " .. (any_on and "disabled" or "enabled"), vim.log.levels.INFO)
 end
 
--- Statusline: each enabled provider's glyph, colored with its own hl group via
--- `%#HlGroup#...%*` markup, so one lualine component carries several colors.
+---Statusline text: each enabled provider's glyph, colored with its own hl
+---group via `%#HlGroup#...%*` markup, so one lualine component carries
+---several colors.
+---@return string
 function M.statusline()
   local parts = {}
   for _, provider in ipairs(ORDER) do

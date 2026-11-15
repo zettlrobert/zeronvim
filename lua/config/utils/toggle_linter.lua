@@ -28,18 +28,21 @@ local M = {}
 ---@type table<string, boolean>
 local disabled = {}
 
+---Whether `name` runs on lint events.
 ---@param name string
 ---@return boolean
 function M.is_enabled(name)
   return not disabled[name]
 end
 
+---Let `name` run again on the next lint event.
 ---@param name string
 function M.enable(name)
   disabled[name] = nil
   vim.notify("Linter " .. name .. ": enabled", vim.log.levels.INFO)
 end
 
+---Stop running `name` and clear its diagnostics.
 ---@param name string
 function M.disable(name)
   disabled[name] = true
@@ -52,6 +55,7 @@ function M.disable(name)
   vim.notify("Linter " .. name .. ": disabled", vim.log.levels.INFO)
 end
 
+---Flip `name` between enabled and disabled.
 ---@param name string
 function M.toggle(name)
   if M.is_enabled(name) then

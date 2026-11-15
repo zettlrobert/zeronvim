@@ -174,6 +174,11 @@ end, { desc = keymap_desc.format(KIND.OPEN, TOOL.NvimTree, "reveal current file"
 
 -- Telescope — <leader>f namespace (find). Each map requires telescope, which
 -- loads the lazy plugin on first use.
+
+---Keymap callback that opens a telescope.builtin picker.
+---@param picker string telescope.builtin function name
+---@param opts? table picker options
+---@return fun()
 local telescope_pick = function(picker, opts)
   return function()
     require("telescope.builtin")[picker](opts)
@@ -301,6 +306,7 @@ keymap(
 -- the primary workflow.
 local trouble_bottom = { type = "split", relative = "editor", position = "bottom", size = 0.25 }
 local trouble_right = { type = "split", relative = "editor", position = "right", size = 0.3 }
+---Map `lhs` to toggle a Trouble view.
 ---@param lhs string
 ---@param opts table trouble.toggle() options
 ---@param desc string
@@ -449,6 +455,7 @@ end, { desc = keymap_desc.format(KIND.PICK, TOOL.LSP, "toggle server") })
 -- LSP actions picker (categorized cheat-sheet menu over the cursor).
 -- <C-.> mirrors VS Code's Quick Fix shortcut (terminal must pass it through;
 -- many do, some don't). <leader>la is the always-works fallback.
+---Open the LSP actions picker (config.utils.lsp_actions).
 local lsp_actions_picker = function()
   require("config.utils").lsp_actions()
 end
@@ -496,6 +503,10 @@ vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown buf_toggle<CR>", {
 
 -- DAP (Debug Adapter Protocol) — namespace <leader>b (b for breakpoint/bug).
 -- Chose `b` because <leader>d is diagnostic float (vim.diagnostic.open_float).
+---Map `lhs` to `require("dap")[method]()`.
+---@param lhs string
+---@param method string nvim-dap function name
+---@param desc string
 local dap_bind = function(lhs, method, desc)
   vim.keymap.set("n", lhs, function()
     require("dap")[method]()

@@ -11,12 +11,14 @@ leaves a half-written file; a failed write is reported once via vim.notify.
 ]]
 local M = {}
 
+---Absolute path of a state file.
 ---@param name string file name without the .json extension
 ---@return string
 function M.path(name)
   return vim.fs.joinpath(vim.fn.stdpath("state"), name .. ".json")
 end
 
+---Decode a state file; nil when missing, empty or not a JSON object.
 ---@param name string
 ---@return table|nil
 function M.read(name)
@@ -33,12 +35,16 @@ function M.read(name)
   return (ok and type(parsed) == "table") and parsed or nil
 end
 
+---Write `data` atomically (temp file + rename).
 ---@param name string
 ---@param data table
 ---@return boolean ok
 function M.write(name, data)
   local path = M.path(name)
   local temp_path = path .. ".tmp"
+  ---Report a failed write and return false.
+  ---@param err string|nil
+  ---@return false
   local function fail(err)
     vim.notify(("Could not save %s: %s"):format(path, err), vim.log.levels.WARN)
     return false

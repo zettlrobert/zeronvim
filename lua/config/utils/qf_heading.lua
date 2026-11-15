@@ -15,6 +15,9 @@ causes a brief visible flicker on j/k. The flicker is the cost of having
 live position info. To eliminate it we'd need to bypass lualine entirely
 for winbar (separate refactor).
 ]]
+
+---Heading text for the current quickfix or location list window, empty elsewhere.
+---@return string
 local function compute()
   local winid = vim.api.nvim_get_current_win()
   local wintype = vim.fn.win_gettype(winid)

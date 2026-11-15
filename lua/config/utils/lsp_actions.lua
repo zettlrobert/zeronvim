@@ -165,6 +165,7 @@ local function supported_actions(bufnr)
   return items
 end
 
+---Pick from the LSP actions the attached clients support and run it.
 local lsp_actions = function()
   local bufnr = vim.api.nvim_get_current_buf()
   local items = supported_actions(bufnr)

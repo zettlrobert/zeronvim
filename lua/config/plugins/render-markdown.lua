@@ -35,8 +35,8 @@ return {
     },
   },
   config = function(_, opts)
-    -- Background for fenced code blocks (`code.highlight` above). Set again on
-    -- every :colorscheme, which clears custom groups.
+    ---Background for fenced code blocks (`code.highlight` above). Set again on
+    ---every :colorscheme, which clears custom groups.
     local function set_code_block_hl()
       vim.api.nvim_set_hl(0, "CodeBlock", { bg = "#222235" })
     end

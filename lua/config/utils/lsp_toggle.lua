@@ -39,6 +39,7 @@ local function load_state()
   end
 end
 
+---Persist the disabled set to ~/.local/state/nvim/lsp-toggles.json.
 local function save_state()
   state.write(STATE, { disabled = disabled })
 end
@@ -47,6 +48,8 @@ load_state()
 
 ---Whether the given server is in the persistent disabled set.
 ---Used by the picker to surface state visually.
+---@param name string
+---@return boolean
 function M.is_disabled(name)
   return disabled[name] == true
 end
@@ -69,6 +72,9 @@ function M.attach_here(name, bufnr)
   config = vim.deepcopy(config)
   config.name = name
 
+  ---Start the client with `root` as its root_dir; notify on failure.
+  ---@param root string|nil
+  ---@return boolean started
   local function start(root)
     config.root_dir = root
     local ok, client_id = pcall(vim.lsp.start, config, { bufnr = bufnr })
@@ -144,6 +150,7 @@ local function server_states(bufnr)
   return items
 end
 
+---Pick a server from after/lsp/ and toggle it (<leader>tl).
 function M.pick()
   local bufnr = vim.api.nvim_get_current_buf()
   local items = server_states(bufnr)
