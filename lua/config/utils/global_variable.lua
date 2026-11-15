@@ -15,7 +15,6 @@ M.is_global_variable_set = function(name, quite)
   quite = quite or false
   local set_variable = vim.g[name]
 
-
   if set_variable == nil then
     if quite == false then
       print(name .. " NOT set")

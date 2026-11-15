@@ -1,3 +1,5 @@
+-- Aligned comments document each option; keep stylua from collapsing them.
+-- stylua: ignore
 local options = {
   autoindent = true,                                                                      -- automatically indent line with indentation of previous line
   autoread = true,                                                                        -- automatically read file when changed outside of vim

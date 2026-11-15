@@ -19,8 +19,18 @@ keymap("n", "<leader>th", "<cmd>set hlsearch!<CR>", { desc = kd.format(K.TOGGLE,
 -- Resize Buffer with arrow keys
 keymap("n", "<C-Up>", "<cmd>resize -2<CR>", { desc = kd.format(K.EDIT, T.Window, "decrease vertical size") })
 keymap("n", "<C-Down>", "<cmd>resize +2<CR>", { desc = kd.format(K.EDIT, T.Window, "increase vertical size") })
-keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = kd.format(K.EDIT, T.Window, "decrease horizontal size") })
-keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = kd.format(K.EDIT, T.Window, "increase horizontal size") })
+keymap(
+  "n",
+  "<C-Left>",
+  "<cmd>vertical resize -2<CR>",
+  { desc = kd.format(K.EDIT, T.Window, "decrease horizontal size") }
+)
+keymap(
+  "n",
+  "<C-Right>",
+  "<cmd>vertical resize +2<CR>",
+  { desc = kd.format(K.EDIT, T.Window, "increase horizontal size") }
+)
 
 -- Manual indenting
 keymap("v", "<", "<gv", { desc = kd.format(K.INDENT, T.Native, "decrease (preserves selection)") })
@@ -131,10 +141,15 @@ local telescope_pick = function(picker, opts)
 end
 keymap("n", "<leader>fh", telescope_pick("help_tags"), { desc = kd.format(K.PICK, T.Telescope, "help tags") })
 keymap("n", "<leader>ff", telescope_pick("find_files"), { desc = kd.format(K.PICK, T.Telescope, "files") })
-keymap("n", "<leader>f.", telescope_pick("find_files", {
-  find_command = { "rg", "--hidden", "--files" },
-  theme = "ivy",
-}), { desc = kd.format(K.PICK, T.Telescope, "files (including hidden)") })
+keymap(
+  "n",
+  "<leader>f.",
+  telescope_pick("find_files", {
+    find_command = { "rg", "--hidden", "--files" },
+    theme = "ivy",
+  }),
+  { desc = kd.format(K.PICK, T.Telescope, "files (including hidden)") }
+)
 keymap("n", "<leader>fb", telescope_pick("buffers"), { desc = kd.format(K.PICK, T.Telescope, "buffers") })
 keymap("n", "<leader>fl", telescope_pick("live_grep"), { desc = kd.format(K.SEARCH, T.Telescope, "live grep") })
 keymap("n", "<leader>fg", function()
@@ -142,7 +157,12 @@ keymap("n", "<leader>fg", function()
 end, { desc = kd.format(K.SEARCH, T.Telescope, "multigrep (double-space separates glob)") })
 -- LSP pickers (results can be sent to qflist via <C-q> inside the picker)
 keymap("n", "<leader>fr", telescope_pick("lsp_references"), { desc = kd.format(K.PICK, T.Telescope, "LSP references") })
-keymap("n", "<leader>fd", telescope_pick("lsp_definitions"), { desc = kd.format(K.PICK, T.Telescope, "LSP definitions") })
+keymap(
+  "n",
+  "<leader>fd",
+  telescope_pick("lsp_definitions"),
+  { desc = kd.format(K.PICK, T.Telescope, "LSP definitions") }
+)
 keymap("n", "<leader>fD", telescope_pick("diagnostics"), { desc = kd.format(K.PICK, T.Telescope, "diagnostics") })
 -- Keymap picker (complements which-key: search by desc)
 keymap("n", "<leader>fk", telescope_pick("keymaps"), { desc = kd.format(K.PICK, T.Telescope, "keymaps") })

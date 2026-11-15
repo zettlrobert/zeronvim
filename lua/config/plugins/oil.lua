@@ -11,11 +11,11 @@ return {
     opts = {
       default_file_explorer = false,
       columns = {
-        "icon"
+        "icon",
       },
       view_options = {
-        show_hidden = true
-      }
+        show_hidden = true,
+      },
     },
-  }
+  },
 }

@@ -30,8 +30,7 @@ return {
         if not ok then
           return all
         end
-        local lspconfig_to_package = mappings_mod.get_mason_map
-            and mappings_mod.get_mason_map().lspconfig_to_package
+        local lspconfig_to_package = mappings_mod.get_mason_map and mappings_mod.get_mason_map().lspconfig_to_package
           or mappings_mod.lspconfig_to_package
         if not lspconfig_to_package then
           return all

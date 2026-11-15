@@ -39,8 +39,8 @@ return {
       -- Disable for some filetypes
       enabled = function()
         return not vim.tbl_contains({ "oil" }, vim.bo.filetype)
-            and vim.bo.buftype ~= "prompt"
-            and vim.b.completion ~= false
+          and vim.bo.buftype ~= "prompt"
+          and vim.b.completion ~= false
       end,
 
       appearance = {
@@ -70,8 +70,8 @@ return {
           draw = {
             treesitter = { "lsp" },
             columns = {
-              { "kind_icon", "label",       "label_description", gap = 1 },
-              { "kind",      "source_name", gap = 1 },
+              { "kind_icon", "label", "label_description", gap = 1 },
+              { "kind", "source_name", gap = 1 },
             },
             components = {
               kind_icon = {
@@ -122,7 +122,6 @@ return {
             name = "RenderMarkdown",
             module = "render-markdown.integ.blink",
           },
-
 
           copilot = {
             name = "copilot",

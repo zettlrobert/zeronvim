@@ -23,35 +23,45 @@ local catalog = {
     title = "Definition",
     method = "textDocument/definition",
     desc = "Jump to where the symbol is defined",
-    run = function() vim.lsp.buf.definition() end,
+    run = function()
+      vim.lsp.buf.definition()
+    end,
   },
   {
     category = "Navigate",
     title = "Declaration",
     method = "textDocument/declaration",
     desc = "Jump to the symbol's declaration",
-    run = function() vim.lsp.buf.declaration() end,
+    run = function()
+      vim.lsp.buf.declaration()
+    end,
   },
   {
     category = "Navigate",
     title = "Implementation",
     method = "textDocument/implementation",
     desc = "Jump to an interface implementation",
-    run = function() vim.lsp.buf.implementation() end,
+    run = function()
+      vim.lsp.buf.implementation()
+    end,
   },
   {
     category = "Navigate",
     title = "Type definition",
     method = "textDocument/typeDefinition",
     desc = "Jump to the symbol's type",
-    run = function() vim.lsp.buf.type_definition() end,
+    run = function()
+      vim.lsp.buf.type_definition()
+    end,
   },
   {
     category = "Navigate",
     title = "References",
     method = "textDocument/references",
     desc = "List all references to the symbol",
-    run = function() vim.lsp.buf.references() end,
+    run = function()
+      vim.lsp.buf.references()
+    end,
   },
 
   -- Refactor
@@ -60,14 +70,18 @@ local catalog = {
     title = "Rename symbol",
     method = "textDocument/rename",
     desc = "Rename the symbol across the workspace",
-    run = function() vim.lsp.buf.rename() end,
+    run = function()
+      vim.lsp.buf.rename()
+    end,
   },
   {
     category = "Refactor",
     title = "Format buffer",
     method = "textDocument/formatting",
     desc = "Format the entire buffer via LSP",
-    run = function() vim.lsp.buf.format({ async = true }) end,
+    run = function()
+      vim.lsp.buf.format({ async = true })
+    end,
   },
 
   -- Fix
@@ -76,7 +90,9 @@ local catalog = {
     title = "Code actions",
     method = "textDocument/codeAction",
     desc = "Quick fixes and refactors at cursor",
-    run = function() vim.lsp.buf.code_action() end,
+    run = function()
+      vim.lsp.buf.code_action()
+    end,
   },
 
   -- Info
@@ -85,35 +101,45 @@ local catalog = {
     title = "Hover",
     method = "textDocument/hover",
     desc = "Show documentation for the symbol",
-    run = function() vim.lsp.buf.hover() end,
+    run = function()
+      vim.lsp.buf.hover()
+    end,
   },
   {
     category = "Info",
     title = "Signature help",
     method = "textDocument/signatureHelp",
     desc = "Show function signature with parameters",
-    run = function() vim.lsp.buf.signature_help() end,
+    run = function()
+      vim.lsp.buf.signature_help()
+    end,
   },
   {
     category = "Info",
     title = "Document symbols",
     method = "textDocument/documentSymbol",
     desc = "List all symbols in the current file",
-    run = function() vim.lsp.buf.document_symbol() end,
+    run = function()
+      vim.lsp.buf.document_symbol()
+    end,
   },
   {
     category = "Info",
     title = "Workspace symbols",
     method = "workspace/symbol",
     desc = "Fuzzy-find symbols across the project",
-    run = function() vim.lsp.buf.workspace_symbol() end,
+    run = function()
+      vim.lsp.buf.workspace_symbol()
+    end,
   },
   {
     category = "Info",
     title = "Diagnostic float",
     method = nil, -- diagnostics come from vim.diagnostic, not LSP capability
     desc = "Show diagnostics at cursor in a floating window",
-    run = function() vim.diagnostic.open_float() end,
+    run = function()
+      vim.diagnostic.open_float()
+    end,
   },
 }
 
