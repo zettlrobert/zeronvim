@@ -2,20 +2,29 @@
 
 ## TLDR
 
-DAP (Debug Adapter Protocol) client via `nvim-dap`. Two UIs installed side-by-side for comparison: `nvim-dap-view` (single-pane, keyboard-first) and `nvim-dap-ui` (multi-pane). Adapters auto-registered via `mason-nvim-dap`. Languages currently wired: **Python** (debugpy), **Go** (delve), **TS/JS/Node/Chrome** (js-debug-adapter, registered in `lua/config/dap/typescript.lua`), and **Lua for Neovim's own runtime** (one-small-step-for-vimkind). Test-level debugging via `neotest` with `strategy = "dap"`.
+`nvim-dap` is the DAP (Debug Adapter Protocol) client. It loads on the first `<leader>b*` or `<leader>td*` keypress.
+
+| Part | Setup |
+|---|---|
+| UIs | `nvim-dap-view` (single pane, keyboard-first) and `nvim-dap-ui` (multi-pane), side by side for comparison |
+| Adapters | `mason-nvim-dap` registers delve and debugpy; `lua/config/dap/typescript.lua` registers js-debug-adapter |
+| Languages | **Python** (debugpy), **Go** (delve), **TS/JS/Node/Chrome** (js-debug-adapter), **Lua in Neovim itself** (one-small-step-for-vimkind) |
+| Tests | `neotest` with `strategy = "dap"` (`<leader>Td`) |
 
 ## Getting started (never used a debugger before?)
 
-A debugger lets you **pause your code at a specific line**, then look at the actual values of variables at that moment, step forward one line at a time, and continue when you're ready. It's the difference between "the function returned wrong data — why?" and "here's the exact input, here's what each intermediate value is, here's where it diverged from what I expected."
+A debugger **pauses your code at a line**. You then read the real values of variables, step one line at a time, and
+continue when ready. Instead of guessing why a function returned wrong data, you see each intermediate value and where
+it diverged.
 
 ### The mental model
 
-1. **Set a breakpoint** — mark a line where you want execution to pause.
-2. **Start the session** — pick a launch config; nvim spawns your program under the debugger.
-3. **Wait for the breakpoint to hit** — execution stops at your marked line.
-4. **Inspect** — look at variables, call stack, expressions in the REPL.
-5. **Step or continue** — step to the next line, or resume until the next breakpoint.
-6. **End** — session finishes naturally, or you terminate it.
+1. **Set a breakpoint**: mark a line where you want execution to pause.
+2. **Start the session**: pick a launch config; nvim spawns your program under the debugger.
+3. **Wait for the breakpoint to hit**: execution stops at your marked line.
+4. **Inspect**: look at variables, call stack, expressions in the REPL.
+5. **Step or continue**: step to the next line, or resume until the next breakpoint.
+6. **End**: the session finishes naturally, or you terminate it.
 
 ### Core keymaps (memorize these five first)
 
@@ -27,11 +36,11 @@ A debugger lets you **pause your code at a specific line**, then look at the act
 | `<leader>bi` | Step **i**nto | Follow a function call one level deeper |
 | `<leader>bx` | Terminate (e**x**it) | End the session |
 
-Once those feel natural, everything else (`<leader>bB` conditional breakpoint, `<leader>br` REPL, `<leader>bv` open UI panel) is optional flavor.
+Everything else is optional: `<leader>bB` conditional breakpoint, `<leader>br` REPL, `<leader>tdv` debug panel.
 
-### Concrete walkthrough — debug a Python file
+### Walkthrough: debug a Python file
 
-Say you have `example.py`:
+Given `example.py`:
 
 ```python
 def greet(name):
@@ -45,36 +54,41 @@ def main():
 main()
 ```
 
-Suppose `greet` returns something unexpected and you want to see what.
-
 1. Open `example.py` in nvim.
-2. Move cursor to the line `message = "Hello, " + name` inside `greet`. Press `<leader>bb`. A red `●` appears in the sign column.
-3. Press `<leader>bc`. A picker opens with Python launch configs (from `lua/config/dap/python.lua`). Pick **"Launch current file"**.
+2. Move cursor to the line `message = "Hello, " + name` inside `greet`. Press `<leader>bb`. A red `●` appears in the
+   sign column.
+3. Press `<leader>bc`. A picker opens with Python launch configs (from `lua/config/dap/python.lua`). Pick **"Launch
+   current file"**.
 4. Execution stops **at your breakpoint**. The `▶` sign highlights the current line.
-5. Press `<leader>bv` to open the debug panel. You'll see:
-   - **Scopes** — locals (`name = "world"`) and globals
-   - **Stack** — where in the call chain you are (`greet` was called by `main`)
-   - **Breakpoints** — the list of all breakpoints
+5. Press `<leader>tdv` to open the debug panel (dap-view, opens on **Scopes**). Its tabs include:
+   - **Scopes**: locals (`name = "world"`) and globals
+   - **Threads**: the call stack (`greet` called by `main`)
+   - **Breakpoints**: every breakpoint
 6. Press `<leader>bo` to step over. `message` gets assigned; the panel updates to show `message = "Hello, world"`.
-7. Press `<leader>br` to open the REPL. Type `name.upper()` and hit enter — you get `"WORLD"` back. You can call methods on any variable in scope.
+7. Press `<leader>br` to open the REPL. Type `name.upper()` and press Enter: you get `"WORLD"`. Any variable in scope
+   works.
 8. Press `<leader>bc` again to continue. The program finishes and prints `"Hello, world"`.
 9. Press `<leader>bx` (or just let it finish) to close the session.
 
-That's it. Everything else is variations on this loop for other languages, other kinds of breakpoints, or attaching to already-running processes.
+Everything else is a variation on this loop: other languages, other breakpoint kinds, attaching to running processes.
 
 ### What the two UIs show
 
-- **`<leader>bv` (dap-view)** — single window with tabs (Scopes / Stack / Watches / REPL). Keyboard-first. Recommended default.
-- **`<leader>bu` (dap-ui)** — splits the screen into fixed panels. More visual space, harder to navigate. Try both; pick your preference.
+- **`<leader>tdv` (dap-view)**: one split with tabs (watches, scopes, exceptions, breakpoints, threads, repl, console).
+  Keyboard-first. Recommended default.
+- **`<leader>tdu` (dap-ui)**: fixed panels around the editor. More space, harder to navigate.
 
-Don't open both at once — the panels stack awkwardly.
+Neither opens automatically. Do not open both at once: the panels stack awkwardly.
 
 ### When it doesn't "just work"
 
-- **"No configuration found for filetype"** — the language isn't wired up yet. See "Add another language" below.
-- **Breakpoint icon shows `○` instead of `●`** — the debugger sees the file but can't map the breakpoint to a source line. For TS/JS: source maps. For Python: usually a stale `.pyc` — delete `__pycache__` and retry.
-- **Session never starts** — check `<leader>nh` (notifier history) for errors. Adapter binary might be missing — `:Mason` to check + install.
-- **Wrong Python interpreter** — set `VIRTUAL_ENV` before starting nvim, or activate the venv. See "Python" section below for interpreter selection order.
+- **"No configuration found for filetype"**: the language is not wired up yet. See [Adapter binaries](#adapter-binaries)
+  for adding one.
+- **Breakpoint shows `○` instead of `●`**: the debugger sees the file but can't map the breakpoint to a source line. For
+  TS/JS: source maps. For Python: usually a stale `.pyc`; delete `__pycache__` and retry.
+- **Session never starts**: check `<leader>nh` (notifier history). The adapter binary may be missing; check `:Mason`.
+- **Wrong Python interpreter**: set `VIRTUAL_ENV` before starting nvim, or activate the venv. See "Python" section below
+  for interpreter selection order.
 
 ## Plugin layering
 
@@ -91,10 +105,12 @@ Don't open both at once — the panels stack awkwardly.
 
 | Path | Purpose |
 |---|---|
-| `lua/config/plugins/nvim-dap*.lua` | Plugin specs (7 files) |
-| `lua/config/plugins/one-small-step-for-vimkind.lua` | osv plugin spec (Lua/nvim debug adapter) |
+| `lua/config/plugins/nvim-dap.lua` | Core spec; its `config` loads `config.dap`, then the add-ons below |
+| `lua/config/plugins/nvim-dap-{ui,view,virtual-text}.lua` | UI and virtual-text specs |
+| `lua/config/plugins/mason-nvim-dap.lua` | Adapter registration (no installs) |
+| `lua/config/plugins/one-small-step-for-vimkind.lua` | osv spec (Lua/nvim debug adapter) |
 | `lua/config/plugins/neotest.lua` | neotest spec with vitest + go adapters |
-| `lua/config/dap/init.lua` | Sign icons, event listeners, requires per-language configs |
+| `lua/config/dap/init.lua` | Sign icons, requires the per-language configs |
 | `lua/config/dap/typescript.lua` | Registers the `pwa-*` adapters (Mason `js-debug-adapter`, plus `node`/`chrome`/`msedge` aliases for VS Code configs) and the fallback launch configs |
 | `lua/config/dap/go.lua` | Delve launch configs: debug, debug_test, attach |
 | `lua/config/dap/python.lua` | debugpy launch configs: launch file, module, pytest, attach |
@@ -110,11 +126,12 @@ Installed via Mason (managed by mason-tool-installer through `tools.debug_adapte
 | `delve` | Go | `~/.local/share/nvim/mason/packages/delve/dlv` |
 | `js-debug-adapter` | JS / TS / Node / Chrome | `~/.local/share/nvim/mason/packages/js-debug-adapter/js-debug-adapter` |
 | `debugpy` | Python | `~/.local/share/nvim/mason/packages/debugpy/venv/bin/python` |
-| `osv` (in-process) | Lua (nvim runtime) | plugin: `one-small-step-for-vimkind` — no external binary |
+| `osv` (in-process) | Lua (nvim runtime) | Plugin `one-small-step-for-vimkind`, no external binary |
 
-To add another: append to `M.debug_adapters` in `lua/config/lsp/tools.lua`, run `:MasonToolsInstall`, add per-language launch configs under `lua/config/dap/` (and `require` the file from `lua/config/dap/init.lua`).
+To add another: append to `M.debug_adapters` in `lua/config/lsp/tools.lua`, run `:MasonToolsInstall`, add launch configs
+in `lua/config/dap/<lang>.lua`, and `require` that file from `lua/config/dap/init.lua`.
 
-## Keymap reference — `<leader>b*` (debug)
+## Keymap reference: `<leader>b*` (debug)
 
 | Key | Action |
 |---|---|
@@ -129,12 +146,12 @@ To add another: append to `M.debug_adapters` in `lua/config/lsp/tools.lua`, run 
 | `<leader>bx` | Terminate session (x for eXit) |
 | `<leader>bj` | List breakpoints in quickfix |
 | `<leader>bw` | Add expression to watches |
-| `<leader>bv` | Toggle nvim-dap-view UI |
-| `<leader>bu` | Toggle nvim-dap-ui UI |
+| `<leader>tdv` | Toggle nvim-dap-view |
+| `<leader>tdu` | Toggle nvim-dap-ui |
 
-`<leader>d` stays as `vim.diagnostic.open_float` (LSP diagnostics) — not touched.
+The namespace is `b`, not `d`, because `<leader>d` is the diagnostic float.
 
-## Keymap reference — `<leader>T*` (test / neotest)
+## Keymap reference: `<leader>T*` (test / neotest)
 
 | Key | Action |
 |---|---|
@@ -144,27 +161,29 @@ To add another: append to `M.debug_adapters` in `lua/config/lsp/tools.lua`, run 
 | `<leader>To` | Open test output for last run |
 | `<leader>Ts` | Toggle summary panel |
 
-Capital T disambiguates from `<leader>t` toggle namespace (`ts`, `tv`, `tl`).
+Capital `T` keeps tests apart from the `<leader>t` toggle namespace.
 
 ## Launch configs
 
-Two mechanisms coexist:
+`<leader>bc` offers configs from two sources in one picker:
 
-**1. Per-project `.vscode/launch.json`.** nvim-dap reads this itself (its `dap.launch.json` config provider). Any launch config VS Code uses just works.
+1. **Per-project `.vscode/launch.json`**, read by nvim-dap itself (its `dap.launch.json` provider). Legacy
+   `node`/`chrome`/`msedge` types map to js-debug's `pwa-*` types.
+2. **Lua configs** in `lua/config/dap/{typescript,go,python,lua}.lua`, always available.
 
-**2. Lua fallback** in `lua/config/dap/typescript.lua` and `lua/config/dap/go.lua`. Used when no `.vscode/launch.json` is present. Selection prompt appears on `<leader>bc`.
+TypeScript / JavaScript (`typescript`, `typescriptreact`, `javascript`, `javascriptreact`):
 
-TypeScript configs available in the Lua fallback:
-- Launch current file with `tsx`, `ts-node`, or plain `node`
-- Attach to a running Node process (pick from list)
-- Debug Vitest tests in current file
-- Launch Chrome against `http://localhost:3000` (frontend)
+- Launch current file (tsx), (ts-node), (node)
+- Attach to Node process (pick from list)
+- Debug Vitest current file
+- Launch Chrome against localhost (`http://localhost:3000`)
 
-Go configs (all via delve):
+Go (delve):
+
 - Debug current file
 - Debug package (containing directory)
-- Debug test at cursor
-- Debug all tests in package
+- Debug test (at cursor): `mode = "test"` on the current file
+- Debug test package (all)
 - Attach to process (pick from list)
 
 ## Python
@@ -174,36 +193,41 @@ Configs in `lua/config/dap/python.lua`. Interpreter selection order (via `get_py
 1. `$VIRTUAL_ENV/bin/python` (if a venv is active)
 2. `$CONDA_PREFIX/bin/python` (if a conda env is active)
 3. `<cwd>/venv/bin/python`, `<cwd>/.venv/bin/python`, `<cwd>/env/bin/python` (whichever exists)
-4. `python3` (system) as final fallback
+4. `python3`, else `python`
 
-This runs your code with your project's env, not Mason's isolated debugpy env — so imports resolve correctly.
+Your code runs in the project's env, not Mason's isolated debugpy env, so imports resolve.
 
 Configs available:
+
 - Launch current file
-- Launch current file (with args) — prompts for space-separated args
-- Launch module (`python -m <name>`) — prompts for module name
-- Debug pytest (current file) — `pytest <file> -vv -s`
-- Debug pytest at cursor — `pytest <file>::<selected>`; select the test name first
+- Launch current file (with args): prompts for space-separated args
+- Launch module (python -m ...): prompts for the module name
+- Debug pytest (current file): `pytest <file> -vv -s`
+- Debug pytest at cursor: `pytest <file>::<selected text>`; select the test name first
 - Attach to running process
 
-`justMyCode = false` on the pytest configs so you can step into fixtures / conftest helpers.
+The pytest configs set `justMyCode = false`, so you can step into fixtures and conftest helpers.
 
 ## Lua (Neovim's own runtime)
 
-Debugging nvim config or plugin code via `one-small-step-for-vimkind` (osv). Requires two nvim instances:
+Debug nvim config or plugin code with `one-small-step-for-vimkind` (osv). It needs two nvim instances:
 
-1. **Server nvim** — the one you want to debug. Run:
-   ```
+1. **Server nvim**, the one to debug. Run:
+
+   ```vim
    :lua require("osv").launch({ port = 8086 })
    ```
+
    osv opens a DAP server on port 8086 inside that nvim.
-2. **Client nvim** — open the `.lua` file, `<leader>bb` at a line, `<leader>bc` → "Attach to nvim (osv)".
-3. Trigger the code in the server nvim (e.g., call your function, run a keymap). Execution pauses in the client with the standard step/inspect controls.
+2. **Client nvim**: open the `.lua` file, `<leader>bb` at a line, `<leader>bc` → "Attach to nvim (osv)".
+3. Trigger the code in the server nvim (call the function, press the keymap). Execution pauses; step and inspect from
+   the client.
 4. `<leader>bx` in the client to detach.
 
-Convenience: in the server nvim, `:lua require("osv").run_this()` runs the current buffer's Lua under debug immediately — useful for testing standalone scripts.
+Shortcut: `:lua require("osv").run_this()` in the server nvim runs the current buffer's Lua under the debugger right
+away.
 
-Standalone Lua (outside nvim) uses a different debugger (`local-lua-debugger-vscode`) and is not set up here.
+Standalone Lua (outside nvim) needs a different debugger (`local-lua-debugger-vscode`), not set up here.
 
 ## Common workflows
 
@@ -212,13 +236,13 @@ Standalone Lua (outside nvim) uses a different debugger (`local-lua-debugger-vsc
 1. Open the file. `<leader>bb` at the line you want to pause.
 2. `<leader>bc` → select "Debug current file" or "Debug package".
 3. Execution stops at the breakpoint. `<leader>bi`/`<leader>bo`/`<leader>bO` to step.
-4. `<leader>bv` or `<leader>bu` to open a UI and see scopes / watches / stack.
+4. `<leader>tdv` or `<leader>tdu` to see scopes, watches and the stack.
 5. `<leader>bx` when done.
 
 ### Debug a Vitest test
 
 1. Open the test file. `<leader>bb` on the line inside your test.
-2. `<leader>Td` — neotest runs the nearest test through DAP.
+2. `<leader>Td`: neotest runs the nearest test through DAP.
 3. Breakpoint hits, debug session live.
 
 ### Attach to a running Node server
@@ -234,24 +258,21 @@ Standalone Lua (outside nvim) uses a different debugger (`local-lua-debugger-vsc
 
 ### Debug a Python script
 
-1. Activate your venv before starting nvim (`source .venv/bin/activate`) — or ensure `.venv/` exists in the project root.
+1. Activate your venv before starting nvim (`source .venv/bin/activate`), or keep a `.venv/` in the project root.
 2. Open the `.py` file. `<leader>bb` at the line you want to pause.
 3. `<leader>bc` → "Launch current file".
 4. Session starts using your venv's Python. Step / inspect as usual.
 
 ### Debug a pytest test
 
-1. Open the test file. Put cursor inside the test function body.
-2. `<leader>bb` at the line of interest.
-3. `<leader>bc` → "Debug pytest (current file)".
-4. Session runs `pytest <file> -vv -s`; breakpoint hits.
+1. Open the test file. `<leader>bb` at the line of interest inside the test.
+2. `<leader>bc` → "Debug pytest (current file)".
+3. Session runs `pytest <file> -vv -s`; breakpoint hits.
 
 ### Debug your nvim config (Lua)
 
-1. In the nvim instance you want to inspect: `:lua require("osv").launch({ port = 8086 })`
-2. Open a **second** nvim in another terminal or split window.
-3. In the second nvim: open a Lua file (e.g., `lua/config/utils/ai_toggle.lua`), `<leader>bb` on a line inside a function, `<leader>bc` → "Attach to nvim (osv)".
-4. Trigger the function in the first nvim (e.g., press the keymap that calls it). It pauses in the second nvim.
+See [Lua (Neovim's own runtime)](#lua-neovims-own-runtime). Example target: a function in
+`lua/config/utils/ai_toggle.lua`, triggered with `<leader>ap` in the server nvim.
 
 ## Troubleshooting
 
@@ -261,17 +282,17 @@ Standalone Lua (outside nvim) uses a different debugger (`local-lua-debugger-vsc
 | Adapter not registered | `:MasonToolsInstall` (installs missing binaries). Restart nvim. |
 | Breakpoints show `○` (rejected) instead of `●` | Source map issue. For TS/JS: verify `sourceMaps = true` in launch config + project builds source maps. |
 | Node --inspect port already in use | Kill orphaned Node processes: `pkill -f 'node --inspect'` |
-| dap-view and dap-ui splits collide | Only toggle one at a time. `<leader>bv` and `<leader>bu` don't auto-close the other. |
-| Python `ModuleNotFoundError` under debug | Wrong interpreter — set `VIRTUAL_ENV` before starting nvim, or create `.venv/` in project root; `get_python_path` will pick it up. |
-| Python breakpoints ignored | Stale `.pyc` files in `__pycache__` — delete and retry. |
+| dap-view and dap-ui splits collide | Open one at a time. `<leader>tdv` and `<leader>tdu` do not close the other. |
+| Python `ModuleNotFoundError` under debug | Wrong interpreter: set `VIRTUAL_ENV` before starting nvim, or create `.venv/` in project root; `get_python_path` will pick it up. |
+| Python breakpoints ignored | Stale `.pyc` files in `__pycache__`: delete and retry. |
 | osv "Connection refused" | Server nvim didn't call `require("osv").launch({...})` yet, or the port is different from the client's config (default 8086). |
-| osv breakpoint doesn't hit | The code hasn't been triggered yet in the server nvim. osv only pauses when your marked line actually executes there. |
+| osv breakpoint doesn't hit | The code has not run in the server nvim yet. osv pauses only when the marked line executes there. |
 
 ## Related
 
-- [lsp.md](lsp.md) — LSP and DAP are separate protocols; LSP provides static analysis, DAP provides runtime introspection.
-- [linting.md](linting.md) — LSP-first linting overview.
-- Vault: `~/notes/zettl/__vault/mocs/moc-neovim-debugging.md` (personal knowledge base entry point)
+- [lsp.md](lsp.md) - LSP gives static analysis; DAP gives runtime introspection. Separate protocols.
+- [keymaps.md](keymaps.md) - full keymap reference.
+- Vault: `~/notes/zettl/__vault/mocs/moc-neovim-debugging.md` - personal knowledge base entry point.
 
 ## References
 
