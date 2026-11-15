@@ -2,15 +2,19 @@
 
 ## TLDR
 
-`conform.nvim` runs formatters on `BufWritePre`. If no formatter is configured for a filetype, it falls back to LSP formatting (`vim.lsp.buf.format`). Configured in `lua/config/plugins/conform.lua`.
+`conform.nvim` formats on save (`BufWritePre`, 1000 ms timeout). A filetype with a configured formatter uses only that
+formatter. A filetype without one falls back to LSP formatting. `<leader>lf` formats manually with the same rules.
+Configured in `lua/config/plugins/conform.lua`.
 
 ## Files
 
 | Path | Role |
 |---|---|
-| `lua/config/plugins/conform.lua` | Plugin spec: formatter-to-filetype map, per-formatter args, format-on-save hook. |
-| `lua/config/lsp/tools.lua` | Mason install list for formatter binaries (`prettierd`, `stylua`). |
-| `lua/config/plugins/mason.lua` | Reads `tools.lua` and installs formatters via `mason-tool-installer`. |
+| `lua/config/plugins/conform.lua` | Filetype map, formatter args, format-on-save hook |
+| `lua/config/keymaps.lua` | `<leader>lf` manual format |
+| `lua/config/lsp/tools.lua` | Mason install list for formatters (`prettierd`, `stylua`) |
+| `lua/config/plugins/mason.lua` | Installs `tools.lua` entries through mason-tool-installer |
+| `.stylua.toml` | Lua style for this repo |
 
 ## What formats what
 
@@ -19,55 +23,49 @@
 | `lua` | stylua |
 | `javascript`, `javascriptreact`, `typescript`, `typescriptreact` | prettierd |
 | `json`, `jsonc`, `html`, `css`, `scss`, `mdx`, `astro`, `svelte`, `vue` | prettierd |
-| `markdown`, `yaml` | prettierd, only in a prettier project, with its settings; no LSP fallback |
-| anything else with an LSP that supports `textDocument/formatting` | LSP (via `lsp_format = "fallback"`) |
+| `markdown`, `yaml` | `prettierd_project`: only inside a prettier project; no LSP fallback |
+| anything else with an LSP that supports `textDocument/formatting` | LSP (`lsp_format = "fallback"`) |
 
-So `eslint --fix` on save still works for JS/TS because vscode-eslint-language-server provides formatting — conform handles prettierd, LSP handles eslint.
+`"fallback"` means LSP formatting runs only when conform has no formatter for the filetype. JS/TS therefore get
+prettierd only: ESLint fixes do not run on save. Apply them through code actions (`<leader>lc`).
 
 ## Format-on-save skip
 
-`*.presentation.md` files are skipped — see `is_presentation_markdown()` in `lua/config/utils/`. Useful for slide decks where prettier breaks formatting.
+`*.presentation.md` files are never formatted on save (`is_presentation_markdown()` in `lua/config/utils/`). Prettier
+breaks slide decks.
 
-## Override formatter flags
+## Formatter flags
 
-Set `prepend_args` (or `args` for full override) in `conform.lua`:
+`prettierd` gets fixed `prepend_args` in `conform.lua`:
 
 ```lua
-formatters = {
-  prettierd = {
-    prepend_args = { "--printWidth=80", "--single-quote", "--semi=true", ... },
-  },
-}
+prettierd = {
+  prepend_args = { "--printWidth=80", "--single-quote", "--trailing-comma=all", "--semi=true", ... },
+},
 ```
 
-Note: these are passed on every invocation, ignoring any project `.prettierrc`. Drop them if you want per-project config to win.
+These flags apply on every run and override any project `.prettierrc`. Drop them to let per-project config win. Use
+`args` instead of `prepend_args` to replace the arguments entirely.
 
-Markdown and YAML use `prettierd_project` instead: no flags, and `require_cwd = true`, so it runs only where it finds a
-`.prettierrc*`, a `prettier.config.*` or a `"prettier"` key in `package.json`. Elsewhere nothing rewrites them on save, and
-the git hooks' markdownlint `--fix` and yamllint apply. LSP fallback is off for both, because yamlls would otherwise
-reformat with its own prettier defaults.
+Markdown and YAML use `prettierd_project` instead: it inherits `prettierd` but has `require_cwd = true`. It runs only
+where it finds a `.prettierrc*`, a `prettier.config.*` or a `"prettier"` key in `package.json`, and uses that project's
+settings. Elsewhere nothing rewrites these files on save; the git hooks' markdownlint `--fix` and yamllint apply. LSP
+fallback is off for both, because yamlls would otherwise reformat with its own prettier defaults.
 
 ## Add a new formatter
 
-1. Add the binary key to `lua/config/lsp/tools.lua` under `M.formatters` so Mason installs it.
-2. Map filetypes in `conform.lua` under `formatters_by_ft`.
-3. (Optional) Add per-formatter `prepend_args` under `formatters`.
-4. Restart nvim. `:Mason` to verify install.
-
-## Manual format
-
-`<leader>lf` formats the current buffer through conform with the same rules as format-on-save: the configured formatter
-first, LSP only as a fallback, and no LSP fallback for markdown and yaml. Defined in `lua/config/keymaps.lua`.
+1. Add the Mason package to `M.formatters` in `lua/config/lsp/tools.lua`.
+2. Map filetypes under `formatters_by_ft` in `conform.lua`.
+3. Optional: add `prepend_args` under `formatters`.
+4. Restart nvim. Check `:Mason` for the install and `:ConformInfo` for the mapping.
 
 ## Lua style in this repo
 
-`.stylua.toml` sets 2-space indents and a 120 column limit. conform's `stylua` `prepend_args` pass the same indent flags,
-so Lua files outside this repo get them too. `lua/config/options.lua` opts out (`-- stylua: ignore`) to keep its aligned
-comments.
-
-To run conform manually: `:lua require("conform").format()` or set up a keymap.
+`.stylua.toml` sets 2-space indents, a 120-column limit and `AutoPreferDouble` quotes. conform's `stylua` `prepend_args`
+pass the same indent flags, so Lua files outside this repo get them too. `lua/config/options.lua` opts out
+(`-- stylua: ignore`) to keep its aligned comments.
 
 ## Related
 
-- [lsp.md](lsp.md) — LSP formatting is the fallback path.
-- [linting.md](linting.md) — separate concern; some tools (e.g. eslint) do both.
+- [lsp.md](lsp.md) - LSP formatting is the fallback path.
+- [linting.md](linting.md) - separate concern; some tools (eslint) both lint and fix.
