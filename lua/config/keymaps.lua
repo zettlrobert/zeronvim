@@ -14,13 +14,13 @@ keymap("n", "<C-d>", "<C-d>zz", { desc = kd.format(K.MOVE, T.Motion, "page down 
 keymap("n", "<C-u>", "<C-u>zz", { desc = kd.format(K.MOVE, T.Motion, "page up (centered)") })
 
 -- Toggle search highlight — <leader>t namespace
-keymap("n", "<leader>th", ":set hlsearch!<CR>", { desc = kd.format(K.TOGGLE, T.Native, "search highlight") })
+keymap("n", "<leader>th", "<cmd>set hlsearch!<CR>", { desc = kd.format(K.TOGGLE, T.Native, "search highlight") })
 
 -- Resize Buffer with arrow keys
-keymap("n", "<C-Up>", ":resize -2<CR>", { desc = kd.format(K.EDIT, T.Window, "decrease vertical size") })
-keymap("n", "<C-Down>", ":resize +2<CR>", { desc = kd.format(K.EDIT, T.Window, "increase vertical size") })
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", { desc = kd.format(K.EDIT, T.Window, "decrease horizontal size") })
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = kd.format(K.EDIT, T.Window, "increase horizontal size") })
+keymap("n", "<C-Up>", "<cmd>resize -2<CR>", { desc = kd.format(K.EDIT, T.Window, "decrease vertical size") })
+keymap("n", "<C-Down>", "<cmd>resize +2<CR>", { desc = kd.format(K.EDIT, T.Window, "increase vertical size") })
+keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = kd.format(K.EDIT, T.Window, "decrease horizontal size") })
+keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = kd.format(K.EDIT, T.Window, "increase horizontal size") })
 
 -- Manual indenting
 keymap("v", "<", "<gv", { desc = kd.format(K.INDENT, T.Native, "decrease (preserves selection)") })
@@ -50,20 +50,20 @@ keymap("n", "<leader>cA", utils.get_current_absolute_buffer_path_with_cwd, {
 })
 
 -- Quickfix List
-keymap("n", "<A-l>", ":cnext<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "next (alt binding)") })
-keymap("n", "<A-h>", ":cprevious<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "prev (alt binding)") })
+keymap("n", "<A-l>", "<cmd>cnext<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "next (alt binding)") })
+keymap("n", "<A-h>", "<cmd>cprevious<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "prev (alt binding)") })
 
 -- Quickfix navigation (vim-unimpaired style; <A-l>/<A-h> kept as alternatives)
-keymap("n", "]q", ":cnext<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "next") })
-keymap("n", "[q", ":cprev<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "prev") })
-keymap("n", "]Q", ":clast<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "last") })
-keymap("n", "[Q", ":cfirst<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "first") })
+keymap("n", "]q", "<cmd>cnext<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "next") })
+keymap("n", "[q", "<cmd>cprev<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "prev") })
+keymap("n", "]Q", "<cmd>clast<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "last") })
+keymap("n", "[Q", "<cmd>cfirst<CR>", { desc = kd.format(K.JUMP, T.Quickfix, "first") })
 
 -- Loclist navigation (mirrors quickfix)
-keymap("n", "]l", ":lnext<CR>", { desc = kd.format(K.JUMP, T.Loclist, "next") })
-keymap("n", "[l", ":lprev<CR>", { desc = kd.format(K.JUMP, T.Loclist, "prev") })
-keymap("n", "]L", ":llast<CR>", { desc = kd.format(K.JUMP, T.Loclist, "last") })
-keymap("n", "[L", ":lfirst<CR>", { desc = kd.format(K.JUMP, T.Loclist, "first") })
+keymap("n", "]l", "<cmd>lnext<CR>", { desc = kd.format(K.JUMP, T.Loclist, "next") })
+keymap("n", "[l", "<cmd>lprev<CR>", { desc = kd.format(K.JUMP, T.Loclist, "prev") })
+keymap("n", "]L", "<cmd>llast<CR>", { desc = kd.format(K.JUMP, T.Loclist, "last") })
+keymap("n", "[L", "<cmd>lfirst<CR>", { desc = kd.format(K.JUMP, T.Loclist, "first") })
 
 -- Quickfix toggle (copen / cclose)
 keymap("n", "<leader>qq", function()
@@ -95,10 +95,11 @@ end, { desc = kd.format(K.EDIT, T.Quickfix, "clear list") })
 keymap("x", "<leader>p", '"_dP', { desc = kd.format(K.PASTE, T.Native, "without losing buffer") })
 
 -- Move Current Lines up or down
-keymap("n", "<A-k>", ":m .-2<CR>", { desc = kd.format(K.MOVE, T.Line, "up") })
-keymap("n", "<A-j>", ":m .+1<CR>", { desc = kd.format(K.MOVE, T.Line, "down") })
-keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = kd.format(K.MOVE, T.Line, "selection up") })
-keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = kd.format(K.MOVE, T.Line, "selection down") })
+keymap("n", "<A-k>", "<cmd>m .-2<CR>", { desc = kd.format(K.MOVE, T.Line, "up") })
+keymap("n", "<A-j>", "<cmd>m .+1<CR>", { desc = kd.format(K.MOVE, T.Line, "down") })
+-- Visual moves keep ":" (the command needs the '<,'> range); silent hides the echo.
+keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true, desc = kd.format(K.MOVE, T.Line, "selection up") })
+keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true, desc = kd.format(K.MOVE, T.Line, "selection down") })
 
 -- NvimTree
 --NvimTree toggle file tree
@@ -341,10 +342,10 @@ vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = kd.format(K.EDIT,
 
 -- AI — <leader>a namespace (CodeCompanion + Copilot/Minuet toggles).
 -- The provider plugins are lazy; ai_toggle loads each one on first enable.
-vim.keymap.set("n", "<leader>ac", ":CodeCompanionChat Toggle<CR>", {
+vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat Toggle<CR>", {
   desc = kd.format(K.TOGGLE, T.CodeCompanion, "chat"),
 })
-vim.keymap.set("n", "<leader>aa", ":CodeCompanionActions<CR>", {
+vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionActions<CR>", {
   desc = kd.format(K.PICK, T.CodeCompanion, "actions palette"),
 })
 vim.keymap.set("n", "<leader>aA", function()
@@ -358,7 +359,7 @@ vim.keymap.set("n", "<leader>am", function()
 end, { desc = kd.format(K.TOGGLE, T.Minuet, "local AI completion") })
 
 -- Markdown — <leader>m namespace
-vim.keymap.set("n", "<leader>mr", ":RenderMarkdown buf_toggle<CR>", {
+vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown buf_toggle<CR>", {
   desc = kd.format(K.TOGGLE, T.RenderMarkdown, "render current buffer"),
 })
 
