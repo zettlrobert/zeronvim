@@ -27,7 +27,7 @@ return {
     },
     -- Skip *.presentation.md files (matches the legacy none-ls behavior)
     format_on_save = function(bufnr)
-      if require("config.utils").is_presentation_markdown() then
+      if require("config.utils").is_presentation_markdown(bufnr) then
         return
       end
       -- No LSP fallback for markdown and yaml: outside a prettier project yamlls
