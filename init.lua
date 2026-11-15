@@ -35,6 +35,8 @@ require("config.filetypes")
 require("lazy").setup({
   spec = {
     { import = "config.plugins" },
+    -- Own import: the directory has no init.lua, one spec file per theme.
+    { import = "config.plugins.colorschemes" },
   },
   -- Colorscheme used while lazy.nvim installs missing plugins on a fresh
   -- clone. The catppuccin spec applies catppuccin-mocha once it is installed.

@@ -2,7 +2,7 @@
 -- https://github.com/mason-org/mason-lspconfig.nvim
 -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
 --
--- LSP servers to install are derived from filenames in ~/.config/nvim/lsp/
+-- LSP servers to install are derived from filenames in ~/.config/nvim/after/lsp/
 -- (filtered to what mason-lspconfig knows about — e.g. nil_ls has
 -- after/lsp/ configs but no Mason package, so they're skipped here).
 -- Formatters + debug adapters come from lua/config/lsp/tools.lua.
