@@ -1,0 +1,7 @@
+# https://github.com/JohnnyMorganz/StyLua#options
+# Same indent as the stylua args in lua/config/plugins/conform.lua, which also
+# apply to Lua files outside this repo.
+column_width = 120
+indent_type = "Spaces"
+indent_width = 2
+quote_style = "AutoPreferDouble"
