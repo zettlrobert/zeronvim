@@ -9,6 +9,8 @@ return {
   -- Loaded only when enabled through config.utils.ai_toggle (<leader>ap or
   -- <leader>aA in config/keymaps.lua), never at startup.
   lazy = true,
+  -- :Copilot (e.g. `:Copilot auth`) also loads it; it still starts disabled.
+  cmd = "Copilot",
   dependencies = {
     "giuxtaposition/blink-cmp-copilot",
   },

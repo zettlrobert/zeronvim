@@ -7,81 +7,84 @@
 --
 -- All trouble bindings live under `<leader>x*` (examine) for consistency.
 
+local kd = require("config.utils.keymap_desc")
+local K, T = kd.KIND, kd.TOOL
+
+-- Shared window opts: bottom split, 25% height
+local bottom_split = {
+  type = "split",
+  relative = "editor",
+  position = "bottom",
+  size = 0.25,
+}
+
+-- Shared window opts: right split, 30% width
+local right_split = {
+  type = "split",
+  relative = "editor",
+  position = "right",
+  size = 0.3,
+}
+
+---@param lhs string
+---@param opts table trouble.toggle() options
+---@param desc string
+local function toggle(lhs, opts, desc)
+  return {
+    lhs,
+    function()
+      require("trouble").toggle(opts)
+    end,
+    desc = kd.format(K.OPEN, T.Trouble, desc),
+  }
+end
+
 return {
   "folke/trouble.nvim",
   cmd = "Trouble",
-  config = function()
-    local trouble = require("trouble")
-    local kd = require("config.utils.keymap_desc")
-    local K, T = kd.KIND, kd.TOOL
-
-    -- Shared window opts: bottom split, 25% height
-    local bottom_split = {
-      type = "split",
-      relative = "editor",
-      position = "bottom",
-      size = 0.25,
-    }
-
-    -- Shared window opts: right split, 30% width
-    local right_split = {
-      type = "split",
-      relative = "editor",
-      position = "right",
-      size = 0.3,
-    }
-
-    local function open(opts)
-      return function()
-        trouble.toggle(opts)
-      end
-    end
-
+  -- In `keys` so the maps exist from startup and load trouble on first use.
+  keys = {
     -- Diagnostics
-    vim.keymap.set("n", "<leader>xx", open({
+    toggle("<leader>xx", {
       mode = "diagnostics",
       multiline = true,
       auto_preview = true,
       win = bottom_split,
-    }), { desc = kd.format(K.OPEN, T.Trouble, "workspace diagnostics panel") })
-
-    vim.keymap.set("n", "<leader>xX", open({
+    }, "workspace diagnostics panel"),
+    toggle("<leader>xX", {
       mode = "diagnostics",
       multiline = true,
       auto_preview = true,
       win = bottom_split,
       filter = { buf = 0 },
-    }), { desc = kd.format(K.OPEN, T.Trouble, "buffer diagnostics panel") })
-
+    }, "buffer diagnostics panel"),
     -- Quickfix / loclist views (don't fight native :copen / :lopen)
-    vim.keymap.set("n", "<leader>xq", open({
+    toggle("<leader>xq", {
       mode = "quickfix",
       multiline = true,
       auto_preview = true,
       win = bottom_split,
-    }), { desc = kd.format(K.OPEN, T.Trouble, "quickfix panel") })
-
-    vim.keymap.set("n", "<leader>xl", open({
+    }, "quickfix panel"),
+    toggle("<leader>xl", {
       mode = "loclist",
       multiline = true,
       auto_preview = true,
       win = bottom_split,
-    }), { desc = kd.format(K.OPEN, T.Trouble, "loclist panel") })
-
+    }, "loclist panel"),
     -- Symbols
-    vim.keymap.set("n", "<leader>xs", open({
+    toggle("<leader>xs", {
       mode = "symbols",
       multiline = true,
       auto_preview = true,
       win = right_split,
-    }), { desc = kd.format(K.OPEN, T.Trouble, "symbols panel") })
-
+    }, "symbols panel"),
     -- LSP definitions / references
-    vim.keymap.set("n", "<leader>xr", open({
+    toggle("<leader>xr", {
       mode = "lsp",
       multiline = true,
       auto_preview = true,
       win = right_split,
-    }), { desc = kd.format(K.OPEN, T.Trouble, "LSP definitions + references") })
-  end,
+    }, "LSP definitions + references"),
+  },
+  opts = {},
 }

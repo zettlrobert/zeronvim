@@ -5,7 +5,7 @@ return {
   {
     "folke/zen-mode.nvim",
     dependencies = {
-      "folke/twilight.nvim",
+      { "folke/twilight.nvim", cmd = "Twilight" },
     },
     cmd = "ZenMode",
     keys = {
