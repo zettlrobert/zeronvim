@@ -85,7 +85,6 @@ Don't open both at once — the panels stack awkwardly.
 | `theHamsta/nvim-dap-virtual-text` | Treesitter inline variable values during a session |
 | `igorlfs/nvim-dap-view` | Single-pane UI (breakpoints, scopes, watches, threads, exceptions, REPL) |
 | `rcarriga/nvim-dap-ui` | Multi-pane UI (splits: scopes / stack+watches / repl+console) |
-| `mxsdev/nvim-dap-vscode-js` | Bridges `js-debug-adapter`, registers `pwa-node` + `pwa-chrome` adapters |
 | `nvim-neotest/neotest` (+ vitest, go adapters) | Test discovery + run + debug per test |
 
 ## Files
@@ -96,7 +95,7 @@ Don't open both at once — the panels stack awkwardly.
 | `lua/config/plugins/one-small-step-for-vimkind.lua` | osv plugin spec (Lua/nvim debug adapter) |
 | `lua/config/plugins/neotest.lua` | neotest spec with vitest + go adapters |
 | `lua/config/dap/init.lua` | Sign icons, event listeners, requires per-language configs |
-| `lua/config/dap/typescript.lua` | pwa-node + pwa-chrome launch configs (fallback when no `.vscode/launch.json`) |
+| `lua/config/dap/typescript.lua` | Registers the `pwa-*` adapters (Mason `js-debug-adapter`, plus `node`/`chrome`/`msedge` aliases for VS Code configs) and the fallback launch configs |
 | `lua/config/dap/go.lua` | Delve launch configs: debug, debug_test, attach |
 | `lua/config/dap/python.lua` | debugpy launch configs: launch file, module, pytest, attach |
 | `lua/config/dap/lua.lua` | osv attach config for debugging nvim's own Lua |
@@ -151,7 +150,7 @@ Capital T disambiguates from `<leader>t` toggle namespace (`ts`, `tv`, `tl`).
 
 Two mechanisms coexist:
 
-**1. Per-project `.vscode/launch.json`.** `nvim-dap-vscode-js` reads this automatically for JS/TS projects. Any launch config VS Code uses just works.
+**1. Per-project `.vscode/launch.json`.** nvim-dap reads this itself (its `dap.launch.json` config provider). Any launch config VS Code uses just works.
 
 **2. Lua fallback** in `lua/config/dap/typescript.lua` and `lua/config/dap/go.lua`. Used when no `.vscode/launch.json` is present. Selection prompt appears on `<leader>bc`.
 

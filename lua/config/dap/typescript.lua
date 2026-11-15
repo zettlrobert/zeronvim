@@ -1,15 +1,41 @@
 --[[
-TypeScript / JavaScript / Node launch configs (fallback when no
-.vscode/launch.json exists in the project — dap-vscode-js reads that file
-first when present).
+TypeScript / JavaScript / Node debugging with vscode-js-debug.
 
-Adapters (pwa-node, pwa-chrome) are registered by nvim-dap-vscode-js.lua.
-This file only defines the LAUNCH CONFIGURATIONS.
+Adapters: registered here for Mason's `js-debug-adapter`, which is
+vscode-js-debug's DAP server (dapDebugServer.js <port>). nvim-dap starts it
+on a free port per session. This replaced mxsdev/nvim-dap-vscode-js, which
+did the same and is unmaintained since 2023.
+
+Launch configs: a project's .vscode/launch.json is read by nvim-dap itself
+(the "dap.launch.json" config provider). The configs below are the fallback
+for projects without one.
 
 Applies to filetypes: typescript, typescriptreact, javascript, javascriptreact.
 ]]
 
 local dap = require("dap")
+
+-- Adapter types vscode-js-debug implements. Each session gets its own server.
+for _, adapter in ipairs({ "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" }) do
+  dap.adapters[adapter] = {
+    type = "server",
+    host = "localhost",
+    port = "${port}",
+    executable = {
+      command = "js-debug-adapter",
+      args = { "${port}" },
+    },
+  }
+end
+
+-- VS Code launch.json files often use the legacy "node"/"chrome"/"msedge"
+-- types, which js-debug only knows as pwa-*. Map them on the fly.
+for _, legacy in ipairs({ "node", "chrome", "msedge" }) do
+  dap.adapters[legacy] = function(callback, config)
+    config.type = "pwa-" .. legacy
+    callback(dap.adapters[config.type])
+  end
+end
 
 local js_based_filetypes = {
   "typescript",
