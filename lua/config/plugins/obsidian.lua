@@ -1,7 +1,7 @@
 --https://github.com/obsidian-nvim/obsidian.nvim
 return {
   "obsidian-nvim/obsidian.nvim",
-  version = "v3.14.2", -- recommended, use latest release instead of latest commit
+  version = "*", -- track the latest release instead of the latest commit
   ft = "markdown",
   opts = {
     workspaces = {
