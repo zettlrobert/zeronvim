@@ -15,10 +15,12 @@ vim.keymap.set("n", "<leader>x", function()
   vim.notify("Executed current line via lua", vim.log.levels.INFO)
 end, { desc = kd.format(K.RUN, T.Source, "execute current line") })
 
--- Execute visual selection lua code
-vim.keymap.set("v", "<leader>x", ":lua<CR>", {
-  desc = kd.format(K.RUN, T.Source, "execute selection"),
-  callback = function()
-    vim.notify("Executed current selection via lua", vim.log.levels.INFO)
-  end,
-})
+-- Execute visual selection lua code. A callback replaces the rhs, so the
+-- old ":lua<CR>" rhs never ran. Leave Visual mode first so '< and '> mark
+-- this selection, then run it.
+vim.keymap.set("v", "<leader>x", function()
+  vim.cmd("normal! \27")
+  vim.cmd("'<,'>lua")
+
+  vim.notify("Executed current selection via lua", vim.log.levels.INFO)
+end, { desc = kd.format(K.RUN, T.Source, "execute selection") })
