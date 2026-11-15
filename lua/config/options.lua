@@ -1,9 +1,10 @@
 -- Aligned comments document each option; keep stylua from collapsing them.
+-- "(nvim default)" marks values equal to Neovim's own default, kept for visibility.
 -- stylua: ignore
 local options = {
-  autoindent = true,                                                                      -- automatically indent line with indentation of previous line
-  autoread = true,                                                                        -- automatically read file when changed outside of vim
-  backup = false,                                                                         -- keep backup file after overwriting a file
+  autoindent = true,                                                                      -- (nvim default) automatically indent line with indentation of previous line
+  autoread = true,                                                                        -- (nvim default) automatically read file when changed outside of vim
+  backup = false,                                                                         -- (nvim default) keep backup file after overwriting a file
   breakindent = true,                                                                     -- wrapped line repeats indent
   cmdheight = 2,                                                                          -- number of screen lines to use for the command-line / message area
   completeopt = { "menuone", "noselect", "preview" },                                     -- comma-separated list of options for Insert mode completion
@@ -12,8 +13,8 @@ local options = {
   cursorline = true,                                                                      -- highlight the text line of the cursor with cursorline hl-CursorLine
   cursorlineopt = { "screenline", "number" },                                             -- settings for how cursorline is displayed
   expandtab = true,                                                                       -- use the appropriate number of spaces to insert a <Tab>
-  hlsearch = true,                                                                        -- when there is a previous search pattern highlight all its matches
-  hidden = true,                                                                          -- When off a buffer is unloaded (including loss of undo information)
+  hlsearch = true,                                                                        -- (nvim default) when there is a previous search pattern highlight all its matches
+  hidden = true,                                                                          -- (nvim default) When off a buffer is unloaded (including loss of undo information)
   ignorecase = true,                                                                      -- ignore case in search patterns
   laststatus = 3,                                                                         -- influences when the last window will have a status line
   mouse = "a",                                                                            -- enable mouse support
@@ -28,11 +29,11 @@ local options = {
   signcolumn = "yes",                                                                     -- when and how to draw the signcolumn
   smartcase = true,                                                                       -- override the ignorecase option if the search patter contains upper case characters
   smartindent = true,                                                                     -- do smart auto indenting when starting a new line
-  splitbelow = false,                                                                     -- when on, splitting a window will put the new window below the current
+  splitbelow = false,                                                                     -- (nvim default) when on, splitting a window will put the new window below the current
   splitright = true,                                                                      -- when on, splitting a window will put the new window to the right of the current one
   swapfile = false,                                                                       -- use a swapfile for the buffer
   tabstop = 4,                                                                            -- number of spaces that a tab in the file counts for
-  termguicolors = true,                                                                   -- enables 24-bit RGB color in the TUI
+  termguicolors = true,                                                                   -- (nvim auto-detects this) enables 24-bit RGB color in the TUI
   undofile = true,                                                                        -- the name of the undo file that would be used for a file with {name} when writing
   updatetime = 250,                                                                       -- updatetime - if this many millisecond's nothing is typed the swap file will be written to disk
   wrap = false,                                                                           -- this option changes how text is displayed
