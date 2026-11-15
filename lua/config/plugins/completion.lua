@@ -107,7 +107,7 @@ return {
         -- the first completion. See config.utils.ai_toggle.
         default = function()
           local ai = require("config.utils.ai_toggle")
-          local sources = { "lsp", "path", "snippets", "buffer", "omni", "markdown" }
+          local sources = { "lsp", "path", "snippets", "buffer", "omni" }
           if ai.is_windsurf_enabled() then
             table.insert(sources, "codeium")
           end
@@ -119,6 +119,13 @@ return {
           end
           return sources
         end,
+
+        -- render-markdown's source only matters in markdown, and listing it
+        -- in `default` would load the ft-lazy plugin on the first completion
+        -- in any filetype.
+        per_filetype = {
+          markdown = { "markdown", inherit_defaults = true },
+        },
 
         -- CMP completion sources
         providers = {

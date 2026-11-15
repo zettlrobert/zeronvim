@@ -2,6 +2,10 @@
 -- https://github.com/MeanderingProgrammer/render-markdown.nvim/wiki
 return {
   "MeanderingProgrammer/render-markdown.nvim",
+  -- Only renders markdown (the default file_types). :RenderMarkdown, used by
+  -- the <leader>mr keymap, also loads it from other buffers.
+  ft = "markdown",
+  cmd = "RenderMarkdown",
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
     "nvim-tree/nvim-web-devicons",
