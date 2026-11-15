@@ -13,7 +13,8 @@ return {
     "mfussenegger/nvim-dap",
     "nvim-neotest/nvim-nio",
   },
-  event = "VeryLazy",
+  -- Loaded by nvim-dap once its own config ran (see nvim-dap.lua).
+  lazy = true,
   opts = {
     icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
     controls = {

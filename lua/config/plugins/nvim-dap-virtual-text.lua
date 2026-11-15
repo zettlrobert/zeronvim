@@ -9,7 +9,8 @@ return {
     "mfussenegger/nvim-dap",
     "nvim-treesitter/nvim-treesitter",
   },
-  event = "VeryLazy",
+  -- Loaded by nvim-dap once its own config ran (see nvim-dap.lua).
+  lazy = true,
   opts = {
     enabled = true,
     enabled_commands = true,

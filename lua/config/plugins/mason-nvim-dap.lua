@@ -14,7 +14,8 @@ return {
     "mason-org/mason.nvim",
     "mfussenegger/nvim-dap",
   },
-  event = "VeryLazy",
+  -- Loaded by nvim-dap once its own config ran (see nvim-dap.lua).
+  lazy = true,
   opts = {
     automatic_installation = false, -- adapters install via mason-tool-installer
     handlers = {}, -- default handler registers all adapters

@@ -11,5 +11,6 @@
 return {
   "jbyuki/one-small-step-for-vimkind",
   dependencies = { "mfussenegger/nvim-dap" },
-  event = "VeryLazy",
+  -- Loaded by nvim-dap once its own config ran (see nvim-dap.lua).
+  lazy = true,
 }

@@ -9,7 +9,8 @@
 return {
   "igorlfs/nvim-dap-view",
   dependencies = { "mfussenegger/nvim-dap" },
-  event = "VeryLazy",
+  -- Loaded by nvim-dap once its own config ran (see nvim-dap.lua).
+  lazy = true,
   opts = {
     winbar = {
       show = true,

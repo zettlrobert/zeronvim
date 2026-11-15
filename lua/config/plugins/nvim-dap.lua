@@ -9,8 +9,22 @@
 
 return {
   "mfussenegger/nvim-dap",
-  event = "VeryLazy",
+  -- Loaded on demand: the <leader>b*/<leader>td* keymaps in config/keymaps.lua
+  -- require("dap") (or an add-on), which lazy.nvim turns into a load.
+  lazy = true,
   config = function()
     require("config.dap")
+    -- Add-ons load after our adapters and configurations exist, the same
+    -- order as when everything loaded on VeryLazy. mason-nvim-dap appends
+    -- its configurations to ours, so it must come after config.dap.
+    require("lazy").load({
+      plugins = {
+        "mason-nvim-dap.nvim",
+        "nvim-dap-ui",
+        "nvim-dap-view",
+        "nvim-dap-virtual-text",
+        "one-small-step-for-vimkind",
+      },
+    })
   end,
 }

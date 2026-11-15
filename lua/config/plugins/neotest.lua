@@ -23,7 +23,8 @@ return {
     -- Debug integration (already installed by lua/config/plugins/nvim-dap.lua)
     "mfussenegger/nvim-dap",
   },
-  event = "VeryLazy",
+  -- Loaded on demand by the <leader>T* keymaps in config/keymaps.lua.
+  lazy = true,
   config = function()
     require("neotest").setup({
       adapters = {
