@@ -1,10 +1,21 @@
 -- https://github.com/jiaoshijie/undotree
+local kd = require("config.utils.keymap_desc")
+
 return {
   "jiaoshijie/undotree",
   dependencies = "nvim-lua/plenary.nvim",
+  -- No user command: the plugin is driven only through its Lua API.
+  keys = {
+    {
+      "<leader>u",
+      function()
+        require("undotree").toggle()
+      end,
+      desc = kd.format(kd.KIND.TOGGLE, kd.TOOL.Undotree, "undo history panel"),
+    },
+  },
   config = function()
     local undotree = require("undotree")
-    local kd = require("config.utils.keymap_desc")
 
     undotree.setup({
       float_diff = true,
@@ -26,10 +37,6 @@ return {
         enter_diffbuf = "p",
         quit = "q",
       },
-    })
-
-    vim.keymap.set("n", "<leader>u", undotree.toggle, {
-      desc = kd.format(kd.KIND.TOGGLE, kd.TOOL.Undotree, "undo history panel"),
     })
   end,
 }
