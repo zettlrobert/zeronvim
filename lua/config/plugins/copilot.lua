@@ -12,7 +12,7 @@ return {
   -- :Copilot (e.g. `:Copilot auth`) also loads it; it still starts disabled.
   cmd = "Copilot",
   dependencies = {
-    "giuxtaposition/blink-cmp-copilot",
+    "fang2hou/blink-copilot",
   },
   config = function()
     local copilot = require("copilot")

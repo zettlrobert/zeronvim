@@ -19,7 +19,7 @@ checking `enabled`.
 | `buffer` | built-in | Words from open buffers | Always |
 | `omni` | built-in (`blink.cmp.sources.complete_func`) | The filetype's `omnifunc` | Always |
 | `markdown` | `render-markdown.nvim` | Markdown completions | Markdown only (`per_filetype`) |
-| `copilot` | `blink-cmp-copilot` | Copilot (cloud), `score_offset = 100` | While Copilot is on |
+| `copilot` | `blink-copilot` | Copilot (cloud), `score_offset = 100` | While Copilot is on |
 | `minuet` | `minuet.blink` | Local Ollama FIM, `score_offset = 50`, 3000 ms timeout | While Minuet is on ([ai.md](ai.md)) |
 
 ## Disabled in
