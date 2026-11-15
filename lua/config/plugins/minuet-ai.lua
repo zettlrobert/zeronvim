@@ -12,6 +12,9 @@
 
 return {
   "milanglacier/minuet-ai.nvim",
+  -- Loaded only when enabled through config.utils.ai_toggle (<leader>am or
+  -- <leader>aA in config/keymaps.lua), never at startup.
+  lazy = true,
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     require("minuet").setup({
@@ -55,14 +58,7 @@ return {
       add_single_line_entry = false,
     })
 
-    local kd = require("config.utils.keymap_desc")
-    local K, T = kd.KIND, kd.TOOL
-
-    vim.keymap.set("n", "<leader>am", function()
-      require("config.utils.ai_toggle").toggle_minuet()
-    end, { desc = kd.format(K.TOGGLE, T.Minuet, "local AI completion") })
-
-    -- Default off. Enable on demand via <leader>am or <leader>aA.
+    -- Default off on every load path. ai_toggle queues its enable after this.
     -- Deferred so require("minuet").config is populated before disable runs.
     vim.schedule(function()
       require("config.utils.ai_toggle").disable_minuet({ silent = true })

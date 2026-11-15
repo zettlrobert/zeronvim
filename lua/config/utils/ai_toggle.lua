@@ -9,15 +9,60 @@ name.
 
 Every function is pcall-guarded so calls from the statusline / keymaps
 don't break if a plugin failed to load.
+
+Lazy loading: the three plugins are `lazy = true` and only load when a
+provider is first enabled. A provider whose plugin is not loaded counts as
+off, and the state queries never `require` it, so the statusline does not
+pull a plugin in. Each plugin's config still defaults itself off via
+vim.schedule; `with_plugin` queues the enable after that (vim.schedule is
+FIFO), so the enable wins.
 ]]
 
 local M = {}
+
+-- lazy.nvim plugin names, used to check and trigger loading.
+local PLUGIN = {
+  copilot = "copilot.lua",
+  windsurf = "windsurf.nvim",
+  minuet = "minuet-ai.nvim",
+}
+
+---@param provider "copilot"|"windsurf"|"minuet"
+---@return boolean
+function M.is_loaded(provider)
+  local ok, lazy_config = pcall(require, "lazy.core.config")
+  if not ok then
+    return false
+  end
+  local plugin = lazy_config.plugins[PLUGIN[provider]]
+  return plugin ~= nil and plugin._.loaded ~= nil
+end
+
+---Run `fn` with the provider's plugin loaded. On first load, defer `fn` so it
+---runs after the plugin's own scheduled default-off.
+---@param provider "copilot"|"windsurf"|"minuet"
+---@param fn fun()
+local function with_plugin(provider, fn)
+  if M.is_loaded(provider) then
+    fn()
+    return
+  end
+  local ok = pcall(function()
+    require("lazy").load({ plugins = { PLUGIN[provider] } })
+  end)
+  if ok then
+    vim.schedule(fn)
+  end
+end
 
 -- ---------------------------------------------------------------------------
 -- State queries
 -- ---------------------------------------------------------------------------
 
 function M.is_copilot_enabled()
+  if not M.is_loaded("copilot") then
+    return false
+  end
   local ok, client = pcall(require, "copilot.client")
   if not ok then
     return false
@@ -26,6 +71,9 @@ function M.is_copilot_enabled()
 end
 
 function M.is_windsurf_enabled()
+  if not M.is_loaded("windsurf") then
+    return false
+  end
   local ok, codeium = pcall(require, "codeium")
   if not ok then
     return false
@@ -34,6 +82,9 @@ function M.is_windsurf_enabled()
 end
 
 function M.is_minuet_enabled()
+  if not M.is_loaded("minuet") then
+    return false
+  end
   local ok, minuet = pcall(require, "minuet")
   if not ok or not minuet.config or not minuet.config.blink then
     return false
@@ -48,19 +99,24 @@ end
 ---@param opts? { silent?: boolean }
 function M.enable_copilot(opts)
   opts = opts or {}
-  local ok, cmd = pcall(require, "copilot.command")
-  if not ok then
-    return
-  end
-  cmd.enable()
-  if not opts.silent then
-    vim.notify("Copilot: enabled", vim.log.levels.INFO)
-  end
+  with_plugin("copilot", function()
+    local ok, cmd = pcall(require, "copilot.command")
+    if not ok then
+      return
+    end
+    cmd.enable()
+    if not opts.silent then
+      vim.notify("Copilot: enabled", vim.log.levels.INFO)
+    end
+  end)
 end
 
 ---@param opts? { silent?: boolean }
 function M.disable_copilot(opts)
   opts = opts or {}
+  if not M.is_loaded("copilot") then
+    return -- never loaded means never enabled
+  end
   local ok, cmd = pcall(require, "copilot.command")
   if not ok then
     return
@@ -90,19 +146,24 @@ end
 ---@param opts? { silent?: boolean }
 function M.enable_windsurf(opts)
   opts = opts or {}
-  local ok, codeium = pcall(require, "codeium")
-  if not ok or not codeium.s then
-    return
-  end
-  codeium.s.enabled = true
-  if not opts.silent then
-    vim.notify("Windsurf: enabled", vim.log.levels.INFO)
-  end
+  with_plugin("windsurf", function()
+    local ok, codeium = pcall(require, "codeium")
+    if not ok or not codeium.s then
+      return
+    end
+    codeium.s.enabled = true
+    if not opts.silent then
+      vim.notify("Windsurf: enabled", vim.log.levels.INFO)
+    end
+  end)
 end
 
 ---@param opts? { silent?: boolean }
 function M.disable_windsurf(opts)
   opts = opts or {}
+  if not M.is_loaded("windsurf") then
+    return
+  end
   local ok, codeium = pcall(require, "codeium")
   if not ok or not codeium.s then
     return
@@ -132,19 +193,24 @@ end
 ---@param opts? { silent?: boolean }
 function M.enable_minuet(opts)
   opts = opts or {}
-  local ok, minuet = pcall(require, "minuet")
-  if not ok or not minuet.config or not minuet.config.blink then
-    return
-  end
-  minuet.config.blink.enable_auto_complete = true
-  if not opts.silent then
-    vim.notify("Minuet: enabled", vim.log.levels.INFO)
-  end
+  with_plugin("minuet", function()
+    local ok, minuet = pcall(require, "minuet")
+    if not ok or not minuet.config or not minuet.config.blink then
+      return
+    end
+    minuet.config.blink.enable_auto_complete = true
+    if not opts.silent then
+      vim.notify("Minuet: enabled", vim.log.levels.INFO)
+    end
+  end)
 end
 
 ---@param opts? { silent?: boolean }
 function M.disable_minuet(opts)
   opts = opts or {}
+  if not M.is_loaded("minuet") then
+    return
+  end
   local ok, minuet = pcall(require, "minuet")
   if not ok or not minuet.config or not minuet.config.blink then
     return
@@ -182,13 +248,6 @@ function M.toggle_all()
     M.enable_minuet({ silent = true })
     vim.notify("AI: all enabled", vim.log.levels.INFO)
   end
-end
-
--- Called once at startup from each plugin's config to default them off.
-function M.startup_disable_all()
-  M.disable_copilot({ silent = true })
-  M.disable_windsurf({ silent = true })
-  M.disable_minuet({ silent = true })
 end
 
 -- ---------------------------------------------------------------------------

@@ -141,8 +141,8 @@ vim.keymap.set({ "n", "v" }, "<C-.>", lsp_actions_picker, { desc = kd.format(K.P
 vim.keymap.set({ "n", "v" }, "<leader>la", lsp_actions_picker, { desc = kd.format(K.PICK, T.LSP, "actions menu") })
 vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = kd.format(K.EDIT, T.LSP, "rename symbol") })
 
--- AI — <leader>a namespace (CodeCompanion + Copilot/Windsurf toggles).
--- Individual provider toggles live in their plugin files (<leader>ap, <leader>aw).
+-- AI — <leader>a namespace (CodeCompanion + Copilot/Windsurf/Minuet toggles).
+-- The provider plugins are lazy; ai_toggle loads each one on first enable.
 vim.keymap.set("n", "<leader>ac", ":CodeCompanionChat Toggle<CR>", {
   desc = kd.format(K.TOGGLE, T.CodeCompanion, "chat"),
 })
@@ -151,7 +151,16 @@ vim.keymap.set("n", "<leader>aa", ":CodeCompanionActions<CR>", {
 })
 vim.keymap.set("n", "<leader>aA", function()
   require("config.utils.ai_toggle").toggle_all()
-end, { desc = kd.format(K.TOGGLE, T.AI, "all providers (copilot + windsurf)") })
+end, { desc = kd.format(K.TOGGLE, T.AI, "all providers (copilot + windsurf + minuet)") })
+vim.keymap.set("n", "<leader>ap", function()
+  require("config.utils.ai_toggle").toggle_copilot()
+end, { desc = kd.format(K.TOGGLE, T.Copilot, "AI suggestions") })
+vim.keymap.set("n", "<leader>aw", function()
+  require("config.utils.ai_toggle").toggle_windsurf()
+end, { desc = kd.format(K.TOGGLE, T.Windsurf, "AI suggestions") })
+vim.keymap.set("n", "<leader>am", function()
+  require("config.utils.ai_toggle").toggle_minuet()
+end, { desc = kd.format(K.TOGGLE, T.Minuet, "local AI completion") })
 
 -- Markdown — <leader>m namespace
 vim.keymap.set("n", "<leader>mr", ":RenderMarkdown buf_toggle<CR>", {

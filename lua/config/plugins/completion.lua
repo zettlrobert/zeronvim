@@ -101,17 +101,24 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = {
-          "lsp",
-          "path",
-          "snippets",
-          "buffer",
-          "omni",
-          "markdown",
-          "codeium",
-          "copilot",
-          "minuet",
-        },
+        -- A function so the AI sources are listed only while their provider
+        -- is on. blink builds (requires) every listed provider before it
+        -- checks `enabled`, so a static list would load the lazy AI plugins on
+        -- the first completion. See config.utils.ai_toggle.
+        default = function()
+          local ai = require("config.utils.ai_toggle")
+          local sources = { "lsp", "path", "snippets", "buffer", "omni", "markdown" }
+          if ai.is_windsurf_enabled() then
+            table.insert(sources, "codeium")
+          end
+          if ai.is_copilot_enabled() then
+            table.insert(sources, "copilot")
+          end
+          if ai.is_minuet_enabled() then
+            table.insert(sources, "minuet")
+          end
+          return sources
+        end,
 
         -- CMP completion sources
         providers = {
@@ -147,6 +154,7 @@ return {
         },
       },
     },
-    opts_extend = { "sources.default" },
+    -- No opts_extend for sources.default: it is a function (see above), and
+    -- no other spec extends it.
   },
 }

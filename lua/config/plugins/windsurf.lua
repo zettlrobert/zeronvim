@@ -1,6 +1,9 @@
 ---https://github.com/Exafunction/windsurf.nvim
 return {
   "Exafunction/windsurf.nvim",
+  -- Loaded only when enabled through config.utils.ai_toggle (<leader>aw or
+  -- <leader>aA in config/keymaps.lua), never at startup.
+  lazy = true,
   -- dir = "~/repositories/codeium.nvim/",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -9,8 +12,6 @@ return {
     -- Imports
     local utils = require("config.utils")
     local codeium = require("codeium")
-    local kd = require("config.utils.keymap_desc")
-    local K, T = kd.KIND, kd.TOOL
 
     -- Paths
     local config = vim.fn.stdpath("data") .. "/codeium/codeium.json"
@@ -38,11 +39,7 @@ return {
       enable_cmp_source = true,
     })
 
-    vim.keymap.set("n", "<leader>aw", function()
-      require("config.utils.ai_toggle").toggle_windsurf()
-    end, { desc = kd.format(K.TOGGLE, T.Windsurf, "AI suggestions") })
-
-    -- Default off. Enable on demand via <leader>aw or <leader>aA.
+    -- Default off on every load path. ai_toggle queues its enable after this.
     -- Deferred so codeium.setup has finished populating `codeium.s`.
     vim.schedule(function()
       require("config.utils.ai_toggle").disable_windsurf({ silent = true })

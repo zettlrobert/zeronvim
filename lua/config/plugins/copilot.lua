@@ -6,13 +6,14 @@ return {
   -- Older tags (v3.0.1) lost copilot/js/ upstream and fail with
   -- "could not find server (bad install?)".
   version = "^3.2",
+  -- Loaded only when enabled through config.utils.ai_toggle (<leader>ap or
+  -- <leader>aA in config/keymaps.lua), never at startup.
+  lazy = true,
   dependencies = {
     "giuxtaposition/blink-cmp-copilot",
   },
   config = function()
     local copilot = require("copilot")
-    local kd = require("config.utils.keymap_desc")
-    local K, T = kd.KIND, kd.TOOL
 
     vim.api.nvim_create_autocmd("User", {
       pattern = "BlinkCmpMenuOpen",
@@ -75,7 +76,7 @@ return {
         file = vim.fn.stdpath("log") .. "/copilot-lua.log",
         file_log_level = vim.log.levels.OFF,
         -- ERROR (not WARN) so copilot's own "copilot is disabled" WARN toast
-        -- doesn't fire every startup when our startup_disable_all runs.
+        -- doesn't fire when the default-off disable below runs.
         print_log_level = vim.log.levels.ERROR,
         trace_lsp = "off", -- "off" | "messages" | "verbose"
         trace_lsp_progress = false,
@@ -105,11 +106,8 @@ return {
       server_opts_overrides = {},
     })
 
-    vim.keymap.set("n", "<leader>ap", function()
-      require("config.utils.ai_toggle").toggle_copilot()
-    end, { desc = kd.format(K.TOGGLE, T.Copilot, "AI suggestions") })
-
-    -- Default off. Enable on demand via <leader>ap or <leader>aA.
+    -- Default off on every load path (ai_toggle, :checkhealth, a require).
+    -- ai_toggle queues its enable after this, so an explicit enable wins.
     -- Deferred so copilot.setup has finished initializing before disable runs.
     vim.schedule(function()
       require("config.utils.ai_toggle").disable_copilot({ silent = true })
