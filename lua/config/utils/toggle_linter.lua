@@ -43,6 +43,12 @@ end
 ---@param name string
 function M.disable(name)
   disabled[name] = true
+  -- Clear what the linter already reported; otherwise its diagnostics stay
+  -- on screen until the buffer is linted again.
+  local ok, lint = pcall(require, "lint")
+  if ok then
+    vim.diagnostic.reset(lint.get_namespace(name))
+  end
   vim.notify("Linter " .. name .. ": disabled", vim.log.levels.INFO)
 end
 
