@@ -12,7 +12,7 @@
 | `path` | built-in | File path completion |
 | `snippets` | `rafamadriz/friendly-snippets` | Language snippets |
 | `buffer` | built-in | Words from open buffers |
-| `omni` | `cmp-omni` via blink.compat | Filetype-specific `omnifunc` |
+| `omni` | built-in (`blink.cmp.sources.complete_func`) | Filetype-specific `omnifunc` |
 | `markdown` | `render-markdown.nvim` | Markdown-aware completions |
 | `copilot` | blink-cmp-copilot | AI completions (Copilot, cloud, score offset +100) |
 | `minuet` | minuet.blink | Local AI completions via Ollama FIM (`qwen2.5-coder:7b-base`, see [ai.md](ai.md)) |

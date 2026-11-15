@@ -1,5 +1,4 @@
 --https://github.com/rafamadriz/friendly-snippets
---https://github.com/hrsh7th/cmp-omni
 
 --TODO: move to debug utils
 local function dump(o)
@@ -20,15 +19,10 @@ end
 return {
   {
     "saghen/blink.cmp",
+    -- The `omni` source is blink's built-in blink.cmp.sources.complete_func,
+    -- so neither cmp-omni nor the blink.compat bridge is needed.
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "hrsh7th/cmp-omni",
-      {
-        ---https://github.com/saghen/blink.compat
-        "saghen/blink.compat",
-        version = "2.*",
-        lazy = true,
-      },
     },
     lazy = false,
     -- use a release tag to download pre-built binaries
