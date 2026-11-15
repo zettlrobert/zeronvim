@@ -1,6 +1,25 @@
 -- https://github.com/nvim-tree/nvim-tree.lua
 return {
   "nvim-tree/nvim-tree.lua",
+  -- Loaded on demand: the <leader>e / <leader>ef keymaps in config/keymaps.lua
+  -- require("nvim-tree.api"), which lazy.nvim turns into a load.
+  cmd = {
+    "NvimTreeToggle",
+    "NvimTreeOpen",
+    "NvimTreeClose",
+    "NvimTreeFocus",
+    "NvimTreeFindFile",
+    "NvimTreeFindFileToggle",
+    "NvimTreeCollapse",
+    "NvimTreeRefresh",
+  },
+  -- init runs at startup even though the plugin is lazy. Disabling netrw here
+  -- keeps the old eager behavior of `disable_netrw = true`, which only takes
+  -- effect if it runs before netrw's own plugin file is sourced.
+  init = function()
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+  end,
   config = function()
     local icons = require("config.assets.icons")
 
