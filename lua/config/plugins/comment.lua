@@ -13,27 +13,26 @@ return {
     { "gc", mode = { "n", "x" }, desc = "Comment toggle linewise" },
     { "gb", mode = { "n", "x" }, desc = "Comment toggle blockwise" },
   },
-  config = function()
-    require("Comment").setup({
-      padding = true,
-      sticky = true,
-      mappings = {
-        basic = true,
-        extra = true,
-      },
-      toggler = {
-        block = "gbc",
-        line = "gcc",
-      },
-      extra = {
-        above = "gcO",
-        below = "gco",
-        eol = "gcA",
-      },
-      opleader = {
-        block = "gb",
-        line = "gc",
-      },
-    })
-  end,
+  -- Same values as Comment.nvim's defaults, spelled out for visibility.
+  opts = {
+    padding = true,
+    sticky = true,
+    mappings = {
+      basic = true,
+      extra = true,
+    },
+    toggler = {
+      block = "gbc",
+      line = "gcc",
+    },
+    extra = {
+      above = "gcO",
+      below = "gco",
+      eol = "gcA",
+    },
+    opleader = {
+      block = "gb",
+      line = "gc",
+    },
+  },
 }

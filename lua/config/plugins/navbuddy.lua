@@ -22,14 +22,10 @@ return {
         desc = kd.format(kd.KIND.OPEN, kd.TOOL.Navbuddy, "symbol tree"),
       },
     },
-    config = function()
-      local navbuddy = require("nvim-navbuddy")
-
-      navbuddy.setup({
-        lsp = {
-          auto_attach = false,
-        },
-      })
-    end,
+    opts = {
+      lsp = {
+        auto_attach = false,
+      },
+    },
   },
 }

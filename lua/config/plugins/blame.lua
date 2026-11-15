@@ -2,9 +2,5 @@
 return {
   "FabijanZulj/blame.nvim",
   cmd = "BlameToggle",
-  config = function()
-    local blame = require("blame")
-
-    blame.setup()
-  end,
+  opts = {},
 }

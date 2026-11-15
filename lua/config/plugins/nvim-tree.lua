@@ -20,10 +20,10 @@ return {
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
   end,
-  config = function()
+  opts = function()
     local icons = require("config.assets.icons")
 
-    require("nvim-tree").setup({
+    return {
       disable_netrw = true,
       hijack_cursor = true,
       reload_on_bufenter = true,
@@ -94,6 +94,6 @@ return {
           trash = true,
         },
       },
-    })
+    }
   end,
 }
