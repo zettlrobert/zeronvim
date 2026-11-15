@@ -31,6 +31,9 @@ require("config.providers")
 -- Filetype detection additions (.tofu, .env*). Must run before files open.
 require("config.filetypes")
 
+-- Options before plugins, so every plugin sees the final values when it loads.
+require("config.options")
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
@@ -42,9 +45,6 @@ require("lazy").setup({
   -- clone. The catppuccin spec applies catppuccin-mocha once it is installed.
   install = { colorscheme = { "catppuccin", "habamax" } },
 })
-
--- Require Neovim Options
-require("config.options")
 
 -- Require LSP
 require("config.lsp")
