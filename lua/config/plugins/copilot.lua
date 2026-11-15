@@ -1,10 +1,11 @@
 ---https://github.com/zbirenbaum/copilot.lua
 return {
   "zbirenbaum/copilot.lua",
-  -- Pinned: newer HEAD regressed to `vim.lsp.stop_client` (deprecated in 0.12)
-  -- and prints a deprecation toast on every startup that disables copilot.
-  -- v3.0.1 uses the modern `client:stop()` method — no deprecation noise.
-  version = "v3.0.1",
+  -- v3.2+ no longer bundles the server in the repo: it downloads the native
+  -- copilot-language-server into stdpath("data")/copilot.lua/lsp on first use.
+  -- Older tags (v3.0.1) lost copilot/js/ upstream and fail with
+  -- "could not find server (bad install?)".
+  version = "^3.2",
   dependencies = {
     "giuxtaposition/blink-cmp-copilot",
   },
@@ -98,7 +99,7 @@ return {
         return true
       end,
       server = {
-        type = "nodejs", -- "nodejs" | "binary"
+        type = "binary", -- "binary" (native, downloaded) | "nodejs" (needs custom_server_filepath)
         custom_server_filepath = nil,
       },
       server_opts_overrides = {},
