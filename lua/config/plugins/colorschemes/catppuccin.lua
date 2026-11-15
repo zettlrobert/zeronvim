@@ -15,6 +15,23 @@ return {
         -- This option ensures, we do not override our set colors
         transparent_background = true,
         term_colors = true,
+        -- Diagnostic styling. Top-level `lsp_styles` replaced the old
+        -- `integrations.native_lsp`, which catppuccin no longer reads. These
+        -- values match catppuccin's defaults; edit here to change them.
+        lsp_styles = {
+          virtual_text = {
+            errors = { "italic" },
+            hints = { "italic" },
+            warnings = { "italic" },
+            information = { "italic" },
+          },
+          underlines = {
+            errors = { "underline" },
+            hints = { "underline" },
+            warnings = { "underline" },
+            information = { "underline" },
+          },
+        },
         integrations = {
           navic = {
             enabled = true,
@@ -23,21 +40,6 @@ return {
           dap = {
             enabled = true,
             enable_ui = true,
-          },
-          native_lsp = {
-            enabled = true,
-            virtual_text = {
-              errors = { "italic" },
-              hints = { "italic" },
-              warnings = { "italic" },
-              information = { "italic" },
-            },
-            underlines = {
-              errors = { "underline" },
-              hints = { "underline" },
-              warnings = { "underline" },
-              information = { "underline" },
-            },
           },
         },
       })
