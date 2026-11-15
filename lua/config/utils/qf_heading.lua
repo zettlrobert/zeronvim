@@ -17,15 +17,16 @@ for winbar (separate refactor).
 ]]
 local function compute()
   local winid = vim.api.nvim_get_current_win()
-  local info = vim.fn.getwininfo(winid)[1]
-  if not info or info.quickfix == 0 then
+  local wintype = vim.fn.win_gettype(winid)
+  if wintype ~= "quickfix" and wintype ~= "loclist" then
     return ""
   end
 
-  local is_loclist = info.loclist == 1
+  -- { size = 0 } returns only the item count instead of copying every entry,
+  -- which matters because this runs on each winbar refresh.
+  local is_loclist = wintype == "loclist"
   local label = is_loclist and "Location list" or "Quickfix"
-  local list = is_loclist and vim.fn.getloclist(winid) or vim.fn.getqflist()
-  local count = #list
+  local count = is_loclist and vim.fn.getloclist(winid, { size = 0 }).size or vim.fn.getqflist({ size = 0 }).size
 
   if count == 0 then
     return (" %s · empty "):format(label)
