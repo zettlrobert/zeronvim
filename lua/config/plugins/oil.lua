@@ -25,7 +25,7 @@ return {
     },
     opts = {
       default_file_explorer = false,
-      columsn = {
+      columns = {
         "icon"
       },
       view_options = {
