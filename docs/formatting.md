@@ -56,7 +56,14 @@ reformat with its own prettier defaults.
 
 ## Manual format
 
-`<leader>fmt` runs `vim.lsp.buf.format({ async = true })` — bypasses conform, uses LSP only.
+`<leader>lf` formats the current buffer through conform with the same rules as format-on-save: the configured formatter
+first, LSP only as a fallback, and no LSP fallback for markdown and yaml. Defined in `lua/config/keymaps.lua`.
+
+## Lua style in this repo
+
+`.stylua.toml` sets 2-space indents and a 120 column limit. conform's `stylua` `prepend_args` pass the same indent flags,
+so Lua files outside this repo get them too. `lua/config/options.lua` opts out (`-- stylua: ignore`) to keep its aligned
+comments.
 
 To run conform manually: `:lua require("conform").format()` or set up a keymap.
 
