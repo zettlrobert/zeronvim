@@ -2,8 +2,10 @@ local M = {}
 
 --[[
 Picker over every configured LSP server (everything with a lsp/<name>.lua),
-showing each server's attach state for the current buffer. Selecting an item
-dispatches to toggle_lsp_server — attached → detached, detached → attached.
+showing each server's state for the current buffer. Selecting an item:
+  ✕ disabled (persisted) → turn it on everywhere (toggle_lsp_server.set)
+  ● attached             → turn it off everywhere (persisted)
+  ○ not attached         → attach it to this buffer only (attach_here)
 
 Useful for:
   - Toggling experimental servers (tsgo) on-demand without per-server keymaps
@@ -69,8 +71,16 @@ local lsp_servers = function()
       return ("%s%-30s  %s"):format(marker, item.name, state)
     end,
   }, function(choice)
-    if choice then
-      require("config.utils").toggle_lsp_server(choice.name)
+    if not choice then
+      return
+    end
+    local toggle = require("config.utils.toggle_lsp_server")
+    if choice.disabled then
+      toggle.set(choice.name, true)
+    elseif choice.attached then
+      toggle.set(choice.name, false)
+    else
+      toggle.attach_here(choice.name, bufnr)
     end
   end)
 end

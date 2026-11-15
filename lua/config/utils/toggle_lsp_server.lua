@@ -1,22 +1,19 @@
 local M = {}
 
 --[[
-Toggle an LSP server's attach state. Once toggled OFF, the server stays
-detached for the rest of the session AND across nvim restarts (state is
-persisted to ~/.local/state/nvim/lsp-toggles.json). Toggling ON re-enables
-auto-attach for new buffers that match and immediately attaches to the
-current buffer.
+Persisted per-server LSP on/off switch, built on Neovim 0.12's
+vim.lsp.enable(name, on):
 
-One flag per server: disabled[server_name] = true means "user wants this
-off everywhere, even after restart".
+  - OFF: vim.lsp.enable(name, false) stops the server's clients and keeps it
+    from attaching again. The name is saved to
+    ~/.local/state/nvim/lsp-toggles.json, and lua/config/lsp/init.lua skips
+    vim.lsp.enable for saved names at startup, so it stays off after restart.
+  - ON: vim.lsp.enable(name) attaches to every matching buffer now and later.
+    If the current buffer still has no client (its filetype is not in the
+    server's filetypes, e.g. the on-demand vale_ls/tsgo), attach_here() starts
+    it for this buffer only.
 
-A LspAttach autocmd detaches any client of a disabled server the moment
-it tries to attach. That's what makes the toggle stick across :e, new
-file opens, AND nvim restarts (where the state file is reloaded on startup
-before any buffer events fire).
-
-Useful as an escape hatch for noisy linters (e.g. vale-ls) when you don't
-want them anywhere — even when you come back to nvim tomorrow.
+Useful as an escape hatch for noisy linters (e.g. vale-ls).
 ]]
 
 local state_path = vim.fn.stdpath("state") .. "/lsp-toggles.json"
@@ -57,84 +54,78 @@ end
 
 load_state()
 
--- Re-apply the disabled state on every LSP attach AND on buffer read /
--- filetype change. LspAttach alone wasn't enough for `:e` — some re-attach
--- paths (buffer reload with a lingering client, FileType-driven reattach)
--- didn't route through LspAttach reliably. BufReadPost + FileType provide a
--- fallback: any disabled server that made it onto the buffer gets detached.
-local group = vim.api.nvim_create_augroup("ToggleLspServerPersistDisabled", { clear = true })
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = group,
-  callback = function(ev)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client and disabled[client.name] then
-      vim.lsp.buf_detach_client(ev.buf, client.id)
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd({ "BufReadPost", "FileType" }, {
-  group = group,
-  callback = function(ev)
-    -- Scheduled so late-attaching clients are visible in get_clients() by
-    -- the time we look — some plugins attach after the sync event handlers.
-    vim.schedule(function()
-      for _, client in ipairs(vim.lsp.get_clients({ bufnr = ev.buf })) do
-        if disabled[client.name] then
-          vim.lsp.buf_detach_client(ev.buf, client.id)
-        end
-      end
-    end)
-  end,
-})
-
 ---Whether the given server is in the persistent disabled set.
 ---Used by the lsp_servers picker to surface state visually.
 function M.is_disabled(name)
   return disabled[name] == true
 end
 
-local toggle_lsp_server = function(name)
-  local bufnr = vim.api.nvim_get_current_buf()
-  local title = "LSP toggle"
+local title = "LSP toggle"
 
-  if disabled[name] then
-    -- Currently disabled → re-enable globally and attach to current buffer
-    disabled[name] = nil
-    save_state()
+---Start `name` for one buffer, whatever its filetype. Resolves root_dir the
+---way vim.lsp.enable does (root_dir function, else root_markers), which a bare
+---vim.lsp.start(config) would skip.
+---@param name string
+---@param bufnr? integer
+---@return boolean started
+function M.attach_here(name, bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local config = vim.lsp.config[name]
+  if not config then
+    vim.notify(("%s: no config registered"):format(name), vim.log.levels.WARN, { title = title })
+    return false
+  end
+  config = vim.deepcopy(config)
+  config.name = name
 
-    local config = vim.lsp.config[name]
-    if not config then
-      vim.notify(("%s: no config registered"):format(name), vim.log.levels.WARN, { title = title })
-      return
-    end
-
-    local final_config = vim.tbl_deep_extend("force", config, { name = name })
-    local ok, client_id = pcall(vim.lsp.start, final_config, { bufnr = bufnr })
-    if ok and client_id then
-      vim.notify(("%s: enabled (persisted)"):format(name), vim.log.levels.INFO, { title = title })
-    else
+  local function start(root)
+    config.root_dir = root
+    local ok, client_id = pcall(vim.lsp.start, config, { bufnr = bufnr })
+    if not (ok and client_id) then
       vim.notify(
-        ("%s: enabled but attach failed (%s)"):format(name, ok and "no client id returned" or tostring(client_id)),
+        ("%s: attach failed (%s)"):format(name, ok and "no client id returned" or tostring(client_id)),
         vim.log.levels.WARN,
         { title = title }
       )
     end
+    return ok and client_id ~= nil
+  end
+
+  if type(config.root_dir) == "function" then
+    config.root_dir(bufnr, start) -- async; start() reports failures itself
+    return true
+  end
+  return start(config.root_dir or vim.fs.root(bufnr, config.root_markers or {}))
+end
+
+---Turn a server on or off everywhere and persist the choice.
+---@param name string
+---@param on boolean
+function M.set(name, on)
+  disabled[name] = (not on) or nil
+  save_state()
+  vim.lsp.enable(name, on)
+
+  if not on then
+    vim.notify(("%s: disabled (persisted, survives restart)"):format(name), vim.log.levels.INFO, { title = title })
     return
   end
 
-  -- Currently enabled → disable globally and detach from every attached buffer
-  disabled[name] = true
-  save_state()
-
-  for _, client in ipairs(vim.lsp.get_clients({ name = name })) do
-    for attached_bufnr in pairs(client.attached_buffers or {}) do
-      vim.lsp.buf_detach_client(attached_bufnr, client.id)
+  -- vim.lsp.enable attaches through the FileType autocmds it re-runs; give
+  -- that a tick, then attach here if this buffer's filetype did not match.
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.schedule(function()
+    if #vim.lsp.get_clients({ bufnr = bufnr, name = name }) == 0 then
+      M.attach_here(name, bufnr)
     end
-  end
+    vim.notify(("%s: enabled (persisted)"):format(name), vim.log.levels.INFO, { title = title })
+  end)
+end
 
-  vim.notify(("%s: disabled (persisted, survives restart)"):format(name), vim.log.levels.INFO, { title = title })
+---Flip the persisted state: disabled → on, otherwise → off.
+---@param name string
+local toggle_lsp_server = function(name)
+  M.set(name, disabled[name] == true)
 end
 
 M.toggle_lsp_server = toggle_lsp_server
