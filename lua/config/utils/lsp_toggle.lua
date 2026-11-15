@@ -119,10 +119,14 @@ function M.set(name, on)
   end)
 end
 
----Flip the persisted state: disabled → on, otherwise → off.
+---Toggle a server for what you see: attached to the current buffer → off
+---everywhere, otherwise → on and attached here. Deciding by the persisted flag
+---instead made the first press on an on-demand server (vale_ls, which never
+---auto-attaches) only record "disabled" with no visible effect.
 ---@param name string
 local toggle_lsp_server = function(name)
-  M.set(name, disabled[name] == true)
+  local attached = #vim.lsp.get_clients({ bufnr = 0, name = name }) > 0
+  M.set(name, not attached)
 end
 
 M.toggle_lsp_server = toggle_lsp_server

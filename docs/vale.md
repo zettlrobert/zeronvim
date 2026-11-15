@@ -3,8 +3,8 @@
 ## TLDR
 
 Vale checks prose against style rules. It runs as the `vale-ls` LSP (see [lsp.md](lsp.md)) but never attaches on its
-own: `after/lsp/vale_ls.lua` sets `filetypes = {}`. Attach it to the current buffer when you want a prose pass:
-`<leader>tl`, then pick `vale_ls`.
+own: `after/lsp/vale_ls.lua` sets `filetypes = {}`. Press `<leader>tv` to attach it to the current buffer for a prose
+pass, and again to turn it off.
 
 Why on demand: vale-ls diagnostics caused display flicker in editor buffers (e.g. `COMMIT_EDITMSG`, markdown drafts).
 
@@ -66,7 +66,7 @@ Since vale-ls is on demand, the simplest escape hatch is to leave it detached.
 | Key | Action |
 |---|---|
 | `<leader>tl` | LSP picker over every server in `after/lsp/` |
-| `<leader>tv` | Flip vale_ls's persisted on/off state |
+| `<leader>tv` | Attach vale_ls here; if already attached, turn it off everywhere |
 
 Picker states and what selecting does:
 
@@ -78,9 +78,8 @@ Picker states and what selecting does:
 
 Persisted state lives in `~/.local/state/nvim/lsp-toggles.json` and survives restarts.
 
-`<leader>tv` calls `toggle_lsp_server("vale_ls")` from `lua/config/utils/lsp_toggle.lua`. It flips the persisted state,
-not the attachment. vale_ls starts "on" (enabled, but with no filetypes), so the first press disables it and nothing
-visible changes. The second press enables it and attaches to the current buffer. Prefer the picker for a one-off pass.
+`<leader>tv` calls `toggle_lsp_server("vale_ls")` from `lua/config/utils/lsp_toggle.lua`. It decides by what the
+current buffer shows: attached means turn off everywhere (persisted), otherwise turn on and attach here.
 
 The helper works for any server. To bind one for another noisy LSP:
 
@@ -94,8 +93,8 @@ end, { desc = keymap_desc.format(KIND.TOGGLE, TOOL.LSP, "eslint") })
 
 1. Configure `Google` + `write-good` in `.vale.ini` at user or project level.
 2. Silence consistently noisy rules in `.vale.ini`. Project-wide keeps a team aligned.
-3. Draft with vale detached. To polish: `<leader>tl`, pick `vale_ls`. To finish: pick it again (this turns it off and
-   persists that).
+3. Draft with vale detached. To polish: `<leader>tv`. To finish: `<leader>tv` again (this turns it off and persists
+   that).
 
 ## Related
 
