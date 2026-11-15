@@ -2,7 +2,7 @@
 
 ## TLDR
 
-DAP (Debug Adapter Protocol) client via `nvim-dap`. Two UIs installed side-by-side for comparison: `nvim-dap-view` (single-pane, keyboard-first) and `nvim-dap-ui` (multi-pane). Adapters auto-registered via `mason-nvim-dap`. Languages currently wired: **Python** (debugpy), **Go** (delve), **TS/JS/Node/Chrome** (js-debug-adapter via `nvim-dap-vscode-js` bridge), and **Lua for Neovim's own runtime** (one-small-step-for-vimkind). Test-level debugging via `neotest` with `strategy = "dap"`.
+DAP (Debug Adapter Protocol) client via `nvim-dap`. Two UIs installed side-by-side for comparison: `nvim-dap-view` (single-pane, keyboard-first) and `nvim-dap-ui` (multi-pane). Adapters auto-registered via `mason-nvim-dap`. Languages currently wired: **Python** (debugpy), **Go** (delve), **TS/JS/Node/Chrome** (js-debug-adapter, registered in `lua/config/dap/typescript.lua`), and **Lua for Neovim's own runtime** (one-small-step-for-vimkind). Test-level debugging via `neotest` with `strategy = "dap"`.
 
 ## Getting started (never used a debugger before?)
 
