@@ -1,24 +1,16 @@
 local M = {}
 
---- Return the path to a local system binary via luo io.popen or nil if unavailable
+--- Return the absolute path of an executable on $PATH, or nil if it is missing.
+--- (The previous `whereis` version returned "name: path manpages" and never
+--- reported a missing binary.)
 ---@param binary string
----@return string
+---@return string? path
 M.get_system_binary = function(binary)
-  local handle = io.popen("whereis " .. binary)
-
-  if handle then
-    local binary_path = handle:read("*a")
-    handle:close()
-
-    -- Trim white space
-    binary_path = binary_path:gsub("^%s*(.-)%s*$", "%1")
-
-    if binary_path == "" then
-      error("Could not find system binary: " .. binary, vim.log.levels.WARN)
-    end
-
-    return binary_path
+  local path = vim.fn.exepath(binary)
+  if path == "" then
+    return nil
   end
+  return path
 end
 
 return M
