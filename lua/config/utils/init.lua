@@ -4,7 +4,7 @@ effects: each module is required on first access, so `require("config.utils")`
 costs nothing until a helper is used.
 
 Modules with side effects (commands, autocmds, keymaps) are required explicitly
-from init.lua instead: source, lint_versions, patch_colorscheme.
+from init.lua instead: source, lint_versions.
 ]]
 
 ---Barrel key -> { module, field }. Without a field the whole module is returned.

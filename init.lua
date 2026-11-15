@@ -61,9 +61,6 @@ require("config.autocmds")
 -- :LintVersions and its startup check
 require("config.utils.lint_versions")
 
--- :PatchColors and the catppuccin highlight patches
-require("config.utils.patch_colorscheme")
-
 -- Require window-title
 require("config.window-title")
 
