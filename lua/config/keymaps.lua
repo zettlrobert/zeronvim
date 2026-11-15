@@ -174,6 +174,20 @@ keymap("n", "<leader>Pd", function()
   require("persistence").stop()
 end, { desc = kd.format(K.TOGGLE, T.Persistence, "stop autosave for this session") })
 
+-- Git — <leader>g namespace (gitsigns, diffview)
+keymap("n", "<leader>gw", function()
+  require("gitsigns").toggle_word_diff()
+end, { desc = kd.format(K.TOGGLE, T.Gitsigns, "word diff") })
+keymap("n", "<leader>gb", function()
+  require("gitsigns").toggle_current_line_blame()
+end, { desc = kd.format(K.TOGGLE, T.Gitsigns, "current-line blame") })
+keymap("n", "<leader>gh", function()
+  require("gitsigns").diffthis()
+end, { desc = kd.format(K.SHOW, T.Gitsigns, "hunk diff current file") })
+keymap("n", "<leader>gD", "<cmd>DiffviewOpen<CR>", { desc = kd.format(K.OPEN, T.Diffview, "diff view") })
+keymap("n", "<leader>gC", "<cmd>DiffviewClose<CR>", { desc = kd.format(K.CLOSE, T.Diffview, "diff view") })
+-- keymap("n", "<leader>gP", "<cmd>DiffviewToggleFiles<CR>", { desc = "Diffview: Toggle Diffview Files" })
+
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.
 vim.keymap.set("n", "<leader>ts", function()
