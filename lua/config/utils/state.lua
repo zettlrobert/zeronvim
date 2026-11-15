@@ -20,12 +20,12 @@ end
 ---@param name string
 ---@return table|nil
 function M.read(name)
-  local f = io.open(M.path(name), "r")
-  if not f then
+  local file = io.open(M.path(name), "r")
+  if not file then
     return nil
   end
-  local content = f:read("*a")
-  f:close()
+  local content = file:read("*a")
+  file:close()
   if not content or content == "" then
     return nil
   end
@@ -38,26 +38,26 @@ end
 ---@return boolean ok
 function M.write(name, data)
   local path = M.path(name)
-  local tmp = path .. ".tmp"
+  local temp_path = path .. ".tmp"
   local function fail(err)
     vim.notify(("Could not save %s: %s"):format(path, err), vim.log.levels.WARN)
     return false
   end
 
   vim.fn.mkdir(vim.fs.dirname(path), "p")
-  local f, open_err = io.open(tmp, "w")
-  if not f then
+  local file, open_err = io.open(temp_path, "w")
+  if not file then
     return fail(open_err)
   end
-  local written, write_err = f:write(vim.json.encode(data))
-  f:close()
+  local written, write_err = file:write(vim.json.encode(data))
+  file:close()
   if not written then
-    os.remove(tmp)
+    os.remove(temp_path)
     return fail(write_err)
   end
-  local renamed, rename_err = os.rename(tmp, path)
+  local renamed, rename_err = os.rename(temp_path, path)
   if not renamed then
-    os.remove(tmp)
+    os.remove(temp_path)
     return fail(rename_err)
   end
   return true

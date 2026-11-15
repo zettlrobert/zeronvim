@@ -26,14 +26,14 @@ local exports = {
 }
 
 return setmetatable({}, {
-  __index = function(t, key)
+  __index = function(barrel, key)
     local export = exports[key]
     if not export then
       error(("config.utils has no export %q"):format(tostring(key)), 2)
     end
-    local mod = require("config.utils." .. export[1])
-    local value = export[2] and mod[export[2]] or mod
-    rawset(t, key, value)
+    local module_table = require("config.utils." .. export[1])
+    local value = export[2] and module_table[export[2]] or module_table
+    rawset(barrel, key, value)
     return value
   end,
 })

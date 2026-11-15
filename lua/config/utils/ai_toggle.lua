@@ -91,17 +91,17 @@ end
 ---Run `fn` with the provider's plugin loaded. On first load, defer `fn` so it
 ---runs after the plugin's own scheduled default-off.
 ---@param provider AiProvider
----@param fn fun()
-local function with_plugin(provider, fn)
+---@param callback fun()
+local function with_plugin(provider, callback)
   if M.is_loaded(provider) then
-    fn()
+    callback()
     return
   end
   local ok = pcall(function()
     require("lazy").load({ plugins = { PROVIDERS[provider].plugin } })
   end)
   if ok then
-    vim.schedule(fn)
+    vim.schedule(callback)
   end
 end
 

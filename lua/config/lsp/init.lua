@@ -22,8 +22,8 @@ local M = {}
 function M.servers_from_dir()
   local dir = vim.fs.joinpath(vim.fn.stdpath("config"), "after", "lsp")
   local names = {}
-  for name, t in vim.fs.dir(dir) do
-    if t == "file" and name:match("%.lua$") then
+  for name, entry_type in vim.fs.dir(dir) do
+    if entry_type == "file" and name:match("%.lua$") then
       table.insert(names, name:sub(1, -5))
     end
   end
@@ -56,10 +56,10 @@ end
 ---return nil if the client stopped between LspAttach firing and this callback.
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("config.lsp.attach", { clear = true }),
-  callback = function(ev)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
     end
 
     -- Breadcrumbs (nvim-navic) and the symbol tree (nvim-navbuddy). The
@@ -67,10 +67,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- navic keeps one client per buffer and warns on a second, so only the
     -- first symbol server wins; navbuddy dedupes by itself.
     if client and client:supports_method("textDocument/documentSymbol") then
-      if vim.b[ev.buf].navic_client_id == nil then
-        require("nvim-navic").attach(client, ev.buf)
+      if vim.b[event.buf].navic_client_id == nil then
+        require("nvim-navic").attach(client, event.buf)
       end
-      require("nvim-navbuddy").attach(client, ev.buf)
+      require("nvim-navbuddy").attach(client, event.buf)
     end
   end,
 })

@@ -10,10 +10,10 @@ return {
   event = "VeryLazy",
   opts = {
     preset = "modern",
-    delay = function(ctx)
+    delay = function(context)
       -- Plugin-triggered prompts show instantly; user-driven prefixes wait
       -- 250ms so quick sequences don't flash a popup.
-      return ctx.plugin and 0 or 250
+      return context.plugin and 0 or 250
     end,
     -- Group labels for the established `<leader>*` namespaces
     spec = {

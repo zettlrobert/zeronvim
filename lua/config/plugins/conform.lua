@@ -32,8 +32,8 @@ return {
       end
       -- No LSP fallback for markdown and yaml: outside a prettier project yamlls
       -- would reformat with its own prettier defaults instead.
-      local ft = vim.bo[bufnr].filetype
-      local lsp_format = (ft == "markdown" or ft == "yaml") and "never" or "fallback"
+      local filetype = vim.bo[bufnr].filetype
+      local lsp_format = (filetype == "markdown" or filetype == "yaml") and "never" or "fallback"
       return { timeout_ms = 1000, lsp_format = lsp_format }
     end,
     formatters = {

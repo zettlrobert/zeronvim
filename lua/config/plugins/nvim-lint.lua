@@ -35,10 +35,10 @@ return {
     -- Only these linters: a global Mason PATH = "append" would also swap LSPs and formatters (rust-analyzer,
     -- ruff, tsc) for older or broken copies on PATH.
     -- :LintVersions compares both copies (lua/config/utils/lint_versions.lua).
-    local lv = require("config.utils.lint_versions")
-    for _, name in ipairs(lv.shared) do
-      if vim.fn.executable(lv.profile_bin .. name) == 1 then
-        lint.linters[name].cmd = lv.profile_bin .. name
+    local lint_versions = require("config.utils.lint_versions")
+    for _, name in ipairs(lint_versions.shared) do
+      if vim.fn.executable(lint_versions.profile_bin .. name) == 1 then
+        lint.linters[name].cmd = lint_versions.profile_bin .. name
       end
     end
 

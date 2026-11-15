@@ -44,8 +44,8 @@ local js_based_filetypes = {
   "javascriptreact",
 }
 
-for _, ft in ipairs(js_based_filetypes) do
-  dap.configurations[ft] = {
+for _, filetype in ipairs(js_based_filetypes) do
+  dap.configurations[filetype] = {
     -- Launch current file with tsx
     {
       type = "pwa-node",

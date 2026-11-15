@@ -23,44 +23,44 @@ local state = require("config.utils.state")
 local STATE = "lint-versions" -- ~/.local/state/nvim/lint-versions.json
 local title = "Linters"
 
----Run `<bin> --version` in the background and pass the first x.y.z to `cb`.
----Missing binary: `cb(nil)`. markdownlint-cli2 prints its version on any call.
+---Run `<bin> --version` in the background and pass the first x.y.z to `callback`.
+---Missing binary: `callback(nil)`. markdownlint-cli2 prints its version on any call.
 ---@param bin string
----@param cb fun(version: string|nil)
-local function read_version(bin, cb)
+---@param callback fun(version: string|nil)
+local function read_version(bin, callback)
   if vim.fn.executable(bin) ~= 1 then
-    cb(nil)
+    callback(nil)
     return
   end
   local ok = pcall(vim.system, { bin, "--version" }, { text = true, timeout = 5000 }, function(out)
-    cb(((out.stdout or "") .. (out.stderr or "")):match("%d+%.%d+%.%d+"))
+    callback(((out.stdout or "") .. (out.stderr or "")):match("%d+%.%d+%.%d+"))
   end)
   if not ok then
-    cb(nil)
+    callback(nil)
   end
 end
 
----Read profile and Mason versions of every shared linter, then call `cb` on the
+---Read profile and Mason versions of every shared linter, then call `callback` on the
 ---main loop with one row per linter.
----@param cb fun(rows: { name: string, profile: string|nil, mason: string|nil }[])
-function M.collect(cb)
+---@param callback fun(rows: { name: string, profile: string|nil, mason: string|nil }[])
+function M.collect(callback)
   local rows, pending = {}, #M.shared * 2
   local function done()
     pending = pending - 1
     if pending == 0 then
       vim.schedule(function()
-        cb(rows)
+        callback(rows)
       end)
     end
   end
-  for i, name in ipairs(M.shared) do
-    rows[i] = { name = name }
-    read_version(M.profile_bin .. name, function(v)
-      rows[i].profile = v
+  for index, name in ipairs(M.shared) do
+    rows[index] = { name = name }
+    read_version(M.profile_bin .. name, function(version)
+      rows[index].profile = version
       done()
     end)
-    read_version(mason_bin .. name, function(v)
-      rows[i].mason = v
+    read_version(mason_bin .. name, function(version)
+      rows[index].mason = version
       done()
     end)
   end
@@ -79,8 +79,8 @@ local function editor_uses(row)
 end
 
 ---Pad by display width: string.format pads by bytes and the ↑ is three.
-local function pad(s, width)
-  return s .. (" "):rep(width - vim.fn.strdisplaywidth(s))
+local function pad(text, width)
+  return text .. (" "):rep(width - vim.fn.strdisplaywidth(text))
 end
 
 ---@return string[] the :LintVersions table
@@ -122,29 +122,29 @@ function M.warn(rows)
   if #fresh == 0 then
     return nil
   end
-  local msg = table.concat({
+  local message = table.concat({
     "The hooks' toolchain is behind Mason:",
     table.concat(fresh, "\n"),
     "Editor keeps the hook versions.",
     "Update: nix flake update in nix-profiles core, then nix profile upgrade",
     "Details: :LintVersions",
   }, "\n")
-  vim.notify(msg, vim.log.levels.WARN, { title = title, timeout = 8000 })
-  return msg
+  vim.notify(message, vim.log.levels.WARN, { title = title, timeout = 8000 })
+  return message
 end
 
 ---Float with the version table; `q` or `<Esc>` closes it.
 local function show(rows)
   local lines = M.format(rows)
-  local buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-  vim.bo[buf].modifiable = false
-  vim.bo[buf].bufhidden = "wipe"
+  local bufnr = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  vim.bo[bufnr].modifiable = false
+  vim.bo[bufnr].bufhidden = "wipe"
   local width = 0
   for _, line in ipairs(lines) do
     width = math.max(width, vim.fn.strdisplaywidth(line))
   end
-  vim.api.nvim_open_win(buf, true, {
+  vim.api.nvim_open_win(bufnr, true, {
     relative = "editor",
     width = width + 2,
     height = #lines,
@@ -155,7 +155,7 @@ local function show(rows)
     title = " Lint versions ",
   })
   for _, key in ipairs({ "q", "<Esc>" }) do
-    vim.keymap.set("n", key, "<cmd>close<cr>", { buffer = buf, nowait = true })
+    vim.keymap.set("n", key, "<cmd>close<cr>", { buffer = bufnr, nowait = true })
   end
 end
 

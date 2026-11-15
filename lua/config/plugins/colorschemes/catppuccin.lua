@@ -43,20 +43,20 @@ return {
       -- Personal tweaks on top of mocha. Applied by catppuccin on every load,
       -- so they survive :colorscheme switches without an extra autocmd.
       highlight_overrides = {
-        mocha = function(c)
+        mocha = function(colors)
           return {
             -- Darker cursor line, rosewater current line number
-            CursorLine = { bg = c.crust },
-            CursorLineNr = { fg = c.rosewater },
+            CursorLine = { bg = colors.crust },
+            CursorLineNr = { fg = colors.rosewater },
             -- Near-invisible window splits. WinSeparator draws them since
             -- Neovim 0.10; VertSplit is kept for plugins still using it.
-            WinSeparator = { fg = c.crust, bg = "NONE" },
-            VertSplit = { fg = c.crust, bg = "NONE" },
+            WinSeparator = { fg = colors.crust, bg = "NONE" },
+            VertSplit = { fg = colors.crust, bg = "NONE" },
             -- Solid background despite transparent_background
-            Normal = { bg = c.mantle },
+            Normal = { bg = colors.mantle },
             -- blink.cmp links its source label to PmenuExtra (overlay0,
             -- grey); match the item label color instead.
-            BlinkCmpSource = { fg = c.overlay2 },
+            BlinkCmpSource = { fg = colors.overlay2 },
           }
         end,
       },

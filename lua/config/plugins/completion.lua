@@ -60,14 +60,14 @@ return {
             components = {
               kind_icon = {
                 ellipsis = false,
-                text = function(ctx)
-                  local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+                text = function(context)
+                  local kind_icon, _, _ = require("mini.icons").get("lsp", context.kind)
                   return kind_icon
                 end,
                 ---Optionally, you may also use the highlights from mini.icons
-                highlight = function(ctx)
-                  local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-                  return hl
+                highlight = function(context)
+                  local _, highlight, _ = require("mini.icons").get("lsp", context.kind)
+                  return highlight
                 end,
               },
             },
@@ -82,12 +82,12 @@ return {
         -- checks `enabled`, so a static list would load the lazy AI plugins on
         -- the first completion. See config.utils.ai_toggle.
         default = function()
-          local ai = require("config.utils.ai_toggle")
+          local ai_toggle = require("config.utils.ai_toggle")
           local sources = { "lsp", "path", "snippets", "buffer", "omni" }
-          if ai.is_copilot_enabled() then
+          if ai_toggle.is_copilot_enabled() then
             table.insert(sources, "copilot")
           end
-          if ai.is_minuet_enabled() then
+          if ai_toggle.is_minuet_enabled() then
             table.insert(sources, "minuet")
           end
           return sources

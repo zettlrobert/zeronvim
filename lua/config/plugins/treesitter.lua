@@ -54,8 +54,8 @@ return {
     -- lua/config/lsp/init.lua.
     vim.api.nvim_create_autocmd("FileType", {
       group = vim.api.nvim_create_augroup("config.treesitter", { clear = true }),
-      callback = function(args)
-        local bufnr = args.buf
+      callback = function(event)
+        local bufnr = event.buf
         local ok = pcall(vim.treesitter.start, bufnr)
         if ok then
           vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"

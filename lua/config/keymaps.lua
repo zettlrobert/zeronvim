@@ -55,8 +55,8 @@ keymap("v", ">", ">gv", { desc = keymap_desc.format(KIND.INDENT, TOOL.Native, "i
 -- (lua/config/plugins/conform.lua): conform first, LSP only as a fallback, and
 -- no LSP fallback for markdown and yaml.
 keymap("n", "<leader>lf", function()
-  local ft = vim.bo.filetype
-  local lsp_format = (ft == "markdown" or ft == "yaml") and "never" or "fallback"
+  local filetype = vim.bo.filetype
+  local lsp_format = (filetype == "markdown" or filetype == "yaml") and "never" or "fallback"
   require("conform").format({ async = true, lsp_format = lsp_format })
 end, {
   desc = keymap_desc.format(KIND.RUN, TOOL.LSP, "format current buffer"),
@@ -113,8 +113,8 @@ keymap("n", "[L", "<cmd>lfirst<CR>", { desc = keymap_desc.format(KIND.JUMP, TOOL
 
 -- Quickfix toggle (copen / cclose)
 keymap("n", "<leader>qq", function()
-  for _, w in ipairs(vim.fn.getwininfo()) do
-    if w.quickfix == 1 then
+  for _, window in ipairs(vim.fn.getwininfo()) do
+    if window.quickfix == 1 then
       vim.cmd("cclose")
       return
     end
@@ -496,9 +496,9 @@ vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown buf_toggle<CR>", {
 
 -- DAP (Debug Adapter Protocol) — namespace <leader>b (b for breakpoint/bug).
 -- Chose `b` because <leader>d is diagnostic float (vim.diagnostic.open_float).
-local dap_bind = function(lhs, fn, desc)
+local dap_bind = function(lhs, method, desc)
   vim.keymap.set("n", lhs, function()
-    require("dap")[fn]()
+    require("dap")[method]()
   end, { desc = desc })
 end
 dap_bind("<leader>bc", "continue", keymap_desc.format(KIND.DEBUG, TOOL.DAP, "continue / start"))

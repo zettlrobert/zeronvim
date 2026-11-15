@@ -9,14 +9,14 @@ in-memory only — reset on every nvim restart.
 
 Usage:
 
-  local tl = require("config.utils.toggle_linter")
-  tl.toggle("markdownlint-cli2")
-  tl.enable("shellcheck")
-  tl.disable("hadolint")
+  local toggle_linter = require("config.utils.toggle_linter")
+  toggle_linter.toggle("markdownlint-cli2")
+  toggle_linter.enable("shellcheck")
+  toggle_linter.disable("hadolint")
 
   -- In the nvim-lint autocmd (see plugins/nvim-lint.lua):
   local linters = require("lint").linters_by_ft[vim.bo.filetype] or {}
-  local enabled = tl.filter(linters)
+  local enabled = toggle_linter.filter(linters)
   if #enabled > 0 then
     require("lint").try_lint(enabled)
   end

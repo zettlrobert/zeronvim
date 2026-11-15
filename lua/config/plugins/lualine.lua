@@ -35,13 +35,13 @@ return {
       end,
     }
 
-    -- Macro recording indicator: shows `● @<reg>` while `q<reg>` is capturing.
+    -- Macro recording indicator: shows `● @<register>` while `q<register>` is capturing.
     -- Hidden otherwise via `cond`. Colored via the `Error` hl group so it
     -- stays high-visibility across colorschemes.
     local macro_recording = {
       function()
-        local reg = vim.fn.reg_recording()
-        return reg ~= "" and ("● @" .. reg) or ""
+        local register = vim.fn.reg_recording()
+        return register ~= "" and ("● @" .. register) or ""
       end,
       cond = function()
         return vim.fn.reg_recording() ~= ""
@@ -67,16 +67,16 @@ return {
     -- for unmapped server names. Compact, always renders something meaningful.
     local lsp_clients = {
       function()
-        local n = #vim.lsp.get_clients({ bufnr = 0 })
-        if n == 0 then
+        local client_count = #vim.lsp.get_clients({ bufnr = 0 })
+        if client_count == 0 then
           return ""
         end
-        local mi_ok, mi = pcall(require, "mini.icons")
-        if not mi_ok then
-          return "LSP:" .. n
+        local icons_ok, mini_icons = pcall(require, "mini.icons")
+        if not icons_ok then
+          return "LSP:" .. client_count
         end
-        local icon, hl = mi.get("filetype", vim.bo.filetype)
-        return string.format("%%#%s#%s%%* %d", hl or "Comment", icon or "", n)
+        local icon, highlight = mini_icons.get("filetype", vim.bo.filetype)
+        return string.format("%%#%s#%s%%* %d", highlight or "Comment", icon or "", client_count)
       end,
       cond = hide_in_width,
     }
