@@ -38,7 +38,7 @@ end
 ---~/.local/state/nvim/lsp-toggles.json) are skipped — vim.lsp.enable would
 ---otherwise register FileType autocmds that keep re-attaching them on
 ---`:e` / new buffers, defeating the toggle.
-local toggle = require("config.utils.toggle_lsp_server")
+local toggle = require("config.utils.lsp_toggle")
 for _, name in ipairs(M.servers_from_dir()) do
   if toggle.is_disabled(name) then
     goto continue

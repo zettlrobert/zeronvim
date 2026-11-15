@@ -14,6 +14,14 @@ vim.lsp.enable(name, on):
     it for this buffer only.
 
 Useful as an escape hatch for noisy linters (e.g. vale-ls).
+
+M.pick() (<leader>tl) is a picker over every configured server (everything
+with an after/lsp/<name>.lua, the same scan that drives vim.lsp.enable:
+config.lsp.servers_from_dir()), showing each server's state for the current
+buffer. Selecting an item:
+  ✕ disabled (persisted) → turn it on everywhere (M.set)
+  ● attached             → turn it off everywhere (persisted)
+  ○ not attached         → attach it to this buffer only (M.attach_here)
 ]]
 
 local state = require("config.utils.state")
@@ -38,7 +46,7 @@ end
 load_state()
 
 ---Whether the given server is in the persistent disabled set.
----Used by the lsp_servers picker to surface state visually.
+---Used by the picker to surface state visually.
 function M.is_disabled(name)
   return disabled[name] == true
 end
@@ -112,5 +120,69 @@ local toggle_lsp_server = function(name)
 end
 
 M.toggle_lsp_server = toggle_lsp_server
+
+-- ---------------------------------------------------------------------------
+-- Picker
+-- ---------------------------------------------------------------------------
+
+---Picker items: every configured server with its attach state for `bufnr`
+---and its persisted-disabled flag.
+---@param bufnr integer
+local function server_states(bufnr)
+  local attached = {}
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    attached[client.name] = true
+  end
+  local items = {}
+  for _, name in ipairs(require("config.lsp").servers_from_dir()) do
+    table.insert(items, {
+      name = name,
+      attached = attached[name] or false,
+      disabled = M.is_disabled(name),
+    })
+  end
+  return items
+end
+
+function M.pick()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local items = server_states(bufnr)
+
+  if #items == 0 then
+    vim.notify("No LSP servers configured", vim.log.levels.WARN, { title = "LSP servers" })
+    return
+  end
+
+  vim.ui.select(items, {
+    prompt = "Toggle LSP server",
+    kind = "lsp_servers",
+    format_item = function(item)
+      local marker
+      local state
+      if item.disabled then
+        marker = "✕ "
+        state = "disabled (persisted)"
+      elseif item.attached then
+        marker = "● "
+        state = "attached"
+      else
+        marker = "○ "
+        state = "not attached"
+      end
+      return ("%s%-30s  %s"):format(marker, item.name, state)
+    end,
+  }, function(choice)
+    if not choice then
+      return
+    end
+    if choice.disabled then
+      M.set(choice.name, true)
+    elseif choice.attached then
+      M.set(choice.name, false)
+    else
+      M.attach_here(choice.name, bufnr)
+    end
+  end)
+end
 
 return M

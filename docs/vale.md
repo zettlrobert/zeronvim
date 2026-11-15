@@ -68,7 +68,7 @@ Since vale-ls is opt-in (manual attach via `<leader>tv`), the everyday "just tur
 | `<leader>tv` | Attach vale-ls to the current buffer (or detach if already attached) |
 | `<leader>tl` | Generic LSP picker — pick any server to toggle, including vale-ls |
 
-Implementation: `toggle_lsp_server(name)` in `lua/config/utils/toggle_lsp_server.lua`, exposed as `require("config.utils").toggle_lsp_server`. Generic — bind it for other noisy LSPs too:
+Implementation: `toggle_lsp_server(name)` in `lua/config/utils/lsp_toggle.lua`, exposed as `require("config.utils").toggle_lsp_server`. Generic — bind it for other noisy LSPs too:
 
 ```lua
 vim.keymap.set("n", "<leader>te", function()

@@ -17,10 +17,10 @@ local exports = {
   get_user = { "get_user", "get_user" },
   protected_plugin_call = { "protected_plugin_call", "protected_plugin_call" },
   is_presentation_markdown = { "is_presentation_markdown", "is_presentation_markdown" },
-  toggle_lsp_server = { "toggle_lsp_server", "toggle_lsp_server" },
+  toggle_lsp_server = { "lsp_toggle", "toggle_lsp_server" },
   toggle_spell = { "toggle_spell", "toggle_spell" },
   lsp_actions = { "lsp_actions", "lsp_actions" },
-  lsp_servers = { "lsp_servers", "lsp_servers" },
+  lsp_servers = { "lsp_toggle", "pick" },
   keymap_desc = { "keymap_desc" },
   lint_versions = { "lint_versions" },
 }
