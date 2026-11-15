@@ -16,7 +16,8 @@ vim.lsp.enable(name, on):
 Useful as an escape hatch for noisy linters (e.g. vale-ls).
 ]]
 
-local state_path = vim.fn.stdpath("state") .. "/lsp-toggles.json"
+local state = require("config.utils.state")
+local STATE = "lsp-toggles" -- ~/.local/state/nvim/lsp-toggles.json
 
 -- disabled[server_name] = true means user toggled it off
 local disabled = {}
@@ -24,32 +25,14 @@ local disabled = {}
 ---Load the disabled set from disk. Best-effort: any read/parse failure
 ---leaves us with an empty set (the toggle still works for this session).
 local function load_state()
-  local f = io.open(state_path, "r")
-  if not f then
-    return
-  end
-  local content = f:read("*a")
-  f:close()
-  if not content or content == "" then
-    return
-  end
-  local ok, parsed = pcall(vim.json.decode, content)
-  if ok and type(parsed) == "table" and type(parsed.disabled) == "table" then
+  local parsed = state.read(STATE)
+  if parsed and type(parsed.disabled) == "table" then
     disabled = parsed.disabled
   end
 end
 
----Save the disabled set to disk. Atomic write via temp + rename so a crash
----mid-write doesn't corrupt the state file.
 local function save_state()
-  local tmp = state_path .. ".tmp"
-  local f = io.open(tmp, "w")
-  if not f then
-    return
-  end
-  f:write(vim.json.encode({ disabled = disabled }))
-  f:close()
-  os.rename(tmp, state_path)
+  state.write(STATE, { disabled = disabled })
 end
 
 load_state()

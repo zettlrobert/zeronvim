@@ -19,7 +19,8 @@ M.shared = { "shellcheck", "yamllint", "hadolint", "actionlint", "markdownlint-c
 M.profile_bin = vim.fn.expand("~/.nix-profile/bin/")
 
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin/"
-local state_path = vim.fn.stdpath("state") .. "/lint-versions.json"
+local state = require("config.utils.state")
+local STATE = "lint-versions" -- ~/.local/state/nvim/lint-versions.json
 local title = "Linters"
 
 ---Run `<bin> --version` in the background and pass the first x.y.z to `cb`.
@@ -96,26 +97,11 @@ function M.format(rows)
 end
 
 local function load_warned()
-  local f = io.open(state_path, "r")
-  if not f then
-    return {}
-  end
-  local content = f:read("*a")
-  f:close()
-  local ok, parsed = pcall(vim.json.decode, content)
-  return (ok and type(parsed) == "table") and parsed or {}
+  return state.read(STATE) or {}
 end
 
----Atomic write via temp + rename, like toggle_lsp_server.
 local function save_warned(warned)
-  local tmp = state_path .. ".tmp"
-  local f = io.open(tmp, "w")
-  if not f then
-    return
-  end
-  f:write(vim.json.encode(warned))
-  f:close()
-  os.rename(tmp, state_path)
+  state.write(STATE, warned)
 end
 
 ---Notify about version pairs where Mason is newer and that have not warned yet.
