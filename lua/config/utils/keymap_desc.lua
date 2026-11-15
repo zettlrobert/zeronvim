@@ -19,8 +19,8 @@ Usage:
   })
   -- → "[DEBUG] [DAP] toggle breakpoint"
 
-Both K.X and T.X return their string value, so typos error immediately
-(nil indexed) instead of producing broken desc strings.
+Both K.X and T.X return their string value. An unknown key errors
+immediately (see the metatables below) instead of producing broken desc strings.
 ]]
 
 M.KIND = {
@@ -84,6 +84,16 @@ M.TOOL = {
   Native = "Native",
   Source = "Source",
 }
+
+-- Strict lookup: an unknown key (a typo like T.Telscope) raises an error
+-- naming the key instead of rendering "[nil]" in the description.
+for name, tbl in pairs({ KIND = M.KIND, TOOL = M.TOOL }) do
+  setmetatable(tbl, {
+    __index = function(_, key)
+      error(("keymap_desc.%s has no entry %q"):format(name, tostring(key)), 2)
+    end,
+  })
+end
 
 ---Format a keymap desc as `[KIND] [TOOL] description`.
 ---@param kind string One of M.KIND
