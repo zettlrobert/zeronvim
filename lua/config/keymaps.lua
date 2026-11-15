@@ -272,6 +272,32 @@ keymap("n", "<leader>ss", function()
   require("nvim-navbuddy").open()
 end, { desc = kd.format(K.OPEN, T.Navbuddy, "symbol tree") })
 
+-- Flash: hint-based motions (`s`), treesitter selection (`S`), remote
+-- operator (`r`), and labels in cmdline search (`<C-s>`).
+keymap({ "n", "x", "o" }, "s", function()
+  require("flash").jump()
+end, { desc = kd.format(K.JUMP, T.Flash, "hint-based") })
+keymap({ "n", "x", "o" }, "S", function()
+  require("flash").treesitter()
+end, { desc = kd.format(K.JUMP, T.Flash, "treesitter node") })
+keymap("o", "r", function()
+  require("flash").remote()
+end, { desc = kd.format(K.JUMP, T.Flash, "remote (operator)") })
+keymap({ "o", "x" }, "R", function()
+  require("flash").treesitter_search()
+end, { desc = kd.format(K.SEARCH, T.Flash, "treesitter") })
+keymap("c", "<c-s>", function()
+  require("flash").toggle()
+end, { desc = kd.format(K.TOGGLE, T.Flash, "in cmdline search") })
+
+-- Paste an image from the clipboard (img-clip)
+keymap("n", "<leader>p", "<cmd>PasteImage<cr>", { desc = kd.format(K.PASTE, T.ImgClip, "image from clipboard") })
+
+-- Which-key: buffer-local keymaps only
+keymap("n", "<leader>?", function()
+  require("which-key").show({ global = false })
+end, { desc = kd.format(K.SHOW, T.WhichKey, "buffer-local keymaps") })
+
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.
 vim.keymap.set("n", "<leader>ts", function()

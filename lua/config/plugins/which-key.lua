@@ -42,13 +42,4 @@ return {
       mappings = false,
     },
   },
-  keys = {
-    {
-      "<leader>?",
-      function()
-        require("which-key").show({ global = false })
-      end,
-      desc = require("config.utils.keymap_desc").format("SHOW", "Which-key", "buffer-local keymaps"),
-    },
-  },
 }
