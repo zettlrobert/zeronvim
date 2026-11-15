@@ -36,11 +36,10 @@ require("lazy").setup({
   spec = {
     { import = "config.plugins" },
   },
+  -- Colorscheme used while lazy.nvim installs missing plugins on a fresh
+  -- clone. The catppuccin spec applies catppuccin-mocha once it is installed.
+  install = { colorscheme = { "catppuccin", "habamax" } },
 })
-
--- pcall so a missing colorscheme (e.g. mid-Lazy-sync, fresh clone) doesn't
--- abort init.lua and cascade into "loop or previous error" on later requires
-pcall(vim.cmd.colorscheme, "catppuccin-mocha")
 
 -- Require Neovim Options
 require("config.options")
