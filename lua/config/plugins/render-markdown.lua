@@ -16,6 +16,10 @@ return {
     markdown.setup({
       enabled = true,
       render_modes = { "n" },
+      -- No LaTeX math in the notes, and the latex parser is not installed.
+      -- Typst can't stand in: its math syntax differs and render-markdown only
+      -- hands formulas to a LaTeX-to-unicode converter (utftex/latex2text).
+      latex = { enabled = false },
       completions = {
         lsp = {
           enabled = true,
