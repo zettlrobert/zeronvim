@@ -146,6 +146,23 @@ keymap("n", "<leader>fp", function()
   require("telescope.builtin").find_files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
 end, { desc = kd.format(K.PICK, T.Telescope, "installed plugin files") })
 
+-- Snacks. Show the notifier's toast history. Useful when a notification faded
+-- before you could read it, or to see errors from plugins that route through
+-- vim.notify (e.g. minuet completion failures).
+keymap("n", "<leader>nh", function()
+  require("snacks").notifier.show_history()
+end, { desc = kd.format(K.SHOW, T.Notifier, "notification history") })
+
+-- Scratch buffers. `<leader>.` opens/toggles the primary scratch for this cwd
+-- (markdown by default). `<leader>S` opens the picker over all scratches for
+-- this cwd, to jump between multiple ongoing notes.
+keymap("n", "<leader>.", function()
+  require("snacks").scratch()
+end, { desc = kd.format(K.OPEN, T.Scratch, "new scratch buffer") })
+keymap("n", "<leader>S", function()
+  require("snacks").scratch.select()
+end, { desc = kd.format(K.PICK, T.Scratch, "select scratch buffer") })
+
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.
 vim.keymap.set("n", "<leader>ts", function()

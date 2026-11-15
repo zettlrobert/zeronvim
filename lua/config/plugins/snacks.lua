@@ -8,150 +8,127 @@ return {
     -- (a nil value)` when snacks color helpers run against un-defined hl
     -- groups. Priority is a lazy.nvim scheduling knob, not runtime.
     priority = 1000,
-    config = function()
-      local snacks = require("snacks")
-      local kd = require("config.utils.keymap_desc")
-      local K, T = kd.KIND, kd.TOOL
+    opts = {
+      animate = {
+        enabled = true,
+        easing = "linear",
+      },
 
-      snacks.setup({
+      indent = {
+        enabled = true,
+        hl = "SnacksIndent",
         animate = {
-          enabled = true,
-          easing = "linear",
+          enabled = false,
         },
-
-        indent = {
-          enabled = true,
-          hl = "SnacksIndent",
-          animate = {
-            enabled = false,
-          },
-          scope = {
-            hl = "ModeMsg",
-          },
+        scope = {
+          hl = "ModeMsg",
         },
+      },
 
-        scroll = {
-          enabled = true,
-          easing = "linear",
+      scroll = {
+        enabled = true,
+        easing = "linear",
+      },
+
+      statuscolumn = {
+        enabled = true,
+        left = { "mark", "sign" }, -- priority of signs on the left (high to low)
+        right = { "fold", "git" }, -- priority of signs on the right (high to low)
+        folds = {
+          open = true,             -- show open fold icons
+          git_hl = true,           -- use Git Signs hl for fold icons
         },
-
-        statuscolumn = {
-          enabled = true,
-          left = { "mark", "sign" }, -- priority of signs on the left (high to low)
-          right = { "fold", "git" }, -- priority of signs on the right (high to low)
-          folds = {
-            open = true,             -- show open fold icons
-            git_hl = true,           -- use Git Signs hl for fold icons
-          },
-          git = {
-            -- patterns to match Git signs
-            patterns = { "GitSign" },
-          },
+        git = {
+          -- patterns to match Git signs
+          patterns = { "GitSign" },
         },
+      },
 
-        -- Replaces vim.ui.input (LSP rename prompt, other single-line prompts).
-        -- Matches the ivy-styled picker for a consistent feel.
-        input = { enabled = true },
+      -- Replaces vim.ui.input (LSP rename prompt, other single-line prompts).
+      -- Matches the ivy-styled picker for a consistent feel.
+      input = { enabled = true },
 
-        -- Replaces vim.notify with toast notifications plus history.
-        -- View past notifications: `:Snacks notifier show_history`.
-        notifier = {
-          enabled = true,
-          timeout = 3000,
-        },
+      -- Replaces vim.notify with toast notifications plus history.
+      -- View past notifications: `:Snacks notifier show_history`.
+      notifier = {
+        enabled = true,
+        timeout = 3000,
+      },
 
-        -- Closes buffers without collapsing the window layout.
-        -- Callable as `Snacks.bufdelete()` or via `:lua Snacks.bufdelete()`.
-        bufdelete = { enabled = true },
+      -- Closes buffers without collapsing the window layout.
+      -- Callable as `Snacks.bufdelete()` or via `:lua Snacks.bufdelete()`.
+      bufdelete = { enabled = true },
 
-        -- Auto-disables treesitter, LSP, and other heavyweight features on
-        -- files above the size threshold to keep the editor responsive.
-        bigfile = { enabled = true },
+      -- Auto-disables treesitter, LSP, and other heavyweight features on
+      -- files above the size threshold to keep the editor responsive.
+      bigfile = { enabled = true },
 
-        -- Highlights other occurrences of the word under the cursor. This
-        -- config doesn't wire up LSP's own `textDocument/documentHighlight`,
-        -- so snacks.words fills the gap purely textually — works even in
-        -- filetypes without an LSP (markdown, plain text, config files).
-        words = { enabled = true },
+      -- Highlights other occurrences of the word under the cursor. This
+      -- config doesn't wire up LSP's own `textDocument/documentHighlight`,
+      -- so snacks.words fills the gap purely textually — works even in
+      -- filetypes without an LSP (markdown, plain text, config files).
+      words = { enabled = true },
 
-        -- LSP-aware file rename: renaming a filename symbol via LSP also
-        -- renames the file on disk. Also lets file explorers (nvim-tree, oil)
-        -- fire LSP willRenameFiles so identifier references update project-wide.
-        rename = { enabled = true },
+      -- LSP-aware file rename: renaming a filename symbol via LSP also
+      -- renames the file on disk. Also lets file explorers (nvim-tree, oil)
+      -- fire LSP willRenameFiles so identifier references update project-wide.
+      rename = { enabled = true },
 
-        -- Persistent scratch buffers per-cwd. Replaces the pattern of creating
-        -- throwaway `todo.md` / `notes.md` files in project roots. Default ft
-        -- is markdown; picker at `<leader>S` lets you jump between saved
-        -- scratches for the current project.
-        scratch = { enabled = true },
+      -- Persistent scratch buffers per-cwd. Replaces the pattern of creating
+      -- throwaway `todo.md` / `notes.md` files in project roots. Default ft
+      -- is markdown; picker at `<leader>S` lets you jump between saved
+      -- scratches for the current project.
+      scratch = { enabled = true },
 
-        -- Startup landing page shown only when nvim opens with no file args
-        -- (bare `nvim`, not `nvim .` or `nvim <file>`). Quick actions +
-        -- recent files. Actions use `Snacks.dashboard.pick`, which routes
-        -- through snacks.picker for a consistent ivy look.
-        dashboard = {
-          enabled = true,
-          preset = {
-            keys = {
-              { icon = " ", key = "f", desc = "Find file", action = ":lua Snacks.dashboard.pick('files')" },
-              { icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
-              { icon = " ", key = "g", desc = "Find text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-              { icon = " ", key = "r", desc = "Recent files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-              {
-                icon = "󰦛 ",
-                key = "s",
-                desc = "Restore session (cwd)",
-                action = ":lua require('persistence').load()",
-              },
-              {
-                icon = " ",
-                key = "c",
-                desc = "Config",
-                action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
-              },
-              { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+      -- Startup landing page shown only when nvim opens with no file args
+      -- (bare `nvim`, not `nvim .` or `nvim <file>`). Quick actions +
+      -- recent files. Actions use `Snacks.dashboard.pick`, which routes
+      -- through snacks.picker for a consistent ivy look.
+      dashboard = {
+        enabled = true,
+        preset = {
+          keys = {
+            { icon = " ", key = "f", desc = "Find file", action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
+            { icon = " ", key = "g", desc = "Find text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+            { icon = " ", key = "r", desc = "Recent files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+            {
+              icon = "󰦛 ",
+              key = "s",
+              desc = "Restore session (cwd)",
+              action = ":lua require('persistence').load()",
             },
-          },
-          sections = {
-            { section = "header" },
-            { section = "keys", gap = 1, padding = 1 },
-            { section = "recent_files", cwd = true, limit = 5, padding = 1 },
-            { section = "startup" },
-          },
-        },
-
-        picker = {
-          enabled = true,
-          ui_select = true, -- register as vim.ui.select handler
-          sources = {
-            -- Ivy = bottom-anchored, matches the telescope-ivy theme used in
-            -- telescope pickers. Scoped to `select` so only vim.ui.select is
-            -- affected; other snacks.picker uses (if added later) keep defaults.
-            select = {
-              -- No preview: menu items (LSP actions, server toggles, etc.) have
-              -- nothing meaningful to preview and the pane just eats space.
-              layout = { preset = "ivy", preview = false },
+            {
+              icon = " ",
+              key = "c",
+              desc = "Config",
+              action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
             },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
           },
         },
-      })
+        sections = {
+          { section = "header" },
+          { section = "keys", gap = 1, padding = 1 },
+          { section = "recent_files", cwd = true, limit = 5, padding = 1 },
+          { section = "startup" },
+        },
+      },
 
-      -- Show the notifier's toast history. Useful when a notification faded
-      -- before you could read it, or to see errors from plugins that route
-      -- through vim.notify (e.g. minuet completion failures).
-      vim.keymap.set("n", "<leader>nh", function()
-        snacks.notifier.show_history()
-      end, { desc = kd.format(K.SHOW, T.Notifier, "notification history") })
-
-      -- Scratch buffer keymaps. `<leader>.` opens/toggles the primary scratch
-      -- for this cwd (markdown by default). `<leader>S` opens the picker over
-      -- all scratches for this cwd — jump between multiple ongoing notes.
-      vim.keymap.set("n", "<leader>.", function()
-        snacks.scratch()
-      end, { desc = kd.format(K.OPEN, T.Scratch, "new scratch buffer") })
-      vim.keymap.set("n", "<leader>S", function()
-        snacks.scratch.select()
-      end, { desc = kd.format(K.PICK, T.Scratch, "select scratch buffer") })
-    end,
+      picker = {
+        enabled = true,
+        ui_select = true, -- register as vim.ui.select handler
+        sources = {
+          -- Ivy = bottom-anchored, matches the telescope-ivy theme used in
+          -- telescope pickers. Scoped to `select` so only vim.ui.select is
+          -- affected; other snacks.picker uses (if added later) keep defaults.
+          select = {
+            -- No preview: menu items (LSP actions, server toggles, etc.) have
+            -- nothing meaningful to preview and the pane just eats space.
+            layout = { preset = "ivy", preview = false },
+          },
+        },
+      },
+    },
   },
 }
