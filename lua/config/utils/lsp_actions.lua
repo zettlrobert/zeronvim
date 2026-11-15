@@ -126,7 +126,7 @@ local function supported_actions(bufnr)
     local supported = item.method == nil
     if not supported then
       for _, client in ipairs(clients) do
-        if client:supports_method(item.method, { bufnr = bufnr }) then
+        if client:supports_method(item.method, bufnr) then
           supported = true
           break
         end
