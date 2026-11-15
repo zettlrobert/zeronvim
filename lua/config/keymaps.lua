@@ -188,6 +188,74 @@ keymap("n", "<leader>gD", "<cmd>DiffviewOpen<CR>", { desc = kd.format(K.OPEN, T.
 keymap("n", "<leader>gC", "<cmd>DiffviewClose<CR>", { desc = kd.format(K.CLOSE, T.Diffview, "diff view") })
 -- keymap("n", "<leader>gP", "<cmd>DiffviewToggleFiles<CR>", { desc = "Diffview: Toggle Diffview Files" })
 
+-- Trouble — <leader>x namespace (examine). An optional, persistent split
+-- panel over lists (diagnostics, quickfix, symbols, references, todos). It does
+-- NOT replace native quickfix navigation: `]q`/`[q` and `<leader>q*` above are
+-- the primary workflow.
+local trouble_bottom = { type = "split", relative = "editor", position = "bottom", size = 0.25 }
+local trouble_right = { type = "split", relative = "editor", position = "right", size = 0.3 }
+---@param lhs string
+---@param opts table trouble.toggle() options
+---@param desc string
+local trouble_toggle = function(lhs, opts, desc)
+  keymap("n", lhs, function()
+    require("trouble").toggle(opts)
+  end, { desc = kd.format(K.OPEN, T.Trouble, desc) })
+end
+trouble_toggle("<leader>xx", {
+  mode = "diagnostics",
+  multiline = true,
+  auto_preview = true,
+  win = trouble_bottom,
+}, "workspace diagnostics panel")
+trouble_toggle("<leader>xX", {
+  mode = "diagnostics",
+  multiline = true,
+  auto_preview = true,
+  win = trouble_bottom,
+  filter = { buf = 0 },
+}, "buffer diagnostics panel")
+-- Quickfix / loclist views (don't fight native :copen / :lopen)
+trouble_toggle("<leader>xq", {
+  mode = "quickfix",
+  multiline = true,
+  auto_preview = true,
+  win = trouble_bottom,
+}, "quickfix panel")
+trouble_toggle("<leader>xl", {
+  mode = "loclist",
+  multiline = true,
+  auto_preview = true,
+  win = trouble_bottom,
+}, "loclist panel")
+trouble_toggle("<leader>xs", {
+  mode = "symbols",
+  multiline = true,
+  auto_preview = true,
+  win = trouble_right,
+}, "symbols panel")
+trouble_toggle("<leader>xr", {
+  mode = "lsp",
+  multiline = true,
+  auto_preview = true,
+  win = trouble_right,
+}, "LSP definitions + references")
+-- The todo source ships with todo-comments: load it first in case no file
+-- buffer has loaded it yet.
+keymap("n", "<leader>xt", function()
+  require("todo-comments")
+  require("trouble").toggle({ mode = "todo" })
+end, { desc = kd.format(K.OPEN, T.Trouble, "todos panel") })
+
+-- TODO comments. ]t/[t override the built-in :tnext/:tprevious on purpose
+-- (]T/[T and the :tnext command still work).
+keymap("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = kd.format(K.JUMP, T.Todo, "next comment") })
+keymap("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = kd.format(K.JUMP, T.Todo, "previous comment") })
+
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.
 vim.keymap.set("n", "<leader>ts", function()

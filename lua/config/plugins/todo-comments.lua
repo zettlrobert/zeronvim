@@ -1,19 +1,15 @@
 -- https://github.com/folke/todo-comments.nvim
 return {
   "folke/todo-comments.nvim",
-  -- Loads with the first real file buffer; the <leader>xt and ]t/[t keymaps
-  -- in config are defined then.
+  -- Loads with the first real file buffer. The <leader>xt and ]t/[t keymaps
+  -- live in config/keymaps.lua.
   event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   cmd = { "TodoTrouble", "TodoTelescope", "TodoQuickFix", "TodoLocList" },
   dependencies = { "nvim-lua/plenary.nvim" },
-  config = function()
-    local trouble = require("trouble")
-    local todo_comments = require("todo-comments")
+  opts = function()
     local icons = require("config.assets.icons")
-    local kd = require("config.utils.keymap_desc")
-    local K, T = kd.KIND, kd.TOOL
 
-    todo_comments.setup({
+    return {
       keywords = {
         FIX = {
           icon = icons.TodoComments.Bug,
@@ -69,18 +65,6 @@ return {
           },
         },
       },
-    })
-
-    vim.keymap.set("n", "<leader>xt", function()
-      trouble.toggle({ mode = "todo" })
-    end, { desc = kd.format(K.OPEN, T.Trouble, "todos panel") })
-
-    vim.keymap.set("n", "]t", function()
-      require("todo-comments").jump_next()
-    end, { desc = kd.format(K.JUMP, T.Todo, "next comment") })
-
-    vim.keymap.set("n", "[t", function()
-      require("todo-comments").jump_prev()
-    end, { desc = kd.format(K.JUMP, T.Todo, "previous comment") })
+    }
   end,
 }
