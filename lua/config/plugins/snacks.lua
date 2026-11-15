@@ -63,10 +63,9 @@ return {
       -- files above the size threshold to keep the editor responsive.
       bigfile = { enabled = true },
 
-      -- Highlights other occurrences of the word under the cursor. This
-      -- config doesn't wire up LSP's own `textDocument/documentHighlight`,
-      -- so snacks.words fills the gap purely textually — works even in
-      -- filetypes without an LSP (markdown, plain text, config files).
+      -- Highlights other references of the symbol under the cursor through
+      -- LSP `textDocument/documentHighlight`. Buffers without a supporting
+      -- LSP get none. Snacks.words.jump() can step between them (not mapped).
       words = { enabled = true },
 
       -- LSP-aware file rename: renaming a filename symbol via LSP also

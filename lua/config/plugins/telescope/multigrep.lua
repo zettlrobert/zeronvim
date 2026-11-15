@@ -9,7 +9,7 @@ local conf = require("telescope.config").values
 local M = {}
 
 ---Grep with multiple arguments
----@param opts table
+---@param opts? table
 M.live_multigrep = function(opts)
   opts = opts or {}
   opts.cwd = opts.cwd or vim.uv.cwd()
