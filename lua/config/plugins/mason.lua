@@ -77,6 +77,12 @@ return {
 
       mason_tool_installer.setup({
         ensure_installed = mason_tools,
+        integrations = {
+          -- tools.lua already lists Mason package names, so the nvim-dap name
+          -- mapping is not needed. Requiring it would load mason-nvim-dap, and
+          -- with it the whole debug stack, at startup.
+          ["mason-nvim-dap"] = false,
+        },
       })
     end,
   },
