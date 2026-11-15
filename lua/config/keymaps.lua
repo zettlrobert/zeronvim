@@ -43,15 +43,15 @@ keymap("n", "<leader>y", '"+y', { desc = kd.format(K.COPY, T.Native, "expression
 keymap("v", "<leader>y", '"+y', { desc = kd.format(K.COPY, T.Native, "visual selection to system clipboard") })
 
 -- Copy Buffer Paths to Registers — <leader>c namespace
-keymap("n", "<leader>cr", utils.get_current_realtive_buffer_path, {
+keymap("n", "<leader>cr", utils.copy_path.copy_relative, {
   desc = kd.format(K.COPY, T.Native, "relative buffer path to r register"),
 })
 
-keymap("n", "<leader>ca", utils.get_current_absolute_buffer_path, {
+keymap("n", "<leader>ca", utils.copy_path.copy_absolute, {
   desc = kd.format(K.COPY, T.Native, "absolute buffer path to a register"),
 })
 
-keymap("n", "<leader>cA", utils.get_current_absolute_buffer_path_with_cwd, {
+keymap("n", "<leader>cA", utils.copy_path.copy_absolute_clipboard, {
   desc = kd.format(K.COPY, T.Native, "absolute buffer path with CWD to system clipboard"),
 })
 

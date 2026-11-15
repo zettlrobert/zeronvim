@@ -10,9 +10,7 @@ from init.lua instead: source, lint_versions, patch_colorscheme.
 ---Barrel key -> { module, field }. Without a field the whole module is returned.
 ---@type table<string, { [1]: string, [2]: string? }>
 local exports = {
-  get_current_realtive_buffer_path = { "get_buffer_paths", "get_current_relative_buffer_path" },
-  get_current_absolute_buffer_path = { "get_buffer_paths", "get_current_absolute_buffer_path" },
-  get_current_absolute_buffer_path_with_cwd = { "get_buffer_paths", "get_current_absolute_buffer_path_with_cwd" },
+  copy_path = { "copy_path" },
   get_current_working_directory = { "get_current_working_directory", "get_current_working_directory" },
   get_project_name = { "get_project_name", "get_project_name" },
   get_system_binary = { "get_system_binary", "get_system_binary" },
