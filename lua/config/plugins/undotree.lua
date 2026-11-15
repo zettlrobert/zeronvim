@@ -1,19 +1,10 @@
 -- https://github.com/jiaoshijie/undotree
-local kd = require("config.utils.keymap_desc")
-
 return {
   "jiaoshijie/undotree",
   dependencies = "nvim-lua/plenary.nvim",
-  -- No user command: the plugin is driven only through its Lua API.
-  keys = {
-    {
-      "<leader>u",
-      function()
-        require("undotree").toggle()
-      end,
-      desc = kd.format(kd.KIND.TOGGLE, kd.TOOL.Undotree, "undo history panel"),
-    },
-  },
+  -- No user command: the plugin is driven only through its Lua API. The
+  -- <leader>u keymap in config/keymaps.lua requires it, which loads it.
+  lazy = true,
   opts = {
     float_diff = true,
     layout = "left_bottom",

@@ -256,6 +256,22 @@ keymap("n", "[t", function()
   require("todo-comments").jump_prev()
 end, { desc = kd.format(K.JUMP, T.Todo, "previous comment") })
 
+-- Undo history panel
+keymap("n", "<leader>u", function()
+  require("undotree").toggle()
+end, { desc = kd.format(K.TOGGLE, T.Undotree, "undo history panel") })
+
+-- Oil (directory buffer editing)
+keymap("n", "-", "<cmd>Oil<CR>", { desc = kd.format(K.OPEN, T.Oil, "parent directory") })
+keymap("n", "<leader>-", function()
+  require("oil").toggle_float()
+end, { desc = kd.format(K.OPEN, T.Oil, "parent directory (float)") })
+
+-- Symbols — <leader>s namespace (room for future <leader>sd/sw)
+keymap("n", "<leader>ss", function()
+  require("nvim-navbuddy").open()
+end, { desc = kd.format(K.OPEN, T.Navbuddy, "symbol tree") })
+
 -- Toggles. <leader>t* is the "toggle" namespace.
 -- For explicit language switching the :Spellcheck command still exists.
 vim.keymap.set("n", "<leader>ts", function()
