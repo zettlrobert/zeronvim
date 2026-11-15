@@ -1,6 +1,9 @@
 -- https://github.com/folke/todo-comments.nvim
 return {
   "folke/todo-comments.nvim",
+  -- Loads with the first real file buffer; the <leader>xt and ]t/[t keymaps
+  -- in config are defined then.
+  event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     local trouble = require("trouble")
