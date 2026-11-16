@@ -20,7 +20,9 @@ return {
       html = { "prettierd" },
       css = { "prettierd" },
       scss = { "prettierd" },
-      markdown = { "prettierd_project" },
+      -- First available wins: prettier projects get prettier, everything else
+      -- gets markdownlint's fixes (no re-wrapping, no quote rewrites).
+      markdown = { "prettierd_project", "markdownlint-cli2", stop_after_first = true },
       mdx = { "prettierd" },
       astro = { "prettierd" },
       svelte = { "prettierd" },
@@ -43,11 +45,31 @@ return {
       },
       -- Markdown and yaml: format only in a prettier project (a .prettierrc*,
       -- prettier.config.*, or a "prettier" key in package.json), with that
-      -- project's settings. Elsewhere the git hooks' markdownlint --fix and
-      -- yamllint apply, and nothing rewrites quotes or wraps on save.
+      -- project's settings. Elsewhere markdown falls back to markdownlint-cli2
+      -- and yaml is left alone, so nothing rewrites quotes or wraps on save.
       prettierd_project = {
         inherit = "prettierd",
         require_cwd = true,
+      },
+      -- Outside projects with their own markdownlint config, use this repo's
+      -- .markdownlint.jsonc, which keeps compact |---| table delimiters.
+      ["markdownlint-cli2"] = {
+        prepend_args = function(_, ctx)
+          local project_config = vim.fs.find({
+            ".markdownlint-cli2.jsonc",
+            ".markdownlint-cli2.yaml",
+            ".markdownlint-cli2.cjs",
+            ".markdownlint.jsonc",
+            ".markdownlint.json",
+            ".markdownlint.yaml",
+            ".markdownlint.yml",
+            ".markdownlint.cjs",
+          }, { path = ctx.dirname, upward = true })[1]
+          if project_config then
+            return {}
+          end
+          return { "--config", vim.fn.stdpath("config") .. "/.markdownlint.jsonc" }
+        end,
       },
       prettierd = {
         prepend_args = {
