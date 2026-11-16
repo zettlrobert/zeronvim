@@ -23,7 +23,8 @@ Configured in `lua/config/plugins/conform.lua`.
 | `lua` | stylua |
 | `javascript`, `javascriptreact`, `typescript`, `typescriptreact` | prettierd |
 | `json`, `jsonc`, `html`, `css`, `scss`, `mdx`, `astro`, `svelte`, `vue` | prettierd |
-| `markdown`, `yaml` | `prettierd_project`: only inside a prettier project; no LSP fallback |
+| `markdown` | `prettierd_project` inside a prettier project, otherwise `markdownlint-cli2` |
+| `yaml` | `prettierd_project`: only inside a prettier project; no LSP fallback |
 | anything else with an LSP that supports `textDocument/formatting` | LSP (`lsp_format = "fallback"`) |
 
 `"fallback"` means LSP formatting runs only when conform has no formatter for the filetype. JS/TS therefore get
@@ -49,8 +50,11 @@ These flags apply on every run and override any project `.prettierrc`. Drop them
 
 Markdown and YAML use `prettierd_project` instead: it inherits `prettierd` but has `require_cwd = true`. It runs only
 where it finds a `.prettierrc*`, a `prettier.config.*` or a `"prettier"` key in `package.json`, and uses that project's
-settings. Elsewhere nothing rewrites these files on save; the git hooks' markdownlint `--fix` and yamllint apply. LSP
-fallback is off for both, because yamlls would otherwise reformat with its own prettier defaults.
+settings. LSP fallback is off for both, because yamlls would otherwise reformat with its own prettier defaults.
+
+Outside a prettier project, markdown gets `markdownlint-cli2 --fix`: lint fixes only, no re-wrapping or quote
+changes. Without a project markdownlint config it uses `.markdownlint.jsonc` from this repo, which turns off MD060 so
+compact `|---|` table delimiters stay as written. YAML is left alone outside prettier projects.
 
 ## Add a new formatter
 
