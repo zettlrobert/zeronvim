@@ -172,6 +172,12 @@ return {
             "tabs",
             -- show_filename_only = true,
             mode = 1,
+            -- The default (0) caps tabs at a third of the screen and collapses
+            -- the rest to "...". Tabs are the only tabline component, so give
+            -- them the full width; a function so it follows resizes.
+            max_length = function()
+              return vim.o.columns
+            end,
             use_mode_color = true,
           },
         },
