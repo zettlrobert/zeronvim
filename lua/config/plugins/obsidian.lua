@@ -29,10 +29,11 @@ return {
       enable = false,
     },
 
+    -- Completion comes from obsidian's built-in obsidian-ls LSP server, which
+    -- blink.cmp shows through its lsp source. The old nvim_cmp/blink switches
+    -- are deprecated (removed in 4.0) and only trigger a warning.
     completion = {
-      nvim_cmp = false,
-      blink = true,
-      min_chars = 2,
+      min_chars = 2, -- (obsidian default)
     },
   },
 }
