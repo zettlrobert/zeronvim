@@ -131,6 +131,18 @@ Ollama models for FIM:
 | `codellama:7b` | ~3.8GB | Fast | Usable | Meta's coding model |
 | `deepseek-coder-v2:16b` | ~9GB | Medium | Slow | Strong on Python/JS |
 
+Measured on an RX 7900 XTX (2026-11), 15 simulated keystrokes in a large Lua file:
+
+| Setup | Time to first token | Notes |
+|---|---|---|
+| Ollama, `7b-base`, `context_window = 12000` | ~1.1 s | Current setup; 2,944 prompt tokens |
+| llama-server, same GGUF | ~0.9 s | Not worth a second always-loaded server |
+| Ollama, `qwen3-coder:30b` | ~1.5 s, 2.9 s total | Instruct only: never stops, invents code; unsuitable for FIM |
+| First request after 5 min idle | +4 s | Ollama reloads the model; `OLLAMA_KEEP_ALIVE` raises the timeout |
+
+Prompt caching barely helps: once a file exceeds the window, minuet trims the front of the prompt on every request, so
+neither runtime can reuse its KV cache.
+
 ## Adding a new AI provider
 
 1. Add the plugin spec at `lua/config/plugins/<provider>.lua`: `lazy = true`, and schedule

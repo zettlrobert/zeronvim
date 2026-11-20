@@ -50,7 +50,10 @@ return {
       debounce = 400, -- ms of no keystrokes before firing
 
       n_completions = 1, -- single suggestion per request keeps latency down
-      context_window = 12000, -- max input tokens sent to the model
+      -- Characters, not tokens: 12000 is about 2,900 tokens of Lua, inside
+      -- Ollama's default 4096-token context. Raising it past ~15000 gets the
+      -- prompt cut by Ollama unless OLLAMA_CONTEXT_LENGTH is raised too.
+      context_window = 12000,
 
       -- Disable the auto-generated "first line only" duplicate entry. Reduces
       -- edge cases in blink's item handling and avoids two-lines-shown vs
