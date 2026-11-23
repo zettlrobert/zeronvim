@@ -135,13 +135,25 @@ Measured on an RX 7900 XTX (2026-11), 15 simulated keystrokes in a large Lua fil
 
 | Setup | Time to first token | Notes |
 |---|---|---|
-| Ollama, `7b-base`, `context_window = 12000` | ~1.1 s | Current setup; 2,944 prompt tokens |
+| Ollama, `7b-base`, `context_window = 12000` | ~1.1 s | 2,944 prompt tokens; now 6000, see below |
 | llama-server, same GGUF | ~0.9 s | Not worth a second always-loaded server |
 | Ollama, `qwen3-coder:30b` | ~1.5 s, 2.9 s total | Instruct only: never stops, invents code; unsuitable for FIM |
 | First request after 5 min idle | +4 s | Ollama reloads the model; `OLLAMA_KEEP_ALIVE` raises the timeout |
 
 Prompt caching barely helps: once a file exceeds the window, minuet trims the front of the prompt on every request, so
 neither runtime can reuse its KV cache.
+
+Completion quality on 12 files of own code (Lua, TypeScript, Nix), 120 random cursor positions each (2026-11-23):
+
+| Model | Window | Rest of line exact | Multi-line first line | First token p50 / p95 |
+|---|---|---|---|---|
+| `qwen2.5-coder:7b-base` (default) | 6000 | 56% | - | 0.50 / 0.69 s |
+| `qwen2.5-coder:7b-base` | 12000 | 58% | 35% | 0.51 / 1.35 s |
+| `qwen2.5-coder:14b-base` | 12000 | 56% | 38% | 0.86 / 2.45 s |
+| Seed-Coder-8B-Base | 12000 | 45% | - | 0.76 / 1.93 s |
+
+Differences of 2 to 3 points are noise at this sample size. A bigger or newer model does not complete better, and
+the smaller window halves the slow requests. Full tables: vault note `local-fim-runtime-midgard`.
 
 ## Adding a new AI provider
 
