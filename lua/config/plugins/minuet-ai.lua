@@ -50,10 +50,13 @@ return {
       debounce = 400, -- ms of no keystrokes before firing
 
       n_completions = 1, -- single suggestion per request keeps latency down
-      -- Characters, not tokens: 12000 is about 2,900 tokens of Lua, inside
-      -- Ollama's default 4096-token context. Raising it past ~15000 gets the
-      -- prompt cut by Ollama unless OLLAMA_CONTEXT_LENGTH is raised too.
-      context_window = 12000,
+      -- Characters, not tokens: 6000 is about 1,500 tokens of Lua. Measured
+      -- (docs/ai.md): same completion quality as 12000 on typical files, and
+      -- half the slow-request latency (p95 0.7 s instead of 1.35 s). Raising
+      -- it past ~15000 gets the prompt cut by Ollama unless
+      -- OLLAMA_CONTEXT_LENGTH is raised too.
+      -- context_window = 12000,
+      context_window = 6000,
 
       -- Disable the auto-generated "first line only" duplicate entry. Reduces
       -- edge cases in blink's item handling and avoids two-lines-shown vs
