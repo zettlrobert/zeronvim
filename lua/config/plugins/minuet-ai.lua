@@ -53,6 +53,12 @@ return {
       -- each extra one adds ~0.2-0.3 s on the 7900 XTX (measured: 1 = ~0.5 s,
       -- 2 = ~0.7 s, 3 = ~1.0-1.3 s). Two gives an alternative for little wait.
       n_completions = 2, -- (minuet default: 3)
+
+      -- Seconds before curl gives up (minuet default: 3). A warm model streams
+      -- back in under 1 s, but reloading it after Ollama's 5-minute idle unload
+      -- takes ~4 s, and a cut-off request aborts the reload (see
+      -- config.utils.ollama_warm). 8 lets one request finish a cold load.
+      request_timeout = 8,
       -- Characters, not tokens: 6000 is about 1,500 tokens of Lua. Measured
       -- (docs/ai.md): same completion quality as 12000 on typical files, and
       -- half the slow-request latency (p95 0.7 s instead of 1.35 s). Raising
