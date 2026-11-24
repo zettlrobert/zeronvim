@@ -67,6 +67,18 @@ return {
       add_single_line_entry = false,
     })
 
+    -- Reload the model after Ollama's idle unload before requests need it;
+    -- see config.utils.ollama_warm for why requests alone never finish it.
+    vim.api.nvim_create_autocmd("InsertEnter", {
+      group = vim.api.nvim_create_augroup("MinuetOllamaWarm", { clear = true }),
+      callback = function()
+        if require("config.utils.ai_toggle").is_minuet_enabled() then
+          local o = require("minuet").config.provider_options.openai_fim_compatible
+          require("config.utils.ollama_warm").warm(o.end_point, o.model)
+        end
+      end,
+    })
+
     -- Default off on every load path. ai_toggle queues its enable after this.
     -- Deferred so require("minuet").config is populated before disable runs.
     vim.schedule(function()

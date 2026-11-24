@@ -72,6 +72,10 @@ local PROVIDERS = {
       if blink then
         blink.enable_auto_complete = on
       end
+      if on then
+        local o = require("minuet").config.provider_options.openai_fim_compatible
+        require("config.utils.ollama_warm").warm(o.end_point, o.model, true)
+      end
     end,
   },
 }
