@@ -49,7 +49,10 @@ return {
       throttle = 1500, -- ms between successive completion requests
       debounce = 400, -- ms of no keystrokes before firing
 
-      n_completions = 1, -- single suggestion per request keeps latency down
+      -- One request per suggestion; Ollama runs them one after another, so
+      -- each extra one adds ~0.2-0.3 s on the 7900 XTX (measured: 1 = ~0.5 s,
+      -- 2 = ~0.7 s, 3 = ~1.0-1.3 s). Two gives an alternative for little wait.
+      n_completions = 2, -- (minuet default: 3)
       -- Characters, not tokens: 6000 is about 1,500 tokens of Lua. Measured
       -- (docs/ai.md): same completion quality as 12000 on typical files, and
       -- half the slow-request latency (p95 0.7 s instead of 1.35 s). Raising
