@@ -31,6 +31,7 @@ Three AI tools. Copilot and Minuet start disabled; toggle them with `<leader>a*`
 | `<leader>ap` | Toggle Copilot (global) |
 | `<leader>am` | Toggle Minuet |
 | `<leader>aA` | Any provider on: disable all. All off: enable all |
+| `<A-y>` (insert) | Ask only Minuet now, even while its automatic suggestions are off |
 
 Copilot's own suggestion keys (insert mode): `<M-l>` accept, `<M-]>`/`<M-[>` next/previous, `<C-]>` dismiss.
 `auto_trigger` is off.
@@ -89,6 +90,7 @@ First use:
 3. `<C-Space>` opens the menu if it does not appear.
 
 Requests are paced by `throttle = 1500` and `debounce = 400` (ms). The blink source times out after 3000 ms.
+`n_completions = 2` gives two suggestions per pause, sent as two requests (~0.7 s instead of ~0.5 s for one).
 
 ### CodeCompanion
 

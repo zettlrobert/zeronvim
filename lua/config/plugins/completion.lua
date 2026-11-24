@@ -18,7 +18,17 @@ return {
       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
       -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
       -- See the full "keymap" documentation for information on defining your own keymap.
-      keymap = { preset = "default" },
+      keymap = {
+        preset = "default",
+        -- Ask only minuet (local AI), even while its automatic suggestions
+        -- are toggled off. Same as require("minuet").make_blink_map(), written
+        -- inline so minuet is not loaded at startup.
+        ["<A-y>"] = {
+          function(cmp)
+            cmp.show({ providers = { "minuet" } })
+          end,
+        },
+      },
 
       -- Disable for some filetypes
       enabled = function()
